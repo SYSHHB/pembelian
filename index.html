@@ -799,7 +799,6 @@ html[data-dark="1"] .theme-btn .i-moon{display:none}
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.min.js"></script>
 <script>
 /* =====================================================================
    Sistem Pemantauan Pembelian — syayasan.edu.bn version
@@ -835,10 +834,28 @@ const CONFIG = {
     setupScreen("Sistem belum disediakan", "Application (client) ID dari Microsoft Entra belum dimasukkan dalam <b>index.html</b>. Ikut langkah 1 dan 2 dalam SETUP.md, kemudian muat naik index.html sekali lagi.");
     return;
   }
-  if(typeof msal === "undefined"){
-    setupScreen("Tidak dapat memuatkan log masuk Microsoft", "Komponen log masuk Microsoft tidak dapat dimuatkan. Semak sambungan internet anda, kemudian muat semula halaman.");
-    return;
-  }
+  // Load the Microsoft sign-in library, trying several copies in case one is blocked.
+  const MSAL_SOURCES = [
+    "https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.4/lib/msal-browser.min.js",
+    "https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js",
+    "https://alcdn.msftauth.net/browser/2.38.2/js/msal-browser.min.js",
+    "https://unpkg.com/@azure/msal-browser@2.38.4/lib/msal-browser.min.js"
+  ];
+  const loadScript = src=>new Promise((res, rej)=>{ const sc = document.createElement("script"); sc.src = src; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+  let useImpl = null, implReady;
+  const implPromise = new Promise(r=>implReady = r);
+  window.claude = {use: async name=>{ await implPromise; return useImpl(name); }};
+  (async()=>{
+    for(const src of MSAL_SOURCES){
+      try{ await loadScript(src); if(typeof msal !== "undefined" && msal.PublicClientApplication) break; }catch(e){}
+    }
+    if(typeof msal === "undefined" || !msal.PublicClientApplication){
+      setupScreen("Tidak dapat memuatkan log masuk Microsoft", "Komponen log masuk Microsoft tidak dapat dimuatkan. Semak sambungan internet anda, atau cuba pelayar lain (Edge atau Chrome), kemudian muat semula halaman.");
+      return;
+    }
+    main();
+  })();
+  function main(){
   const GRAPH = "https://graph.microsoft.com/v1.0";
   const SCOPES = ["User.Read", "User.ReadBasic.All", "Files.ReadWrite.All"];
   const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -1094,8 +1111,7 @@ const CONFIG = {
     }
   };
 
-  window.claude = {
-    use: async name=>{
+  useImpl = async name=>{
       await ready;
       switch(name){
         case "db": return db;
@@ -1104,8 +1120,8 @@ const CONFIG = {
         case "downloads": return downloads;
         default: return null;
       }
-    }
   };
+  implReady();
 
   /* ---------- Start ---------- */
   (async function start(){
@@ -1129,6 +1145,7 @@ const CONFIG = {
     addSignOut();
     readyResolve();
   })();
+  }
 })();
 
 </script>
