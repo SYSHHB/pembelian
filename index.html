@@ -784,10 +784,10 @@ html[data-dark="1"] .theme-btn .i-moon{display:none}
       <summary>Pentadbir dan perkongsian</summary>
       <p class="ms-only"><b>Pemerhati</b> boleh melihat pembelian dan memuat turun borang. <b>Penyunting</b> juga boleh menambah, menyunting dan memadam pembelian, memuat naik fail dan mengisi borang. <b>Pentadbir</b> boleh melakukan semua yang Penyunting boleh, serta mengurus pengguna dan melihat log audit.</p>
       <p class="ms-only">Pemilik sistem sentiasa menjadi pentadbir. Setiap pengguna log masuk dengan akaun Microsoft syayasan.edu.bn mereka sendiri.</p>
-      <p class="ms-only">Penyunting dan Pentadbir yang memuat naik dokumen memerlukan akses edit ke folder OneDrive <b>Sistem Pemantauan Pembelian</b>. Kongsi folder itu dengan mereka dari OneDrive.</p>
+      <p class="ms-only">Setiap pengguna juga mesti dikongsi folder OneDrive <b>Sistem Pemantauan Pembelian</b>: <b>Boleh lihat</b> untuk Pemerhati, <b>Boleh edit</b> untuk Penyunting dan Pentadbir. Perkongsian OneDrive inilah yang benar-benar mengawal siapa boleh membuat perubahan.</p>
       <p class="en-only"><b>Viewer</b> can view purchases and download forms. <b>Editor</b> can also add, edit and delete purchases, upload files and fill in the forms. <b>Admin</b> can do everything an Editor can, and also manage users and see the audit log.</p>
       <p class="en-only">The system owner is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
-      <p class="en-only">Editors and Admins who upload documents need edit access to the <b>Sistem Pemantauan Pembelian</b> OneDrive folder. Share that folder with them from OneDrive.</p>
+      <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins. That OneDrive sharing is what actually controls who can make changes.</p>
     </details>
   </div>
   <div class="ua-foot"><button type="button" class="btn primary" id="usersDone">Selesai</button></div>
@@ -799,248 +799,275 @@ html[data-dark="1"] .theme-btn .i-moon{display:none}
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.min.js"></script>
 <script>
 /* =====================================================================
-   Sistem Pemantauan Pembelian — standalone runtime for syayasan.edu.bn
-   Replaces the Claude runtime with: Microsoft sign-in (Firebase Auth),
-   Firestore for data, and OneDrive (Microsoft Graph) for documents.
-   Fill in CONFIG below before publishing. See SETUP.md.
+   Sistem Pemantauan Pembelian — syayasan.edu.bn version
+   Sign-in: Microsoft (school accounts only).
+   Storage: the "Sistem Pemantauan Pembelian" folder in the owner's OneDrive.
+     purchases.json, members.json, audit-YYYY-MM.json  (the system's data)
+     Dokumen/                                          (uploaded documents)
+   Who can open or change data is decided by OneDrive folder sharing.
+   Fill in clientId below (see SETUP.md).
    ===================================================================== */
 const CONFIG = {
-  firebase: {
-    apiKey: "PASTE_API_KEY",
-    authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-    projectId: "PASTE_PROJECT_ID",
-    appId: "PASTE_APP_ID"
-  },
-  tenant: "syayasan.edu.bn",
+  clientId: "598ea952-e9df-4684-a109-85832dc34e59",
+  tenant: "d3ab4c65-3ba1-4c04-98fd-66a0c7730cdf",
   emailDomain: "@syayasan.edu.bn",
   ownerEmail: "zulfa.zaini@syayasan.edu.bn",
-  oneDriveFolder: "Sistem Pemantauan Pembelian"
+  folderName: "Sistem Pemantauan Pembelian",
+  docsFolder: "Dokumen",
+  pollSeconds: 30
 };
 
 (function(){
   const GRAPH = "https://graph.microsoft.com/v1.0";
   const SCOPES = ["User.Read", "User.ReadBasic.All", "Files.ReadWrite.All"];
-  const TOKEN_KEY = "spp-graph-token";
-  firebase.initializeApp(CONFIG.firebase);
-  const auth = firebase.auth();
-  const fs = firebase.firestore();
-
-  /* ---------- Sign-in screen ---------- */
-  let authUser = null, signedInResolve;
-  const signedIn = new Promise(r=>signedInResolve = r);
   const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const redirectUri = location.origin + location.pathname.replace(/index\.html$/, "");
+  const pca = new msal.PublicClientApplication({
+    auth: {clientId: CONFIG.clientId, authority: `https://login.microsoftonline.com/${CONFIG.tenant}`, redirectUri},
+    cache: {cacheLocation: "localStorage"}
+  });
+  let account = null, me = null, readyResolve;
+  const ready = new Promise(r=>readyResolve = r);
 
-  function provider(){
-    const p = new firebase.auth.OAuthProvider("microsoft.com");
-    SCOPES.forEach(s=>p.addScope(s));
-    p.setCustomParameters({tenant: CONFIG.tenant, prompt: "select_account"});
-    return p;
-  }
-  function saveToken(cred){
-    if(cred && cred.accessToken){
-      try{ sessionStorage.setItem(TOKEN_KEY, JSON.stringify({t: cred.accessToken, exp: Date.now() + 55*60*1000})); }catch(e){}
-    }
-  }
-  function readToken(){
-    try{ const v = JSON.parse(sessionStorage.getItem(TOKEN_KEY)||"null"); if(v && v.exp > Date.now()) return v.t; }catch(e){}
-    return null;
-  }
-  async function signIn(){
-    const res = await auth.signInWithPopup(provider());
-    saveToken(res.credential);
-    return res;
-  }
-  async function reconnect(){
-    const res = auth.currentUser ? await auth.currentUser.reauthenticateWithPopup(provider()) : await auth.signInWithPopup(provider());
-    saveToken(res.credential);
-    hideReconnect();
-    return readToken();
-  }
-
+  /* ---------- Screens ---------- */
   function overlay(html){
     let o = document.getElementById("msGate");
     if(!o){ o = document.createElement("section"); o.id = "msGate"; o.className = "gate"; document.body.appendChild(o); }
     o.hidden = false;
     o.innerHTML = `<div class="gate-card"><div class="gate-band"><img id="msCrest" alt=""><div><p>Yayasan Sultan Haji Hassanal Bolkiah</p><strong>Sistem Pemantauan Pembelian</strong></div></div><div class="gate-body">${html}</div></div>`;
-    const crest = o.querySelector("#msCrest"); if(typeof IMG_CREST2 !== "undefined") crest.src = IMG_CREST2;
+    if(typeof IMG_CREST2 !== "undefined") o.querySelector("#msCrest").src = IMG_CREST2;
     return o;
   }
   function showSignIn(msg){
     const o = overlay(`<h2>Log masuk</h2><p>Gunakan akaun Microsoft sekolah anda (${esc(CONFIG.emailDomain.slice(1))}).</p>${msg?`<div class="no" style="margin-bottom:14px">${esc(msg)}</div>`:""}<button type="button" class="btn primary" id="msSignIn">Log masuk dengan Microsoft</button>`);
-    o.querySelector("#msSignIn").onclick = async (e)=>{
-      e.target.disabled = true; e.target.textContent = "Membuka tetingkap Microsoft…";
-      try{ await signIn(); }
-      catch(err){ showSignIn(err && err.code==="auth/popup-blocked" ? "Tetingkap log masuk disekat. Benarkan pop-up untuk laman ini dan cuba lagi." : err && err.code==="auth/popup-closed-by-user" ? "" : "Log masuk tidak berjaya. Cuba lagi."); }
+    o.querySelector("#msSignIn").onclick = e=>{
+      e.target.disabled = true; e.target.textContent = "Membuka halaman Microsoft…";
+      pca.loginRedirect({scopes: SCOPES, prompt: "select_account"});
     };
   }
-  function hideSignIn(){ const o = document.getElementById("msGate"); if(o) o.hidden = true; }
-
-  let reconnectBtn = null;
-  function showReconnect(){
-    if(reconnectBtn) return;
-    const host = document.querySelector(".hero .actions"); if(!host) return;
-    reconnectBtn = document.createElement("button");
-    reconnectBtn.type = "button"; reconnectBtn.className = "btn"; reconnectBtn.textContent = "Sambung semula OneDrive";
-    reconnectBtn.onclick = ()=>reconnect().then(()=>window.toast && toast("OneDrive disambung semula.")).catch(()=>{});
-    host.prepend(reconnectBtn);
+  function showMessage(title, msg, retry){
+    const o = overlay(`<h2>${esc(title)}</h2><div class="no" style="margin-bottom:14px">${esc(msg)}</div>${retry?`<button type="button" class="btn primary" id="msRetry">Cuba lagi</button>`:""}<button type="button" class="btn" id="msOut" style="margin-top:8px">Log keluar</button>`);
+    if(retry) o.querySelector("#msRetry").onclick = ()=>location.reload();
+    o.querySelector("#msOut").onclick = signOut;
   }
-  function hideReconnect(){ if(reconnectBtn){ reconnectBtn.remove(); reconnectBtn = null; } }
-
-  auth.onAuthStateChanged(async u=>{
-    if(!u){ authUser = null; showSignIn(""); return; }
-    const email = (u.email || (u.providerData[0] && u.providerData[0].email) || "").toLowerCase();
-    if(!email.endsWith(CONFIG.emailDomain)){
-      await auth.signOut();
-      showSignIn(`Akaun ${email || "ini"} bukan akaun ${CONFIG.emailDomain.slice(1)}. Log masuk dengan akaun sekolah anda.`);
-      return;
-    }
-    authUser = {uid: u.uid, email, name: u.displayName || email};
-    hideSignIn();
-    addSignOut();
-    signedInResolve(authUser);
-  });
-
+  function hideOverlay(){ const o = document.getElementById("msGate"); if(o) o.hidden = true; }
+  function signOut(){ try{ sessionStorage.clear(); }catch(e){} pca.logoutRedirect({account, postLogoutRedirectUri: redirectUri}); }
   function addSignOut(){
     if(document.getElementById("msSignOut")) return;
     const host = document.querySelector(".hero .actions"); if(!host) return;
     const b = document.createElement("button");
-    b.type = "button"; b.className = "btn"; b.id = "msSignOut"; b.textContent = "Log keluar";
-    b.onclick = async ()=>{ try{ sessionStorage.clear(); }catch(e){} await auth.signOut(); location.reload(); };
+    b.type = "button"; b.className = "btn"; b.id = "msSignOut"; b.textContent = "Log keluar"; b.onclick = signOut;
     host.appendChild(b);
   }
 
   /* ---------- Microsoft Graph ---------- */
+  async function token(){
+    try{ return (await pca.acquireTokenSilent({scopes: SCOPES, account})).accessToken; }
+    catch(e){ pca.acquireTokenRedirect({scopes: SCOPES, account}); throw {code:"needs_reauth"}; }
+  }
   async function graph(path, opts){
-    let token = readToken();
-    if(!token){ showReconnect(); throw {code:"needs_reauth"}; }
-    const res = await fetch(path.startsWith("http") ? path : GRAPH + path, {...(opts||{}), headers:{Authorization:"Bearer "+token, ...((opts&&opts.headers)||{})}});
-    if(res.status===401){ try{ sessionStorage.removeItem(TOKEN_KEY); }catch(e){} showReconnect(); throw {code:"needs_reauth"}; }
-    if(!res.ok){ let msg = ""; try{ msg = (await res.json()).error.message; }catch(e){} throw {code:"graph_"+res.status, message: msg}; }
+    const t = await token();
+    const res = await fetch(path.startsWith("http") ? path : GRAPH + path, {...(opts||{}), headers:{Authorization: "Bearer " + t, ...((opts && opts.headers) || {})}});
+    if(!res.ok){ let msg = ""; try{ msg = (await res.json()).error.message; }catch(e){} throw {code: "graph_" + res.status, status: res.status, message: msg}; }
     return res;
   }
-  async function folderInfo(){
-    const ref = fs.collection("settings").doc("onedrive");
-    const snap = await ref.get();
-    if(snap.exists) return snap.data();
-    if(authUser.email !== CONFIG.ownerEmail) throw {code:"no_folder", message:"Folder OneDrive belum disediakan. Minta pemilik sistem log masuk sekali."};
-    const name = encodeURIComponent(CONFIG.oneDriveFolder);
-    let item;
-    try{ item = await (await graph(`/me/drive/root:/${name}`)).json(); }
-    catch(e){
-      if(e.code!=="graph_404") throw e;
-      item = await (await graph(`/me/drive/root/children`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({name: CONFIG.oneDriveFolder, folder:{}, "@microsoft.graph.conflictBehavior":"fail"})})).json();
+
+  /* ---------- The shared folder ---------- */
+  let ROOT = null, DOCS = null;
+  async function resolveFolder(){
+    const isOwner = me.email === CONFIG.ownerEmail;
+    if(isOwner){
+      const name = encodeURIComponent(CONFIG.folderName);
+      let item;
+      try{ item = await (await graph(`/me/drive/root:/${name}`)).json(); }
+      catch(e){
+        if(e.status !== 404) throw e;
+        item = await (await graph(`/me/drive/root/children`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({name: CONFIG.folderName, folder:{}, "@microsoft.graph.conflictBehavior":"fail"})})).json();
+      }
+      ROOT = {driveId: item.parentReference.driveId, id: item.id, webUrl: item.webUrl};
+    } else {
+      let url = `/me/drive/sharedWithMe?$top=200`, found = null;
+      while(url && !found){
+        const r = await (await graph(url)).json();
+        found = (r.value||[]).find(x=>x.name === CONFIG.folderName && x.remoteItem && x.remoteItem.folder);
+        url = r["@odata.nextLink"] || null;
+      }
+      if(!found) throw {code:"not_shared"};
+      ROOT = {driveId: found.remoteItem.parentReference.driveId, id: found.remoteItem.id, webUrl: found.remoteItem.webUrl || found.webUrl};
     }
-    const info = {driveId: item.parentReference.driveId, folderId: item.id, webUrl: item.webUrl};
-    await ref.set(info);
-    return info;
+    try{ DOCS = await (await graph(`/drives/${ROOT.driveId}/items/${ROOT.id}:/${encodeURIComponent(CONFIG.docsFolder)}`)).json(); }
+    catch(e){
+      if(e.status !== 404 || !isOwner) { DOCS = null; return; }
+      DOCS = await (await graph(`/drives/${ROOT.driveId}/items/${ROOT.id}/children`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({name: CONFIG.docsFolder, folder:{}, "@microsoft.graph.conflictBehavior":"fail"})})).json();
+    }
   }
-  const safeName = n=>String(n||"fail").replace(/[\\/:*?"<>|#%]/g,"-").trim() || "fail";
-  async function oneDriveUpload(blob){
-    const f = await folderInfo();
+
+  /* ---------- JSON files in the folder ---------- */
+  const fileUrl = name=>`/drives/${ROOT.driveId}/items/${ROOT.id}:/${encodeURIComponent(name)}`;
+  const cache = {};   // name -> {etag, data}
+  async function meta(name){
+    try{ return await (await graph(fileUrl(name) + "?select=id,eTag,@microsoft.graph.downloadUrl")).json(); }
+    catch(e){ if(e.status === 404) return null; throw e; }
+  }
+  async function readJson(name, force){
+    const m = await meta(name);
+    if(!m){ cache[name] = {etag: null, data: null}; return cache[name]; }
+    if(!force && cache[name] && cache[name].etag === m.eTag) return cache[name];
+    const txt = await (await fetch(m["@microsoft.graph.downloadUrl"])).text();
+    let data = null; try{ data = JSON.parse(txt || "null"); }catch(e){ data = null; }
+    cache[name] = {etag: m.eTag, data};
+    return cache[name];
+  }
+  async function writeJson(name, data, etag){
+    const headers = {"Content-Type": "application/json"};
+    if(etag) headers["If-Match"] = etag;
+    const r = await (await graph(fileUrl(name) + ":/content", {method:"PUT", headers, body: JSON.stringify(data, null, 1)})).json();
+    cache[name] = {etag: r.eTag, data};
+  }
+  async function mutate(name, fn, empty){
+    for(let i = 0; i < 6; i++){
+      const cur = await readJson(name, true);
+      const next = fn(JSON.parse(JSON.stringify(cur.data ?? empty)));
+      try{ await writeJson(name, next, cur.etag); notify(name); return next; }
+      catch(e){
+        if(e.status === 412 || e.status === 409){ await new Promise(r=>setTimeout(r, 300 + Math.random()*700)); continue; }
+        throw e;
+      }
+    }
+    throw {code:"conflict"};
+  }
+
+  /* ---------- Live refresh (polling) ---------- */
+  const listeners = {};   // name -> Set(fn)
+  function notify(name){ (listeners[name] || []).forEach(fn=>fn()); }
+  function watch(names, fire){
+    names.forEach(n=>(listeners[n] ||= new Set()).add(fire));
+    let stop = false;
+    const tick = async()=>{ if(stop) return; if(document.visibilityState === "visible"){ try{ await Promise.all(names.map(n=>readJson(n))); fire(); }catch(e){} } setTimeout(tick, CONFIG.pollSeconds*1000); };
+    setTimeout(tick, CONFIG.pollSeconds*1000);
+    return ()=>{ stop = true; names.forEach(n=>listeners[n] && listeners[n].delete(fire)); };
+  }
+
+  /* ---------- Data adapter with the shape the app expects ---------- */
+  const clean = v=>JSON.parse(JSON.stringify(v === undefined ? null : v));
+  const mapErr = e=>{ throw (e && (e.status === 403 || e.status === 401)) ? {code:"invalid_argument", message:"Tiada kebenaran"} : e; };
+  const monthFile = d=>`audit-${(d || new Date()).toISOString().slice(0,7)}.json`;
+  const searchCache = {};
+  function filesFor(col){
+    if(col === "audit"){ const now = new Date(); const prev = new Date(now.getFullYear(), now.getMonth()-1, 15); return [monthFile(now), monthFile(prev)]; }
+    return [col + ".json"];
+  }
+  async function readMap(col){
+    const maps = await Promise.all(filesFor(col).map(n=>readJson(n).then(r=>r.data || {})));
+    return Object.assign({}, ...maps.reverse());
+  }
+  const toSnap = (map, order, lim)=>{
+    let docs = Object.entries(map).map(([id, d])=>({id, d}));
+    if(order) docs.sort((a,b)=>{ const x = a.d[order.f], y = b.d[order.f]; return (x>y?1:x<y?-1:0) * (order.dir === "desc" ? -1 : 1); });
+    if(lim) docs = docs.slice(0, lim);
+    return {docs: docs.map(x=>({id: x.id, data: ()=>x.d}))};
+  };
+  function collection(col){
+    const writeFile = ()=> col === "audit" ? monthFile() : col + ".json";
+    function q(order, lim){
+      return {
+        orderBy: (f, dir)=>q({f, dir: dir || "asc"}, lim),
+        limit: n=>q(order, n),
+        get: async()=>toSnap(await readMap(col), order, lim),
+        onSnapshot: (cb, err)=>{
+          const fire = ()=>readMap(col).then(m=>cb(toSnap(m, order, lim))).catch(e=>err && err(e));
+          fire();
+          return watch(filesFor(col), fire);
+        }
+      };
+    }
+    return {
+      ...q(null, null),
+      doc: id=>({
+        get: async()=>{ const m = await readMap(col); return {exists: !!m[id], id, data: ()=>m[id]}; },
+        set: d=>{
+          let data = clean(d);
+          if(col === "members" && searchCache[id]) data = {...data, name: searchCache[id].name, email: searchCache[id].email};
+          return mutate(writeFile(), m=>{ m[id] = data; return m; }, {}).catch(mapErr);
+        },
+        update: d=>mutate(writeFile(), m=>{ m[id] = {...(m[id] || {}), ...clean(d)}; return m; }, {}).catch(mapErr),
+        delete: ()=>mutate(writeFile(), m=>{ delete m[id]; return m; }, {}).catch(mapErr)
+      })
+    };
+  }
+  const db = {collection};
+
+  /* ---------- Documents ---------- */
+  const safeName = n=>String(n || "fail").replace(/[\\/:*?"<>|#%]/g, "-").trim() || "fail";
+  async function upload(blob){
+    if(!DOCS) throw {code:"no_docs_folder"};
     const name = `${new Date().toISOString().slice(0,10)} ${safeName(blob.name)}`;
-    const base = `/drives/${f.driveId}/items/${f.folderId}:/${encodeURIComponent(name)}`;
+    const base = `/drives/${ROOT.driveId}/items/${DOCS.id}:/${encodeURIComponent(name)}`;
     let item;
     if(blob.size <= 4*1024*1024){
       item = await (await graph(`${base}:/content?@microsoft.graph.conflictBehavior=rename`, {method:"PUT", headers:{"Content-Type": blob.type || "application/octet-stream"}, body: blob})).json();
     } else {
       const s = await (await graph(`${base}:/createUploadSession`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({item:{"@microsoft.graph.conflictBehavior":"rename"}})})).json();
       const CHUNK = 320*1024*10;
-      for(let start=0; start<blob.size; start+=CHUNK){
-        const end = Math.min(start+CHUNK, blob.size);
-        const r = await fetch(s.uploadUrl, {method:"PUT", headers:{"Content-Range":`bytes ${start}-${end-1}/${blob.size}`}, body: blob.slice(start, end)});
-        if(!r.ok && r.status!==202) throw {code:"upload_failed"};
-        if(end===blob.size) item = await r.json();
+      for(let start = 0; start < blob.size; start += CHUNK){
+        const end = Math.min(start + CHUNK, blob.size);
+        const r = await fetch(s.uploadUrl, {method:"PUT", headers:{"Content-Range": `bytes ${start}-${end-1}/${blob.size}`}, body: blob.slice(start, end)});
+        if(!r.ok && r.status !== 202) throw {code:"upload_failed"};
+        if(end === blob.size) item = await r.json();
       }
     }
-    return {id: item.id, url: `odx:${f.driveId}!${item.id}`, webUrl: item.webUrl, sizeBytes: item.size, contentType: blob.type};
+    return {id: item.id, url: `odx:${ROOT.driveId}!${item.id}`, webUrl: item.webUrl, sizeBytes: item.size, contentType: blob.type};
   }
   const objUrls = new Map();
   window.fetchFile = async function(url){
     if(!String(url).startsWith("odx:")) return fetch(url);
     const [driveId, itemId] = url.slice(4).split("!");
-    const meta = await (await graph(`/drives/${driveId}/items/${itemId}?select=id,name,@microsoft.graph.downloadUrl`)).json();
-    return fetch(meta["@microsoft.graph.downloadUrl"]);
+    const m = await (await graph(`/drives/${driveId}/items/${itemId}?select=id,@microsoft.graph.downloadUrl`)).json();
+    return fetch(m["@microsoft.graph.downloadUrl"]);
   };
   window.fileObjectUrl = async function(url){
     if(!String(url).startsWith("odx:")) return url;
     if(objUrls.has(url)) return objUrls.get(url);
-    const blob = await (await window.fetchFile(url)).blob();
-    const u = URL.createObjectURL(blob); objUrls.set(url, u); return u;
+    const u = URL.createObjectURL(await (await window.fetchFile(url)).blob());
+    objUrls.set(url, u); return u;
   };
 
-  /* ---------- Firestore adapter (same shape the app expects) ---------- */
-  const clean = v=>JSON.parse(JSON.stringify(v===undefined ? null : v));
-  const mapErr = e=>{ throw (e && e.code==="permission-denied") ? {code:"invalid_argument", message:"Tiada kebenaran"} : e; };
-  const snapOf = qs=>({docs: qs.docs.map(d=>({id: d.id, data: ()=>d.data()}))});
-  const searchCache = {};
-  function docRef(colName, ref){
-    return {
-      get: ()=>ref.get().then(s=>({exists: s.exists, id: s.id, data: ()=>s.data()})),
-      set: d=>{
-        let data = clean(d);
-        if(colName==="members" && searchCache[ref.id]){ data = {...data, name: searchCache[ref.id].name, email: searchCache[ref.id].email}; }
-        return ref.set(data).catch(mapErr);
-      },
-      update: d=>ref.update(clean(d)).catch(mapErr),
-      delete: ()=>ref.delete().catch(mapErr)
-    };
-  }
-  function query(q){
-    return {
-      orderBy: (f, dir)=>query(q.orderBy(f, dir||"asc")),
-      limit: n=>query(q.limit(n)),
-      get: ()=>q.get().then(snapOf),
-      onSnapshot: (cb, err)=>q.onSnapshot(qs=>cb(snapOf(qs)), e=>err && err(e))
-    };
-  }
-  function collection(name){
-    const c = fs.collection(name);
-    return {...query(c), doc: id=>docRef(name, c.doc(id))};
-  }
-  const db = {collection};
-
   /* ---------- People ---------- */
-  const initials = n=>String(n||"?").split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("") || "?";
+  const initials = n=>String(n || "?").split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("") || "?";
   const avatar = n=>"data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="32" fill="#0B5D33"/><text x="32" y="40" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#E0BD4B" text-anchor="middle">${initials(n).replace(/[<&]/g,"")}</text></svg>`);
-  const isOwner = ()=>!!authUser && authUser.email===CONFIG.ownerEmail;
+  const isOwner = ()=>!!me && me.email === CONFIG.ownerEmail;
   const user = {
-    id: async()=>authUser.email,
+    id: async()=>me.email,
     isOwner: async()=>isOwner(),
     canEdit: async()=>isOwner(),
     can: async()=>null,
-    me: async()=>({id: authUser.email, name: authUser.name, email: authUser.email, avatarUrl: avatar(authUser.name), isOwner: isOwner(), canEdit: isOwner(), guest:false}),
+    me: async()=>({id: me.email, name: me.name, email: me.email, avatarUrl: avatar(me.name), isOwner: isOwner(), canEdit: isOwner(), guest: false}),
     profiles: async ids=>{
+      const members = (cache["members.json"] && cache["members.json"].data) || {};
       const out = {};
-      const want = [...new Set(ids||[])];
-      await Promise.all(want.map(async id=>{
-        if(authUser && id===authUser.email){ out[id] = {id, name: authUser.name, email: id, avatarUrl: avatar(authUser.name)}; return; }
-        let name = searchCache[id] && searchCache[id].name;
-        if(!name){ try{ const s = await fs.collection("members").doc(id).get(); if(s.exists) name = s.data().name; }catch(e){} }
-        if(!name && id===CONFIG.ownerEmail) name = "Pemilik sistem";
-        out[id] = {id, name: name || id, email: id, avatarUrl: avatar(name || id)};
-      }));
+      (ids || []).forEach(id=>{
+        const name = (me && id === me.email) ? me.name : (members[id] && members[id].name) || (searchCache[id] && searchCache[id].name) || (id === CONFIG.ownerEmail ? "Pemilik sistem" : id);
+        out[id] = {id, name, email: id, avatarUrl: avatar(name)};
+      });
       return out;
     },
     search: async q=>{
-      q = String(q||"").trim().replace(/'/g,"''"); if(!q) return [];
+      q = String(q || "").trim().replace(/'/g, "''"); if(!q) return [];
       try{
-        const r = await (await graph(`/users?$filter=startswith(displayName,'${encodeURIComponent(q)}') or startswith(mail,'${encodeURIComponent(q)}')&$select=displayName,mail,userPrincipalName&$top=10`)).json();
-        return (r.value||[]).map(u=>{
+        const enc = encodeURIComponent(q);
+        const r = await (await graph(`/users?$filter=startswith(displayName,'${enc}') or startswith(mail,'${enc}')&$select=displayName,mail,userPrincipalName&$top=10`)).json();
+        return (r.value || []).map(u=>{
           const email = String(u.mail || u.userPrincipalName || "").toLowerCase();
           searchCache[email] = {name: u.displayName, email};
-          return {id: email, name: u.displayName, email, avatarUrl: avatar(u.displayName), isMe: authUser && email===authUser.email, guest:false};
+          return {id: email, name: u.displayName, email, avatarUrl: avatar(u.displayName), isMe: email === me.email, guest: false};
         }).filter(h=>h.id.endsWith(CONFIG.emailDomain));
       }catch(e){ return []; }
     }
   };
 
-  /* ---------- Other capabilities ---------- */
-  const assets = { upload: blob=>oneDriveUpload(blob) };
   const downloads = {
     save: async ({filename, data})=>{
       const blob = data instanceof Blob ? data : new Blob([data]);
@@ -1051,16 +1078,39 @@ const CONFIG = {
 
   window.claude = {
     use: async name=>{
-      await signedIn;
+      await ready;
       switch(name){
         case "db": return db;
         case "user": return user;
-        case "assets": return assets;
+        case "assets": return DOCS ? {upload} : null;
         case "downloads": return downloads;
         default: return null;
       }
     }
   };
+
+  /* ---------- Start ---------- */
+  (async function start(){
+    try{
+      await pca.initialize();
+      const res = await pca.handleRedirectPromise();
+      account = (res && res.account) || pca.getAllAccounts()[0] || null;
+    }catch(e){ showSignIn("Log masuk tidak berjaya. Cuba lagi."); return; }
+    if(!account){ showSignIn(""); return; }
+    const email = String(account.username || "").toLowerCase();
+    if(!email.endsWith(CONFIG.emailDomain)){ showSignIn(`Akaun ${email} bukan akaun ${CONFIG.emailDomain.slice(1)}. Log masuk dengan akaun sekolah anda.`); return; }
+    me = {email, name: account.name || email};
+    overlay(`<h2>Memuatkan…</h2><p>Menyambung ke OneDrive.</p>`);
+    try{ await resolveFolder(); }
+    catch(e){
+      if(e.code === "not_shared") showMessage("Belum ada akses", `Folder "${CONFIG.folderName}" di OneDrive belum dikongsi dengan ${email}. Minta pemilik sistem berkongsi folder itu dengan anda, kemudian cuba lagi.`, true);
+      else if(e.code !== "needs_reauth") showMessage("Tidak dapat menyambung", "OneDrive tidak dapat dibuka sekarang. Semak sambungan internet anda dan cuba lagi.", true);
+      return;
+    }
+    hideOverlay();
+    addSignOut();
+    readyResolve();
+  })();
 })();
 
 </script>
@@ -2491,11 +2541,13 @@ async function exportAudit(){
 
 /* ---------- Language (Bahasa Melayu / English) ---------- */
 let LANG = (()=>{ try{ return localStorage.getItem("apt-lang")==="en" ? "en" : "ms"; }catch(e){ return "ms"; } })();
-const EN = {"Log masuk dengan Microsoft":"Sign in with Microsoft","Log keluar":"Sign out","Sambung semula OneDrive":"Reconnect OneDrive","OneDrive disambung semula.":"OneDrive reconnected.","Membuka tetingkap Microsoft…":"Opening Microsoft window…","Log masuk tidak berjaya. Cuba lagi.":"Sign-in didn’t work. Try again.","Tetingkap log masuk disekat. Benarkan pop-up untuk laman ini dan cuba lagi.":"The sign-in window was blocked. Allow pop-ups for this site and try again.","Belum ada pengguna ditambah. Hanya orang dalam senarai ini (dan pemilik sistem) boleh log masuk.":"No users added yet. Only people in this list (and the system owner) can sign in.","Pemilik sistem":"System owner","Buka di OneDrive":"Open in OneDrive","Sambungkan Microsoft 365 dalam tetapan Claude untuk menyalin fail ke OneDrive.":"Connect Microsoft 365 in Claude settings to copy files to OneDrive.","Log masuk semula ke Microsoft 365 dalam tetapan Claude untuk menyalin fail ke OneDrive.":"Sign in to Microsoft 365 again in Claude settings to copy files to OneDrive.","Kebenaran OneDrive tidak diberikan, jadi fail tidak disalin ke OneDrive.":"OneDrive permission wasn’t given, so the file wasn’t copied to OneDrive.","Organisasi anda tidak membenarkan penyalinan ke OneDrive dari sini.":"Your organisation doesn’t allow copying to OneDrive from here.","Tukar ke mod gelap":"Switch to dark mode","Tukar ke mod cerah":"Switch to light mode","Indent (Borang Pesanan)":"Indent (Purchase order)","Dokumen":"Document","Muat turun":"Download","Memuatkan dokumen…":"Loading document…","Belum ada fail dimuat naik":"No file uploaded yet","Dokumen tidak dapat dibuka di sini. Gunakan Muat turun untuk membukanya.":"The document can’t be opened here. Use Download to open it.","Fail tidak disimpan.":"File not saved.","Tidak dapat memuat turun fail. Cuba lagi.":"Couldn’t download the file. Try again.","Cetakan disekat dalam tetingkap ini, jadi fail asal sedang dimuat turun. Buka fail itu dan cetak dari situ.":"Printing is blocked in this window, so the original file is being downloaded. Open it and print from there.","Borang 601 → 602 → T-607 → Indent → DO → Invois":"Borang 601 → 602 → T-607 → Indent → DO → Invoice","Sistem Pemantauan Pembelian":"Purchase Tracker","Sistem Pemantauan Pembelian": "Purchase Tracker", "Lambang Yayasan Sultan Haji Hassanal Bolkiah": "Yayasan Sultan Haji Hassanal Bolkiah crest", "Memuatkan…": "Loading…", "Pengguna": "Users", "Log Audit": "Audit log", "Eksport ke Excel (CSV)": "Export to Excel (CSV)", "Pemberitahuan": "Notifications", "Tanda semua dibaca": "Mark all as read", "Pembelian baharu": "New purchase", "Ringkasan": "Summary", "Pembelian di setiap langkah": "Purchases at each step", "Status semasa setiap pembelian (tekan langkah untuk menapis)": "Where every purchase is now (tap a step to filter)", "Cari tajuk, pembekal, no. PO, no. DO, sebutharga, no. siri…": "Search title, supplier, PO no., DO no., quotation, serial no.…", "Cari pembelian": "Search purchases", "Susun pembelian": "Sort purchases", "Susun: no. fail": "Sort: file no.", "Susun: kemas kini terkini": "Sort: last updated", "Susun: menunggu paling lama": "Sort: waiting longest", "Susun: nilai tertinggi": "Sort: highest value", "Tutup": "Close", "Muat naik dokumen untuk mengisi secara automatik": "Upload documents to fill in automatically", "601, 602, sebutharga, T-607, Borang Pesanan, DO atau invois. PDF, Word, JPG atau PNG. Pilih beberapa fail sekali gus, atau seret ke sini.": "601, 602, quotation, T-607, Borang Pesanan, DO or invoice. PDF, Word, JPG or PNG. Pick several at once, or drop them here.", "Langkah proses": "Process steps", "Padam pembelian": "Delete purchase", "Simpan pembelian": "Save purchase", "Pratonton borang": "Form print preview", "Muat turun PDF": "Download PDF", "Menyediakan PDF…": "Making PDF…", "Cetak": "Print", "Simpan": "Save", "Eksport CSV": "Export CSV", "Cari pengguna, pembelian, nama fail…": "Search user, purchase, file name…", "Cari log audit": "Search audit log", "Tapis mengikut tindakan": "Filter by action", "Semua tindakan": "All actions", "Tarikh dan masa": "Date and time", "Tindakan": "Action", "Butiran": "Details", "Pengguna dan akses": "Users and access", "Tambah pengguna": "Add user", "Taip nama atau e-mel": "Type a name or email", "Cari rakan sekerja": "Search for a colleague", "Peranan": "Role", "Pemerhati (lihat sahaja)": "Viewer (view only)", "Penyunting (boleh tambah dan sunting pembelian)": "Editor (can add and edit purchases)", "Pentadbir (boleh sunting dan urus pengguna)": "Admin (can edit and manage users)", "Menambah…": "Adding…", "Pentadbir dan perkongsian": "Admins and sharing", "Selesai": "Completed", "Pembelian selesai": "Purchase complete", "Nota penghantaran": "Delivery order", "Invois": "Invoice", "Invois dan bayaran": "Invoice and payment", "Tarikh PO": "PO date", "Ditandatangani Ketua Bahagian": "Signed by Head of Division", "Ditandatangani Pengarah Urusan": "Signed by Managing Director", "Catatan PO": "PO remarks", "Nama Syarikat": "Company name", "Tarikh DO": "DO date", "Diterima oleh": "Received by", "Jaminan": "Warranty", "No. Invois": "Invoice no.", "Tarikh Invois": "Invoice date", "Lampirkan fail": "Attach file", "Buang barang": "Remove item", "Pilih tempoh sah laku": "Choose a validity period", "Menunggu": "Pending", "Invois selesai": "Invoice done", "Pembelian": "Purchases", "Dalam proses": "In progress", "Jumlah nilai": "Total value", "Papar semua": "Show all", "Belum ada pembelian": "No purchases yet", "Tambah pembelian pertama anda untuk memantaunya dari 601 hingga invois.": "Add your first purchase to track it from 601 to invoice.", "Pembelian yang ditambah oleh pentadbir akan dipaparkan di sini.": "Purchases added by the admin will appear here.", "Tiada padanan": "No match", "Cuba perkataan carian lain atau papar semua langkah.": "Try another search word or show all steps.", "Selesai, semua dokumen dimuat naik": "Complete, all documents uploaded", "Langkah selesai, dokumen belum lengkap": "Steps done, documents missing", "Fail dilampirkan. Simpan pembelian untuk menyimpannya.": "File attached. Save the purchase to keep it.", "Sunting pembelian": "Edit purchase", "Butiran pembelian": "Purchase details", ", tetapi fail tidak dapat dilampirkan": ", but the file couldn’t be attached", "Semua dokumen dimuat naik dan setiap langkah selesai. Simpan untuk menandakan pembelian ini selesai.": "All documents uploaded and every step is done. Save to mark this purchase complete.", "Semak maklumat yang diisi, kemudian simpan pembelian.": "Check the filled details, then save the purchase.", "Masukkan tajuk pembelian dahulu.": "Enter the purchase title first.", "Lengkapkan langkah mengikut urutan: 601, 602, T-607, Indent, DO, Invois.": "Complete the steps in order: 601, 602, T-607, Indent, DO, Invoice.", "Pembelian disimpan.": "Purchase saved.", "Pembelian ditambah.": "Purchase added.", "Anda hanya mempunyai akses lihat. Perubahan tidak disimpan.": "You have view-only access. Changes were not saved.", "Tidak dapat menyimpan. Semak sambungan anda dan cuba lagi.": "Couldn’t save. Check your connection and try again.", "Klik sekali lagi untuk padam": "Click again to delete", "Klik “Klik sekali lagi untuk padam” untuk mengesahkan. Tindakan ini tidak boleh dibatalkan.": "Click “Click again to delete” to confirm. This can’t be undone.", "Pembelian dipadam.": "Purchase deleted.", "Tidak dapat memadam. Cuba lagi.": "Couldn’t delete. Try again.", "Dokumen Indent, DO dan Invois telah dimuat naik dan setiap langkah selesai. Pembelian ini selesai.": "Indent, DO and Invoice documents uploaded and every step is done. This purchase is complete.", "Dokumen Indent, DO dan Invois telah dimuat naik. Tandakan langkah yang tinggal sebagai selesai.": "Indent, DO and Invoice documents uploaded. Tick the remaining steps as completed.", "Tambah barang": "Add item", "Barang": "Item", "Kuantiti": "Qty", "Harga": "Price", "Jumlah": "Total", "Syarikat": "Company", "No. sijil": "Cert no.", "Tajuk perbelanjaan": "Expenditure head", "Mengapa pembelian ini diperlukan?": "Why is this purchase needed?", "Terangkan pembelian": "Describe the purchase", "Tambah baris": "Add a line", "Taip di sini": "Type here", "Cetakan disekat dalam tetingkap ini, jadi PDF sedang disediakan. Buka PDF dan cetak dari situ.": "Printing is blocked in this window, so a PDF is being made instead. Open the PDF and print it from there.", "PDF tidak disimpan.": "PDF not saved.", "Penyedia PDF tidak dapat dimuatkan. Semak sambungan internet anda dan cuba lagi.": "The PDF maker couldn’t load. Check your internet connection and try again.", "Tidak dapat menyediakan PDF. Cuba lagi.": "Couldn’t make the PDF. Try again.", "Pratonton borang dengan butiran pembelian ini.": "Preview of the form with this purchase’s details.", "Eksport dibatalkan.": "Export cancelled.", "tiada teks yang boleh dibaca. Cuba imbasan yang lebih jelas, atau gambar dalam JPG atau PNG.": "no readable text was found. Try a clearer scan, or a photo as JPG or PNG.", "pembaca PDF atau Word tidak dapat dimuatkan. Semak sambungan internet anda dan cuba lagi.": "the PDF or Word reader couldn’t load. Check your internet connection and try again.", "kebenaran untuk Claude membaca fail telah ditolak. Muat semula halaman dan benarkan.": "permission for Claude to read files was declined. Reload the page and allow it to use this.", "terlalu banyak fail sekali gus. Tunggu seminit, kemudian muat naik fail ini semula.": "too many files at once. Wait a minute, then upload this file again.", "butiran tidak dapat dibaca. Muat naik semula, atau isi langkah ini secara manual.": "the details couldn’t be read. Upload it again, or fill this step by hand.", "imej halaman tidak dapat dihantar. Cuba PDF atau imej yang lebih kecil.": "the page image couldn’t be sent. Try a PDF or a smaller image.", "fail ini tidak dapat dibaca. Muat naik semula, atau isi langkah ini secara manual.": "this file couldn’t be read. Upload it again, or fill this step by hand.", "No. Fail": "File no.", "Tajuk": "Title", "Pemohon": "Requested by", "Bahagian": "Division", "Untuk": "For", "Tajuk Perbelanjaan": "Expenditure head", "Kaedah": "Method", "Pembekal": "Supplier", "No. Sijil Pembekal": "Supplier cert. no.", "No. Siri": "Serial numbers", "Langkah Semasa": "Current step", "Tidak": "No", "Pemerhati": "Viewer", "Penyunting": "Editor", "Pentadbir": "Admin", "Anda": "You", "Buang": "Remove", "Sahkan buang": "Confirm remove", "Peranan dikemas kini.": "Role updated.", "Tidak dapat menukar peranan. Cuba lagi.": "Couldn’t change the role. Try again.", "Rakan sekerja": "Colleague", "Pengguna dibuang.": "User removed.", "Tidak dapat membuang pengguna. Cuba lagi.": "Couldn’t remove the user. Try again.", "Kosongkan": "Clear", "Sudah ditambah": "Already added", "Tetamu": "Guest", "Tidak dapat menambah pengguna. Cuba lagi.": "Couldn’t add the user. Try again.", "Log masuk": "Log in", "Selamat datang": "Welcome", "Telah log masuk": "Signed in", "Sila log masuk": "Please sign in", "Buka halaman ini semasa log masuk ke akaun Claude dalam organisasi anda, kemudian muat semula.": "Open this page while signed in to your Claude account in your organisation, then reload.", "Sambungan ke data terputus. Muat semula untuk cuba lagi.": "Lost connection to shared data. Reload to try again.", "Pemerhati, lihat sahaja": "Viewer, view only", "Disimpan pada peranti ini": "Saved on this device", "Belum ada aktiviti direkodkan.": "No activity recorded yet.", "Seseorang": "Someone", "rakan sekerja": "a colleague", "Permohonan pembelian": "Purchase request", "Pembelian secara terus (≤ B$5,000)": "Direct purchase (≤ B$5,000)", "Memohon penyediaan Borang Pesanan": "Request for purchase order", "Borang Pesanan (PO)": "Purchase order (PO)", "Tarikh 601": "Date of 601", "Tarikh 602": "Date of 602", "No. Sebutharga": "Quotation no.", "Tarikh Sebutharga": "Quotation date", "Tempoh Sah Laku Sebutharga": "Quotation validity", "Harga sebutharga yang disokong (B$)": "Supported price (B$)", "Tempoh Siap / Pembekalan": "Delivery term", "Rujukan": "Reference", "Tarikh": "Date", "Dokumen yang disertakan": "Documents attached", "Salinan asal Borang 601": "Original Borang 601", "Salinan asal Borang 602": "Original Borang 602", "Salinan asal kebenaran bantuan / sumbangan": "Original aid / donation approval", "Salinan asal sebutharga / tawaran": "Original quotation / tender", "Surat kebenaran Penerimaan Tawaran": "Tender acceptance approval letter", "Salinan Award Letter": "Copy of award letter", "Salinan Kontrak": "Copy of contract", "Dokumen-dokumen sokongan": "Supporting documents", "Catatan": "Remarks", "Kaedah pembelian": "Purchase method", "Ulasan mengenai keperluan / penyediaan kerja": "Justification (why it is needed)", "Senarai Barang": "Items", "Keterangan Barang / Kerja": "Description", "Harga Seunit (B$)": "Unit price (B$)", "Jumlah Tuntutan (B$), ikut Harga sebutharga yang disokong": "Claim amount (B$), follows supported price", "Nama Syarikat, ikut 602": "Company name, follows 602", "Jumlah Invois (B$), ikut Jumlah Tuntutan Indent": "Invoice amount (B$), follows Indent claim amount", "No. PO": "PO no.", "No. DO": "DO no.", "Tajuk pembelian *": "Purchase title *", "Anggaran yang diluluskan (B$)": "Approved budget (B$)", "– Pilih tajuk perbelanjaan –": "– Choose expenditure head –", "Terus kepada Pembekal": "Direct from supplier", "Sebutharga": "Quotation", "Lain-lain": "Others", "Ya": "Yes", "Hanya orang dalam senarai ini (dan pentadbir) boleh log masuk. Peranan mereka menentukan apa yang boleh dilakukan.": "Only people in this list (and admins) can log in. Their role decides what they can do.", "Belum ada pengguna ditambah, jadi semua yang dikongsi sistem ini boleh melihatnya. Sebaik sahaja anda menambah pengguna pertama, hanya orang dalam senarai ini (dan pentadbir) boleh log masuk.": "No users added yet, so everyone the system is shared with can view it. As soon as you add the first user, only people in this list (and admins) can log in.", "Tiada rakan sekerja dengan nama itu.": "No colleague found with that name.", "Diisi secara automatik daripada langkah sebelumnya": "Filled in automatically from an earlier step", "Anda belum mempunyai akses ke sistem ini. Minta pentadbir menambah anda di bahagian": "You don’t have access to this system yet. Ask the admin to add you under", ", kemudian muat semula halaman ini.": ", then reload this page.", "Dokumen belum dimuat naik": "Document not uploaded", "Belum ada pemberitahuan. Pemberitahuan akan muncul apabila pembelian selesai atau memerlukan perhatian.": "No notifications yet. One appears here when a purchase is complete or needs attention.", "Cipta pembelian": "Created purchase", "Kemas kini pembelian": "Updated purchase", "Muat naik fail": "Uploaded file", "Buang fail": "Removed file", "Tambah pengguna ": "Added user", "Buang pengguna": "Removed user", "Tukar peranan": "Changed user role", "Eksport ke Excel": "Exported to Excel", "Eksport log audit": "Exported audit log", "Tandakan semua dibaca": "Mark all as read", "Klik untuk membuka langkah ini.": "Click to open this step.", "Taip dalam kotak kuning untuk mengisi borang. Tutup akan mengekalkan perubahan dalam pembelian; Simpan akan menyimpannya.": "Type in the yellow boxes to fill in the form. Close keeps your changes in the purchase; Save stores them."};
+const EN = {"Membuka halaman Microsoft…":"Opening the Microsoft page…","Belum ada akses":"No access yet","Tidak dapat menyambung":"Can’t connect","OneDrive tidak dapat dibuka sekarang. Semak sambungan internet anda dan cuba lagi.":"OneDrive can’t be opened right now. Check your internet connection and try again.","Cuba lagi":"Try again","Memuatkan…":"Loading…","Menyambung ke OneDrive.":"Connecting to OneDrive.","Log masuk dengan Microsoft":"Sign in with Microsoft","Log keluar":"Sign out","Sambung semula OneDrive":"Reconnect OneDrive","OneDrive disambung semula.":"OneDrive reconnected.","Membuka tetingkap Microsoft…":"Opening Microsoft window…","Log masuk tidak berjaya. Cuba lagi.":"Sign-in didn’t work. Try again.","Tetingkap log masuk disekat. Benarkan pop-up untuk laman ini dan cuba lagi.":"The sign-in window was blocked. Allow pop-ups for this site and try again.","Belum ada pengguna ditambah. Hanya orang dalam senarai ini (dan pemilik sistem) boleh log masuk.":"No users added yet. Only people in this list (and the system owner) can sign in.","Pemilik sistem":"System owner","Buka di OneDrive":"Open in OneDrive","Sambungkan Microsoft 365 dalam tetapan Claude untuk menyalin fail ke OneDrive.":"Connect Microsoft 365 in Claude settings to copy files to OneDrive.","Log masuk semula ke Microsoft 365 dalam tetapan Claude untuk menyalin fail ke OneDrive.":"Sign in to Microsoft 365 again in Claude settings to copy files to OneDrive.","Kebenaran OneDrive tidak diberikan, jadi fail tidak disalin ke OneDrive.":"OneDrive permission wasn’t given, so the file wasn’t copied to OneDrive.","Organisasi anda tidak membenarkan penyalinan ke OneDrive dari sini.":"Your organisation doesn’t allow copying to OneDrive from here.","Tukar ke mod gelap":"Switch to dark mode","Tukar ke mod cerah":"Switch to light mode","Indent (Borang Pesanan)":"Indent (Purchase order)","Dokumen":"Document","Muat turun":"Download","Memuatkan dokumen…":"Loading document…","Belum ada fail dimuat naik":"No file uploaded yet","Dokumen tidak dapat dibuka di sini. Gunakan Muat turun untuk membukanya.":"The document can’t be opened here. Use Download to open it.","Fail tidak disimpan.":"File not saved.","Tidak dapat memuat turun fail. Cuba lagi.":"Couldn’t download the file. Try again.","Cetakan disekat dalam tetingkap ini, jadi fail asal sedang dimuat turun. Buka fail itu dan cetak dari situ.":"Printing is blocked in this window, so the original file is being downloaded. Open it and print from there.","Borang 601 → 602 → T-607 → Indent → DO → Invois":"Borang 601 → 602 → T-607 → Indent → DO → Invoice","Sistem Pemantauan Pembelian":"Purchase Tracker","Sistem Pemantauan Pembelian": "Purchase Tracker", "Lambang Yayasan Sultan Haji Hassanal Bolkiah": "Yayasan Sultan Haji Hassanal Bolkiah crest", "Memuatkan…": "Loading…", "Pengguna": "Users", "Log Audit": "Audit log", "Eksport ke Excel (CSV)": "Export to Excel (CSV)", "Pemberitahuan": "Notifications", "Tanda semua dibaca": "Mark all as read", "Pembelian baharu": "New purchase", "Ringkasan": "Summary", "Pembelian di setiap langkah": "Purchases at each step", "Status semasa setiap pembelian (tekan langkah untuk menapis)": "Where every purchase is now (tap a step to filter)", "Cari tajuk, pembekal, no. PO, no. DO, sebutharga, no. siri…": "Search title, supplier, PO no., DO no., quotation, serial no.…", "Cari pembelian": "Search purchases", "Susun pembelian": "Sort purchases", "Susun: no. fail": "Sort: file no.", "Susun: kemas kini terkini": "Sort: last updated", "Susun: menunggu paling lama": "Sort: waiting longest", "Susun: nilai tertinggi": "Sort: highest value", "Tutup": "Close", "Muat naik dokumen untuk mengisi secara automatik": "Upload documents to fill in automatically", "601, 602, sebutharga, T-607, Borang Pesanan, DO atau invois. PDF, Word, JPG atau PNG. Pilih beberapa fail sekali gus, atau seret ke sini.": "601, 602, quotation, T-607, Borang Pesanan, DO or invoice. PDF, Word, JPG or PNG. Pick several at once, or drop them here.", "Langkah proses": "Process steps", "Padam pembelian": "Delete purchase", "Simpan pembelian": "Save purchase", "Pratonton borang": "Form print preview", "Muat turun PDF": "Download PDF", "Menyediakan PDF…": "Making PDF…", "Cetak": "Print", "Simpan": "Save", "Eksport CSV": "Export CSV", "Cari pengguna, pembelian, nama fail…": "Search user, purchase, file name…", "Cari log audit": "Search audit log", "Tapis mengikut tindakan": "Filter by action", "Semua tindakan": "All actions", "Tarikh dan masa": "Date and time", "Tindakan": "Action", "Butiran": "Details", "Pengguna dan akses": "Users and access", "Tambah pengguna": "Add user", "Taip nama atau e-mel": "Type a name or email", "Cari rakan sekerja": "Search for a colleague", "Peranan": "Role", "Pemerhati (lihat sahaja)": "Viewer (view only)", "Penyunting (boleh tambah dan sunting pembelian)": "Editor (can add and edit purchases)", "Pentadbir (boleh sunting dan urus pengguna)": "Admin (can edit and manage users)", "Menambah…": "Adding…", "Pentadbir dan perkongsian": "Admins and sharing", "Selesai": "Completed", "Pembelian selesai": "Purchase complete", "Nota penghantaran": "Delivery order", "Invois": "Invoice", "Invois dan bayaran": "Invoice and payment", "Tarikh PO": "PO date", "Ditandatangani Ketua Bahagian": "Signed by Head of Division", "Ditandatangani Pengarah Urusan": "Signed by Managing Director", "Catatan PO": "PO remarks", "Nama Syarikat": "Company name", "Tarikh DO": "DO date", "Diterima oleh": "Received by", "Jaminan": "Warranty", "No. Invois": "Invoice no.", "Tarikh Invois": "Invoice date", "Lampirkan fail": "Attach file", "Buang barang": "Remove item", "Pilih tempoh sah laku": "Choose a validity period", "Menunggu": "Pending", "Invois selesai": "Invoice done", "Pembelian": "Purchases", "Dalam proses": "In progress", "Jumlah nilai": "Total value", "Papar semua": "Show all", "Belum ada pembelian": "No purchases yet", "Tambah pembelian pertama anda untuk memantaunya dari 601 hingga invois.": "Add your first purchase to track it from 601 to invoice.", "Pembelian yang ditambah oleh pentadbir akan dipaparkan di sini.": "Purchases added by the admin will appear here.", "Tiada padanan": "No match", "Cuba perkataan carian lain atau papar semua langkah.": "Try another search word or show all steps.", "Selesai, semua dokumen dimuat naik": "Complete, all documents uploaded", "Langkah selesai, dokumen belum lengkap": "Steps done, documents missing", "Fail dilampirkan. Simpan pembelian untuk menyimpannya.": "File attached. Save the purchase to keep it.", "Sunting pembelian": "Edit purchase", "Butiran pembelian": "Purchase details", ", tetapi fail tidak dapat dilampirkan": ", but the file couldn’t be attached", "Semua dokumen dimuat naik dan setiap langkah selesai. Simpan untuk menandakan pembelian ini selesai.": "All documents uploaded and every step is done. Save to mark this purchase complete.", "Semak maklumat yang diisi, kemudian simpan pembelian.": "Check the filled details, then save the purchase.", "Masukkan tajuk pembelian dahulu.": "Enter the purchase title first.", "Lengkapkan langkah mengikut urutan: 601, 602, T-607, Indent, DO, Invois.": "Complete the steps in order: 601, 602, T-607, Indent, DO, Invoice.", "Pembelian disimpan.": "Purchase saved.", "Pembelian ditambah.": "Purchase added.", "Anda hanya mempunyai akses lihat. Perubahan tidak disimpan.": "You have view-only access. Changes were not saved.", "Tidak dapat menyimpan. Semak sambungan anda dan cuba lagi.": "Couldn’t save. Check your connection and try again.", "Klik sekali lagi untuk padam": "Click again to delete", "Klik “Klik sekali lagi untuk padam” untuk mengesahkan. Tindakan ini tidak boleh dibatalkan.": "Click “Click again to delete” to confirm. This can’t be undone.", "Pembelian dipadam.": "Purchase deleted.", "Tidak dapat memadam. Cuba lagi.": "Couldn’t delete. Try again.", "Dokumen Indent, DO dan Invois telah dimuat naik dan setiap langkah selesai. Pembelian ini selesai.": "Indent, DO and Invoice documents uploaded and every step is done. This purchase is complete.", "Dokumen Indent, DO dan Invois telah dimuat naik. Tandakan langkah yang tinggal sebagai selesai.": "Indent, DO and Invoice documents uploaded. Tick the remaining steps as completed.", "Tambah barang": "Add item", "Barang": "Item", "Kuantiti": "Qty", "Harga": "Price", "Jumlah": "Total", "Syarikat": "Company", "No. sijil": "Cert no.", "Tajuk perbelanjaan": "Expenditure head", "Mengapa pembelian ini diperlukan?": "Why is this purchase needed?", "Terangkan pembelian": "Describe the purchase", "Tambah baris": "Add a line", "Taip di sini": "Type here", "Cetakan disekat dalam tetingkap ini, jadi PDF sedang disediakan. Buka PDF dan cetak dari situ.": "Printing is blocked in this window, so a PDF is being made instead. Open the PDF and print it from there.", "PDF tidak disimpan.": "PDF not saved.", "Penyedia PDF tidak dapat dimuatkan. Semak sambungan internet anda dan cuba lagi.": "The PDF maker couldn’t load. Check your internet connection and try again.", "Tidak dapat menyediakan PDF. Cuba lagi.": "Couldn’t make the PDF. Try again.", "Pratonton borang dengan butiran pembelian ini.": "Preview of the form with this purchase’s details.", "Eksport dibatalkan.": "Export cancelled.", "tiada teks yang boleh dibaca. Cuba imbasan yang lebih jelas, atau gambar dalam JPG atau PNG.": "no readable text was found. Try a clearer scan, or a photo as JPG or PNG.", "pembaca PDF atau Word tidak dapat dimuatkan. Semak sambungan internet anda dan cuba lagi.": "the PDF or Word reader couldn’t load. Check your internet connection and try again.", "kebenaran untuk Claude membaca fail telah ditolak. Muat semula halaman dan benarkan.": "permission for Claude to read files was declined. Reload the page and allow it to use this.", "terlalu banyak fail sekali gus. Tunggu seminit, kemudian muat naik fail ini semula.": "too many files at once. Wait a minute, then upload this file again.", "butiran tidak dapat dibaca. Muat naik semula, atau isi langkah ini secara manual.": "the details couldn’t be read. Upload it again, or fill this step by hand.", "imej halaman tidak dapat dihantar. Cuba PDF atau imej yang lebih kecil.": "the page image couldn’t be sent. Try a PDF or a smaller image.", "fail ini tidak dapat dibaca. Muat naik semula, atau isi langkah ini secara manual.": "this file couldn’t be read. Upload it again, or fill this step by hand.", "No. Fail": "File no.", "Tajuk": "Title", "Pemohon": "Requested by", "Bahagian": "Division", "Untuk": "For", "Tajuk Perbelanjaan": "Expenditure head", "Kaedah": "Method", "Pembekal": "Supplier", "No. Sijil Pembekal": "Supplier cert. no.", "No. Siri": "Serial numbers", "Langkah Semasa": "Current step", "Tidak": "No", "Pemerhati": "Viewer", "Penyunting": "Editor", "Pentadbir": "Admin", "Anda": "You", "Buang": "Remove", "Sahkan buang": "Confirm remove", "Peranan dikemas kini.": "Role updated.", "Tidak dapat menukar peranan. Cuba lagi.": "Couldn’t change the role. Try again.", "Rakan sekerja": "Colleague", "Pengguna dibuang.": "User removed.", "Tidak dapat membuang pengguna. Cuba lagi.": "Couldn’t remove the user. Try again.", "Kosongkan": "Clear", "Sudah ditambah": "Already added", "Tetamu": "Guest", "Tidak dapat menambah pengguna. Cuba lagi.": "Couldn’t add the user. Try again.", "Log masuk": "Log in", "Selamat datang": "Welcome", "Telah log masuk": "Signed in", "Sila log masuk": "Please sign in", "Buka halaman ini semasa log masuk ke akaun Claude dalam organisasi anda, kemudian muat semula.": "Open this page while signed in to your Claude account in your organisation, then reload.", "Sambungan ke data terputus. Muat semula untuk cuba lagi.": "Lost connection to shared data. Reload to try again.", "Pemerhati, lihat sahaja": "Viewer, view only", "Disimpan pada peranti ini": "Saved on this device", "Belum ada aktiviti direkodkan.": "No activity recorded yet.", "Seseorang": "Someone", "rakan sekerja": "a colleague", "Permohonan pembelian": "Purchase request", "Pembelian secara terus (≤ B$5,000)": "Direct purchase (≤ B$5,000)", "Memohon penyediaan Borang Pesanan": "Request for purchase order", "Borang Pesanan (PO)": "Purchase order (PO)", "Tarikh 601": "Date of 601", "Tarikh 602": "Date of 602", "No. Sebutharga": "Quotation no.", "Tarikh Sebutharga": "Quotation date", "Tempoh Sah Laku Sebutharga": "Quotation validity", "Harga sebutharga yang disokong (B$)": "Supported price (B$)", "Tempoh Siap / Pembekalan": "Delivery term", "Rujukan": "Reference", "Tarikh": "Date", "Dokumen yang disertakan": "Documents attached", "Salinan asal Borang 601": "Original Borang 601", "Salinan asal Borang 602": "Original Borang 602", "Salinan asal kebenaran bantuan / sumbangan": "Original aid / donation approval", "Salinan asal sebutharga / tawaran": "Original quotation / tender", "Surat kebenaran Penerimaan Tawaran": "Tender acceptance approval letter", "Salinan Award Letter": "Copy of award letter", "Salinan Kontrak": "Copy of contract", "Dokumen-dokumen sokongan": "Supporting documents", "Catatan": "Remarks", "Kaedah pembelian": "Purchase method", "Ulasan mengenai keperluan / penyediaan kerja": "Justification (why it is needed)", "Senarai Barang": "Items", "Keterangan Barang / Kerja": "Description", "Harga Seunit (B$)": "Unit price (B$)", "Jumlah Tuntutan (B$), ikut Harga sebutharga yang disokong": "Claim amount (B$), follows supported price", "Nama Syarikat, ikut 602": "Company name, follows 602", "Jumlah Invois (B$), ikut Jumlah Tuntutan Indent": "Invoice amount (B$), follows Indent claim amount", "No. PO": "PO no.", "No. DO": "DO no.", "Tajuk pembelian *": "Purchase title *", "Anggaran yang diluluskan (B$)": "Approved budget (B$)", "– Pilih tajuk perbelanjaan –": "– Choose expenditure head –", "Terus kepada Pembekal": "Direct from supplier", "Sebutharga": "Quotation", "Lain-lain": "Others", "Ya": "Yes", "Hanya orang dalam senarai ini (dan pentadbir) boleh log masuk. Peranan mereka menentukan apa yang boleh dilakukan.": "Only people in this list (and admins) can log in. Their role decides what they can do.", "Belum ada pengguna ditambah, jadi semua yang dikongsi sistem ini boleh melihatnya. Sebaik sahaja anda menambah pengguna pertama, hanya orang dalam senarai ini (dan pentadbir) boleh log masuk.": "No users added yet, so everyone the system is shared with can view it. As soon as you add the first user, only people in this list (and admins) can log in.", "Tiada rakan sekerja dengan nama itu.": "No colleague found with that name.", "Diisi secara automatik daripada langkah sebelumnya": "Filled in automatically from an earlier step", "Anda belum mempunyai akses ke sistem ini. Minta pentadbir menambah anda di bahagian": "You don’t have access to this system yet. Ask the admin to add you under", ", kemudian muat semula halaman ini.": ", then reload this page.", "Dokumen belum dimuat naik": "Document not uploaded", "Belum ada pemberitahuan. Pemberitahuan akan muncul apabila pembelian selesai atau memerlukan perhatian.": "No notifications yet. One appears here when a purchase is complete or needs attention.", "Cipta pembelian": "Created purchase", "Kemas kini pembelian": "Updated purchase", "Muat naik fail": "Uploaded file", "Buang fail": "Removed file", "Tambah pengguna ": "Added user", "Buang pengguna": "Removed user", "Tukar peranan": "Changed user role", "Eksport ke Excel": "Exported to Excel", "Eksport log audit": "Exported audit log", "Tandakan semua dibaca": "Mark all as read", "Klik untuk membuka langkah ini.": "Click to open this step.", "Taip dalam kotak kuning untuk mengisi borang. Tutup akan mengekalkan perubahan dalam pembelian; Simpan akan menyimpannya.": "Type in the yellow boxes to fill in the form. Close keeps your changes in the purchase; Save stores them."};
 const EN_ROLE = {Pemerhati:"Viewer", Penyunting:"Editor", Pentadbir:"Admin"};
 const UNIT = {Minggu:["week","weeks"], Bulan:["month","months"], Tahun:["year","years"]};
 const trIn = x => trText(x) ?? x.replace(/Invois/g,"Invoice");
 const EN_RX = [
+  [/^Folder "(.+)" di OneDrive belum dikongsi dengan (.+)\. Minta pemilik sistem berkongsi folder itu dengan anda, kemudian cuba lagi\.$/, "The \"$1\" OneDrive folder hasn’t been shared with $2 yet. Ask the system owner to share it with you, then try again."],
+  [/^Akaun (.+) bukan akaun (.+)\. Log masuk dengan akaun sekolah anda\.$/, "$1 isn’t a $2 account. Sign in with your school account."],
   [/^Gunakan akaun Microsoft sekolah anda \((.+)\)\.$/, "Use your school Microsoft account ($1)."],
   [/^(.+) disalin ke OneDrive\.$/, "$1 copied to OneDrive."],
   [/^(.+) melebihi 1 MB, jadi tidak disalin ke OneDrive\. Fail masih disimpan dalam sistem\.$/, "$1 is over 1 MB, so it wasn’t copied to OneDrive. It’s still saved in the system."],
