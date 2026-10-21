@@ -812,7 +812,7 @@ html[data-dark="1"] .theme-btn .i-moon{display:none}
    ===================================================================== */
 const CONFIG = {
   clientId: "598ea952-e9df-4684-a109-85832dc34e59",
-  tenant: "d3ab4c65-3ba1-4c04-98fd-66a0c7730cdf",
+  tenant: "syayasan.edu.bn",
   emailDomain: "@syayasan.edu.bn",
   ownerEmail: "zulfa.zaini@syayasan.edu.bn",
   folderName: "Sistem Pemantauan Pembelian",
@@ -821,6 +821,24 @@ const CONFIG = {
 };
 
 (function(){
+  // Stop here with a clear message if the system isn't set up yet, instead of opening in "saved on this device" mode.
+  function setupScreen(title, msg){
+    const show = ()=>{
+      const o = document.createElement("section"); o.className = "gate"; o.id = "msSetup";
+      o.innerHTML = `<div class="gate-card"><div class="gate-band"><div><p>Yayasan Sultan Haji Hassanal Bolkiah</p><strong>Sistem Pemantauan Pembelian</strong></div></div><div class="gate-body"><h2>${title}</h2><div class="no">${msg}</div></div></div>`;
+      document.body.appendChild(o);
+    };
+    document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", show) : show();
+    window.claude = {use: ()=>new Promise(()=>{})};   // keep the app waiting behind this screen
+  }
+  if(!CONFIG.clientId || /PASTE/.test(CONFIG.clientId)){
+    setupScreen("Sistem belum disediakan", "Application (client) ID dari Microsoft Entra belum dimasukkan dalam <b>index.html</b>. Ikut langkah 1 dan 2 dalam SETUP.md, kemudian muat naik index.html sekali lagi.");
+    return;
+  }
+  if(typeof msal === "undefined"){
+    setupScreen("Tidak dapat memuatkan log masuk Microsoft", "Komponen log masuk Microsoft tidak dapat dimuatkan. Semak sambungan internet anda, kemudian muat semula halaman.");
+    return;
+  }
   const GRAPH = "https://graph.microsoft.com/v1.0";
   const SCOPES = ["User.Read", "User.ReadBasic.All", "Files.ReadWrite.All"];
   const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
