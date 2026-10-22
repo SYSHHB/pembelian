@@ -628,6 +628,9 @@ html[data-dark="1"] .theme-btn .i-moon{display:none}
 .track .st.cancel .dot{background:var(--danger);border-color:var(--danger)}
 .track .st.cancel .lbl,.track .st.cancel .dt{color:var(--danger)}
 .row.is-cancel{border-left-color:var(--danger)}
+.rnote{margin-top:6px;font-size:13px;padding:5px 9px;border-radius:7px;background:var(--now-soft);color:var(--ink);border-left:3px solid var(--now);max-width:100%;overflow-wrap:anywhere}
+.rnote.cx{background:color-mix(in srgb,var(--danger) 10%,transparent);border-left-color:var(--danger)}
+.rnote b{font-weight:700}
 .row.is-cancel .pbar i{background:var(--danger)}
 .state.cancel{background:color-mix(in srgb,var(--danger) 13%,transparent);color:var(--danger)}
 .stat.s-cancel::before{background:var(--danger)}
@@ -853,7 +856,7 @@ html[data-dark="1"] .theme-btn .i-moon{display:none}
    Fill in clientId below (see SETUP.md).
    ===================================================================== */
 const CONFIG = {
-  clientId: "598ea952-e9df-4684-a109-85832dc34e59",
+  clientId: "PASTE_APPLICATION_CLIENT_ID",
   tenant: "syayasan.edu.bn",
   emailDomain: "@syayasan.edu.bn",
   ownerEmail: "zulfa.zaini@syayasan.edu.bn",
@@ -1658,6 +1661,7 @@ function render(){
         <div style="display:flex;align-items:center"><div class="pbar" style="flex:1"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
         <div class="meta">${meta||"&nbsp;"}</div>
         ${refs?`<div class="refs">${refs}</div>`:""}
+        ${(()=>{ const k = ci>=0 ? STAGES[ci] : (!fin ? STAGES[cur] : null); const n = k ? String(it.stages?.[k.k]?.note||"").trim() : ""; return n ? `<div class="rnote ${ci>=0?"cx":""}"><b>Catatan ${esc(k.code)}:</b> ${esc(n)}</div>` : ""; })()}
         <span class="state ${ci>=0?'cancel':fin&&allDocs(it)?'fin':''}">${ci>=0?"Dibatalkan di "+esc(STAGES[ci].code):fin?(allDocs(it)?"Selesai, semua dokumen dimuat naik":"Langkah selesai, dokumen belum lengkap"):"Kini di "+esc(STAGES[cur].code)+wait}</span>
         <span class="docs ${allDocs(it)?'all':''}">Dokumen ${docCount(it)}/${DOC_STEPS.length}</span>
       </div>
@@ -3242,6 +3246,7 @@ const EN_ROLE = {Pemerhati:"Viewer", Penyunting:"Editor", Pentadbir:"Admin"};
 const UNIT = {Minggu:["week","weeks"], Bulan:["month","months"], Tahun:["year","years"]};
 const trIn = x => trText(x) ?? x.replace(/Invois/g,"Invoice");
 const EN_RX = [
+  [/^Catatan (.+):$/, (m,a)=>`Remarks ${trIn(a)}:`],
   [/^Baki (B\$[\d,.]+)$/, "Balance $1"],
   [/^Melebihi anggaran (B\$[\d,.]+)$/, "Over budget by $1"],
   [/^(\d+) pembelian belum dipilih Tajuk Perbelanjaan\.$/, (m,n)=>`${n} purchase${n==="1"?"":"s"} without an expenditure head.`],
