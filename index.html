@@ -856,7 +856,7 @@ html[data-dark="1"] .theme-btn .i-moon{display:none}
    Fill in clientId below (see SETUP.md).
    ===================================================================== */
 const CONFIG = {
-  clientId: "598ea952-e9df-4684-a109-85832dc34e59",
+  clientId: "PASTE_APPLICATION_CLIENT_ID",
   tenant: "syayasan.edu.bn",
   emailDomain: "@syayasan.edu.bn",
   ownerEmail: "zulfa.zaini@syayasan.edu.bn",
@@ -1648,7 +1648,7 @@ function render(){
     let wait = "";
     if(!fin && ci<0){ const from=lastDate(it,cur); if(from){ const d=daysBetween(from,today()); if(d>=0) wait=`, menunggu ${d} hari`; } }
     const amt = bestAmount(it);
-    const meta = [amt?money(amt):"", esc(it.supplier||""), esc(it.forWho||it.division||"")].filter(Boolean).join(", ");
+    const meta = [amt?money(amt):"", esc(it.supplier||"")].filter(Boolean).join(", ");
     const refs = [
       it.stages?.indent?.ref ? "PO "+esc(it.stages.indent.ref) : "",
       it.stages?.do?.ref ? "DO "+esc(it.stages.do.ref) : "",
@@ -1657,7 +1657,7 @@ function render(){
     const doneN = STAGES.filter(s=>it.stages?.[s.k]?.done).length, pct = Math.round(doneN/STAGES.length*100);
     return `<button type="button" class="row ${ci>=0?"is-cancel":fin?"is-fin":""}" data-id="${esc(it.id)}">
       <div>
-        <p class="name">${it.fileNo?esc(it.fileNo)+". ":""}${esc(it.title||"Untitled")}</p>
+        <p class="name">${esc(it.title||"Untitled")}</p>
         <div style="display:flex;align-items:center"><div class="pbar" style="flex:1"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
         <div class="meta">${meta||"&nbsp;"}</div>
         ${refs?`<div class="refs">${refs}</div>`:""}
@@ -2106,7 +2106,7 @@ const DOC_STAGES = () => STAGES.filter(s=>DOC_STEPS.includes(s.k));
 function docCount(it){ return DOC_STAGES().filter(s=>(it.stages?.[s.k]?.files||[]).length).length; }
 function allDocs(it){ return docCount(it)===DOC_STEPS.length; }
 function isComplete(it){ return cancelIdx(it)<0 && stageIndex(it)===STAGES.length && allDocs(it); }
-function nameOf(it){ return (it.fileNo?it.fileNo+". ":"")+(it.title||"Untitled"); }
+function nameOf(it){ return it.title||"Untitled"; }
 function loadSeen(){ try{ return new Set(JSON.parse(localStorage.getItem(SEEN_KEY)||"[]")); }catch(e){ return new Set(); } }
 function saveSeen(s){ try{ localStorage.setItem(SEEN_KEY, JSON.stringify([...s].slice(-500))); }catch(e){} }
 let seen = loadSeen();
