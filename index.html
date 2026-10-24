@@ -1286,13 +1286,13 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 <script>
 /* Fill these in after the Entra ID app registration and SharePoint site exist. */
 window.APT_CONFIG = {
-  tenantId: "d3ab4c65-3ba1-4c04-98fd-66a0c7730cdf",
-  clientId: "598ea952-e9df-4684-a109-85832dc34e59",
+  tenantId: "PASTE-DIRECTORY-TENANT-ID",
+  clientId: "PASTE-APPLICATION-CLIENT-ID",
   redirectUri: "https://pembelian.syayasan.edu.bn/",          // must match the Entra ID redirect URI exactly
   siteHost: "YOURTENANT.sharepoint.com",
   sitePath: "/sites/YourSiteName",                  // SharePoint site that holds the data
   folder: "AptData",                                // folder created in the site's Documents library
-  admins: ["first.admin@syayasan.edu.bn"]           // always admin; they add everyone else inside the app
+  admins: ["ZULFA.ZAINI@syayasan.edu.bn"]           // always admin; they add everyone else inside the app
 };
 
 </script>
@@ -1366,11 +1366,12 @@ function coll(name){
 const db = {collection: n => colls[n] || (colls[n] = coll(n))};
 
 /* People: signed-in user, profiles, and search for the "add user" box. */
-const mapU = u => ({id:u.id, name:u.displayName, displayName:u.displayName, email:u.mail||u.userPrincipalName||"", avatarUrl:"", isMe:u.id===me_?.id, guest:false});
+const av = n => { const t = (n||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase().replace(/[<&>]/g,""); return "data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#0b5a30"/><text x="32" y="41" font-family="Arial,sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#fff">${t}</text></svg>`); };
+const mapU = u => ({id:u.id, name:u.displayName, displayName:u.displayName, email:u.mail||u.userPrincipalName||"", avatarUrl:av(u.displayName), isMe:u.id===me_?.id, guest:false});
 const userCap = {
   async me(){
-    const u = await g("/me?$select=id,displayName,mail,userPrincipalName"), em = (u.mail||u.userPrincipalName||"").toLowerCase();
-    return me_ = {...mapU(u), isOwner:(C.admins||[]).map(a=>a.toLowerCase()).includes(em), canEdit:false};
+    const u = await g("/me?$select=id,displayName,mail,userPrincipalName"), mine = [u.mail, u.userPrincipalName, u.id].filter(Boolean).map(x=>x.toLowerCase());
+    return me_ = {...mapU(u), isOwner:(C.admins||[]).some(a=>mine.includes(String(a).trim().toLowerCase())), canEdit:false};
   },
   async profiles(ids){ const o = {}; await Promise.all(ids.map(async id=>{ try{ const u = await g(`/users/${id}?$select=id,displayName,mail,userPrincipalName`); if(u) o[id] = mapU(u); }catch(e){} })); return o; },
   async search(q){ q = q.replace(/'/g,"''"); const r = await g(`/users?$filter=startswith(displayName,'${q}') or startswith(mail,'${q}')&$top=10&$select=id,displayName,mail,userPrincipalName`); return (r?.value||[]).map(mapU); }
@@ -3955,9 +3956,10 @@ function gateLogin(onEnter){
     hideGate(); onEnter(); }
 }
 function gateDenied(){
-  setGate(`<img class="av" alt="" id="gAv"><h2 id="gName"></h2><div class="no">Anda belum mempunyai akses ke sistem ini. Minta pentadbir menambah anda di bahagian <b>Pengguna</b>, kemudian muat semula halaman ini.</div>`);
+  setGate(`<img class="av" alt="" id="gAv"><h2 id="gName"></h2><div class="no">Anda belum mempunyai akses ke sistem ini. Minta pentadbir menambah anda di bahagian <b>Pengguna</b>, kemudian muat semula halaman ini.</div><p id="gMail" style="font-size:12px;opacity:.7;margin:8px 0 0"></p>`);
   $("#gAv").src = me.avatarUrl;
   $("#gName").textContent = me.name || "Telah log masuk";
+  $("#gMail").textContent = me.email || "";
 }
 function gateNoId(){
   setGate(`<h2>Sila log masuk</h2><div class="no">Buka halaman ini semasa log masuk ke akaun Claude dalam organisasi anda, kemudian muat semula.</div>`);
