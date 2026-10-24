@@ -1291,8 +1291,8 @@ window.APT_CONFIG = {
   tenantId: "d3ab4c65-3ba1-4c04-98fd-66a0c7730cdf",
   clientId: "598ea952-e9df-4684-a109-85832dc34e59",
   redirectUri: "https://pembelian.syayasan.edu.bn/",          // must match the Entra ID redirect URI exactly
-  siteHost: "YOURTENANT.sharepoint.com",
-  sitePath: "/sites/YourSiteName",                  // SharePoint site that holds the data
+  siteHost: "SYAYASANEDU.sharepoint.com",
+  sitePath: "/teams/ICTSYHHB/SitePages/Home.aspx",                  // SharePoint site that holds the data
   folder: "AptData",                                // folder created in the site's Documents library
   admins: ["ZULFA.ZAINI@syayasan.edu.bn"]           // always admin; they add everyone else inside the app
 };
@@ -1326,10 +1326,19 @@ async function tok(){
   try{ return (await app.acquireTokenSilent({scopes:SC, account:acct})).accessToken; }
   catch(e){ await app.acquireTokenRedirect({scopes:SC}); await new Promise(()=>{}); }
 }
+const hint = e => e.code===403 ? " Check admin consent for Sites.ReadWrite.All and that your account has access to the SharePoint site." : e.code===401 ? " Sign out and sign in again." : (e.code===404||/not found/i.test(e.message)) ? " Check siteHost and sitePath in config." : "";
+function report(e){
+  console.error("[SharePoint]", e);
+  let b=document.getElementById("aptErrBar");
+  if(!b){ b=document.createElement("div"); b.id="aptErrBar"; b.title="Click to dismiss"; b.onclick=()=>b.remove();
+    b.style.cssText="position:fixed;left:12px;right:12px;bottom:12px;z-index:100000;background:#7a1f1f;color:#fff;padding:10px 14px;border-radius:10px;font:13px system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.4)"; }
+  (([...document.querySelectorAll("dialog[open]")].pop())||document.body).appendChild(b);
+  b.textContent="SharePoint: "+(e.message||e)+hint(e);
+}
 async function g(p, o={}, raw){
   const r = await of(p.startsWith("http") ? p : GR+p, {...o, headers:{Authorization:"Bearer "+await tok(), ...(o.headers||{})}});
   if(r.status===404) return null;
-  if(!r.ok) throw Object.assign(new Error("Graph "+r.status), {code:r.status});
+  if(!r.ok){ let m=""; try{ const j=await r.json(); m=(j.error&&(j.error.code+": "+j.error.message))||""; }catch(e){} throw Object.assign(new Error("Graph "+r.status+(m?" "+m:"")), {code:r.status}); }
   return raw ? r : (r.status===204 ? {} : r.json());
 }
 async function drive(){
@@ -1355,19 +1364,28 @@ function coll(name){
     }));
     loaded = true; if(changed) notify();
   }
+  let ready;
+  const ensure = () => ready || (ready = (async()=>{
+    const d = await drive();
+    for(let i=0;i<parts.length;i++){
+      const url = i ? `/drives/${d}/root:/${enc(parts.slice(0,i))}:/children` : `/drives/${d}/root/children`;
+      try{ await g(url, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({name:parts[i], folder:{}, "@microsoft.graph.conflictBehavior":"fail"})}); }
+      catch(e){ if(e.code!==409) throw e; }
+    }
+  })().catch(e=>{ ready=null; throw e; }));
   const c = {
     doc: id => {
       const path = () => drive().then(d=>`/drives/${d}/root:/${enc([...parts, id+".json"])}:`);
       return {
         async get(){ const r = await g(await path()+"/content", {}, true); if(!r) return {exists:false, id, data:()=>null}; const v = await r.json(); return {exists:true, id, data:()=>v}; },
-        async set(v){ await g(await path()+"/content", {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(v)}); cache[id] = {etag:"", data:v}; if(loaded) notify(); },
+        async set(v){ try{ await ensure(); const r = await g(await path()+"/content", {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(v)}); if(!r) throw Object.assign(new Error("Graph 404 could not save"),{code:404}); }catch(e){ report(e); throw e; } cache[id] = {etag:"", data:v}; if(loaded) notify(); },
         async update(p){ const s = await this.get(); await this.set({...(s.exists ? s.data() : {}), ...p}); },
         async delete(){ await g(await path(), {method:"DELETE"}); delete cache[id]; if(loaded) notify(); }
       };
     },
     onSnapshot(cb, err){
       const s = {cb, err}; subs.add(s);
-      if(loaded) cb(snap()); else refresh(true).catch(e=>err&&err(e));
+      if(loaded) cb(snap()); else refresh(true).catch(e=>{ report(e); err&&err(e); });
       if(!timer) timer = setInterval(()=>refresh().catch(()=>{}), 15000);
       return ()=>subs.delete(s);
     },
@@ -1412,6 +1430,7 @@ window.claude = {use: async n => {
   if(n==="sample") return {local:true};   // local document reader only, no AI
   if(n==="mcp") return null;
   await authOnce();
+  if(n==="db") drive().catch(report);
   return n==="db" ? db : n==="user" ? userCap : n==="assets" ? assets : null;
 }};
 })();
