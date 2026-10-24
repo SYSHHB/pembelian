@@ -808,7 +808,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     </div>
     <div class="actions">
       <span class="me-chip" id="meChip" hidden><img id="meAvatar" alt=""><span><b id="meName"></b><small id="mode">Memuatkan…</small></span></span>
-      <button class="btn" id="btnUsers" hidden>Pengguna</button>
+      <button class="btn" id="btnUsers" hidden>Urus pengguna</button>
       <button class="btn" id="btnAudit" hidden>Log Audit</button>
       <button class="theme-btn" id="btnTheme" type="button" aria-label="Tukar ke mod gelap" title="Tukar ke mod gelap">
         <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M21 14.5A8.5 8.5 0 0 1 9.5 3a.5.5 0 0 0-.6-.6A10 10 0 1 0 21.6 15.1a.5.5 0 0 0-.6-.6z"/></svg>
@@ -817,6 +817,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
       <div class="lang-sw" id="btnLang" role="group" aria-label="Bahasa / Language"><button type="button" data-lang="ms" aria-pressed="true">BM</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
       <button class="btn" id="btnManual" type="button">📘 Panduan</button>
       <button class="btn" id="btnCsv">Eksport ke Excel (CSV)</button>
+      <button class="btn" id="btnImport" hidden>Import Excel</button>
       <div class="bell-wrap">
         <button class="btn" id="btnBell" aria-expanded="false" aria-controls="notePanel">Pemberitahuan<span class="badge" id="badge" hidden>0</span></button>
         <div class="note-panel" id="notePanel" hidden>
@@ -826,6 +827,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
         </div>
       </div>
       <button class="btn primary" id="btnNew" hidden>Pembelian baharu</button>
+      <button class="btn" id="btnLogout" type="button" hidden>Log keluar</button>
     </div>
   </div>
 </header>
@@ -1266,11 +1268,11 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     <details class="ua-help">
       <summary>Pentadbir dan perkongsian</summary>
       <p class="ms-only"><b>Pemerhati</b> boleh melihat pembelian dan memuat turun borang. <b>Penyunting</b> juga boleh menambah, menyunting dan memadam pembelian, memuat naik fail dan mengisi borang. <b>Pentadbir</b> boleh melakukan semua yang Penyunting boleh, serta mengurus pengguna dan melihat log audit.</p>
-      <p class="ms-only">Pemilik sistem sentiasa menjadi pentadbir. Setiap pengguna membuka sistem ini dengan akaun Claude mereka sendiri, tiada log masuk lain diperlukan.</p>
-      <p class="ms-only">Kongsi sistem ini dengan rakan sekerja melalui butang <b>Kongsi</b> di Claude. Beri tahap <b>Contributor</b> kepada Penyunting dan Pentadbir supaya mereka boleh menyimpan perubahan, kemudian tambah mereka di sini dengan peranan yang betul.</p>
+      <p class="ms-only">Setiap pengguna log masuk dengan e-mel Microsoft mereka. Hanya orang dalam senarai ini (dan pentadbir yang ditetapkan dalam konfigurasi) boleh masuk. Taip alamat e-mel penuh untuk menambah seseorang terus.</p>
+      
       <p class="en-only"><b>Viewer</b> can view purchases and download forms. <b>Editor</b> can also add, edit and delete purchases, upload files and fill in the forms. <b>Admin</b> can do everything an Editor can, and also manage users and see the audit log.</p>
-      <p class="en-only">The system owner is always an admin. Everyone opens the system with their own Claude account; no other sign-in is needed.</p>
-      <p class="en-only">Share the system with colleagues using Claude’s <b>Share</b> button. Give Editors and Admins at least <b>Contributor</b> so they can save changes, then add them here with the right role.</p>
+      <p class="en-only">Each user signs in with their Microsoft email. Only people on this list (and the admins set in the configuration) can enter. Type a full email address to add someone directly.</p>
+      
     </details>
   </div>
   <div class="ua-foot"><button type="button" class="btn primary" id="usersDone">Selesai</button></div>
@@ -1286,13 +1288,13 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 <script>
 /* Fill these in after the Entra ID app registration and SharePoint site exist. */
 window.APT_CONFIG = {
-  tenantId: "PASTE-DIRECTORY-TENANT-ID",
-  clientId: "PASTE-APPLICATION-CLIENT-ID",
+  tenantId: "d3ab4c65-3ba1-4c04-98fd-66a0c7730cdf",
+  clientId: "598ea952-e9df-4684-a109-85832dc34e59",
   redirectUri: "https://pembelian.syayasan.edu.bn/",          // must match the Entra ID redirect URI exactly
   siteHost: "YOURTENANT.sharepoint.com",
   sitePath: "/sites/YourSiteName",                  // SharePoint site that holds the data
   folder: "AptData",                                // folder created in the site's Documents library
-  admins: ["ZULFA.ZAINI@syayasan.edu.bn"]           // always admin; they add everyone else inside the app
+  admins: ["first.admin@syayasan.edu.bn"]           // always admin; they add everyone else inside the app
 };
 
 </script>
@@ -1304,11 +1306,21 @@ const ROOT = C.folder || "AptData", enc = a => a.map(encodeURIComponent).join("/
 const of = window.fetch.bind(window);
 let app, acct, authP, driveId, meCache, me_;
 
+function loginPage(err){
+  const en=(()=>{try{return localStorage.getItem("apt-lang")==="en"}catch(e){return false}})(), T=(m,e)=>en?e:m;
+  const d=document.createElement("div"); d.style.cssText="position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#14753f,#0b4a28);font-family:system-ui,sans-serif;padding:16px";
+  d.innerHTML=`<div style="background:#fff;color:#14231a;border-top:4px solid #c9a227;border-radius:16px;padding:28px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)"><div style="font-size:13px;font-weight:700;color:#b8860b">Yayasan Sultan Haji Hassanal Bolkiah</div><h2 style="margin:6px 0 14px">${T("Sistem Pemantauan Pembelian","Purchase Tracker")}</h2><p style="font-size:14px;margin:0 0 18px">${T("Log masuk dengan e-mel Microsoft anda. Hanya pengguna yang diberi kebenaran boleh masuk.","Sign in with your Microsoft email. Only users who have been given permission can enter.")}</p><button id="aptSignIn" style="width:100%;padding:12px;border:0;border-radius:10px;background:#0b5a30;color:#fff;font:600 15px system-ui,sans-serif;cursor:pointer">${T("Log masuk dengan Microsoft","Sign in with Microsoft")}</button><p id="aptErr" style="color:#a12;font-size:12px;margin:12px 0 0"></p></div>`;
+  document.body.appendChild(d);
+  d.querySelector("#aptSignIn").onclick=()=>app.loginRedirect({scopes:SC,prompt:"select_account"});
+  if(err) d.querySelector("#aptErr").textContent=err;
+}
 function authOnce(){ return authP || (authP = (async()=>{
-  app = new msal.PublicClientApplication({auth:{clientId:C.clientId, authority:"https://login.microsoftonline.com/"+C.tenantId, redirectUri:C.redirectUri||location.origin+"/"}, cache:{cacheLocation:"localStorage"}});
-  const r = await app.handleRedirectPromise();
+  app = new msal.PublicClientApplication({auth:{clientId:C.clientId, authority:"https://login.microsoftonline.com/"+C.tenantId, redirectUri:C.redirectUri||location.origin+"/", postLogoutRedirectUri:C.redirectUri||location.origin+"/"}, cache:{cacheLocation:"localStorage"}});
+  let r, err=""; try{ r = await app.handleRedirectPromise(); }catch(e){ err = String(e.message||e).slice(0,300); }
   acct = (r && r.account) || app.getAllAccounts()[0];
-  if(!acct){ await app.loginRedirect({scopes:SC}); await new Promise(()=>{}); }
+  if(!acct){ loginPage(err); await new Promise(()=>{}); }
+  window.aptLogout = () => app.logoutRedirect({account:acct, postLogoutRedirectUri:C.redirectUri||location.origin+"/"});
+  const lb=document.getElementById("btnLogout"); if(lb){ lb.hidden=false; lb.title=acct.username||""; lb.onclick=window.aptLogout; }
 })()); }
 async function tok(){
   try{ return (await app.acquireTokenSilent({scopes:SC, account:acct})).accessToken; }
@@ -1374,7 +1386,11 @@ const userCap = {
     return me_ = {...mapU(u), isOwner:(C.admins||[]).some(a=>mine.includes(String(a).trim().toLowerCase())), canEdit:false};
   },
   async profiles(ids){ const o = {}; await Promise.all(ids.map(async id=>{ try{ const u = await g(`/users/${id}?$select=id,displayName,mail,userPrincipalName`); if(u) o[id] = mapU(u); }catch(e){} })); return o; },
-  async search(q){ q = q.replace(/'/g,"''"); const r = await g(`/users?$filter=startswith(displayName,'${q}') or startswith(mail,'${q}')&$top=10&$select=id,displayName,mail,userPrincipalName`); return (r?.value||[]).map(mapU); }
+  async search(q){ q = q.trim().replace(/'/g,"''");
+    if(q.includes("@")){ const F="$select=id,displayName,mail,userPrincipalName"; let u=null;
+      try{ u = await g(`/users/${encodeURIComponent(q)}?${F}`); }catch(e){}
+      if(!u){ try{ const r = await g(`/users?$filter=mail eq '${q}' or userPrincipalName eq '${q}'&${F}`); u = r?.value?.[0]; }catch(e){} }
+      if(u) return [mapU(u)]; } const r = await g(`/users?$filter=startswith(displayName,'${q}') or startswith(mail,'${q}')&$top=10&$select=id,displayName,mail,userPrincipalName`); return (r?.value||[]).map(mapU); }
 };
 
 /* Uploaded files go to a "files" folder in the same library. */
@@ -3956,7 +3972,8 @@ function gateLogin(onEnter){
     hideGate(); onEnter(); }
 }
 function gateDenied(){
-  setGate(`<img class="av" alt="" id="gAv"><h2 id="gName"></h2><div class="no">Anda belum mempunyai akses ke sistem ini. Minta pentadbir menambah anda di bahagian <b>Pengguna</b>, kemudian muat semula halaman ini.</div><p id="gMail" style="font-size:12px;opacity:.7;margin:8px 0 0"></p>`);
+  setGate(`<img class="av" alt="" id="gAv"><h2 id="gName"></h2><div class="no">Anda belum mempunyai akses ke sistem ini. Minta pentadbir menambah anda di bahagian <b>Pengguna</b>, kemudian muat semula halaman ini.</div><p id="gMail" style="font-size:12px;opacity:.7;margin:8px 0 0"></p><button type="button" class="btn primary" id="gOut" style="margin-top:12px">${LANG==="en"?"Log out":"Log keluar"}</button>`);
+  $("#gOut").onclick = ()=>window.aptLogout && window.aptLogout();
   $("#gAv").src = me.avatarUrl;
   $("#gName").textContent = me.name || "Telah log masuk";
   $("#gMail").textContent = me.email || "";
@@ -4253,7 +4270,7 @@ darkMQ.addEventListener?.("change", applyTheme);
 function persistLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(items)); }catch(e){} }
 function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||"[]"); }catch(e){ return []; } }
 function applyMode(){
-  $("#btnNew").hidden = !canEdit;
+  $("#btnNew").hidden = !canEdit; $("#btnImport").hidden = !canEdit;
   $("#mode").textContent = col ? (isAdmin ? "Pentadbir" : canEdit ? "Penyunting" : "Pemerhati, lihat sahaja") : "Disimpan pada peranti ini";
   $("#btnUsers").hidden = !(col && isAdmin);
   $("#btnAudit").hidden = !(col && isAdmin);
@@ -4379,6 +4396,101 @@ const drop = $("#drop");
 ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{ e.preventDefault(); drop.classList.add("over"); }));
 ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{ e.preventDefault(); drop.classList.remove("over"); }));
 drop.addEventListener("drop", e=>autoFill([...e.dataTransfer.files]));
+/* ---------- Import from Excel / CSV ---------- */
+(function(){
+const L = (ms,en)=>LANG==="en"?en:ms;
+const norm = s=>String(s??"").toLowerCase().replace(/[^a-z0-9]/g,"");
+const KEYS = {nofail:"fileNo",fileno:"fileNo",tajuk:"title",title:"title",pemohon:"requester",bahagian:"division",untuk:"forWho",tajukperbelanjaan:"budgetHead",budgethead:"budgetHead",kaedah:"method",pembekal:"supplier",nosijilpembekal:"supplierCert",kategori:"category",jenispembelian:"category",perihalbarang:"desc",perihal:"desc",kuantiti:"qty",qty:"qty",nosiri:"serials",barang:"combined"};
+const hk = h=>{ const n=norm(h); return KEYS[n] || (n.startsWith("hargaseunit")||n==="unitprice" ? "unitPrice" : null); };
+const normCat = v=>/off/i.test(v)?"Office":"Sekolah";
+const normMeth = v=>{ v=String(v||"").toLowerCase(); return /terus/.test(v)?"Terus kepada Pembekal":/sebut/.test(v)?"Sebutharga":/tender|tawar/.test(v)?"Tender":v?"Lain-lain":""; };
+function parseCsv(t){
+  t=t.replace(/^\uFEFF/,""); const first=t.split(/\r?\n/,1)[0], d=[",",";","\t"].map(c=>[c,first.split(c).length]).sort((a,b)=>b[1]-a[1])[0][0];
+  const rows=[]; let r=[],v="",q=false;
+  for(let i=0;i<t.length;i++){ const c=t[i];
+    if(q){ if(c==='"'){ if(t[i+1]==='"'){v+='"';i++;} else q=false; } else v+=c; }
+    else if(c==='"') q=true;
+    else if(c===d){ r.push(v); v=""; }
+    else if(c==="\n"||c==="\r"){ if(c==="\r"&&t[i+1]==="\n") i++; r.push(v); rows.push(r); r=[]; v=""; }
+    else v+=c; }
+  if(v!==""||r.length){ r.push(v); rows.push(r); } return rows;
+}
+async function parseXlsx(buf){
+  const z=await unzipBytes(buf), td=new TextDecoder(), get=n=>{ const f=z.find(x=>x.name===n); return f?new DOMParser().parseFromString(td.decode(f.data),"application/xml"):null; };
+  const ss=get("xl/sharedStrings.xml"), S=ss?[...ss.getElementsByTagName("si")].map(si=>[...si.getElementsByTagName("t")].map(t=>t.textContent).join("")):[];
+  const sn=z.map(x=>x.name).filter(n=>/^xl\/worksheets\/sheet\d+\.xml$/.test(n)).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}))[0], sh=sn&&get(sn);
+  if(!sh) throw new Error("no sheet");
+  return [...sh.getElementsByTagName("row")].map(row=>{ const r=[];
+    [...row.getElementsByTagName("c")].forEach(c=>{ const col=(c.getAttribute("r")||"").replace(/\d/g,"").split("").reduce((a,ch)=>a*26+ch.charCodeAt(0)-64,0)-1, t=c.getAttribute("t"), ve=c.getElementsByTagName("v")[0];
+      r[col>=0?col:r.length] = t==="s" ? S[+ve?.textContent] : t==="inlineStr" ? [...c.getElementsByTagName("t")].map(x=>x.textContent).join("") : ve?.textContent; });
+    return Array.from(r,x=>x??""); });
+}
+function build(rows){
+  const hdr=(rows[0]||[]).map(hk); if(!hdr.includes("title")) return null;
+  const out=[]; let last=null, skipped=0;
+  for(const raw of rows.slice(1)){
+    const o={}; hdr.forEach((k,i)=>{ if(k && o[k]===undefined) o[k]=String(raw[i]??"").trim(); });
+    if(!Object.values(o).some(Boolean)) continue;
+    let g;
+    if(o.title||o.fileNo){
+      g=out.find(x=>o.fileNo?x.fileNo===o.fileNo:x.title===o.title);
+      if(!g){ g={fileNo:o.fileNo||"",title:o.title||"",requester:o.requester||REQUESTER,position:POSITION,division:o.division||DIVISION,forWho:o.forWho||"",budgetHead:o.budgetHead||"",category:normCat(o.category),method:normMeth(o.method),supplier:o.supplier||"",supplierCert:o.supplierCert||"",lines:[]}; out.push(g); }
+    } else g=last;
+    if(!g){ skipped++; continue; } last=g;
+    const add=(desc,qty,price,serials)=>{ const t=(parseFloat(qty)||1)*(parseFloat(String(price).replace(/,/g,""))||0); g.lines.push({desc,qty:String(qty||"1"),unitPrice:String(price||""),total:t?t.toFixed(2):"",serials:serials||""}); };
+    if(o.desc||o.qty||o.unitPrice) add(o.desc||"",o.qty,o.unitPrice,o.serials);
+    if(o.combined) o.combined.split(";").map(s=>s.trim()).filter(Boolean).forEach(s=>{ const m=s.match(/^(.*?)\s*x\s*(\d+(?:\.\d+)?)\s*@\s*([\d.,]+)$/i); m?add(m[1],m[2],m[3]):add(s,"1",""); });
+  }
+  return {groups:out.filter(g=>g.title), skipped};
+}
+window.__aptImp={parseCsv,build};
+async function saveText(filename,text){
+  const data="\uFEFF"+text;
+  try{ const dl=window.claude?await claude.use("downloads"):null; if(dl){ await dl.save({filename,data}); return; } }catch(e){}
+  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([data],{type:"text/csv"})); a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+}
+const toCsv=rows=>rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");
+const bh=()=>(typeof BUDGET_HEADS!=="undefined"&&BUDGET_HEADS[0]?BUDGET_HEADS[0].t:"");
+const TPL={
+  1:()=>[["No. Fail","Tajuk","Untuk","Tajuk Perbelanjaan","Kategori","Kaedah","Pembekal","No. Sijil Pembekal","Perihal Barang","Kuantiti","Harga Seunit (B$)","No. Siri"],
+    ["101","Pembelian Type C Dongle","Pejabat IT",bh(),"Sekolah","Pembelian Terus","Syarikat ABC","YSHHB/SP/123","Type C Dongle","6","12.50",""],
+    ["","","","","","","","","HDMI Cable","2","8.00",""]],
+  2:()=>[["No. Fail","Tajuk","Untuk","Tajuk Perbelanjaan","Jenis Pembelian","Kaedah","Pembekal","No. Sijil Pembekal","Barang"],
+    ["102","Pembelian Peralatan ICT","Pejabat IT",bh(),"Pembelian Sekolah","Pembelian Terus","Syarikat ABC","YSHHB/SP/123","Type C Dongle x6 @ 12.50; HDMI Cable x2 @ 8.00"]]
+};
+async function doImport(file){
+  try{
+    if(/\.xls$/i.test(file.name)){ toast(L("Fail .xls lama tidak disokong. Simpan sebagai .xlsx atau CSV.","Old .xls files are not supported. Save as .xlsx or CSV."),6000); return; }
+    const buf=await file.arrayBuffer(), rows=/\.xlsx$/i.test(file.name)?await parseXlsx(buf):parseCsv(new TextDecoder().decode(buf)), res=build(rows);
+    if(!res){ toast(L("Lajur “Tajuk” tidak ditemui. Gunakan salah satu templat.","No “Tajuk” column found. Please use one of the templates."),6000); return; }
+    const fresh=res.groups.filter(g=>!items.some(x=>x.title===g.title&&(!g.fileNo||x.fileNo===g.fileNo))), dup=res.groups.length-fresh.length;
+    if(!fresh.length){ toast(L("Tiada pembelian baharu untuk diimport.","No new purchases to import.")+(dup?` (${dup} ${L("sudah wujud","already exist")})`:""),6000); return; }
+    if(!confirm(L(`Import ${fresh.length} pembelian baharu?`,`Import ${fresh.length} new purchase(s)?`)+(dup?`\n${dup} ${L("yang sudah wujud akan dilangkau.","already existing will be skipped.")}`:""))) return;
+    for(const g of fresh){ const id="p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6), rec={...g,id,stages:{},budgetYear:curYear(),updated:Date.now(),created:Date.now()};
+      if(col) await col.doc(id).set(rec); else items.push(rec); }
+    if(!col){ persistLocal(); render(); }
+    audit("Imported from Excel","",`${fresh.length} pembelian`);
+    toast(L(`${fresh.length} pembelian diimport.`,`${fresh.length} purchase(s) imported.`),5000);
+  }catch(e){ toast(L("Fail tidak dapat dibaca. Semak format fail.","Could not read the file. Check the file format."),6000); }
+}
+const inp=document.createElement("input"); inp.type="file"; inp.accept=".xlsx,.csv,.txt"; inp.hidden=true; document.body.appendChild(inp);
+inp.onchange=()=>{ const f=inp.files[0]; inp.value=""; if(f){ dlg.close(); doImport(f); } };
+const dlg=document.createElement("dialog"); dlg.style.cssText="border:0;border-radius:14px;padding:20px;max-width:460px;width:92%;background:#fff;color:#14231a;box-shadow:0 20px 60px rgba(0,0,0,.35)";
+document.body.appendChild(dlg);
+const B="border:1px solid #0b5a30;color:#0b5a30;background:#fff;padding:10px 12px;border-radius:10px;font:inherit;cursor:pointer;text-align:left", BP=B.replace("color:#0b5a30;background:#fff","color:#fff;background:#0b5a30");
+function openImp(){
+  dlg.innerHTML=`<h3 style="margin:0 0 8px">Import Excel</h3><p style="margin:0 0 12px;font-size:14px">${L("Pilih fail .xlsx atau .csv. Muat turun templat dahulu supaya lajur sepadan. Pembelian yang sudah wujud dilangkau.","Choose an .xlsx or .csv file. Download a template first so the columns match. Purchases that already exist are skipped.")}</p><div style="display:grid;gap:8px"><button type="button" data-t="1" style="${B}">${L("Muat turun Templat 1: satu baris setiap barang","Download Template 1: one row per item")}</button><button type="button" data-t="2" style="${B}">${L("Muat turun Templat 2: satu baris setiap pembelian (format Eksport)","Download Template 2: one row per purchase (same as Export)")}</button><button type="button" id="impPick" style="${BP}">${L("Pilih fail untuk diimport","Choose file to import")}</button><button type="button" id="impX" style="${B}">${L("Tutup","Close")}</button></div>`;
+  dlg.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>saveText(`templat-import-${b.dataset.t}.csv`,toCsv(TPL[b.dataset.t]())));
+  dlg.querySelector("#impPick").onclick=()=>inp.click(); dlg.querySelector("#impX").onclick=()=>dlg.close();
+  dlg.showModal();
+}
+$("#btnImport").onclick=openImp;
+})();
+
+
+Object.assign(EN,{"Log keluar":"Log out","Urus pengguna":"Manage users"});
+(function(){ const b=$("#btnLogout"); if(b && window.aptLogout){ b.hidden=false; b.onclick=()=>window.aptLogout(); } })();
+
 init();
 applyLang();
 </script>
