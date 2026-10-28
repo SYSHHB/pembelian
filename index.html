@@ -76,6 +76,7 @@ h1{font-size:26px;line-height:1.15;font-weight:800;letter-spacing:-.01em;margin:
 .row{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:minmax(200px,1fr) minmax(360px,1.6fr);gap:14px;align-items:center;cursor:pointer;text-align:left;width:100%}
 .row:hover{border-color:var(--muted)}
 .row .name{font-weight:700;font-size:16px;margin:0}
+.row .name .rowno{display:inline-block;min-width:1.6em;color:var(--muted);font-variant-numeric:tabular-nums}
 .row .meta{color:var(--muted);font-size:13px;margin-top:2px;display:flex;flex-direction:column;gap:1px}
 .row .meta .kvl b{color:var(--ink);font-weight:700}
 .row .state{display:inline-block;margin-top:6px;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--now-soft);color:var(--now)}
@@ -1303,8 +1304,8 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
       <p class="ms-only">Pemilik sistem (helpdesk@syayasan.edu.bn) sentiasa menjadi pentadbir. Setiap pengguna log masuk dengan akaun Microsoft syayasan.edu.bn mereka sendiri.</p>
       <p class="ms-only">Setiap pengguna juga mesti dikongsi folder OneDrive <b>Sistem Pemantauan Pembelian</b> milik helpdesk@syayasan.edu.bn: <b>Boleh lihat</b> untuk Pemerhati, <b>Boleh edit</b> untuk Penyunting dan Pentadbir.</p>
       <p class="en-only"><b>Viewer</b> can view purchases and download forms. <b>Editor</b> can also add, edit and delete purchases, upload files and fill in the forms. <b>Admin</b> can do everything an Editor can, and also manage users and see the audit log.</p>
-      <p class="en-only">The system owner (IT.helpdesk@syayasan.edu.bn) is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
-      <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder owned by IT.helpdesk@syayasan.edu.bn: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins.</p>
+      <p class="en-only">The system owner (helpdesk@syayasan.edu.bn) is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
+      <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder owned by helpdesk@syayasan.edu.bn: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins.</p>
     </details>
   </div>
   <div class="ua-foot"><button type="button" class="btn primary" id="usersDone">Selesai</button></div>
@@ -1331,7 +1332,7 @@ const CONFIG = {
   clientId: "598ea952-e9df-4684-a109-85832dc34e59",
   tenant: "syayasan.edu.bn",
   emailDomain: "@syayasan.edu.bn",
-  ownerEmail: "IT.helpdesk@syayasan.edu.bn",
+  ownerEmail: "it.helpdesk@syayasan.edu.bn",
   oneDriveHost: "syayasanedu-my.sharepoint.com",   // the school's OneDrive address
   folderUrl: "https://syayasanedu-my.sharepoint.com/personal/it_helpdesk_syayasan_edu_bn/Documents/Sistem%20Pemantauan%20Pembelian",   // the shared folder in the owner's OneDrive
   folderName: "Sistem Pemantauan Pembelian",
@@ -2290,7 +2291,7 @@ function render(){
   }
   if(!list.length){ el.innerHTML = `<div class="empty"><strong>Tiada padanan</strong><p>Cuba perkataan carian lain atau papar semua langkah.</p></div>`; return; }
 
-  el.innerHTML = list.map(it=>{
+  el.innerHTML = list.map((it, ix)=>{
     const cur = stageIndex(it), ci = cancelIdx(it), fin = ci<0 && cur===STAGES.length;
     let wait = "";
     if(!fin && ci<0){ const from=lastDate(it,cur); if(from){ const d=daysBetween(from,today()); if(d>=0) wait=`, menunggu ${d} hari`; } }
@@ -2301,7 +2302,7 @@ function render(){
     const doneN = STAGES.filter(s=>it.stages?.[s.k]?.done).length, pct = Math.round(doneN/STAGES.length*100);
     return `<button type="button" class="row ${ci>=0?"is-cancel":fin?"is-fin":""}" data-id="${esc(it.id)}">
       <div>
-        <p class="name">${esc(it.title||"Untitled")}</p>
+        <p class="name"><span class="rowno">${ix+1}.</span> ${esc(it.title||"Untitled")}</p>
         ${(it.category||it.method)?`<div class="tags">${it.category?`<span class="tag cat">${esc(CAT_LABEL[it.category]||it.category)}</span>`:""}${it.method?`<span class="tag met">${esc(METHOD_LABEL[it.method]||it.method)}</span>`:""}${needsMinit(it)?`<div class="tags-col">${[...MINIT, ...BOXES].map(m=>`<span class="tag mn ${it.stages?.[m.k]?.done?"ok":""}">${esc(m.code)}${it.stages?.[m.k]?.done?" ✓":""}</span>`).join("")}</div>`:""}</div>`:""}
         <div style="display:flex;align-items:center"><div class="pbar" style="flex:1"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
         <div class="meta">${meta||"&nbsp;"}</div>
