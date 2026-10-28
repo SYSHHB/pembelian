@@ -808,7 +808,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     </div>
     <div class="actions">
       <span class="me-chip" id="meChip" hidden><img id="meAvatar" alt=""><span><b id="meName"></b><small id="mode">Memuatkan…</small></span></span>
-      <button class="btn" id="btnUsers" hidden>Urus pengguna</button>
+      <button class="btn" id="btnUsers" hidden>Pengguna</button>
       <button class="btn" id="btnAudit" hidden>Log Audit</button>
       <button class="theme-btn" id="btnTheme" type="button" aria-label="Tukar ke mod gelap" title="Tukar ke mod gelap">
         <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M21 14.5A8.5 8.5 0 0 1 9.5 3a.5.5 0 0 0-.6-.6A10 10 0 1 0 21.6 15.1a.5.5 0 0 0-.6-.6z"/></svg>
@@ -817,7 +817,6 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
       <div class="lang-sw" id="btnLang" role="group" aria-label="Bahasa / Language"><button type="button" data-lang="ms" aria-pressed="true">BM</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
       <button class="btn" id="btnManual" type="button">📘 Panduan</button>
       <button class="btn" id="btnCsv">Eksport ke Excel (CSV)</button>
-      <button class="btn" id="btnImport" hidden>Import Excel</button>
       <div class="bell-wrap">
         <button class="btn" id="btnBell" aria-expanded="false" aria-controls="notePanel">Pemberitahuan<span class="badge" id="badge" hidden>0</span></button>
         <div class="note-panel" id="notePanel" hidden>
@@ -827,7 +826,6 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
         </div>
       </div>
       <button class="btn primary" id="btnNew" hidden>Pembelian baharu</button>
-      <button class="btn" id="btnLogout" type="button" hidden>Log keluar</button>
     </div>
   </div>
 </header>
@@ -977,7 +975,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 
     <details open><summary>1. Membuka sistem dan peranan pengguna</summary>
       <ol>
-        <li>Buka pautan sistem yang dikongsi melalui Claude dan log masuk dengan akaun Claude anda.</li>
+        <li>Buka laman sistem dan log masuk dengan akaun Microsoft syayasan.edu.bn anda.</li>
         <li>Tekan <b>Log masuk</b> pada skrin selamat datang.</li>
       </ol>
       <p>Setiap pengguna mempunyai satu peranan:</p>
@@ -1089,7 +1087,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 
     <details><summary>11. Pengguna dan Log Audit (Pentadbir)</summary>
       <ul>
-        <li><b>Pengguna</b>: cari rakan sekerja, tambah mereka dan pilih peranan. Kongsi sistem dengan mereka melalui butang Kongsi di Claude dengan tahap Contributor untuk Penyunting dan Pentadbir.</li>
+        <li><b>Pengguna</b>: cari rakan sekerja, tambah mereka dan pilih peranan. Kongsi folder OneDrive sistem dengan mereka: Boleh lihat untuk Pemerhati, Boleh edit untuk Penyunting dan Pentadbir.</li>
         <li><b>Log Audit</b>: lihat siapa membuat perubahan dan bila.</li>
       </ul>
     </details>
@@ -1108,7 +1106,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 
     <details open><summary>1. Opening the system and user roles</summary>
       <ol>
-        <li>Open the system link shared through Claude and sign in with your Claude account.</li>
+        <li>Open the system website and sign in with your syayasan.edu.bn Microsoft account.</li>
         <li>Press <b>Log masuk</b> (Log in) on the welcome screen.</li>
       </ol>
       <p>Each user has one role:</p>
@@ -1220,7 +1218,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 
     <details><summary>11. Users and Audit Log (Admin)</summary>
       <ul>
-        <li><b>Users</b>: search for colleagues, add them and choose a role. Share the system with them using Claude’s Share button, with Contributor access for Editors and Admins.</li>
+        <li><b>Users</b>: search for colleagues, add them and choose a role. Share the system’s OneDrive folder with them: Can view for Viewers, Can edit for Editors and Admins.</li>
         <li><b>Audit Log</b>: see who made changes and when.</li>
       </ul>
     </details>
@@ -1268,11 +1266,11 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     <details class="ua-help">
       <summary>Pentadbir dan perkongsian</summary>
       <p class="ms-only"><b>Pemerhati</b> boleh melihat pembelian dan memuat turun borang. <b>Penyunting</b> juga boleh menambah, menyunting dan memadam pembelian, memuat naik fail dan mengisi borang. <b>Pentadbir</b> boleh melakukan semua yang Penyunting boleh, serta mengurus pengguna dan melihat log audit.</p>
-      <p class="ms-only">Setiap pengguna log masuk dengan e-mel Microsoft mereka. Hanya orang dalam senarai ini (dan pentadbir yang ditetapkan dalam konfigurasi) boleh masuk. Taip alamat e-mel penuh untuk menambah seseorang terus.</p>
-      
+      <p class="ms-only">Pemilik sistem (helpdesk@syayasan.edu.bn) sentiasa menjadi pentadbir. Setiap pengguna log masuk dengan akaun Microsoft syayasan.edu.bn mereka sendiri.</p>
+      <p class="ms-only">Setiap pengguna juga mesti dikongsi folder OneDrive <b>Sistem Pemantauan Pembelian</b> milik helpdesk@syayasan.edu.bn: <b>Boleh lihat</b> untuk Pemerhati, <b>Boleh edit</b> untuk Penyunting dan Pentadbir.</p>
       <p class="en-only"><b>Viewer</b> can view purchases and download forms. <b>Editor</b> can also add, edit and delete purchases, upload files and fill in the forms. <b>Admin</b> can do everything an Editor can, and also manage users and see the audit log.</p>
-      <p class="en-only">Each user signs in with their Microsoft email. Only people on this list (and the admins set in the configuration) can enter. Type a full email address to add someone directly.</p>
-      
+      <p class="en-only">The system owner (helpdesk@syayasan.edu.bn) is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
+      <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder owned by helpdesk@syayasan.edu.bn: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins.</p>
     </details>
   </div>
   <div class="ua-foot"><button type="button" class="btn primary" id="usersDone">Selesai</button></div>
@@ -1284,155 +1282,359 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="https://alcdn.msauth.net/browser/2.35.0/js/msal-browser.min.js"></script>
 <script>
-/* Fill these in after the Entra ID app registration and SharePoint site exist. */
-window.APT_CONFIG = {
-  tenantId: "d3ab4c65-3ba1-4c04-98fd-66a0c7730cdf",
-  clientId: "598ea952-e9df-4684-a109-85832dc34e59",
-  redirectUri: "https://pembelian.syayasan.edu.bn/",          // must match the Entra ID redirect URI exactly
-  siteHost: "SYAYASANEDU.sharepoint.com",
-  sitePath: "/teams/ICTSYHHB/SitePages/Home.aspx",                  // SharePoint site that holds the data
-  folder: "AptData",                                // folder created in the site's Documents library
-  admins: ["ZULFA.ZAINI@syayasan.edu.bn"]           // always admin; they add everyone else inside the app
+/* =====================================================================
+   Sistem Pemantauan Pembelian — syayasan.edu.bn version
+   Sign-in: Microsoft (school accounts only).
+   Storage: the "Sistem Pemantauan Pembelian" folder in the owner's OneDrive.
+     purchases.json, members.json, audit-YYYY-MM.json  (the system's data)
+     Dokumen/                                          (uploaded documents)
+   Who can open or change data is decided by OneDrive folder sharing.
+   Fill in clientId below (see SETUP.md).
+   ===================================================================== */
+window.MS_MODE = true;
+const CONFIG = {
+  clientId: "PASTE_APPLICATION_CLIENT_ID",
+  tenant: "syayasan.edu.bn",
+  emailDomain: "@syayasan.edu.bn",
+  ownerEmail: "helpdesk@syayasan.edu.bn",
+  folderName: "Sistem Pemantauan Pembelian",
+  docsFolder: "Dokumen",
+  pollSeconds: 30
 };
 
-</script>
-<script>
-/* Microsoft sign-in + SharePoint storage. Provides the same window.claude.use(...) interface the app already calls. */
 (function(){
-const C = window.APT_CONFIG, SC = ["User.Read","User.ReadBasic.All","Sites.ReadWrite.All"], GR = "https://graph.microsoft.com/v1.0";
-const ROOT = C.folder || "AptData", enc = a => a.map(encodeURIComponent).join("/");
-const of = window.fetch.bind(window);
-let app, acct, authP, driveId, meCache, me_;
-
-function loginPage(err){
-  const en=(()=>{try{return localStorage.getItem("apt-lang")==="en"}catch(e){return false}})(), T=(m,e)=>en?e:m;
-  const d=document.createElement("div"); d.style.cssText="position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#14753f,#0b4a28);font-family:system-ui,sans-serif;padding:16px";
-  d.innerHTML=`<div style="background:#fff;color:#14231a;border-top:4px solid #c9a227;border-radius:16px;padding:28px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)"><div style="font-size:13px;font-weight:700;color:#b8860b">Yayasan Sultan Haji Hassanal Bolkiah</div><h2 style="margin:6px 0 14px">${T("Sistem Pemantauan Pembelian","Purchase Tracker")}</h2><p style="font-size:14px;margin:0 0 18px">${T("Log masuk dengan e-mel Microsoft anda. Hanya pengguna yang diberi kebenaran boleh masuk.","Sign in with your Microsoft email. Only users who have been given permission can enter.")}</p><button id="aptSignIn" style="width:100%;padding:12px;border:0;border-radius:10px;background:#0b5a30;color:#fff;font:600 15px system-ui,sans-serif;cursor:pointer">${T("Log masuk dengan Microsoft","Sign in with Microsoft")}</button><p id="aptErr" style="color:#a12;font-size:12px;margin:12px 0 0"></p></div>`;
-  document.body.appendChild(d);
-  d.querySelector("#aptSignIn").onclick=()=>app.loginRedirect({scopes:SC,prompt:"select_account"});
-  if(err) d.querySelector("#aptErr").textContent=err;
-}
-function authOnce(){ return authP || (authP = (async()=>{
-  app = new msal.PublicClientApplication({auth:{clientId:C.clientId, authority:"https://login.microsoftonline.com/"+C.tenantId, redirectUri:C.redirectUri||location.origin+"/", postLogoutRedirectUri:C.redirectUri||location.origin+"/"}, cache:{cacheLocation:"localStorage"}});
-  let r, err=""; try{ r = await app.handleRedirectPromise(); }catch(e){ err = String(e.message||e).slice(0,300); }
-  acct = (r && r.account) || app.getAllAccounts()[0];
-  if(!acct){ loginPage(err); await new Promise(()=>{}); }
-  window.aptLogout = () => app.logoutRedirect({account:acct, postLogoutRedirectUri:C.redirectUri||location.origin+"/"});
-  const lb=document.getElementById("btnLogout"); if(lb){ lb.hidden=false; lb.title=acct.username||""; lb.onclick=window.aptLogout; }
-})()); }
-async function tok(){
-  try{ return (await app.acquireTokenSilent({scopes:SC, account:acct})).accessToken; }
-  catch(e){ await app.acquireTokenRedirect({scopes:SC}); await new Promise(()=>{}); }
-}
-const hint = e => e.code===403 ? " Check admin consent for Sites.ReadWrite.All and that your account has access to the SharePoint site." : e.code===401 ? " Sign out and sign in again." : (e.code===404||/not found/i.test(e.message)) ? " Check siteHost and sitePath in config." : "";
-function report(e){
-  console.error("[SharePoint]", e);
-  let b=document.getElementById("aptErrBar");
-  if(!b){ b=document.createElement("div"); b.id="aptErrBar"; b.title="Click to dismiss"; b.onclick=()=>b.remove();
-    b.style.cssText="position:fixed;left:12px;right:12px;bottom:12px;z-index:100000;background:#7a1f1f;color:#fff;padding:10px 14px;border-radius:10px;font:13px system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.4)"; }
-  (([...document.querySelectorAll("dialog[open]")].pop())||document.body).appendChild(b);
-  b.textContent="SharePoint: "+(e.message||e)+hint(e);
-}
-async function g(p, o={}, raw){
-  const r = await of(p.startsWith("http") ? p : GR+p, {...o, headers:{Authorization:"Bearer "+await tok(), ...(o.headers||{})}});
-  if(r.status===404) return null;
-  if(!r.ok){ let m=""; try{ const j=await r.json(); m=(j.error&&(j.error.code+": "+j.error.message))||""; }catch(e){} throw Object.assign(new Error("Graph "+r.status+(m?" "+m:"")), {code:r.status}); }
-  return raw ? r : (r.status===204 ? {} : r.json());
-}
-async function drive(){
-  if(driveId) return driveId;
-  const s = await g(`/sites/${C.siteHost}:${C.sitePath}`); if(!s) throw new Error("SharePoint site not found");
-  return driveId = (await g(`/sites/${s.id}/drive`)).id;
-}
-
-/* Collections are folders of .json files in the SharePoint document library. */
-const colls = {};
-function coll(name){
-  const parts = [ROOT, ...name.split("/")], cache = {}, subs = new Set(); let loaded = false, timer;
-  const snap = () => ({docs:Object.entries(cache).map(([id,v])=>({id, data:()=>v.data}))});
-  const notify = () => subs.forEach(s=>s.cb(snap()));
-  async function refresh(force){
-    const d = await drive(); let url = `/drives/${d}/root:/${enc(parts)}:/children?$top=200`, files = [];
-    while(url){ const r = await g(url); if(!r) break; files.push(...r.value.filter(f=>/\.json$/.test(f.name))); url = r["@odata.nextLink"]; }
-    const ids = new Set(files.map(f=>f.name.slice(0,-5))); let changed = force || !loaded;
-    for(const id in cache) if(!ids.has(id)){ delete cache[id]; changed = true; }
-    const todo = files.filter(f=>!cache[f.name.slice(0,-5)] || cache[f.name.slice(0,-5)].etag !== f.eTag);
-    for(let i=0;i<todo.length;i+=6) await Promise.all(todo.slice(i,i+6).map(async f=>{
-      try{ cache[f.name.slice(0,-5)] = {etag:f.eTag, data:await (await of(f["@microsoft.graph.downloadUrl"])).json()}; changed = true; }catch(e){}
-    }));
-    loaded = true; if(changed) notify();
+  // Stop here with a clear message if the system isn't set up yet, instead of opening in "saved on this device" mode.
+  function setupScreen(title, msg){
+    const show = ()=>{
+      const o = document.createElement("section"); o.className = "gate"; o.id = "msSetup";
+      o.innerHTML = `<div class="gate-card"><div class="gate-band"><div><p>Yayasan Sultan Haji Hassanal Bolkiah</p><strong>Sistem Pemantauan Pembelian</strong></div></div><div class="gate-body"><h2>${title}</h2><div class="no">${msg}</div></div></div>`;
+      document.body.appendChild(o);
+    };
+    document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", show) : show();
+    window.claude = {use: ()=>new Promise(()=>{})};   // keep the app waiting behind this screen
   }
-  let ready;
-  const ensure = () => ready || (ready = (async()=>{
-    const d = await drive();
-    for(let i=0;i<parts.length;i++){
-      const url = i ? `/drives/${d}/root:/${enc(parts.slice(0,i))}:/children` : `/drives/${d}/root/children`;
-      try{ await g(url, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({name:parts[i], folder:{}, "@microsoft.graph.conflictBehavior":"fail"})}); }
-      catch(e){ if(e.code!==409) throw e; }
+  if(!CONFIG.clientId || /PASTE/.test(CONFIG.clientId)){
+    setupScreen("Sistem belum disediakan", "Application (client) ID dari Microsoft Entra belum dimasukkan dalam <b>index.html</b>. Ikut langkah 1 dan 2 dalam SETUP.md, kemudian muat naik index.html sekali lagi.");
+    return;
+  }
+  // Load the Microsoft sign-in library, trying several copies in case one is blocked.
+  const MSAL_SOURCES = [
+    "https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.4/lib/msal-browser.min.js",
+    "https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js",
+    "https://alcdn.msftauth.net/browser/2.38.2/js/msal-browser.min.js",
+    "https://unpkg.com/@azure/msal-browser@2.38.4/lib/msal-browser.min.js"
+  ];
+  const loadScript = src=>new Promise((res, rej)=>{ const sc = document.createElement("script"); sc.src = src; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+  let useImpl = null, implReady;
+  const implPromise = new Promise(r=>implReady = r);
+  window.claude = {use: async name=>{ await implPromise; return useImpl(name); }};
+  (async()=>{
+    for(const src of MSAL_SOURCES){
+      try{ await loadScript(src); if(typeof msal !== "undefined" && msal.PublicClientApplication) break; }catch(e){}
     }
-  })().catch(e=>{ ready=null; throw e; }));
-  const c = {
-    doc: id => {
-      const path = () => drive().then(d=>`/drives/${d}/root:/${enc([...parts, id+".json"])}:`);
-      return {
-        async get(){ const r = await g(await path()+"/content", {}, true); if(!r) return {exists:false, id, data:()=>null}; const v = await r.json(); return {exists:true, id, data:()=>v}; },
-        async set(v){ try{ await ensure(); const r = await g(await path()+"/content", {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(v)}); if(!r) throw Object.assign(new Error("Graph 404 could not save"),{code:404}); }catch(e){ report(e); throw e; } cache[id] = {etag:"", data:v}; if(loaded) notify(); },
-        async update(p){ const s = await this.get(); await this.set({...(s.exists ? s.data() : {}), ...p}); },
-        async delete(){ await g(await path(), {method:"DELETE"}); delete cache[id]; if(loaded) notify(); }
-      };
-    },
-    onSnapshot(cb, err){
-      const s = {cb, err}; subs.add(s);
-      if(loaded) cb(snap()); else refresh(true).catch(e=>{ report(e); err&&err(e); });
-      if(!timer) timer = setInterval(()=>refresh().catch(()=>{}), 15000);
-      return ()=>subs.delete(s);
-    },
-    orderBy: (f, dir) => ({limit: n => ({onSnapshot:(cb, err)=>c.onSnapshot(s=>cb({docs:[...s.docs].sort((a,b)=>(a.data()[f]>b.data()[f] ? 1 : -1)*(dir==="desc"?-1:1)).slice(0,n)}), err)})})
+    if(typeof msal === "undefined" || !msal.PublicClientApplication){
+      setupScreen("Tidak dapat memuatkan log masuk Microsoft", "Komponen log masuk Microsoft tidak dapat dimuatkan. Semak sambungan internet anda, atau cuba pelayar lain (Edge atau Chrome), kemudian muat semula halaman.");
+      return;
+    }
+    main();
+  })();
+  function main(){
+  const GRAPH = "https://graph.microsoft.com/v1.0";
+  const SCOPES = ["User.Read", "User.ReadBasic.All", "Files.ReadWrite.All"];
+  const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const redirectUri = location.origin + location.pathname.replace(/index\.html$/, "");
+  const pca = new msal.PublicClientApplication({
+    auth: {clientId: CONFIG.clientId, authority: `https://login.microsoftonline.com/${CONFIG.tenant}`, redirectUri},
+    cache: {cacheLocation: "localStorage"}
+  });
+  let account = null, me = null, readyResolve;
+  const ready = new Promise(r=>readyResolve = r);
+
+  /* ---------- Screens ---------- */
+  function overlay(html){
+    let o = document.getElementById("msGate");
+    if(!o){ o = document.createElement("section"); o.id = "msGate"; o.className = "gate"; document.body.appendChild(o); }
+    o.hidden = false;
+    o.innerHTML = `<div class="gate-card"><div class="gate-band"><img id="msCrest" alt=""><div><p>Yayasan Sultan Haji Hassanal Bolkiah</p><strong>Sistem Pemantauan Pembelian</strong></div></div><div class="gate-body">${html}</div></div>`;
+    if(typeof IMG_CREST2 !== "undefined") o.querySelector("#msCrest").src = IMG_CREST2;
+    return o;
+  }
+  function showSignIn(msg){
+    const o = overlay(`<h2>Log masuk</h2><p>Gunakan akaun Microsoft sekolah anda (${esc(CONFIG.emailDomain.slice(1))}).</p>${msg?`<div class="no" style="margin-bottom:14px">${esc(msg)}</div>`:""}<button type="button" class="btn primary" id="msSignIn">Log masuk dengan Microsoft</button>`);
+    o.querySelector("#msSignIn").onclick = e=>{
+      e.target.disabled = true; e.target.textContent = "Membuka halaman Microsoft…";
+      pca.loginRedirect({scopes: SCOPES, prompt: "select_account"});
+    };
+  }
+  function showMessage(title, msg, retry){
+    const o = overlay(`<h2>${esc(title)}</h2><div class="no" style="margin-bottom:14px">${esc(msg)}</div>${retry?`<button type="button" class="btn primary" id="msRetry">Cuba lagi</button>`:""}<button type="button" class="btn" id="msOut" style="margin-top:8px">Log keluar</button>`);
+    if(retry) o.querySelector("#msRetry").onclick = ()=>location.reload();
+    o.querySelector("#msOut").onclick = signOut;
+  }
+  function hideOverlay(){ const o = document.getElementById("msGate"); if(o) o.hidden = true; }
+  function signOut(){ try{ sessionStorage.clear(); }catch(e){} pca.logoutRedirect({account, postLogoutRedirectUri: redirectUri}); }
+  function addSignOut(){
+    if(document.getElementById("msSignOut")) return;
+    const host = document.querySelector(".hero .actions"); if(!host) return;
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "btn"; b.id = "msSignOut"; b.textContent = "Log keluar"; b.onclick = signOut;
+    host.appendChild(b);
+  }
+
+  /* ---------- Microsoft Graph ---------- */
+  async function token(){
+    try{ return (await pca.acquireTokenSilent({scopes: SCOPES, account})).accessToken; }
+    catch(e){ pca.acquireTokenRedirect({scopes: SCOPES, account}); throw {code:"needs_reauth"}; }
+  }
+  async function graph(path, opts){
+    const t = await token();
+    const res = await fetch(path.startsWith("http") ? path : GRAPH + path, {...(opts||{}), headers:{Authorization: "Bearer " + t, ...((opts && opts.headers) || {})}});
+    if(!res.ok){ let msg = ""; try{ msg = (await res.json()).error.message; }catch(e){} throw {code: "graph_" + res.status, status: res.status, message: msg}; }
+    return res;
+  }
+
+  /* ---------- The shared folder ---------- */
+  let ROOT = null, DOCS = null;
+  async function resolveFolder(){
+    const isOwner = me.email === CONFIG.ownerEmail;
+    if(isOwner){
+      const name = encodeURIComponent(CONFIG.folderName);
+      let item;
+      try{ item = await (await graph(`/me/drive/root:/${name}`)).json(); }
+      catch(e){
+        if(e.status !== 404) throw e;
+        item = await (await graph(`/me/drive/root/children`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({name: CONFIG.folderName, folder:{}, "@microsoft.graph.conflictBehavior":"fail"})})).json();
+      }
+      ROOT = {driveId: item.parentReference.driveId, id: item.id, webUrl: item.webUrl};
+    } else {
+      let url = `/me/drive/sharedWithMe?$top=200`, found = null;
+      while(url && !found){
+        const r = await (await graph(url)).json();
+        found = (r.value||[]).find(x=>x.name === CONFIG.folderName && x.remoteItem && x.remoteItem.folder);
+        url = r["@odata.nextLink"] || null;
+      }
+      if(!found) throw {code:"not_shared"};
+      ROOT = {driveId: found.remoteItem.parentReference.driveId, id: found.remoteItem.id, webUrl: found.remoteItem.webUrl || found.webUrl};
+    }
+    try{ DOCS = await (await graph(`/drives/${ROOT.driveId}/items/${ROOT.id}:/${encodeURIComponent(CONFIG.docsFolder)}`)).json(); }
+    catch(e){
+      if(e.status !== 404 || !isOwner) { DOCS = null; return; }
+      DOCS = await (await graph(`/drives/${ROOT.driveId}/items/${ROOT.id}/children`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({name: CONFIG.docsFolder, folder:{}, "@microsoft.graph.conflictBehavior":"fail"})})).json();
+    }
+  }
+
+  /* ---------- JSON files in the folder ---------- */
+  const fileUrl = name=>`/drives/${ROOT.driveId}/items/${ROOT.id}:/${encodeURIComponent(name)}`;
+  const cache = {};   // name -> {etag, data}
+  async function meta(name){
+    try{ return await (await graph(fileUrl(name) + "?select=id,eTag,@microsoft.graph.downloadUrl")).json(); }
+    catch(e){ if(e.status === 404) return null; throw e; }
+  }
+  async function readJson(name, force){
+    const m = await meta(name);
+    if(!m){ cache[name] = {etag: null, data: null}; return cache[name]; }
+    if(!force && cache[name] && cache[name].etag === m.eTag) return cache[name];
+    const txt = await (await fetch(m["@microsoft.graph.downloadUrl"])).text();
+    let data = null; try{ data = JSON.parse(txt || "null"); }catch(e){ data = null; }
+    cache[name] = {etag: m.eTag, data};
+    return cache[name];
+  }
+  async function writeJson(name, data, etag){
+    const headers = {"Content-Type": "application/json"};
+    if(etag) headers["If-Match"] = etag;
+    const r = await (await graph(fileUrl(name) + ":/content", {method:"PUT", headers, body: JSON.stringify(data, null, 1)})).json();
+    cache[name] = {etag: r.eTag, data};
+  }
+  async function mutate(name, fn, empty){
+    for(let i = 0; i < 6; i++){
+      const cur = await readJson(name, true);
+      const next = fn(JSON.parse(JSON.stringify(cur.data ?? empty)));
+      try{ await writeJson(name, next, cur.etag); notify(name); return next; }
+      catch(e){
+        if(e.status === 412 || e.status === 409){ await new Promise(r=>setTimeout(r, 300 + Math.random()*700)); continue; }
+        throw e;
+      }
+    }
+    throw {code:"conflict"};
+  }
+
+  /* ---------- Live refresh (polling) ---------- */
+  const listeners = {};   // name -> Set(fn)
+  function notify(name){ (listeners[name] || []).forEach(fn=>fn()); }
+  function watch(names, fire){
+    names.forEach(n=>(listeners[n] ||= new Set()).add(fire));
+    let stop = false;
+    const tick = async()=>{ if(stop) return; if(document.visibilityState === "visible"){ try{ await Promise.all(names.map(n=>readJson(n))); fire(); }catch(e){} } setTimeout(tick, CONFIG.pollSeconds*1000); };
+    setTimeout(tick, CONFIG.pollSeconds*1000);
+    return ()=>{ stop = true; names.forEach(n=>listeners[n] && listeners[n].delete(fire)); };
+  }
+
+  /* ---------- Data adapter with the shape the app expects ---------- */
+  const clean = v=>JSON.parse(JSON.stringify(v === undefined ? null : v));
+  const mapErr = e=>{ throw (e && (e.status === 403 || e.status === 401)) ? {code:"invalid_argument", message:"Tiada kebenaran"} : e; };
+  const monthFile = d=>`audit-${(d || new Date()).toISOString().slice(0,7)}.json`;
+  const searchCache = {};
+  function filesFor(col){
+    if(col === "audit"){ const now = new Date(); const prev = new Date(now.getFullYear(), now.getMonth()-1, 15); return [monthFile(now), monthFile(prev)]; }
+    return [col + ".json"];
+  }
+  async function readMap(col){
+    const maps = await Promise.all(filesFor(col).map(n=>readJson(n).then(r=>r.data || {})));
+    return Object.assign({}, ...maps.reverse());
+  }
+  const toSnap = (map, order, lim)=>{
+    let docs = Object.entries(map).map(([id, d])=>({id, d}));
+    if(order) docs.sort((a,b)=>{ const x = a.d[order.f], y = b.d[order.f]; return (x>y?1:x<y?-1:0) * (order.dir === "desc" ? -1 : 1); });
+    if(lim) docs = docs.slice(0, lim);
+    return {docs: docs.map(x=>({id: x.id, data: ()=>x.d}))};
   };
-  return c;
-}
-const db = {collection: n => colls[n] || (colls[n] = coll(n))};
+  function collection(col){
+    const writeFile = ()=> col === "audit" ? monthFile() : col + ".json";
+    function q(order, lim){
+      return {
+        orderBy: (f, dir)=>q({f, dir: dir || "asc"}, lim),
+        limit: n=>q(order, n),
+        get: async()=>toSnap(await readMap(col), order, lim),
+        onSnapshot: (cb, err)=>{
+          const fire = ()=>readMap(col).then(m=>cb(toSnap(m, order, lim))).catch(e=>err && err(e));
+          fire();
+          return watch(filesFor(col), fire);
+        }
+      };
+    }
+    return {
+      ...q(null, null),
+      doc: id=>({
+        get: async()=>{ const m = await readMap(col); return {exists: !!m[id], id, data: ()=>m[id]}; },
+        set: d=>{
+          let data = clean(d);
+          if(col === "members" && searchCache[id]) data = {...data, name: searchCache[id].name, email: searchCache[id].email};
+          return mutate(writeFile(), m=>{ m[id] = data; return m; }, {}).catch(mapErr);
+        },
+        update: d=>mutate(writeFile(), m=>{ m[id] = {...(m[id] || {}), ...clean(d)}; return m; }, {}).catch(mapErr),
+        delete: ()=>mutate(writeFile(), m=>{ delete m[id]; return m; }, {}).catch(mapErr)
+      })
+    };
+  }
+  const db = {collection};
 
-/* People: signed-in user, profiles, and search for the "add user" box. */
-const av = n => { const t = (n||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase().replace(/[<&>]/g,""); return "data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#0b5a30"/><text x="32" y="41" font-family="Arial,sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#fff">${t}</text></svg>`); };
-const mapU = u => ({id:u.id, name:u.displayName, displayName:u.displayName, email:u.mail||u.userPrincipalName||"", avatarUrl:av(u.displayName), isMe:u.id===me_?.id, guest:false});
-const userCap = {
-  async me(){
-    const u = await g("/me?$select=id,displayName,mail,userPrincipalName"), mine = [u.mail, u.userPrincipalName, u.id].filter(Boolean).map(x=>x.toLowerCase());
-    return me_ = {...mapU(u), isOwner:(C.admins||[]).some(a=>mine.includes(String(a).trim().toLowerCase())), canEdit:false};
-  },
-  async profiles(ids){ const o = {}; await Promise.all(ids.map(async id=>{ try{ const u = await g(`/users/${id}?$select=id,displayName,mail,userPrincipalName`); if(u) o[id] = mapU(u); }catch(e){} })); return o; },
-  async search(q){ q = q.trim().replace(/'/g,"''");
-    if(q.includes("@")){ const F="$select=id,displayName,mail,userPrincipalName"; let u=null;
-      try{ u = await g(`/users/${encodeURIComponent(q)}?${F}`); }catch(e){}
-      if(!u){ try{ const r = await g(`/users?$filter=mail eq '${q}' or userPrincipalName eq '${q}'&${F}`); u = r?.value?.[0]; }catch(e){} }
-      if(u) return [mapU(u)]; } const r = await g(`/users?$filter=startswith(displayName,'${q}') or startswith(mail,'${q}')&$top=10&$select=id,displayName,mail,userPrincipalName`); return (r?.value||[]).map(mapU); }
-};
+  /* ---------- Documents ---------- */
+  const safeName = n=>String(n || "fail").replace(/[\\/:*?"<>|#%]/g, "-").trim() || "fail";
+  async function upload(blob){
+    if(!DOCS) throw {code:"no_docs_folder"};
+    const name = `${new Date().toISOString().slice(0,10)} ${safeName(blob.name)}`;
+    const base = `/drives/${ROOT.driveId}/items/${DOCS.id}:/${encodeURIComponent(name)}`;
+    let item;
+    if(blob.size <= 4*1024*1024){
+      item = await (await graph(`${base}:/content?@microsoft.graph.conflictBehavior=rename`, {method:"PUT", headers:{"Content-Type": blob.type || "application/octet-stream"}, body: blob})).json();
+    } else {
+      const s = await (await graph(`${base}:/createUploadSession`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({item:{"@microsoft.graph.conflictBehavior":"rename"}})})).json();
+      const CHUNK = 320*1024*10;
+      for(let start = 0; start < blob.size; start += CHUNK){
+        const end = Math.min(start + CHUNK, blob.size);
+        const r = await fetch(s.uploadUrl, {method:"PUT", headers:{"Content-Range": `bytes ${start}-${end-1}/${blob.size}`}, body: blob.slice(start, end)});
+        if(!r.ok && r.status !== 202) throw {code:"upload_failed"};
+        if(end === blob.size) item = await r.json();
+      }
+    }
+    return {id: item.id, url: `odx:${ROOT.driveId}!${item.id}`, webUrl: item.webUrl, sizeBytes: item.size, contentType: blob.type};
+  }
+  const objUrls = new Map();
+  window.msFetchFile = async function(url){
+    if(!String(url).startsWith("odx:")) return fetch(url);
+    const [driveId, itemId] = url.slice(4).split("!");
+    try{
+      const m = await (await graph(`/drives/${driveId}/items/${itemId}`)).json();
+      const u = m["@microsoft.graph.downloadUrl"];
+      if(u){ const r = await fetch(u); if(r.ok) return r; }
+    }catch(e){}
+    return graph(`/drives/${driveId}/items/${itemId}/content`);
+  };
+  window.fileObjectUrl = async function(url){
+    if(!String(url).startsWith("odx:")) return url;
+    if(objUrls.has(url)) return objUrls.get(url);
+    const u = URL.createObjectURL(await (await window.msFetchFile(url)).blob());
+    objUrls.set(url, u); return u;
+  };
 
-/* Uploaded files go to a "files" folder in the same library. */
-const assets = {async upload(file){
-  const d = await drive(), p = enc([ROOT, "files", crypto.randomUUID()+"-"+file.name.replace(/[\\/:*?"<>|#%]/g,"_")]); let it;
-  if(file.size < 4e6) it = await g(`/drives/${d}/root:/${p}:/content`, {method:"PUT", headers:{"Content-Type":file.type||"application/octet-stream"}, body:file});
-  else{ const s = await g(`/drives/${d}/root:/${p}:/createUploadSession`, {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
-    it = await (await of(s.uploadUrl, {method:"PUT", headers:{"Content-Range":`bytes 0-${file.size-1}/${file.size}`}, body:file})).json(); }
-  return {id:it.id, url:"gp:"+it.id, webUrl:it.webUrl};
-}};
-window.fetch = async (u, o) => String(u).startsWith("gp:") ? of((await g(`/drives/${await drive()}/items/${String(u).slice(3)}`))["@microsoft.graph.downloadUrl"]) : of(u, o);
+  /* ---------- People ---------- */
+  const initials = n=>String(n || "?").split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("") || "?";
+  const avatar = n=>"data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="32" fill="#0B5D33"/><text x="32" y="40" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#E0BD4B" text-anchor="middle">${initials(n).replace(/[<&]/g,"")}</text></svg>`);
+  const isOwner = ()=>!!me && me.email === CONFIG.ownerEmail;
+  const user = {
+    id: async()=>me.email,
+    isOwner: async()=>isOwner(),
+    canEdit: async()=>isOwner(),
+    can: async()=>null,
+    me: async()=>({id: me.email, name: me.name, email: me.email, avatarUrl: avatar(me.name), isOwner: isOwner(), canEdit: isOwner(), guest: false}),
+    profiles: async ids=>{
+      const members = (cache["members.json"] && cache["members.json"].data) || {};
+      const out = {};
+      (ids || []).forEach(id=>{
+        const name = (me && id === me.email) ? me.name : (members[id] && members[id].name) || (searchCache[id] && searchCache[id].name) || (id === CONFIG.ownerEmail ? "Pemilik sistem" : id);
+        out[id] = {id, name, email: id, avatarUrl: avatar(name)};
+      });
+      return out;
+    },
+    search: async q=>{
+      q = String(q || "").trim().replace(/'/g, "''"); if(!q) return [];
+      try{
+        const enc = encodeURIComponent(q);
+        const r = await (await graph(`/users?$filter=startswith(displayName,'${enc}') or startswith(mail,'${enc}')&$select=displayName,mail,userPrincipalName&$top=10`)).json();
+        return (r.value || []).map(u=>{
+          const email = String(u.mail || u.userPrincipalName || "").toLowerCase();
+          searchCache[email] = {name: u.displayName, email};
+          return {id: email, name: u.displayName, email, avatarUrl: avatar(u.displayName), isMe: email === me.email, guest: false};
+        }).filter(h=>h.id.endsWith(CONFIG.emailDomain));
+      }catch(e){ return []; }
+    }
+  };
 
-const downloads = {async save({filename, data}){
-  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([data])); a.download = filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
-}};
+  const downloads = {
+    save: async ({filename, data})=>{
+      const blob = data instanceof Blob ? data : new Blob([data]);
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+    }
+  };
 
-window.claude = {use: async n => {
-  if(n==="downloads") return downloads;
-  if(n==="sample") return {local:true};   // local document reader only, no AI
-  if(n==="mcp") return null;
-  await authOnce();
-  if(n==="db") drive().catch(report);
-  return n==="db" ? db : n==="user" ? userCap : n==="assets" ? assets : null;
-}};
+  useImpl = async name=>{
+      await ready;
+      switch(name){
+        case "db": return db;
+        case "user": return user;
+        case "assets": return DOCS ? {upload} : null;
+        case "downloads": return downloads;
+        case "sample": return {local: true};
+        default: return null;
+      }
+  };
+  implReady();
+
+  /* ---------- Start ---------- */
+  (async function start(){
+    try{
+      await pca.initialize();
+      const res = await pca.handleRedirectPromise();
+      account = (res && res.account) || pca.getAllAccounts()[0] || null;
+    }catch(e){ showSignIn("Log masuk tidak berjaya. Cuba lagi."); return; }
+    if(!account){ showSignIn(""); return; }
+    const email = String(account.username || "").toLowerCase();
+    if(!email.endsWith(CONFIG.emailDomain)){ showSignIn(`Akaun ${email} bukan akaun ${CONFIG.emailDomain.slice(1)}. Log masuk dengan akaun sekolah anda.`); return; }
+    me = {email, name: account.name || email};
+    overlay(`<h2>Memuatkan…</h2><p>Menyambung ke OneDrive.</p>`);
+    try{ await resolveFolder(); }
+    catch(e){
+      if(e.code === "not_shared") showMessage("Belum ada akses", `Folder "${CONFIG.folderName}" di OneDrive belum dikongsi dengan ${email}. Minta pemilik sistem berkongsi folder itu dengan anda, kemudian cuba lagi.`, true);
+      else if(e.code !== "needs_reauth") showMessage("Tidak dapat menyambung", "OneDrive tidak dapat dibuka sekarang. Semak sambungan internet anda dan cuba lagi.", true);
+      return;
+    }
+    hideOverlay();
+    addSignOut();
+    readyResolve();
+  })();
+  }
 })();
 
 </script>
@@ -3439,7 +3641,7 @@ const FILE_ACCEPT = ".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,.xls,.xlsx";
 const FILE_MAX = 10*1024*1024, CHUNK = 180000;
 const OFFICE_TYPE = {doc:"application/msword", docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document", xls:"application/vnd.ms-excel", xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
 async function storeFile(file){
-  if(!OFFICE_RX.test(file.name)){ const r = await assets.upload(file); return {id:r.id, url:r.url, name:file.name, od:r.webUrl}; }
+  if(window.MS_MODE || !OFFICE_RX.test(file.name)){ const r = await assets.upload(file); return {id:r.id, url:r.url, name:file.name, od:r.webUrl}; }
   if(file.size > FILE_MAX) throw {code:"too_big"};
   const b64 = toB64(await file.arrayBuffer());
   const ext = file.name.split(".").pop().toLowerCase(), type = OFFICE_TYPE[ext] || file.type || "application/octet-stream";
@@ -3452,6 +3654,7 @@ async function storeFile(file){
 }
 async function fetchFile(url){
   url = String(url||"");
+  if(url.startsWith("odx:") && window.msFetchFile) return window.msFetchFile(url);
   if(url.startsWith("db:")){
     if(!db) throw {code:"unavailable"};
     const id = url.slice(3);
@@ -3991,11 +4194,9 @@ function gateLogin(onEnter){
     hideGate(); onEnter(); }
 }
 function gateDenied(){
-  setGate(`<img class="av" alt="" id="gAv"><h2 id="gName"></h2><div class="no">Anda belum mempunyai akses ke sistem ini. Minta pentadbir menambah anda di bahagian <b>Pengguna</b>, kemudian muat semula halaman ini.</div><p id="gMail" style="font-size:12px;opacity:.7;margin:8px 0 0"></p><button type="button" class="btn primary" id="gOut" style="margin-top:12px">${LANG==="en"?"Log out":"Log keluar"}</button>`);
-  $("#gOut").onclick = ()=>window.aptLogout && window.aptLogout();
+  setGate(`<img class="av" alt="" id="gAv"><h2 id="gName"></h2><div class="no">Anda belum mempunyai akses ke sistem ini. Minta pentadbir menambah anda di bahagian <b>Pengguna</b>, kemudian muat semula halaman ini.</div>`);
   $("#gAv").src = me.avatarUrl;
   $("#gName").textContent = me.name || "Telah log masuk";
-  $("#gMail").textContent = me.email || "";
 }
 function gateNoId(){
   setGate(`<h2>Sila log masuk</h2><div class="no">Buka halaman ini semasa log masuk ke akaun Claude dalam organisasi anda, kemudian muat semula.</div>`);
@@ -4289,7 +4490,7 @@ darkMQ.addEventListener?.("change", applyTheme);
 function persistLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(items)); }catch(e){} }
 function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||"[]"); }catch(e){ return []; } }
 function applyMode(){
-  $("#btnNew").hidden = !canEdit; $("#btnImport").hidden = !canEdit;
+  $("#btnNew").hidden = !canEdit;
   $("#mode").textContent = col ? (isAdmin ? "Pentadbir" : canEdit ? "Penyunting" : "Pemerhati, lihat sahaja") : "Disimpan pada peranti ini";
   $("#btnUsers").hidden = !(col && isAdmin);
   $("#btnAudit").hidden = !(col && isAdmin);
@@ -4415,101 +4616,6 @@ const drop = $("#drop");
 ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{ e.preventDefault(); drop.classList.add("over"); }));
 ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{ e.preventDefault(); drop.classList.remove("over"); }));
 drop.addEventListener("drop", e=>autoFill([...e.dataTransfer.files]));
-/* ---------- Import from Excel / CSV ---------- */
-(function(){
-const L = (ms,en)=>LANG==="en"?en:ms;
-const norm = s=>String(s??"").toLowerCase().replace(/[^a-z0-9]/g,"");
-const KEYS = {nofail:"fileNo",fileno:"fileNo",tajuk:"title",title:"title",pemohon:"requester",bahagian:"division",untuk:"forWho",tajukperbelanjaan:"budgetHead",budgethead:"budgetHead",kaedah:"method",pembekal:"supplier",nosijilpembekal:"supplierCert",kategori:"category",jenispembelian:"category",perihalbarang:"desc",perihal:"desc",kuantiti:"qty",qty:"qty",nosiri:"serials",barang:"combined"};
-const hk = h=>{ const n=norm(h); return KEYS[n] || (n.startsWith("hargaseunit")||n==="unitprice" ? "unitPrice" : null); };
-const normCat = v=>/off/i.test(v)?"Office":"Sekolah";
-const normMeth = v=>{ v=String(v||"").toLowerCase(); return /terus/.test(v)?"Terus kepada Pembekal":/sebut/.test(v)?"Sebutharga":/tender|tawar/.test(v)?"Tender":v?"Lain-lain":""; };
-function parseCsv(t){
-  t=t.replace(/^\uFEFF/,""); const first=t.split(/\r?\n/,1)[0], d=[",",";","\t"].map(c=>[c,first.split(c).length]).sort((a,b)=>b[1]-a[1])[0][0];
-  const rows=[]; let r=[],v="",q=false;
-  for(let i=0;i<t.length;i++){ const c=t[i];
-    if(q){ if(c==='"'){ if(t[i+1]==='"'){v+='"';i++;} else q=false; } else v+=c; }
-    else if(c==='"') q=true;
-    else if(c===d){ r.push(v); v=""; }
-    else if(c==="\n"||c==="\r"){ if(c==="\r"&&t[i+1]==="\n") i++; r.push(v); rows.push(r); r=[]; v=""; }
-    else v+=c; }
-  if(v!==""||r.length){ r.push(v); rows.push(r); } return rows;
-}
-async function parseXlsx(buf){
-  const z=await unzipBytes(buf), td=new TextDecoder(), get=n=>{ const f=z.find(x=>x.name===n); return f?new DOMParser().parseFromString(td.decode(f.data),"application/xml"):null; };
-  const ss=get("xl/sharedStrings.xml"), S=ss?[...ss.getElementsByTagName("si")].map(si=>[...si.getElementsByTagName("t")].map(t=>t.textContent).join("")):[];
-  const sn=z.map(x=>x.name).filter(n=>/^xl\/worksheets\/sheet\d+\.xml$/.test(n)).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}))[0], sh=sn&&get(sn);
-  if(!sh) throw new Error("no sheet");
-  return [...sh.getElementsByTagName("row")].map(row=>{ const r=[];
-    [...row.getElementsByTagName("c")].forEach(c=>{ const col=(c.getAttribute("r")||"").replace(/\d/g,"").split("").reduce((a,ch)=>a*26+ch.charCodeAt(0)-64,0)-1, t=c.getAttribute("t"), ve=c.getElementsByTagName("v")[0];
-      r[col>=0?col:r.length] = t==="s" ? S[+ve?.textContent] : t==="inlineStr" ? [...c.getElementsByTagName("t")].map(x=>x.textContent).join("") : ve?.textContent; });
-    return Array.from(r,x=>x??""); });
-}
-function build(rows){
-  const hdr=(rows[0]||[]).map(hk); if(!hdr.includes("title")) return null;
-  const out=[]; let last=null, skipped=0;
-  for(const raw of rows.slice(1)){
-    const o={}; hdr.forEach((k,i)=>{ if(k && o[k]===undefined) o[k]=String(raw[i]??"").trim(); });
-    if(!Object.values(o).some(Boolean)) continue;
-    let g;
-    if(o.title||o.fileNo){
-      g=out.find(x=>o.fileNo?x.fileNo===o.fileNo:x.title===o.title);
-      if(!g){ g={fileNo:o.fileNo||"",title:o.title||"",requester:o.requester||REQUESTER,position:POSITION,division:o.division||DIVISION,forWho:o.forWho||"",budgetHead:o.budgetHead||"",category:normCat(o.category),method:normMeth(o.method),supplier:o.supplier||"",supplierCert:o.supplierCert||"",lines:[]}; out.push(g); }
-    } else g=last;
-    if(!g){ skipped++; continue; } last=g;
-    const add=(desc,qty,price,serials)=>{ const t=(parseFloat(qty)||1)*(parseFloat(String(price).replace(/,/g,""))||0); g.lines.push({desc,qty:String(qty||"1"),unitPrice:String(price||""),total:t?t.toFixed(2):"",serials:serials||""}); };
-    if(o.desc||o.qty||o.unitPrice) add(o.desc||"",o.qty,o.unitPrice,o.serials);
-    if(o.combined) o.combined.split(";").map(s=>s.trim()).filter(Boolean).forEach(s=>{ const m=s.match(/^(.*?)\s*x\s*(\d+(?:\.\d+)?)\s*@\s*([\d.,]+)$/i); m?add(m[1],m[2],m[3]):add(s,"1",""); });
-  }
-  return {groups:out.filter(g=>g.title), skipped};
-}
-window.__aptImp={parseCsv,build};
-async function saveText(filename,text){
-  const data="\uFEFF"+text;
-  try{ const dl=window.claude?await claude.use("downloads"):null; if(dl){ await dl.save({filename,data}); return; } }catch(e){}
-  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([data],{type:"text/csv"})); a.download=filename; document.body.appendChild(a); a.click(); a.remove();
-}
-const toCsv=rows=>rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");
-const bh=()=>(typeof BUDGET_HEADS!=="undefined"&&BUDGET_HEADS[0]?BUDGET_HEADS[0].t:"");
-const TPL={
-  1:()=>[["No. Fail","Tajuk","Untuk","Tajuk Perbelanjaan","Kategori","Kaedah","Pembekal","No. Sijil Pembekal","Perihal Barang","Kuantiti","Harga Seunit (B$)","No. Siri"],
-    ["101","Pembelian Type C Dongle","Pejabat IT",bh(),"Sekolah","Pembelian Terus","Syarikat ABC","YSHHB/SP/123","Type C Dongle","6","12.50",""],
-    ["","","","","","","","","HDMI Cable","2","8.00",""]],
-  2:()=>[["No. Fail","Tajuk","Untuk","Tajuk Perbelanjaan","Jenis Pembelian","Kaedah","Pembekal","No. Sijil Pembekal","Barang"],
-    ["102","Pembelian Peralatan ICT","Pejabat IT",bh(),"Pembelian Sekolah","Pembelian Terus","Syarikat ABC","YSHHB/SP/123","Type C Dongle x6 @ 12.50; HDMI Cable x2 @ 8.00"]]
-};
-async function doImport(file){
-  try{
-    if(/\.xls$/i.test(file.name)){ toast(L("Fail .xls lama tidak disokong. Simpan sebagai .xlsx atau CSV.","Old .xls files are not supported. Save as .xlsx or CSV."),6000); return; }
-    const buf=await file.arrayBuffer(), rows=/\.xlsx$/i.test(file.name)?await parseXlsx(buf):parseCsv(new TextDecoder().decode(buf)), res=build(rows);
-    if(!res){ toast(L("Lajur “Tajuk” tidak ditemui. Gunakan salah satu templat.","No “Tajuk” column found. Please use one of the templates."),6000); return; }
-    const fresh=res.groups.filter(g=>!items.some(x=>x.title===g.title&&(!g.fileNo||x.fileNo===g.fileNo))), dup=res.groups.length-fresh.length;
-    if(!fresh.length){ toast(L("Tiada pembelian baharu untuk diimport.","No new purchases to import.")+(dup?` (${dup} ${L("sudah wujud","already exist")})`:""),6000); return; }
-    if(!confirm(L(`Import ${fresh.length} pembelian baharu?`,`Import ${fresh.length} new purchase(s)?`)+(dup?`\n${dup} ${L("yang sudah wujud akan dilangkau.","already existing will be skipped.")}`:""))) return;
-    for(const g of fresh){ const id="p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6), rec={...g,id,stages:{},budgetYear:curYear(),updated:Date.now(),created:Date.now()};
-      if(col) await col.doc(id).set(rec); else items.push(rec); }
-    if(!col){ persistLocal(); render(); }
-    audit("Imported from Excel","",`${fresh.length} pembelian`);
-    toast(L(`${fresh.length} pembelian diimport.`,`${fresh.length} purchase(s) imported.`),5000);
-  }catch(e){ toast(L("Fail tidak dapat dibaca. Semak format fail.","Could not read the file. Check the file format."),6000); }
-}
-const inp=document.createElement("input"); inp.type="file"; inp.accept=".xlsx,.csv,.txt"; inp.hidden=true; document.body.appendChild(inp);
-inp.onchange=()=>{ const f=inp.files[0]; inp.value=""; if(f){ dlg.close(); doImport(f); } };
-const dlg=document.createElement("dialog"); dlg.style.cssText="border:0;border-radius:14px;padding:20px;max-width:460px;width:92%;background:#fff;color:#14231a;box-shadow:0 20px 60px rgba(0,0,0,.35)";
-document.body.appendChild(dlg);
-const B="border:1px solid #0b5a30;color:#0b5a30;background:#fff;padding:10px 12px;border-radius:10px;font:inherit;cursor:pointer;text-align:left", BP=B.replace("color:#0b5a30;background:#fff","color:#fff;background:#0b5a30");
-function openImp(){
-  dlg.innerHTML=`<h3 style="margin:0 0 8px">Import Excel</h3><p style="margin:0 0 12px;font-size:14px">${L("Pilih fail .xlsx atau .csv. Muat turun templat dahulu supaya lajur sepadan. Pembelian yang sudah wujud dilangkau.","Choose an .xlsx or .csv file. Download a template first so the columns match. Purchases that already exist are skipped.")}</p><div style="display:grid;gap:8px"><button type="button" data-t="1" style="${B}">${L("Muat turun Templat 1: satu baris setiap barang","Download Template 1: one row per item")}</button><button type="button" data-t="2" style="${B}">${L("Muat turun Templat 2: satu baris setiap pembelian (format Eksport)","Download Template 2: one row per purchase (same as Export)")}</button><button type="button" id="impPick" style="${BP}">${L("Pilih fail untuk diimport","Choose file to import")}</button><button type="button" id="impX" style="${B}">${L("Tutup","Close")}</button></div>`;
-  dlg.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>saveText(`templat-import-${b.dataset.t}.csv`,toCsv(TPL[b.dataset.t]())));
-  dlg.querySelector("#impPick").onclick=()=>inp.click(); dlg.querySelector("#impX").onclick=()=>dlg.close();
-  dlg.showModal();
-}
-$("#btnImport").onclick=openImp;
-})();
-
-
-Object.assign(EN,{"Log keluar":"Log out","Urus pengguna":"Manage users"});
-(function(){ const b=$("#btnLogout"); if(b && window.aptLogout){ b.hidden=false; b.onclick=()=>window.aptLogout(); } })();
-
 init();
 applyLang();
 </script>
