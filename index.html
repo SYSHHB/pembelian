@@ -185,6 +185,9 @@ fieldset:disabled input,fieldset:disabled textarea,fieldset:disabled select{opac
 #noteList{list-style:none;margin:0;padding:6px}
 #noteList li{border-radius:8px;border-left:4px solid var(--now);margin:4px 0}
 #noteList li.ok{border-left-color:var(--done)}
+#noteList li.info{border-left-color:var(--accent)}
+#noteList li.urgent{border-left-color:var(--danger)}
+#noteList li.urgent strong{color:var(--danger)}
 #noteList li.unread{background:color-mix(in srgb,var(--accent) 9%,transparent)}
 #noteList li.none{border:0;padding:14px;color:var(--muted);font-size:13px}
 #noteList button{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;background:none;border:0;padding:8px 10px;cursor:pointer;font-size:13px}
@@ -767,6 +770,19 @@ fieldset:disabled .seg button{cursor:default}
 .lrow{display:flex;gap:6px;align-items:center}
 .lrow input{flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-width:0}
 .ladd{margin-top:6px}
+.dv-msg.dv-err{max-width:540px;margin:48px auto;text-align:center;line-height:1.55}
+.dv-err strong{display:block;font-size:18px;margin-bottom:6px}
+.dv-err p{margin:0 0 6px}
+.dv-err .dv-det{font-size:12px;opacity:.75}
+.dv-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.dv-err .btn{color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:9px 14px;font-weight:700;font-size:14px}
+.dv-err .btn.primary{color:#fff}
+.dv-doc{background:#fff;color:#111;max-width:820px;margin:18px auto;padding:36px 44px;border-radius:6px;box-shadow:0 2px 14px rgba(0,0,0,.25);font:12pt/1.55 "Times New Roman",Times,"Liberation Serif",serif;overflow-wrap:anywhere}
+.dv-doc table{border-collapse:collapse;max-width:100%;margin:8px 0}
+.dv-doc td,.dv-doc th{border:1px solid #888;padding:4px 7px;vertical-align:top}
+.dv-doc img{max-width:100%;height:auto}
+.dv-doc p{margin:0 0 8px}
+@media (max-width:640px){ .dv-doc{margin:0;padding:18px 16px;border-radius:0} }
 .files .readl{border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:6px;padding:1px 8px;font-size:12px;font-weight:700;cursor:pointer;margin-left:6px}
 #itemRows td.tot input{width:110px;text-align:right}
 .lrow input.lref{flex:0 0 38%}
@@ -828,7 +844,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
         <button class="btn" id="btnBell" aria-expanded="false" aria-controls="notePanel">Pemberitahuan<span class="badge" id="badge" hidden>0</span></button>
         <div class="note-panel" id="notePanel" hidden>
           <div class="np-head"><strong>Pemberitahuan</strong><button type="button" class="mini" id="btnReadAll">Tanda semua dibaca</button></div>
-          <div class="np-tabs" role="tablist"><button type="button" role="tab" data-nt="all" aria-selected="true">Semua<span class="n" id="ntAll">0</span></button><button type="button" role="tab" data-nt="minit" aria-selected="false">Minit<span class="n" id="ntMinit">0</span></button></div>
+          <div class="np-tabs" role="tablist"><button type="button" role="tab" data-nt="all" aria-selected="true">Semua<span class="n" id="ntAll">0</span></button><button type="button" role="tab" data-nt="tender" aria-selected="false">Tender<span class="n" id="ntTender">0</span></button><button type="button" role="tab" data-nt="minit" aria-selected="false">Minit<span class="n" id="ntMinit">0</span></button></div>
           <ul id="noteList"></ul>
         </div>
       </div>
@@ -849,12 +865,13 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     <button type="button" role="tab" data-cat="">Semua<span class="n"></span></button>
     <button type="button" role="tab" data-cat="Sekolah">Pembelian Sekolah<span class="n"></span></button>
     <button type="button" role="tab" data-cat="Office">Pembelian Office<span class="n"></span></button>
+    <button type="button" role="tab" data-cat="_none" hidden>Belum dipilih<span class="n"></span></button>
   </div>
 
   <div class="toolbar">
     <input type="search" id="q" placeholder="Cari tajuk, pembekal, no. PO, no. DO, sebutharga, no. siri…" aria-label="Cari pembelian">
     <select id="sort" aria-label="Susun pembelian"><option value="file">Susun: no. fail</option><option value="new">Susun: kemas kini terkini</option><option value="wait">Susun: menunggu paling lama</option><option value="value">Susun: nilai tertinggi</option></select>
-    <select id="fCat" class="fsel" hidden aria-label="Tapis jenis pembelian"><option value="">Semua jenis</option><option value="Sekolah">Pembelian Sekolah</option><option value="Office">Pembelian Office</option></select>
+    <select id="fCat" class="fsel" hidden aria-label="Tapis jenis pembelian"><option value="">Semua jenis</option><option value="Sekolah">Pembelian Sekolah</option><option value="Office">Pembelian Office</option><option value="_none">Belum dipilih</option></select>
     <select id="fMethod" class="fsel" aria-label="Tapis kaedah pembelian"><option value="">Semua kaedah</option><option value="Terus kepada Pembekal">Pembelian Terus</option><option value="Sebutharga">Sebutharga (SH)</option><option value="Tender">Tawaran (TN)</option></select>
     <span class="filter-note" id="filterNote"></span>
     <button type="button" class="btn clear-f" id="btnClearF" hidden>✕ Kosongkan tapisan</button>
@@ -1014,7 +1031,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
         <li><b>Minit Permohonan kepada PU</b>: no. rujukan dan tarikh minit.</li>
         <li><b>Dokumen Tender</b>: no. dan tajuk tender. Tarikh tutup diisi sendiri 2 minggu selepas tarikh dikeluarkan (boleh diubah).</li>
         <li><b>Iklan</b>: tempat dan tarikh iklan.</li>
-        <li><b>Tarikh Tutup Tender</b>: tarikh dan masa tutup, bilangan tawaran diterima. Kiraan hari dipaparkan dan peringatan dihantar 7 hari dan 3 hari sebelum tutup.</li>
+        <li><b>Tarikh Tutup Tender</b>: tarikh dan masa tutup, bilangan tawaran diterima. Kiraan hari dipaparkan.</li>
         <li><b>Penilaian Tender</b>: tarikh penilaian, syarikat dan harga dicadangkan.</li>
         <li><b>Minit Sokongan</b>: no. rujukan dan tarikh minit.</li>
         <li><b>Surat Setuju Terima dan Penolakan</b>: syarikat berjaya dan no. rujukan surat setuju terima, serta setiap syarikat ditolak dengan no. rujukan surat penolakan.</li>
@@ -1066,7 +1083,8 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     </details>
 
     <details><summary>8. Pemberitahuan</summary>
-      <p>Tekan <b>Pemberitahuan</b> di bahagian atas. Tab <b>Semua</b> menunjukkan semua peringatan; tab <b>Minit</b> menunjukkan minit yang tertunggak.</p>
+      <p>Tekan <b>Pemberitahuan</b> di bahagian atas. Tab <b>Semua</b> menunjukkan semua peringatan; tab <b>Tender</b> memantau tarikh tender; tab <b>Minit</b> menunjukkan minit yang tertunggak.</p>
+      <p>Tab <b>Tender</b> menunjukkan tarikh dikeluarkan dan tarikh tutup setiap tender, serta peringatan <b>3, 2 dan 1 hari</b> sebelum tender dibuka dan sebelum tender ditutup, pada hari ia dibuka atau ditutup, dan apabila tarikh tutup telah lepas. Yang paling mendesak dipaparkan dahulu.</p>
       <p>Peringatan dihantar untuk langkah yang belum siap, tarikh tutup tender, dokumen yang belum dilampirkan dan invois yang tidak sama dengan jumlah Indent. Tekan peringatan untuk membuka pembelian itu.</p>
     </details>
 
@@ -1145,7 +1163,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
         <li><b>Request minute to MD</b>: minute reference number and date.</li>
         <li><b>Tender document</b>: tender number and title. The closing date fills in as 2 weeks after the issue date (you can change it).</li>
         <li><b>Advert</b>: where and when it was advertised.</li>
-        <li><b>Tender closing date</b>: closing date and time, number of bids received. A countdown shows, and reminders are sent 7 days and 3 days before closing.</li>
+        <li><b>Tender closing date</b>: closing date and time, number of bids received. A countdown shows.</li>
         <li><b>Tender evaluation</b>: evaluation date, recommended company and price.</li>
         <li><b>Support minute</b>: minute reference number and date.</li>
         <li><b>Award and reject letter</b>: the winning company and award letter reference, plus each rejected company with its reject letter reference.</li>
@@ -1197,7 +1215,8 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     </details>
 
     <details><summary>8. Notifications</summary>
-      <p>Press <b>Notifications</b> at the top. The <b>All</b> tab shows every reminder; the <b>Minutes</b> tab shows outstanding minutes.</p>
+      <p>Press <b>Notifications</b> at the top. The <b>All</b> tab shows every reminder; the <b>Tender</b> tab monitors tender dates; the <b>Minutes</b> tab shows outstanding minutes.</p>
+      <p>The <b>Tender</b> tab shows each tender’s issue date and closing date, with reminders <b>3, 2 and 1 days</b> before a tender opens and before it closes, on the day itself, and when the closing date has passed. The most urgent come first.</p>
       <p>Reminders are sent for unfinished steps, tender closing dates, documents not yet attached, and invoices that don’t match the Indent amount. Tap a reminder to open that purchase.</p>
     </details>
 
@@ -1284,8 +1303,8 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
       <p class="ms-only">Pemilik sistem (helpdesk@syayasan.edu.bn) sentiasa menjadi pentadbir. Setiap pengguna log masuk dengan akaun Microsoft syayasan.edu.bn mereka sendiri.</p>
       <p class="ms-only">Setiap pengguna juga mesti dikongsi folder OneDrive <b>Sistem Pemantauan Pembelian</b> milik helpdesk@syayasan.edu.bn: <b>Boleh lihat</b> untuk Pemerhati, <b>Boleh edit</b> untuk Penyunting dan Pentadbir.</p>
       <p class="en-only"><b>Viewer</b> can view purchases and download forms. <b>Editor</b> can also add, edit and delete purchases, upload files and fill in the forms. <b>Admin</b> can do everything an Editor can, and also manage users and see the audit log.</p>
-      <p class="en-only">The system owner (it.helpdesk@syayasan.edu.bn) is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
-      <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder owned by it.helpdesk@syayasan.edu.bn: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins.</p>
+      <p class="en-only">The system owner (IT.helpdesk@syayasan.edu.bn) is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
+      <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder owned by IT.helpdesk@syayasan.edu.bn: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins.</p>
     </details>
   </div>
   <div class="ua-foot"><button type="button" class="btn primary" id="usersDone">Selesai</button></div>
@@ -1312,7 +1331,7 @@ const CONFIG = {
   clientId: "598ea952-e9df-4684-a109-85832dc34e59",
   tenant: "syayasan.edu.bn",
   emailDomain: "@syayasan.edu.bn",
-  ownerEmail: "it.helpdesk@syayasan.edu.bn",
+  ownerEmail: "IT.helpdesk@syayasan.edu.bn",
   oneDriveHost: "syayasanedu-my.sharepoint.com",   // the school's OneDrive address
   folderUrl: "https://syayasanedu-my.sharepoint.com/personal/it_helpdesk_syayasan_edu_bn/Documents/Sistem%20Pemantauan%20Pembelian",   // the shared folder in the owner's OneDrive
   folderName: "Sistem Pemantauan Pembelian",
@@ -1570,18 +1589,29 @@ const CONFIG = {
         if(end === blob.size) item = await r.json();
       }
     }
-    return {id: item.id, url: `odx:${ROOT.driveId}!${item.id}`, webUrl: item.webUrl, sizeBytes: item.size, contentType: blob.type};
+    return {id: item.id, url: `odx:${encodeURIComponent(ROOT.driveId)}|${encodeURIComponent(item.id)}`, webUrl: item.webUrl, sizeBytes: item.size, contentType: blob.type};
   }
   const objUrls = new Map();
+  // File address: odx:<driveId>|<itemId>. Older links used "!" between them, but a work-account
+  // drive id itself starts with "b!", so those are split carefully.
+  const odParse = url=>{
+    const rest = String(url).slice(4);
+    if(rest.includes("|")){ const [d,i] = rest.split("|"); return [decodeURIComponent(d), decodeURIComponent(i)]; }
+    const at = rest.startsWith("b!") ? rest.indexOf("!", 2) : rest.indexOf("!");
+    return [rest.slice(0, at), rest.slice(at + 1)];
+  };
   window.msFetchFile = async function(url){
     if(!String(url).startsWith("odx:")) return fetch(url);
-    const [driveId, itemId] = url.slice(4).split("!");
+    const [driveId, itemId] = odParse(url);
+    const base = `/drives/${encodeURIComponent(driveId)}/items/${encodeURIComponent(itemId)}`;
+    let last = null;
     try{
-      const m = await (await graph(`/drives/${driveId}/items/${itemId}`)).json();
+      const m = await (await graph(base)).json();
       const u = m["@microsoft.graph.downloadUrl"];
-      if(u){ const r = await fetch(u); if(r.ok) return r; }
-    }catch(e){}
-    return graph(`/drives/${driveId}/items/${itemId}/content`);
+      if(u){ try{ const r = await fetch(u); if(r.ok) return r; last = {message: "download " + r.status}; }catch(e){ last = e; } }
+    }catch(e){ last = e; }
+    try{ return await graph(base + "/content"); }
+    catch(e){ if(e && e.status) throw e; throw {...(e||{}), message: (e && e.message) || (last && last.message) || "Tiada sambungan"}; }
   };
   window.fileObjectUrl = async function(url){
     if(!String(url).startsWith("odx:")) return url;
@@ -2191,7 +2221,7 @@ function renderStats(){
 function renderBudgets(){
   const host = $("#budgets"); if(!host) return;
   const ys = yearsList(); if(!bYear || !ys.includes(bYear)) bYear = ys.includes(curYear()) ? curYear() : ys[ys.length-1];
-  const y = bYear, cats = $("#fCat").value ? [$("#fCat").value] : CATS;
+  const y = bYear, cats = ($("#fCat").value && $("#fCat").value!=="_none") ? [$("#fCat").value] : CATS;
   const live = items.filter(it=>cancelIdx(it)<0 && yearOf(it)===y);
   const groups = cats.map(c=>{
     const heads = headsFor(y, c), mineCat = live.filter(it=>catOf(it)===c);
@@ -2236,9 +2266,10 @@ function render(){
   else if(filter==="cancelled") list = list.filter(it=>cancelIdx(it)>=0);
   else if(filter.startsWith("bh:")){ const p = parseBh(filter); list = list.filter(it=>cancelIdx(it)<0 && p.h && yearOf(it)===p.y && catOf(it)===p.c && it.budgetHead===p.h.t); }
   else if(filter!=="all") list = list.filter(it=>cancelIdx(it)<0 && stageIndex(it)===Number(filter));
+  if($("#fCat").value==="_none" && !items.some(it=>!it.category)) $("#fCat").value = "";
   const fc = $("#fCat").value, fm = $("#fMethod").value;
-  document.querySelectorAll("#catTabs [data-cat]").forEach(b=>{ const c = b.dataset.cat; b.setAttribute("aria-selected", String(c===fc)); b.querySelector(".n").textContent = items.filter(it=>!c || it.category===c).length; });
-  if(fc) list = list.filter(it=>it.category===fc);
+  document.querySelectorAll("#catTabs [data-cat]").forEach(b=>{ const c = b.dataset.cat; b.setAttribute("aria-selected", String(c===fc)); const cnt = items.filter(it=>!c || (c==="_none" ? !it.category : it.category===c)).length; b.querySelector(".n").textContent = cnt; if(c==="_none") b.hidden = cnt===0 && fc!=="_none"; });
+  if(fc) list = list.filter(it=>fc==="_none" ? !it.category : it.category===fc);
   if(fm) list = list.filter(it=>it.method===fm);
   if(q) list = list.filter(it=>haystack(it).includes(q));
 
@@ -2961,14 +2992,29 @@ function buildNotes(){
     }
     if(needsTender(it) && st.awardLetter?.done && !st.acceptLetter?.done) out.push({id:`${it.id}:acceptLetter`, step:"acceptLetter", kind:"warn", item:it.id, title:"Surat Penerimaan daripada Pembekal belum diterima", text:`${nm}: tunggu surat penerimaan daripada syarikat berjaya sebelum Borang 601.`});
     if(needsTender(it) && st.tenderDoc?.done && !st.advert?.done) out.push({id:`${it.id}:advert`, step:"advert", kind:"warn", item:it.id, title:"Iklan belum selesai", text:`${nm}: iklankan tawaran / sebutharga sebelum Surat Setuju Terima dan Penolakan.`});
-    if(needsTender(it) && st.advert?.done && !st.tenderClose?.done){
-      const cd = closeDateOf(it);
-      if(!cd) out.push({id:`${it.id}:tenderClose:nodate`, step:"tenderClose", kind:"warn", item:it.id, title:"Tarikh tutup tender belum dimasukkan", text:`${nm}: masukkan tarikh tutup supaya peringatan boleh dihantar.`});
-      else {
-        const left = daysBetween(today(), cd);
-        if(left<=7) out.push({id:`${it.id}:tenderClose:${cd}:${left<0?"past":left===0?"today":left<=3?"3":"7"}`, step:"tenderClose", kind:"warn", item:it.id,
-          title: left<0 ? "Tarikh tutup tender telah lepas" : left===0 ? "Tender ditutup hari ini" : "Tender akan ditutup",
-          text: left<0 ? `${nm}: ditutup pada ${fmtDate(cd)}. Tandakan Tarikh Tutup Tender selesai.` : left===0 ? `${nm}: tender ditutup hari ini (${fmtDate(cd)}).` : `${nm}: ${left} hari lagi, ditutup pada ${fmtDate(cd)}.`});
+    if(needsTender(it) && !st.tenderClose?.done){
+      const iss = st.tenderDoc?.date || "", cl = closeDateOf(it);
+      const dl = d=>daysBetween(today(), d);
+      const li = iss ? dl(iss) : null, lc = cl ? dl(cl) : null;
+      const span = cl ? `, ditutup ${fmtDate(cl)}` : "", was = iss ? `, dibuka ${fmtDate(iss)}` : "";
+      const T = {cat:"tender", item:it.id};
+      if(!cl){
+        if(st.tenderDoc?.done) out.push({...T, id:`${it.id}:tenderClose:nodate`, step:"tenderDoc", kind:"warn", pri:50, title:"Tarikh tutup tender belum dimasukkan", text:`${nm}: masukkan tarikh tutup supaya peringatan boleh dihantar.`});
+      } else if(lc<0){
+        out.push({...T, id:`${it.id}:tOver:${cl}`, step:"tenderClose", kind:"warn urgent", pri:-1, title:"Tarikh tutup tender telah lepas", text:`${nm}: ditutup pada ${fmtDate(cl)}. Tandakan Tarikh Tutup Tender selesai.`});
+      } else if(lc<=3){
+        out.push({...T, id:`${it.id}:tClose:${cl}:${lc}`, step:"tenderClose", kind: lc<=1 ? "warn urgent" : "warn", pri:lc,
+          title: lc===0 ? "Tender ditutup hari ini" : "Tender akan ditutup",
+          text: lc===0 ? `${nm}: tender ditutup hari ini (${fmtDate(cl)})${was}.` : `${nm}: ditutup dalam ${lc} hari (${fmtDate(cl)})${was}.`});
+      }
+      if(iss && li>=0 && li<=3){
+        out.push({...T, id:`${it.id}:tOpen:${iss}:${li}`, step:"tenderDoc", kind:"warn", pri:li,
+          title: li===0 ? "Tender dibuka hari ini" : "Tender akan dibuka",
+          text: li===0 ? `${nm}: tender dibuka hari ini (${fmtDate(iss)})${span}.` : `${nm}: dibuka dalam ${li} hari (${fmtDate(iss)})${span}.`});
+      }
+      if(iss && cl && lc>3){
+        if(li>3) out.push({...T, id:`${it.id}:tStatus:${iss}:${cl}:s`, step:"tenderDoc", kind:"info", pri:li, title:"Tender dijadualkan", text:`${nm}: akan dibuka ${fmtDate(iss)} (dalam ${li} hari)${span}.`});
+        else if(li<0) out.push({...T, id:`${it.id}:tStatus:${iss}:${cl}:r`, step:"tenderClose", kind:"info", pri:lc, title:"Tender sedang berjalan", text:`${nm}: dikeluarkan ${fmtDate(iss)}, ditutup ${fmtDate(cl)} (${lc} hari lagi).`});
       }
     }
     if(needsTender(it) && st.tenderClose?.done && !st.tenderEval?.done) out.push({id:`${it.id}:tenderEval`, step:"tenderEval", kind:"warn", item:it.id, title:"Penilaian Tender belum selesai", text:`${nm}: nilai tawaran yang diterima sebelum Surat Setuju Terima dan Penolakan.`});
@@ -2976,7 +3022,7 @@ function buildNotes(){
     if(needsTender(it) && st.minitS?.done && !st.awardLetter?.done) out.push({id:`${it.id}:awardLetter`, step:"awardLetter", kind:"warn", item:it.id, title:"Surat Setuju Terima dan Penolakan belum selesai", text:`${nm}: hantar surat setuju terima dan surat penolakan sebelum Borang 601.`});
     if(needsTender(it) && !st.tenderDoc?.done){
       const td = st.tenderDoc || {}, left = td.closeDate ? daysBetween(today(), td.closeDate) : null;
-      out.push({id:`${it.id}:tenderDoc`, step:"tenderDoc", kind:"warn", item:it.id, title:"Dokumen Tender belum selesai", text: left!==null && left>=0 && left<=3 ? `${nm}: tender ditutup pada ${fmtDate(td.closeDate)}.` : `${nm}: lengkapkan Dokumen Tender sebelum Borang 601.`});
+      out.push({id:`${it.id}:tenderDoc`, cat:"tender", pri:60, step:"tenderDoc", kind:"warn", item:it.id, title:"Dokumen Tender belum selesai", text: left!==null && left>=0 && left<=3 ? `${nm}: tender ditutup pada ${fmtDate(td.closeDate)}.` : `${nm}: lengkapkan Dokumen Tender sebelum Borang 601.`});
     }
     if(needsMinit(it)){
       const how = METHOD_LABEL[it.method], mp = st.minitP || {}, ms = st.minitS || {};
@@ -2994,7 +3040,7 @@ function buildNotes(){
       }
     }
   });
-  return out.sort((a,b)=>(seen.has(a.id)?1:0)-(seen.has(b.id)?1:0));
+  return out.sort((a,b)=>((seen.has(a.id)?1:0)-(seen.has(b.id)?1:0)) || ((a.pri??99)-(b.pri??99)));
 }
 let noteTab = "all";
 function renderNotes(){
@@ -3002,12 +3048,16 @@ function renderNotes(){
   const unread = all.filter(n=>!seen.has(n.id)).length;
   const b = $("#badge"); b.hidden = !unread; b.textContent = unread;
   const mn = all.filter(n=>n.cat==="minit"), mnUnread = mn.filter(n=>!seen.has(n.id)).length;
+  const tn = all.filter(n=>n.cat==="tender"), tnUnread = tn.filter(n=>!seen.has(n.id)).length;
+  $("#ntTender").textContent = tn.length; $("#ntTender").classList.toggle("on", tnUnread>0);
   $("#ntAll").textContent = all.length; $("#ntAll").classList.toggle("on", unread>0);
   $("#ntMinit").textContent = mn.length; $("#ntMinit").classList.toggle("on", mnUnread>0);
   document.querySelectorAll("#notePanel [data-nt]").forEach(t=>t.setAttribute("aria-selected", String(t.dataset.nt===noteTab)));
-  const notes = noteTab==="minit" ? mn : all;
+  const notes = noteTab==="minit" ? mn : noteTab==="tender" ? tn : all;
   $("#noteList").innerHTML = notes.length
     ? notes.map(n=>`<li class="${n.kind} ${seen.has(n.id)?"":"unread"}"><button type="button" data-item="${esc(n.item)}" data-note="${esc(n.id)}" data-step="${esc(n.step||"")}"><strong>${esc(n.title)}</strong><span>${esc(n.text)}</span></button></li>`).join("")
+    : noteTab==="tender"
+      ? `<li class="none">Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.</li>`
     : noteTab==="minit"
       ? `<li class="none">Tiada minit yang tertunggak. Pemberitahuan Minit Permohonan kepada PU muncul di sini untuk pembelian secara Tawaran atau Sebutharga.</li>`
       : `<li class="none">Belum ada pemberitahuan. Pemberitahuan akan muncul apabila pembelian selesai atau memerlukan perhatian.</li>`;
@@ -3625,6 +3675,23 @@ async function openDoc(k){
   $("#docView").showModal();
   showDoc();
 }
+function dvError(host, f, e){
+  const st = e && e.status, access = st===401 || st===403 || st===404;
+  const hint = window.MS_MODE
+    ? (access ? "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive."
+              : "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.")
+    : "Semak sambungan internet anda, kemudian tekan Cuba lagi.";
+  const det = [st ? `ralat ${st}` : "", e && e.message ? String(e.message).slice(0,120) : "", e && e.code && !st ? e.code : ""].filter(Boolean).join(": ");
+  host.innerHTML = `<div class="dv-msg dv-err"><strong></strong><p class="dv-h"></p>${det?'<p class="dv-det"></p>':""}<div class="dv-acts"><button type="button" class="btn primary" data-a="retry"></button>${f.od?'<a class="btn" target="_blank" rel="noopener"></a>':""}<button type="button" class="btn" data-a="dl"></button></div></div>`;
+  host.querySelector("strong").textContent = "Dokumen belum dapat dipaparkan";
+  host.querySelector(".dv-h").textContent = hint;
+  if(det) host.querySelector(".dv-det").textContent = "Butiran: " + det;
+  host.querySelector('[data-a="retry"]').textContent = "Cuba lagi";
+  host.querySelector('[data-a="retry"]').onclick = showDoc;
+  host.querySelector('[data-a="dl"]').textContent = "Muat turun";
+  host.querySelector('[data-a="dl"]').onclick = downloadDoc;
+  const a = host.querySelector("a.btn"); if(a){ a.textContent = "Buka di OneDrive"; a.href = f.od; }
+}
 async function showDoc(){
   const f = dvFiles[dvIdx], host = $("#dvPages");
   $("#dvHint").textContent = f.name;
@@ -3632,8 +3699,21 @@ async function showDoc(){
   host.innerHTML = `<div class="dv-msg">Memuatkan dokumen…</div>`;
   let blob;
   try{ blob = await (await fetchFile(f.url)).blob(); }
-  catch(e){ host.innerHTML = `<div class="dv-msg">Dokumen tidak dapat dimuatkan. ${f.od?"Gunakan Buka di OneDrive untuk melihatnya.":"Cuba lagi sebentar lagi."}</div>`; return; }
+  catch(e){ dvError(host, f, e); return; }
   const isPdf = /\.pdf$/i.test(f.name) || blob.type==="application/pdf";
+  if(/\.docx$/i.test(f.name)){
+    try{
+      await loadScript(LIBS.mammoth);
+      const r = await window.mammoth.convertToHtml({arrayBuffer: await blob.arrayBuffer()});
+      const dom = new DOMParser().parseFromString(r.value || "", "text/html");
+      dom.querySelectorAll("script,style,iframe,object,embed,link,meta,form").forEach(n=>n.remove());
+      dom.querySelectorAll("*").forEach(n=>[...n.attributes].forEach(a=>{ if(/^on/i.test(a.name) || /^\s*javascript:/i.test(a.value)) n.removeAttribute(a.name); }));
+      dom.querySelectorAll("a").forEach(a=>{ a.target = "_blank"; a.rel = "noopener"; });
+      host.innerHTML = `<div class="dv-doc"></div>`;
+      host.firstElementChild.innerHTML = dom.body.innerHTML || "<p></p>";
+      return;
+    }catch(e){}
+  }
   if(OFFICE_RX.test(f.name)){
     host.innerHTML = `<div class="dv-msg"><p></p><button type="button" class="btn primary">Muat turun</button></div>`;
     host.querySelector("p").textContent = `${f.name} ialah fail ${/\.xlsx?$/i.test(f.name)?"Excel":"Word"}. Muat turun untuk membukanya.`;
@@ -4521,7 +4601,7 @@ function trText(t){
 const BOX_EN = {"Dokumen Tender":"Tender document","Iklan":"Advert","Tarikh Tutup Tender":"Tender closing date","Penilaian Tender":"Tender evaluation","Minit Sokongan":"Support minute","Surat Setuju Terima dan Penolakan":"Award and reject letter","Surat Penerimaan daripada Pembekal":"Acceptance letter from vendor","Minit Permohonan kepada PU":"Request minute to MD"};
 Object.assign(EN, BOX_EN, {
   "Syarikat Berjaya":"Winning company", "Syarikat Ditolak":"Rejected companies", "Nama Syarikat (Pembekal)":"Company name (vendor)",
-  "Iklan belum selesai":"Advert not done", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
+  "Iklan belum selesai":"Advert not done", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
 });
 { const BN = Object.keys(BOX_EN).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|"), mt = m=>m==="Tawaran"?"tender":"quotation";
   EN_RX.unshift(
@@ -4545,6 +4625,17 @@ Object.assign(EN, BOX_EN, {
     [/^Surat setuju terima: (.+)$/, "Award letter: $1"], [/^Surat penolakan: (.+)$/, "Reject letter: $1"]
   );
 }
+{ const dy = n=>`${n} day${n==="1"?"":"s"}`;
+  EN_RX.unshift(
+    [/^(.+): dibuka dalam (\d+) hari \((.+?)\)(?:, ditutup (.+))?\.$/, (m,a,n,i,c)=>`${a}: opens in ${dy(n)} (${i})${c?`, closes ${c}`:""}.`],
+    [/^(.+): tender dibuka hari ini \((.+?)\)(?:, ditutup (.+))?\.$/, (m,a,i,c)=>`${a}: the tender opens today (${i})${c?`, closes ${c}`:""}.`],
+    [/^(.+): ditutup dalam (\d+) hari \((.+?)\)(?:, dibuka (.+))?\.$/, (m,a,n,c,i)=>`${a}: closes in ${dy(n)} (${c})${i?`, opened ${i}`:""}.`],
+    [/^(.+): tender ditutup hari ini \((.+?)\)(?:, dibuka (.+))?\.$/, (m,a,c,i)=>`${a}: the tender closes today (${c})${i?`, opened ${i}`:""}.`],
+    [/^(.+): akan dibuka (.+?) \(dalam (\d+) hari\)(?:, ditutup (.+))?\.$/, (m,a,i,n,c)=>`${a}: opens ${i} (in ${dy(n)})${c?`, closes ${c}`:""}.`],
+    [/^(.+): dikeluarkan (.+?), ditutup (.+?) \((\d+) hari lagi\)\.$/, (m,a,i,c,n)=>`${a}: issued ${i}, closes ${c} (${dy(n)} left).`]
+  );
+}
+EN_RX.unshift([/^Butiran: ralat (\d+)(.*)$/, "Details: error $1$2"], [/^Butiran: (.+)$/, "Details: $1"]);
 const ID_EN = {usersDone:"Done"};
 let trBusy = false;
 const SKIP = "#pvPages, script, style, #meName";
