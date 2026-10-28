@@ -1301,11 +1301,11 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     <details class="ua-help">
       <summary>Pentadbir dan perkongsian</summary>
       <p class="ms-only"><b>Pemerhati</b> boleh melihat pembelian dan memuat turun borang. <b>Penyunting</b> juga boleh menambah, menyunting dan memadam pembelian, memuat naik fail dan mengisi borang. <b>Pentadbir</b> boleh melakukan semua yang Penyunting boleh, serta mengurus pengguna dan melihat log audit.</p>
-      <p class="ms-only">Pemilik sistem (helpdesk@syayasan.edu.bn) sentiasa menjadi pentadbir. Setiap pengguna log masuk dengan akaun Microsoft syayasan.edu.bn mereka sendiri.</p>
-      <p class="ms-only">Setiap pengguna juga mesti dikongsi folder OneDrive <b>Sistem Pemantauan Pembelian</b> milik helpdesk@syayasan.edu.bn: <b>Boleh lihat</b> untuk Pemerhati, <b>Boleh edit</b> untuk Penyunting dan Pentadbir.</p>
+      <p class="ms-only">Pemilik sistem (it.helpdesk@syayasan.edu.bn) sentiasa menjadi pentadbir. Setiap pengguna log masuk dengan akaun Microsoft syayasan.edu.bn mereka sendiri.</p>
+      <p class="ms-only">Setiap pengguna juga mesti dikongsi folder OneDrive <b>Sistem Pemantauan Pembelian</b> milik it.helpdesk@syayasan.edu.bn: <b>Boleh lihat</b> untuk Pemerhati, <b>Boleh edit</b> untuk Penyunting dan Pentadbir.</p>
       <p class="en-only"><b>Viewer</b> can view purchases and download forms. <b>Editor</b> can also add, edit and delete purchases, upload files and fill in the forms. <b>Admin</b> can do everything an Editor can, and also manage users and see the audit log.</p>
-      <p class="en-only">The system owner (helpdesk@syayasan.edu.bn) is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
-      <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder owned by helpdesk@syayasan.edu.bn: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins.</p>
+      <p class="en-only">The system owner (it.helpdesk@syayasan.edu.bn) is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
+      <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder owned by it.helpdesk@syayasan.edu.bn: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins.</p>
     </details>
   </div>
   <div class="ua-foot"><button type="button" class="btn primary" id="usersDone">Selesai</button></div>
@@ -1920,17 +1920,111 @@ const CONFIG = {
     }
     return pages.join("\n\n");
   }
-  async function ocrImages(images){
-    await loadScript(TESS);
-    let text = "";
-    for(const img of images){ const r = await window.Tesseract.recognize(img, "eng"); text += (r.data && r.data.text || "") + "\n\n"; }
-    return text;
+  /* ---- OCR: clean the picture first, read it with tuned settings, then repair common misreads ---- */
+  let ocrProgress = null, ocrW = null, ocrWP = null, ocrIdle = null;
+  async function getOcrWorker(){
+    if(ocrW) return ocrW;
+    return ocrWP ||= (async()=>{
+      await loadScript(TESS);
+      const T = window.Tesseract, logger = m=>{ if(ocrProgress && m && m.status === "recognizing text") ocrProgress(m.progress || 0); };
+      let w; try{ w = await T.createWorker("eng+msa", 1, {logger}); }catch(e){ try{ w = await T.createWorker("eng", 1, {logger}); }catch(e2){ ocrWP = null; throw {code:"lib"}; } }
+      await w.setParameters({preserve_interword_spaces:"1", user_defined_dpi:"300"});
+      return ocrW = w;
+    })();
+  }
+  async function toBitmap(src){
+    if(src instanceof HTMLCanvasElement) return {w: src.width, h: src.height, draw: (ctx,W,H)=>ctx.drawImage(src,0,0,W,H)};
+    let bmp; try{ bmp = await createImageBitmap(src, {imageOrientation:"from-image"}); }catch(e){ bmp = await createImageBitmap(src); }
+    return {w: bmp.width, h: bmp.height, draw: (ctx,W,H)=>ctx.drawImage(bmp,0,0,W,H)};
+  }
+  /* mode "gray": stretch the contrast. mode "bin": also remove uneven lighting and shadows (adaptive threshold). */
+  async function prepImage(src, mode, longSide){
+    const bm = await toBitmap(src), long = Math.max(bm.w, bm.h);
+    const scale = Math.min(3, Math.max(0.4, (longSide || 2600) / long));
+    const W = Math.max(1, Math.round(bm.w * scale)), H = Math.max(1, Math.round(bm.h * scale));
+    const c = document.createElement("canvas"); c.width = W; c.height = H;
+    const ctx = c.getContext("2d", {willReadFrequently:true}); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,W,H);
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high"; bm.draw(ctx, W, H);
+    const img = ctx.getImageData(0,0,W,H), px = img.data, n = W*H, g = new Uint8ClampedArray(n), hist = new Uint32Array(256);
+    for(let i=0,j=0;i<n;i++,j+=4){ const v = (px[j]*299 + px[j+1]*587 + px[j+2]*114) / 1000 | 0; g[i] = v; hist[v]++; }
+    let lo = 0, hi = 255, acc = 0; const cut = n * 0.01;
+    for(let v=0; v<256; v++){ acc += hist[v]; if(acc > cut){ lo = v; break; } }
+    acc = 0; for(let v=255; v>=0; v--){ acc += hist[v]; if(acc > cut){ hi = v; break; } }
+    if(hi - lo < 40){ lo = 0; hi = 255; }
+    const span = hi - lo, lut = new Uint8ClampedArray(256);
+    for(let v=0; v<256; v++) lut[v] = Math.max(0, Math.min(255, (v - lo) * 255 / span));
+    for(let i=0;i<n;i++) g[i] = lut[g[i]];
+    if(mode === "bin"){
+      const integ = new Uint32Array(n);
+      for(let y=0;y<H;y++){ let row = 0; for(let x=0;x<W;x++){ row += g[y*W+x]; integ[y*W+x] = row + (y ? integ[(y-1)*W+x] : 0); } }
+      const r = Math.max(8, Math.round(W / 24)), t = 0.12, out = new Uint8ClampedArray(n);
+      for(let y=0;y<H;y++){
+        const y0 = Math.max(0,y-r), y1 = Math.min(H-1,y+r);
+        for(let x=0;x<W;x++){
+          const x0 = Math.max(0,x-r), x1 = Math.min(W-1,x+r), cnt = (x1-x0+1)*(y1-y0+1);
+          const A = (x0 && y0) ? integ[(y0-1)*W+x0-1] : 0, B = y0 ? integ[(y0-1)*W+x1] : 0, C = x0 ? integ[y1*W+x0-1] : 0, D = integ[y1*W+x1];
+          out[y*W+x] = g[y*W+x] * cnt < (D - B - C + A) * (1 - t) ? 0 : 255;
+        }
+      }
+      g.set(out);
+    }
+    for(let i=0,j=0;i<n;i++,j+=4){ px[j]=px[j+1]=px[j+2]=g[i]; px[j+3]=255; }
+    ctx.putImageData(img,0,0);
+    return c;
+  }
+  function rotated(c, deg){
+    const o = document.createElement("canvas"), sw = deg % 180 !== 0; o.width = sw ? c.height : c.width; o.height = sw ? c.width : c.height;
+    const x = o.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0,0,o.width,o.height); x.translate(o.width/2, o.height/2); x.rotate(deg*Math.PI/180); x.drawImage(c, -c.width/2, -c.height/2);
+    return o;
+  }
+  async function ocrOne(w, src){
+    const run = async (canvas, psm)=>{ await w.setParameters({tessedit_pageseg_mode: String(psm)}); const r = await w.recognize(canvas); return {text: (r.data && r.data.text) || "", conf: Math.round((r.data && r.data.confidence) || 0)}; };
+    const gray = await prepImage(src, "gray");
+    let best = await run(gray, 3);
+    if(best.conf < 78){
+      const bin = await prepImage(src, "bin");
+      for(const psm of [3, 6]){ const r2 = await run(bin, psm); if(r2.conf > best.conf + 2) best = r2; if(best.conf >= 78) break; }
+    }
+    if(best.conf < 55){
+      const small = await prepImage(src, "gray", 1600);
+      for(const deg of [90, 270, 180]){
+        const r3 = await run(rotated(small, deg), 3);
+        if(r3.conf >= best.conf + 15){ const full = await run(rotated(gray, deg), 3); best = full.conf >= r3.conf - 5 ? full : r3; break; }
+      }
+    }
+    return best;
+  }
+  /* Repair what OCR gets wrong most often in these documents: look-alike characters inside numbers, dates and reference numbers. */
+  function cleanOcr(t){
+    t = String(t||"").replace(/[\u2010-\u2015\u2212]/g,"-").replace(/[\u2018\u2019]/g,"'").replace(/[\u201C\u201D]/g,'"').replace(/\u00A0/g," ").replace(/[ \t]+$/gm,"");
+    const dig = x=>x.replace(/[Oo]/g,"0").replace(/[Il|]/g,"1").replace(/S/g,"5").replace(/B/g,"8");
+    t = t.replace(/\b[YV]SHH[B8]\b/g,"YSHHB");
+    t = t.replace(/\b(YSHHB)\s*-\s*P[O0]\s*-\s*([SM5])\s*-\s*([0-9OoIlBS|]{3,8})\b/gi, (m,a,k,d)=>`YSHHB-PO-${/5/.test(k)?"S":k.toUpperCase()}-${dig(d)}`);
+    t = t.replace(/\b([A-Z]{2,8})\s*-\s*(D[O0]|[I1l]NV)\s*-\s*([0-9OoIlBS|]{3,10})\b/g, (m,a,k,d)=>`${a}-${/^D/.test(k)?"DO":"INV"}-${dig(d)}`);
+    t = t.replace(/\(\s*([0-9OoIl]{2,4})\s*\)\s*(YSHHB)/g, (m,d,y)=>`(${dig(d)}) ${y}`);
+    t = t.replace(/\b([0-3OoIl]?[0-9OoIl])\s*([\/.\-])\s*([01OoIl]?[0-9OoIl])\s*\2\s*((?:19|20|[OoIl2]{1,2})[0-9OoIl]{2}|[0-9OoIl]{2})\b/g, (m,a,sep,b,y)=>`${dig(a)}${sep}${dig(b)}${sep}${dig(y)}`);
+    t = t.replace(/\b(\d{1,3}(?:,\d{3})+),(\d{2})\b/g, "$1.$2");
+    t = t.replace(/\bIn?v[o0]ice\b/gi,"Invoice").replace(/\bDe[l1I]ivery\s+Ord[e3]r\b/gi,"Delivery Order").replace(/\bQu[o0]tat[i1l][o0]n\b/gi,"Quotation").replace(/\bWarr[a4]nty\b/gi,"Warranty");
+    return t;
+  }
+  async function ocrImages(images, onProgress){
+    const w = await getOcrWorker();
+    let text = "", confSum = 0, wsum = 0;
+    for(let i=0;i<images.length;i++){
+      ocrProgress = p=>{ if(onProgress) onProgress((i + p) / images.length); };
+      const r = await ocrOne(w, images[i]);
+      const cleaned = cleanOcr(r.text); text += cleaned + "\n\n";
+      const wgt = Math.max(1, cleaned.replace(/\s/g,"").length); confSum += r.conf * wgt; wsum += wgt;
+    }
+    ocrProgress = null;
+    clearTimeout(ocrIdle); ocrIdle = setTimeout(()=>{ const w0 = ocrW; ocrW = null; ocrWP = null; try{ w0 && w0.terminate(); }catch(e){} }, 60000);
+    return {text, conf: wsum ? Math.round(confSum / wsum) : 0};
   }
   async function pdfPagesAsImages(doc){
     const out = [];
-    for(let p = 1; p <= Math.min(doc.numPages, 3); p++){
+    for(let p = 1; p <= Math.min(doc.numPages, 4); p++){
       const page = await doc.getPage(p);
-      const vp = page.getViewport({scale: 2.2});
+      const v0 = page.getViewport({scale: 1}), vp = page.getViewport({scale: Math.min(4, Math.max(2, 2600 / Math.max(v0.width, v0.height)))});
       const c = document.createElement("canvas"); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
       const ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height);
       await page.render({canvasContext: ctx, viewport: vp}).promise;
@@ -1938,22 +2032,32 @@ const CONFIG = {
     }
     return out;
   }
+  const ocrToast = f=>p=>{ const pc = Math.round(p*100); if(pc - (f.last||0) >= 10 || pc === 100){ f.last = pc; try{ toast(`Membaca teks daripada imej (${pc}%)\u2026`, 4000); }catch(e){} } };
+  window.cleanOcr = cleanOcr; window.prepImage = prepImage;
+  window.ocrText = async function(file){
+    const name = file.name.toLowerCase(), f = {};
+    if(name.endsWith(".pdf")){ const lib = await pdfLib(); const doc = await lib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise; return await ocrImages(await pdfPagesAsImages(doc), ocrToast(f)); }
+    if(/\.(jpe?g|png|webp)$/.test(name)) return await ocrImages([file], ocrToast(f));
+    return {text:"", conf:0};
+  };
   window.localExtractDoc = async function(file){
     const name = file.name.toLowerCase();
-    let text = "";
+    let text = "", ocr = null; const f = {};
     if(name.endsWith(".pdf")){
       const lib = await pdfLib();
       const doc = await lib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise;
       text = await pdfLayout(doc);
-      if(text.replace(/\s/g,"").length < 80) text = await ocrImages(await pdfPagesAsImages(doc));
+      if(text.replace(/\s/g,"").length < 80){ ocr = await ocrImages(await pdfPagesAsImages(doc), ocrToast(f)); text = ocr.text; }
     } else if(name.endsWith(".docx")){
       await loadScript(LIBS.mammoth);
       text = (await window.mammoth.extractRawText({arrayBuffer: await file.arrayBuffer()})).value || "";
     } else if(/\.(jpe?g|png|webp)$/.test(name)){
-      text = await ocrImages([file]);
+      ocr = await ocrImages([file], ocrToast(f)); text = ocr.text;
     } else throw {code: "type"};
     if(!text.trim()) throw {code: "empty"};
-    return window.parseDocument(text, file.name);
+    const res = window.parseDocument(text, file.name);
+    if(ocr) res.ocr = {conf: ocr.conf};
+    return res;
   };
 })();
 
@@ -2539,7 +2643,7 @@ async function fillStepFromDocs(k, files){
     const tk = STAGE_OF[r.docType], tst = d.stages[tk] ||= {}, src = r.stage || {};
     (STAGES.find(x=>x.k===tk)?.fields || []).forEach(f=>{ const v = src[f.k]; if(!f.mirror && v!=null && String(v).trim()!=="" && f.type!=="checks") tst[f.k] = ""; });
     const n = mergeInto(d, r);
-    msgs.push(`${file.name}: ${n} maklumat ${code} diisi`);
+    msgs.push(`${file.name}: ${n} maklumat ${code} diisi` + (r.ocr && r.ocr.conf < 80 ? ` (amaran: imej kurang jelas, keyakinan ${r.ocr.conf}%, semak dengan teliti)` : ""));
     if(k==="inv" && r.stage?.amount){ const po = Number(mirrorVal(d, "indent.amount"))||0, iv = Number(String(r.stage.amount).replace(/[^\d.]/g,""))||0; if(po && iv && Math.abs(po-iv)>0.009) msgs.push(`Amaran: jumlah invois ${money(iv)} tidak sama dengan Jumlah Tuntutan Indent ${money(po)}`); }
   }
   fillDialog(d);
@@ -2593,7 +2697,8 @@ async function readLetter(file){
       if(arr.length) return arr;
     }catch(e){}
   }
-  // Without Claude: best effort from the text
+  // Without Claude: best effort from the text (OCR for scans and photos)
+  if(!text.trim() && window.ocrText){ try{ text = (await window.ocrText(file)).text || ""; }catch(e){} }
   return text.trim() ? parseLettersText(text, file.name) : [];
 }
 async function fillFromLetters(files){
@@ -2919,7 +3024,7 @@ async function autoFill(files){
       } else if(/\.docx$/i.test(file.name)) att = ". Fail Word tidak dilampirkan; simpan sebagai PDF untuk menyimpan salinan";
       fillDialog(d);
       li.className = "ok";
-      li.textContent = `${file.name}: dibaca sebagai ${DOC_NAME[r.docType]}, ${n} maklumat diisi${att}.`;
+      li.textContent = `${file.name}: dibaca sebagai ${DOC_NAME[r.docType]}, ${n} maklumat diisi${att}.` + (r.ocr ? (r.ocr.conf < 80 ? ` Amaran: teks dibaca daripada imej dengan keyakinan ${r.ocr.conf}%, semak semua maklumat dengan teliti.` : ` Teks dibaca daripada imej (keyakinan ${r.ocr.conf}%), semak maklumat.`) : "");
     }catch(e){ li.className="warn"; li.textContent = `${file.name}: ${errText(e)}`; }
   }
   busy = false; $("#btnSave").disabled = false;
@@ -4602,7 +4707,7 @@ function trText(t){
 const BOX_EN = {"Dokumen Tender":"Tender document","Iklan":"Advert","Tarikh Tutup Tender":"Tender closing date","Penilaian Tender":"Tender evaluation","Minit Sokongan":"Support minute","Surat Setuju Terima dan Penolakan":"Award and reject letter","Surat Penerimaan daripada Pembekal":"Acceptance letter from vendor","Minit Permohonan kepada PU":"Request minute to MD"};
 Object.assign(EN, BOX_EN, {
   "Syarikat Berjaya":"Winning company", "Syarikat Ditolak":"Rejected companies", "Nama Syarikat (Pembekal)":"Company name (vendor)",
-  "Iklan belum selesai":"Advert not done", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
+  "Iklan belum selesai":"Advert not done", "Membaca teks daripada imej…":"Reading text from the image…", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
 });
 { const BN = Object.keys(BOX_EN).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|"), mt = m=>m==="Tawaran"?"tender":"quotation";
   EN_RX.unshift(
@@ -4637,6 +4742,12 @@ Object.assign(EN, BOX_EN, {
   );
 }
 EN_RX.unshift([/^Butiran: ralat (\d+)(.*)$/, "Details: error $1$2"], [/^Butiran: (.+)$/, "Details: $1"]);
+EN_RX.unshift(
+  [/^Membaca teks daripada imej \((\d+)%\)\u2026$/, "Reading text from the image ($1%)\u2026"],
+  [/^(.*) Amaran: teks dibaca daripada imej dengan keyakinan (\d+)%, semak semua maklumat dengan teliti\.$/, (m,a,n)=>`${trText(a)||a} Warning: the text was read from an image with only ${n}% confidence, check every detail carefully.`],
+  [/^(.*) Teks dibaca daripada imej \(keyakinan (\d+)%\), semak maklumat\.$/, (m,a,n)=>`${trText(a)||a} The text was read from an image (${n}% confidence), check the details.`],
+  [/^(.*) \(amaran: imej kurang jelas, keyakinan (\d+)%, semak dengan teliti\)$/, (m,a,n)=>`${trText(a)||a} (warning: the image is unclear, ${n}% confidence, check carefully)`]
+);
 const ID_EN = {usersDone:"Done"};
 let trBusy = false;
 const SKIP = "#pvPages, script, style, #meName";
