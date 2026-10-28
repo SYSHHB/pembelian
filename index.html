@@ -1299,6 +1299,7 @@ const CONFIG = {
   emailDomain: "@syayasan.edu.bn",
   ownerEmail: "helpdesk@syayasan.edu.bn",
   oneDriveHost: "syayasanedu-my.sharepoint.com",   // the school's OneDrive address
+  folderUrl: "https://syayasanedu-my.sharepoint.com/personal/it_helpdesk_syayasan_edu_bn/Documents/Sistem%20Pemantauan%20Pembelian",   // the shared folder in the owner's OneDrive
   folderName: "Sistem Pemantauan Pembelian",
   docsFolder: "Dokumen",
   pollSeconds: 30
@@ -1412,7 +1413,7 @@ const CONFIG = {
       // 1) Open the owner's folder straight from its address (works as soon as it is shared)
       const tryGet = async path=>{ try{ return await (await graph(path)).json(); }catch(e){ if(e.status===401 || e.code==="needs_reauth") throw e; return null; } };
       const ownerSite = CONFIG.ownerEmail.toLowerCase().replace(/[@.]/g, "_");
-      const folderUrl = `https://${CONFIG.oneDriveHost}/personal/${ownerSite}/Documents/${encodeURIComponent(CONFIG.folderName)}`;
+      const folderUrl = CONFIG.folderUrl || `https://${CONFIG.oneDriveHost}/personal/${ownerSite}/Documents/${encodeURIComponent(CONFIG.folderName)}`;
       const shareId = "u!" + btoa(unescape(encodeURIComponent(folderUrl))).replace(/=+$/,"").replace(/\//g,"_").replace(/\+/g,"-");
       let item = await tryGet(`/shares/${shareId}/driveItem`);
       // 2) Through the owner's drive by path
