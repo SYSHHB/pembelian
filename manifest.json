@@ -1,0 +1,31 @@
+{
+  "name": "SYSHHB IT Purchase Tracker",
+  "short_name": "Pembelian",
+  "description": "Sistem Pemantauan Pembelian SYSHHB IT",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "lang": "ms",
+  "background_color": "#1d9d46",
+  "theme_color": "#0a4a28",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
