@@ -842,6 +842,63 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 @keyframes spSlide{0%{left:-40%}100%{left:100%}}
 @media (prefers-reduced-motion:reduce){ #splash .sp-ring,#splash .sp-bar i{animation-duration:3.2s} }
 @media print{ #splash{display:none!important} }
+
+/* ===== Sidebar layout (same look as the SYSHHB IT Asset Inventory menu) ===== */
+.topbar,.nav-backdrop{display:none}
+body .hero .actions [hidden]{display:none!important}
+body .hero{position:fixed;top:0;bottom:0;left:0;width:268px;z-index:22;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;color:#fff;border-bottom:0;border-right:4px solid var(--gold);background:linear-gradient(180deg,var(--band-2) 0%,var(--band) 100%);transition:left .25s ease,box-shadow .25s}
+body .hero::after{display:none}
+body .hero .hero-in{max-width:none;margin:0;padding:20px 14px 16px;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto 1fr;align-items:center;gap:0 12px;flex:1 0 auto}
+body .hero .crest{width:52px;height:52px;border-radius:50%;flex:none}
+body .hero .hero-txt{min-width:0}
+body .hero h1{margin:0;font-size:17px;line-height:1.25;font-weight:800;display:flex;flex-direction:column}
+body .hero .actions{grid-column:1/-1;align-self:stretch;display:flex;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:2px;width:auto;margin-top:16px;padding-top:10px;border-top:1px solid rgba(255,255,255,.13)}
+body .hero .actions .btn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:transparent;border:0;border-radius:12px;color:#e6f2ea;padding:11px 14px;font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,color .15s}
+body .hero .actions .btn:hover{background:rgba(255,255,255,.1);color:#fff;border-color:transparent}
+body .hero .actions .btn.active{background:#fff;color:#1f9d55}
+body .hero .actions .btn::before{content:"";flex:none;width:20px;height:20px;background:currentColor;-webkit-mask:var(--ic,none) center/contain no-repeat;mask:var(--ic,none) center/contain no-repeat}
+body .hero .actions .btn.primary{justify-content:flex-start;background:var(--gold);color:var(--gold-ink);font-weight:800;margin:2px 0 6px;padding:12px 14px;order:0;grid-column:auto}
+body .hero .actions .btn.primary:hover{background:var(--gold);filter:brightness(1.07)}
+body .hero .bell-wrap{display:block;width:100%;padding:0}
+body .hero .bell-wrap > .btn{width:100%;height:auto}
+body .hero .badge,body .hero .nbadge{margin-left:auto;background:var(--gold);color:var(--gold-ink);font-weight:800;font-size:12px;line-height:20px;min-width:24px;padding:0 8px;border-radius:999px;text-align:center}
+body .hero .nav-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8fb5a1;margin:16px 14px 6px}
+body .hero .nav-foot{margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.13);display:flex;flex-direction:column;gap:10px}
+body .hero .nav-row{display:flex;align-items:center;gap:8px}
+body .hero .nav-row .lang-sw{flex:1;justify-content:center;order:0;justify-self:auto}
+body .hero .nav-row .lang-sw button{flex:1}
+body .hero .actions .me-chip{order:0;grid-column:auto;width:100%;max-width:none;border-radius:14px;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);padding:8px 10px}
+body .hero .note-panel{position:fixed;z-index:60;left:284px;top:90px;right:auto;width:min(400px,calc(100vw - 300px));max-height:calc(100vh - 110px);color:var(--ink)}
+#stats,#budgets,#catTabs{scroll-margin-top:76px}
+@media (min-width:1000px){ body{padding-left:268px} }
+@media (max-width:999px){
+  body{padding-top:calc(58px + env(safe-area-inset-top,0px))}
+  body .hero{left:-310px;width:min(290px,84vw)}
+  body.nav-open .hero{left:0;box-shadow:8px 0 30px rgba(0,0,0,.4)}
+  body.nav-open{overflow:hidden}
+  body .hero .note-panel{left:12px;right:12px;width:auto;top:calc(env(safe-area-inset-top,0px) + 64px);max-height:calc(100dvh - 90px)}
+  .topbar{display:flex;position:fixed;top:0;left:0;right:0;z-index:18;align-items:center;gap:10px;padding:env(safe-area-inset-top,0px) 10px 0;height:calc(58px + env(safe-area-inset-top,0px));color:#fff;background:linear-gradient(90deg,var(--band-2),var(--band));border-bottom:3px solid var(--gold)}
+  .topbar img{width:36px;height:36px;border-radius:50%;background:#fff;flex:none}
+  .topbar strong{flex:1;min-width:0;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tb-btn{position:relative;flex:none;width:42px;height:42px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center;cursor:pointer}
+  .tb-btn svg{width:22px;height:22px}
+  .tb-badge{position:absolute;top:1px;right:1px;min-width:18px;height:18px;line-height:18px;padding:0 4px;border-radius:99px;background:var(--gold);color:var(--gold-ink);font-size:11px;font-weight:800;text-align:center}
+  .tb-badge[hidden]{display:none}
+  .nav-backdrop{display:block;position:fixed;inset:0;z-index:21;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
+  body.nav-open .nav-backdrop{opacity:1;visibility:visible;transition:opacity .25s}
+}
+@media print{ .hero,.topbar,.nav-backdrop{display:none!important} body{padding:0!important} }
+body .hero .actions #btnNew{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Ccircle%20cx='12'%20cy='12'%20r='10'/%3E%3Cpath%20d='M8%2012h8'/%3E%3Cpath%20d='M12%208v8'/%3E%3C/svg%3E")}
+body .hero .actions #navDash{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='3'%20y='3'%20width='7'%20height='7'%20rx='1'/%3E%3Crect%20x='14'%20y='3'%20width='7'%20height='7'%20rx='1'/%3E%3Crect%20x='14'%20y='14'%20width='7'%20height='7'%20rx='1'/%3E%3Crect%20x='3'%20y='14'%20width='7'%20height='7'%20rx='1'/%3E%3C/svg%3E")}
+body .hero .actions #navList{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Ccircle%20cx='8'%20cy='21'%20r='1'/%3E%3Ccircle%20cx='19'%20cy='21'%20r='1'/%3E%3Cpath%20d='M2.05%202.05h2l2.66%2012.42a2%202%200%200%200%202%201.58h9.78a2%202%200%200%200%201.95-1.57l1.65-7.43H5.12'/%3E%3C/svg%3E")}
+body .hero .actions #navBud{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M19%207V4a1%201%200%200%200-1-1H5a2%202%200%200%200%200%204h15a1%201%200%200%201%201%201v4h-3a2%202%200%200%200%200%204h3a1%201%200%200%200%201-1v-2a1%201%200%200%200-1-1'/%3E%3Cpath%20d='M3%205v14a2%202%200%200%200%202%202h15a1%201%200%200%200%201-1v-4'/%3E%3C/svg%3E")}
+body .hero .actions #btnBell{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M6%208a6%206%200%200%201%2012%200c0%207%203%209%203%209H3s3-2%203-9'/%3E%3Cpath%20d='M10.3%2021a1.94%201.94%200%200%200%203.4%200'/%3E%3C/svg%3E")}
+body .hero .actions #btnManual{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M12%207v14'/%3E%3Cpath%20d='M3%2018a1%201%200%200%201-1-1V4a1%201%200%200%201%201-1h5a4%204%200%200%201%204%204%204%204%200%200%201%204-4h5a1%201%200%200%201%201%201v13a1%201%200%200%201-1%201h-6a3%203%200%200%200-3%203%203%203%200%200%200-3-3z'/%3E%3C/svg%3E")}
+body .hero .actions #btnCsv{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4'/%3E%3Cpath%20d='M7%2010l5%205%205-5'/%3E%3Cpath%20d='M12%2015V3'/%3E%3C/svg%3E")}
+body .hero .actions #btnImport{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M21%2015v4a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2v-4'/%3E%3Cpath%20d='M17%208l-5-5-5%205'/%3E%3Cpath%20d='M12%203v12'/%3E%3C/svg%3E")}
+body .hero .actions #btnUsers{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M16%2021v-2a4%204%200%200%200-4-4H6a4%204%200%200%200-4%204v2'/%3E%3Ccircle%20cx='9'%20cy='7'%20r='4'/%3E%3Cpath%20d='M22%2021v-2a4%204%200%200%200-3-3.87'/%3E%3Cpath%20d='M16%203.13a4%204%200%200%201%200%207.75'/%3E%3C/svg%3E")}
+body .hero .actions #btnAudit{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M8%206h13'/%3E%3Cpath%20d='M8%2012h13'/%3E%3Cpath%20d='M8%2018h13'/%3E%3Cpath%20d='M3%206h.01'/%3E%3Cpath%20d='M3%2012h.01'/%3E%3Cpath%20d='M3%2018h.01'/%3E%3C/svg%3E")}
+body .hero .actions #msSignOut{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M9%2021H5a2%202%200%200%201-2-2V5a2%202%200%200%201%202-2h4'/%3E%3Cpath%20d='M16%2017l5-5-5-5'/%3E%3Cpath%20d='M21%2012H9'/%3E%3C/svg%3E")}
 </style>
 </head>
 <body>
@@ -872,25 +929,25 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
   if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) addEventListener("load", function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
 })();
 </script>
-<header class="hero">
+<div class="nav-backdrop" id="navBackdrop"></div>
+<div class="topbar" id="topbar">
+  <button class="tb-btn" id="navToggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="sideNav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <img id="tbCrest" alt="">
+  <strong>SYSHHB IT <span>Sistem Pemantauan Pembelian</span></strong>
+  <button class="tb-btn" id="tbBell" type="button" aria-label="Pemberitahuan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="tb-badge" id="tbBadge" hidden>0</span></button>
+</div>
+<header class="hero" id="sideNav">
   <div class="hero-in">
     <img class="crest" id="heroCrest" alt="Lambang Yayasan Sultan Haji Hassanal Bolkiah">
     <div class="hero-txt">
       <h1>SYSHHB IT <span>Sistem Pemantauan Pembelian</span></h1>
     </div>
     <div class="actions">
-      <span class="me-chip" id="meChip" hidden><img id="meAvatar" alt=""><span><b id="meName"></b><small id="mode">Memuatkan…</small></span></span>
-      <button class="btn" id="btnUsers" hidden>Pengguna</button>
-      <button class="btn" id="btnAudit" hidden>Log Audit</button>
-      <button class="theme-btn" id="btnTheme" type="button" aria-label="Tukar ke mod gelap" title="Tukar ke mod gelap">
-        <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M21 14.5A8.5 8.5 0 0 1 9.5 3a.5.5 0 0 0-.6-.6A10 10 0 1 0 21.6 15.1a.5.5 0 0 0-.6-.6z"/></svg>
-        <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
-      </button>
-      <div class="lang-sw" id="btnLang" role="group" aria-label="Bahasa / Language"><button type="button" data-lang="ms" aria-pressed="true">BM</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
-      <button class="btn" id="btnManual" type="button">📘 Panduan</button>
-      <button class="btn" id="btnCsv">Eksport ke Excel (CSV)</button>
-      <button class="btn" id="btnImport" type="button" hidden>Import dari Excel (CSV)</button>
-      <input type="file" id="importFile" accept=".csv,text/csv" hidden>
+      <button class="btn primary" id="btnNew" hidden>Pembelian baharu</button>
+      <div class="nav-label">Gambaran Keseluruhan</div>
+      <button class="btn nav-go active" id="navDash" type="button" data-go="stats">Papan Pemuka</button>
+      <button class="btn nav-go" id="navList" type="button" data-go="catTabs">Pembelian<span class="nbadge" id="navCount">0</span></button>
+      <button class="btn nav-go" id="navBud" type="button" data-go="budgets">Anggaran</button>
       <div class="bell-wrap">
         <button class="btn" id="btnBell" aria-expanded="false" aria-controls="notePanel">Pemberitahuan<span class="badge" id="badge" hidden>0</span></button>
         <div class="note-panel" id="notePanel" hidden>
@@ -899,7 +956,23 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
           <ul id="noteList"></ul>
         </div>
       </div>
-      <button class="btn primary" id="btnNew" hidden>Pembelian baharu</button>
+      <div class="nav-label">Alat</div>
+      <button class="btn" id="btnManual" type="button">Panduan</button>
+      <button class="btn" id="btnCsv">Eksport ke Excel (CSV)</button>
+      <button class="btn" id="btnImport" type="button" hidden>Import dari Excel (CSV)</button>
+      <input type="file" id="importFile" accept=".csv,text/csv" hidden>
+      <button class="btn" id="btnUsers" hidden>Pengguna</button>
+      <button class="btn" id="btnAudit" hidden>Log Audit</button>
+      <div class="nav-foot" id="navFoot">
+        <span class="me-chip" id="meChip" hidden><img id="meAvatar" alt=""><span><b id="meName"></b><small id="mode">Memuatkan…</small></span></span>
+        <div class="nav-row">
+          <button class="theme-btn" id="btnTheme" type="button" aria-label="Tukar ke mod gelap" title="Tukar ke mod gelap">
+        <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M21 14.5A8.5 8.5 0 0 1 9.5 3a.5.5 0 0 0-.6-.6A10 10 0 1 0 21.6 15.1a.5.5 0 0 0-.6-.6z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+      </button>
+          <div class="lang-sw" id="btnLang" role="group" aria-label="Bahasa / Language"><button type="button" data-lang="ms" aria-pressed="true">BM</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -1134,7 +1207,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     </details>
 
     <details><summary>8. Pemberitahuan</summary>
-      <p>Tekan <b>Pemberitahuan</b> di bahagian atas. Tab <b>Semua</b> menunjukkan semua peringatan; tab <b>Tender</b> memantau tarikh tender; tab <b>Minit</b> menunjukkan minit yang tertunggak.</p>
+      <p>Tekan <b>Pemberitahuan</b> dalam menu di sebelah kiri (pada telefon, tekan ikon loceng di bahagian atas). Tab <b>Semua</b> menunjukkan semua peringatan; tab <b>Tender</b> memantau tarikh tender; tab <b>Minit</b> menunjukkan minit yang tertunggak.</p>
       <p>Tab <b>Tender</b> menunjukkan tarikh dikeluarkan dan tarikh tutup setiap tender, serta peringatan <b>3, 2 dan 1 hari</b> sebelum tender dibuka dan sebelum tender ditutup, pada hari ia dibuka atau ditutup, dan apabila tarikh tutup telah lepas. Yang paling mendesak dipaparkan dahulu.</p>
       <p>Peringatan dihantar untuk langkah yang belum siap, tarikh tutup tender, dokumen yang belum dilampirkan dan invois yang tidak sama dengan jumlah Indent. Tekan peringatan untuk membuka pembelian itu.</p>
     </details>
@@ -1266,7 +1339,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
     </details>
 
     <details><summary>8. Notifications</summary>
-      <p>Press <b>Notifications</b> at the top. The <b>All</b> tab shows every reminder; the <b>Tender</b> tab monitors tender dates; the <b>Minutes</b> tab shows outstanding minutes.</p>
+      <p>Press <b>Notifications</b> in the menu on the left (on a phone, tap the bell icon at the top). The <b>All</b> tab shows every reminder; the <b>Tender</b> tab monitors tender dates; the <b>Minutes</b> tab shows outstanding minutes.</p>
       <p>The <b>Tender</b> tab shows each tender’s issue date and closing date, with reminders <b>3, 2 and 1 days</b> before a tender opens and before it closes, on the day itself, and when the closing date has passed. The most urgent come first.</p>
       <p>Reminders are sent for unfinished steps, tender closing dates, documents not yet attached, and invoices that don’t match the Indent amount. Tap a reminder to open that purchase.</p>
     </details>
@@ -1538,7 +1611,7 @@ const CONFIG = {
   function signOut(){ try{ sessionStorage.clear(); }catch(e){} pca.logoutRedirect({account, postLogoutRedirectUri: redirectUri}); }
   function addSignOut(){
     if(document.getElementById("msSignOut")) return;
-    const host = document.querySelector(".hero .actions"); if(!host) return;
+    const host = document.querySelector(".hero .nav-foot") || document.querySelector(".hero .actions"); if(!host) return;
     const b = document.createElement("button");
     b.type = "button"; b.className = "btn"; b.id = "msSignOut"; b.textContent = "Log keluar"; b.onclick = signOut;
     host.appendChild(b);
@@ -2488,6 +2561,7 @@ function renderBudgets(){
 }
 function parseBh(f){ const [y,c,i] = f.slice(3).split("|"); return {y, c, h: headsFor(y, c)[+i]}; }
 function render(){
+  { const nc = $("#navCount"); if(nc) nc.textContent = items.length; }
   renderOverview();
   renderNotes();
   renderStats();
@@ -3286,6 +3360,7 @@ function renderNotes(){
   const all = buildNotes();
   const unread = all.filter(n=>!seen.has(n.id)).length;
   const b = $("#badge"); b.hidden = !unread; b.textContent = unread;
+  { const tb = $("#tbBadge"); if(tb){ tb.hidden = !unread; tb.textContent = unread; } }
   const mn = all.filter(n=>n.cat==="minit"), mnUnread = mn.filter(n=>!seen.has(n.id)).length;
   const tn = all.filter(n=>n.cat==="tender"), tnUnread = tn.filter(n=>!seen.has(n.id)).length;
   $("#ntTender").textContent = tn.length; $("#ntTender").classList.toggle("on", tnUnread>0);
@@ -4840,7 +4915,7 @@ function trText(t){
 const BOX_EN = {"Dokumen Tender":"Tender document","Iklan":"Advert","Tarikh Tutup Tender":"Tender closing date","Penilaian Tender":"Tender evaluation","Minit Sokongan":"Support minute","Surat Setuju Terima dan Penolakan":"Award and reject letter","Surat Penerimaan daripada Pembekal":"Acceptance letter from vendor","Minit Permohonan kepada PU":"Request minute to MD"};
 Object.assign(EN, BOX_EN, {
   "Syarikat Berjaya":"Winning company", "Syarikat Ditolak":"Rejected companies", "Nama Syarikat (Pembekal)":"Company name (vendor)",
-  "Iklan belum selesai":"Advert not done", "Membaca teks daripada imej…":"Reading text from the image…", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
+  "Iklan belum selesai":"Advert not done", "Gambaran Keseluruhan":"Overview", "Alat":"Tools", "Papan Pemuka":"Dashboard", "Anggaran":"Budget", "Pembelian":"Purchases", "Panduan":"User guide", "Buka menu":"Open menu", "Membaca teks daripada imej…":"Reading text from the image…", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
 });
 { const BN = Object.keys(BOX_EN).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|"), mt = m=>m==="Tawaran"?"tender":"quotation";
   EN_RX.unshift(
@@ -5014,6 +5089,24 @@ async function init(){
   }catch(e){}
 }
 
+/* ---------- Sidebar navigation ---------- */
+(function(){
+  const body = document.body, mq = matchMedia("(max-width:999px)");
+  const setOpen = o=>{ body.classList.toggle("nav-open", o); $("#navToggle").setAttribute("aria-expanded", String(o)); };
+  $("#navToggle").onclick = ()=>setOpen(!body.classList.contains("nav-open"));
+  $("#navBackdrop").onclick = ()=>setOpen(false);
+  document.addEventListener("keydown", e=>{ if(e.key === "Escape") setOpen(false); });
+  mq.addEventListener("change", ()=>setOpen(false));
+  $("#tbBell").onclick = e=>{ e.stopPropagation(); $("#btnBell").click(); };
+  $("#tbCrest").src = IMG_CREST2;
+  document.querySelector(".hero .actions").addEventListener("click", e=>{ const b = e.target.closest("button"); if(b && !b.closest(".nav-row") && mq.matches) setOpen(false); });
+  const mark = id=>document.querySelectorAll(".nav-go").forEach(x=>x.classList.toggle("active", x.id === id));
+  document.querySelectorAll(".nav-go").forEach(b=>b.onclick = ()=>{ const t = document.getElementById(b.dataset.go); if(t) t.scrollIntoView({behavior:"smooth", block:"start"}); mark(b.id); });
+  const spy = [["navDash","stats"], ["navBud","budgets"], ["navList","catTabs"]];
+  let tick = false;
+  addEventListener("scroll", ()=>{ if(tick) return; tick = true; requestAnimationFrame(()=>{ tick = false; let cur = "navDash"; if(scrollY > 40){ for(const [id, sec] of spy){ const el = document.getElementById(sec); if(el && el.getBoundingClientRect().top <= 150) cur = id; } } mark(cur); }); }, {passive:true});
+})();
+
 $("#btnNew").onclick = ()=>openDlg(null);
 $("#btnSave").onclick = save;
 $("#btnDel").onclick = del;
@@ -5060,7 +5153,9 @@ $("#uSearch").onblur = ()=>setTimeout(()=>{ $("#uResults").hidden = true; }, 150
 $("#gateCrest").src = IMG_CREST2;
 $("#sort").onchange = render;
 $("#heroCrest").src = IMG_CREST2;
-$("#btnBell").onclick = e=>{ e.stopPropagation(); const p = $("#notePanel"); p.hidden = !p.hidden; $("#btnBell").setAttribute("aria-expanded", String(!p.hidden)); };
+$("#btnBell").onclick = e=>{ e.stopPropagation(); const p = $("#notePanel"); p.hidden = !p.hidden; $("#btnBell").setAttribute("aria-expanded", String(!p.hidden));
+  if(matchMedia("(max-width:999px)").matches){ document.body.classList.remove("nav-open"); p.style.left = p.style.top = ""; }
+  else if(!p.hidden){ const r = $("#btnBell").getBoundingClientRect(); p.style.left = "284px"; p.style.top = Math.max(12, Math.min(r.top - 10, innerHeight * 0.3)) + "px"; } };
 $("#notePanel").onclick = e=>e.stopPropagation();
 document.addEventListener("click", closePanel);
 document.addEventListener("keydown", e=>{ if(e.key==="Escape") closePanel(); });
