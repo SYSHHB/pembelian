@@ -1,13 +1,13 @@
 {
-  "name": "SYSHHB IT Purchase Tracker",
-  "short_name": "Pembelian",
+  "name": "SYSHHB Pembelian",
+  "short_name": "SYSHHB Pembelian",
   "description": "Sistem Pemantauan Pembelian SYSHHB IT",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "lang": "ms",
-  "background_color": "#1d9d46",
-  "theme_color": "#0a4a28",
+  "background_color": "#0f5e34",
+  "theme_color": "#0f5e34",
   "icons": [
     {
       "src": "icon-192.png",
