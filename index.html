@@ -917,6 +917,11 @@ body .hero .actions #btnInstall{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='htt
 #iosDlg{width:min(460px,94vw);padding:0}
 @media (max-width:560px){ .install-banner{flex-wrap:wrap} .install-banner .ib-t{flex:1 1 calc(100% - 110px)} .install-banner .btn.primary{margin-left:52px} }
 @media (prefers-reduced-motion:reduce){ .inst-dot{animation:none} }
+
+/* A4 pages with Moderate margins: the form sits inside the margins and is scaled to fit the page */
+.a4.mod{padding:0!important;height:297mm;min-height:0;overflow:hidden}
+.a4.land.mod{height:210mm}
+.a4.mod > .fitwrap{position:absolute;transform-origin:0 0}
 </style>
 </head>
 <body>
@@ -3785,10 +3790,38 @@ function liveTotals(f){
   const cell = document.querySelector("#pvPages .t-items tbody tr:last-child td:last-child .fld");
   if(cell) cell.textContent = tot ? "B$"+amt(tot) : "";
 }
+/* Put every form page inside A4 "Moderate" margins (2.54 cm top and bottom, 1.91 cm left and right) and scale the form down
+   only as much as needed to keep the page as it is today. T-607 (landscape) uses 1.43 cm at the top, like its Word form. */
+function modPages(){
+  const host = $("#pvPages"); if(!host || !host.getClientRects().length) return;   // measure only while the preview is open
+  const mm = 96 / 25.4;
+  host.querySelectorAll(".a4:not(.rep):not(.manp)").forEach(pg=>{
+    pg.style.zoom = "";
+    const land = pg.classList.contains("land");
+    const PW = (land ? 297 : 210) * mm, PH = (land ? 210 : 297) * mm;
+    const ml = 19.1 * mm, mt = (land ? 14.3 : 25.4) * mm, mb = 25.4 * mm, cw = PW - 2 * ml, ch = PH - mt - mb;
+    pg.classList.add("mod");
+    let w = pg.querySelector(":scope > .fitwrap");
+    if(!w){
+      w = document.createElement("div"); w.className = "fitwrap";
+      [...pg.childNodes].forEach(n=>{ if(n.nodeType === 1 && /^(absolute|fixed)$/.test(getComputedStyle(n).position)) return; w.appendChild(n); });
+      pg.appendChild(w);
+    }
+    w.style.left = ml + "px"; w.style.top = mt + "px";
+    const fit = z=>{ w.style.width = (cw / z) + "px"; w.style.transform = z < 1 ? `scale(${z})` : ""; return w.offsetHeight * z; };
+    if(fit(1) > ch){
+      let lo = 0.5, hi = 1;
+      for(let i = 0; i < 9; i++){ const mid = (lo + hi) / 2; if(fit(mid) <= ch) lo = mid; else hi = mid; }
+      fit(lo);
+    }
+  });
+}
+(function(){ let t = null; const h = $("#pvPages"); if(h) h.addEventListener("input", ()=>{ clearTimeout(t); t = setTimeout(modPages, 150); }); })();
 function renderPv(){
   const host = $("#pvPages");
   host.innerHTML = pvForm==="manual" ? `<div class="a4 manp"></div>` : pvForm==="report" ? buildReport(pvDraft) : pvForm==="601" ? build601(pvDraft) : pvForm==="602" ? build602(pvDraft) : build607(pvDraft);
   pvChanged = false;
+  modPages();
   fitPages();
 }
 // Shrink the paper pages to the screen width on phones so the whole form is visible
@@ -3959,7 +3992,8 @@ function openPrint(form){
   $("#pageSize").textContent = `@media print{@page{size:${f.page};margin:0}}`;
   renderPv();
   $("#printView").showModal();
-  requestAnimationFrame(fitPages);
+  modPages();
+  fitPages();
 }
 function applyPv(){ if(pvDraft && pvEdit){ pvDraft.lines = (pvDraft.lines||[]).filter(l=>l.desc||l.qty||l.unitPrice); fillDialog(pvDraft); } }
 (function wirePv(){
@@ -4504,6 +4538,21 @@ function wordValues(form, d){
   }
   return {v, lists};
 }
+/* A4 paper with "Moderate" margins (top and bottom 2.54 cm, left and right 1.91 cm) on every Word form.
+   The text is scaled down a little on 601 and 602 so the larger margins do not push them onto an extra page.
+   T-607 keeps its original top margin, because its logo and table are placed against the top of the page. */
+const WORD_FIT = {"601": 0.92, "602": 0.92, "607": 1};
+function wordPage(xml, form){
+  const land = form === "607", W = land ? 16838 : 11906, H = land ? 11906 : 16838;
+  xml = xml.replace(/<w:pgSz[^>]*\/>/, `<w:pgSz w:w="${W}" w:h="${H}"${land ? ' w:orient="landscape"' : ""} w:code="9"/>`)
+           .replace(/<w:pgMar[^>]*\/>/, `<w:pgMar w:top="${land ? 810 : 1440}" w:right="1080" w:bottom="1440" w:left="1080" w:header="720" w:footer="720" w:gutter="0"/>`);
+  const f = WORD_FIT[form] || 1;
+  if(f < 1){
+    xml = xml.replace(/<w:sz w:val="(\d+)"\/>/g, (m, n)=>`<w:sz w:val="${Math.max(2, Math.round(n * f))}"/>`)
+             .replace(/<w:szCs w:val="(\d+)"\/>/g, (m, n)=>`<w:szCs w:val="${Math.max(2, Math.round(n * f))}"/>`);
+  }
+  return xml;
+}
 async function buildWordForm(form, d){
   const b64 = WORD_TPL[form];
   const bin = atob(b64), bytes = new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
@@ -4513,6 +4562,7 @@ async function buildWordForm(form, d){
   let xml = new TextDecoder().decode(docFile.data);
   lists.forEach(L=>{ xml = repeatAround(xml, L.ph, L.tag, L.items, L.fill); });
   xml = xml.replace(/\{\{([A-Za-z0-9_]+)\}\}/g, (m0, k)=>wxEsc(v[k] ?? ""));
+  xml = wordPage(xml, form);
   docFile.data = new TextEncoder().encode(xml);
   return WX.zip(files);
 }
