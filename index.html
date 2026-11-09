@@ -927,6 +927,8 @@ body .hero .actions #btnInstall{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='htt
 .a4.mod{padding:0!important;height:297mm;min-height:0;overflow:hidden}
 .a4.land.mod{height:210mm}
 .a4.mod > .fitwrap{position:absolute;transform-origin:0 0}
+/* An empty form field must stay plain blank: the app's general ".empty" box style (gold top border, dashed frame, big padding) must not leak onto it */
+.pv-pages .fld.empty{border-top:0;border-left:0;border-right:0;border-radius:0;padding-top:0;padding-left:0;padding-right:0;text-align:inherit;background:transparent}
 </style>
 </head>
 <body>
