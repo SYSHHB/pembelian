@@ -1071,6 +1071,9 @@ dialog{border-radius:22px;border:1px solid var(--line);box-shadow:0 24px 70px rg
 .cd-chips{display:flex;flex-direction:column;gap:6px;margin-top:-2px}
 .cd-t{font-size:12.5px;color:var(--muted);font-weight:600}
 .qchip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+#msGate .ms-detail{font-size:12px;color:var(--muted);margin:0 0 14px;word-break:break-word}
+#msGate a.btn{display:block;width:100%;box-sizing:border-box;color:var(--ink)}
+.u-list .btn[data-share]{padding:6px 10px;font-size:12.5px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -1629,6 +1632,7 @@ dialog{border-radius:22px;border:1px solid var(--line);box-shadow:0 24px 70px rg
     </div>
     <h4>Pengguna <span class="ua-count" id="uCount">0</span></h4>
     <p class="u-note" id="uPolicy"></p>
+      <p class="u-note" id="uShareNote">Folder OneDrive sistem dikongsi secara automatik apabila pengguna ditambah. Jika seseorang masih melihat "Belum ada akses", tekan Kongsi folder pada namanya.</p>
     <ul class="u-list" id="uMembers"></ul>
     <details class="ua-help">
       <summary>Pentadbir dan perkongsian</summary>
@@ -1811,9 +1815,15 @@ const CONFIG = {
       pca.loginRedirect({scopes: SCOPES, prompt: "select_account"});
     };
   }
-  function showMessage(title, msg, retry){
-    const o = overlay(`<h2>${esc(title)}</h2><div class="no" style="margin-bottom:14px">${esc(msg)}</div>${retry?`<button type="button" class="btn primary" id="msRetry">Cuba lagi</button>`:""}<button type="button" class="btn" id="msOut" style="margin-top:8px">Log keluar</button>`);
+  function showMessage(title, msg, retry, extra){
+    const ex = extra || {};
+    const o = overlay(`<h2>${esc(title)}</h2><div class="no" style="margin-bottom:14px">${esc(msg)}</div>${ex.detail?`<p class="ms-detail">${esc(ex.detail)}</p>`:""}${retry?`<button type="button" class="btn primary" id="msRetry">Cuba lagi</button>`:""}${ex.ask?`<button type="button" class="btn" id="msAsk" style="margin-top:8px">Salin mesej untuk pemilik sistem</button><a class="btn" id="msMail" style="margin-top:8px;text-align:center;text-decoration:none">E-mel pemilik sistem</a>`:""}<button type="button" class="btn" id="msOut" style="margin-top:8px">Log keluar</button>`);
     if(retry) o.querySelector("#msRetry").onclick = ()=>location.reload();
+    if(ex.ask){
+      const ab = o.querySelector("#msAsk");
+      ab.onclick = async ()=>{ try{ await navigator.clipboard.writeText(ex.ask); ab.textContent = "Mesej disalin"; }catch(e){ window.prompt("Salin mesej ini:", ex.ask); } };
+      o.querySelector("#msMail").href = "mailto:" + CONFIG.ownerEmail + "?subject=" + encodeURIComponent(ex.subject || "") + "&body=" + encodeURIComponent(ex.ask);
+    }
     o.querySelector("#msOut").onclick = signOut;
   }
   function hideOverlay(){ const o = document.getElementById("msGate"); if(o) o.hidden = true; }
@@ -1853,13 +1863,14 @@ const CONFIG = {
       ROOT = {driveId: item.parentReference.driveId, id: item.id, webUrl: item.webUrl};
     } else {
       // 1) Open the owner's folder straight from its address (works as soon as it is shared)
-      const tryGet = async path=>{ try{ return await (await graph(path)).json(); }catch(e){ if(e.status===401 || e.code==="needs_reauth") throw e; return null; } };
+      const diag = [];
+      const tryGet = async (label, path)=>{ try{ return await (await graph(path)).json(); }catch(e){ if(e.status===401 || e.code==="needs_reauth") throw e; diag.push(label + " " + (e.status || e.code || "error")); return null; } };
       const ownerSite = CONFIG.ownerEmail.toLowerCase().replace(/[@.]/g, "_");
       const folderUrl = CONFIG.folderUrl || `https://${CONFIG.oneDriveHost}/personal/${ownerSite}/Documents/${encodeURIComponent(CONFIG.folderName)}`;
       const shareId = "u!" + btoa(unescape(encodeURIComponent(folderUrl))).replace(/=+$/,"").replace(/\//g,"_").replace(/\+/g,"-");
-      let item = await tryGet(`/shares/${shareId}/driveItem`);
+      let item = await tryGet("link", `/shares/${shareId}/driveItem`);
       // 2) Through the owner's drive by path
-      if(!item) item = await tryGet(`/users/${encodeURIComponent(CONFIG.ownerEmail)}/drive/root:/${encodeURIComponent(CONFIG.folderName)}`);
+      if(!item) item = await tryGet("owner-drive", `/users/${encodeURIComponent(CONFIG.ownerEmail)}/drive/root:/${encodeURIComponent(CONFIG.folderName)}`);
       if(item && item.id){
         ROOT = {driveId: item.parentReference.driveId, id: item.id, webUrl: item.webUrl};
       } else {
@@ -1871,8 +1882,8 @@ const CONFIG = {
             found = (r.value||[]).find(x=>(x.name === CONFIG.folderName || x.remoteItem?.name === CONFIG.folderName) && x.remoteItem && x.remoteItem.folder);
             url = r["@odata.nextLink"] || null;
           }
-        }catch(e){ if(e.code==="needs_reauth") throw e; }
-        if(!found) throw {code:"not_shared"};
+        }catch(e){ if(e.code==="needs_reauth") throw e; diag.push("shared-with-me " + (e.status || e.code || "error")); }
+        if(!found) throw {code:"not_shared", diag};
         ROOT = {driveId: found.remoteItem.parentReference.driveId, id: found.remoteItem.id, webUrl: found.remoteItem.webUrl || found.webUrl};
       }
     }
@@ -1882,6 +1893,14 @@ const CONFIG = {
       DOCS = await (await graph(`/drives/${ROOT.driveId}/items/${ROOT.id}/children`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({name: CONFIG.docsFolder, folder:{}, "@microsoft.graph.conflictBehavior":"fail"})})).json();
     }
   }
+
+  /* Share the system folder with a person: Can edit for Pentadbir and Penyunting, Can view for Pemerhati */
+  window.msShareFolder = async function(email, role){
+    if(!ROOT) throw {code:"no_folder"};
+    await graph(`/drives/${ROOT.driveId}/items/${ROOT.id}/invite`, {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({requireSignIn:true, sendInvitation:false, roles:[role === "viewer" ? "read" : "write"], recipients:[{email}]})});
+    return true;
+  };
 
   /* ---------- JSON files in the folder ---------- */
   const fileUrl = name=>`/drives/${ROOT.driveId}/items/${ROOT.id}:/${encodeURIComponent(name)}`;
@@ -2104,7 +2123,11 @@ const CONFIG = {
     hideOverlay(); if(window.__splash) window.__splash.show();   // the loading screen is shown while the folder opens
     try{ await resolveFolder(); }
     catch(e){
-      if(e.code === "not_shared") showMessage("Belum ada akses", `Folder "${CONFIG.folderName}" di OneDrive belum dikongsi dengan ${email}. Minta pemilik sistem berkongsi folder itu dengan anda, kemudian cuba lagi.`, true);
+      if(e.code === "not_shared") showMessage("Belum ada akses", `Folder "${CONFIG.folderName}" di OneDrive belum dikongsi dengan ${email}. Minta pemilik sistem berkongsi folder itu dengan anda, kemudian cuba lagi.`, true, {
+      detail: "Butiran: " + (e.diag && e.diag.length ? e.diag.join("; ") : "folder not found"),
+      subject: "Mohon akses: SYSHHB IT Purchase Tracker",
+      ask: `Salam, mohon kongsikan folder OneDrive "${CONFIG.folderName}" dengan ${email} (boleh sunting) dan tambahkan saya dalam Pengguna, supaya saya boleh menggunakan SYSHHB IT Purchase Tracker. Terima kasih.`
+    });
       else if(e.code !== "needs_reauth") showMessage("Tidak dapat menyambung", "OneDrive tidak dapat dibuka sekarang. Semak sambungan internet anda dan cuba lagi.", true);
       return;
     }
@@ -4968,6 +4991,7 @@ function showMe(){
 }
 let uChosen = null, uHits = [];
 const ROLE_NAME = {viewer:"Pemerhati", editor:"Penyunting", admin:"Pentadbir"};
+function shareBtn(m){ return window.msShareFolder ? `<button type="button" class="btn" data-share="${esc(m.id)}">Kongsi folder</button>` : ""; }
 async function renderMembers(){
   const admins = $("#uAdmins"), host = $("#uMembers"); if(!host) return;
   admins.innerHTML = `<li><img alt=""><span class="who"><b></b><small>Anda</small></span><span class="tag admin">Pentadbir</span></li>`;
@@ -4980,9 +5004,9 @@ async function renderMembers(){
   const ids = members.map(m=>m.id);
   const ps = ids.length && userCap ? await userCap.profiles(ids) : {};
   const roleSel = m=>`<select class="u-role" data-role="${esc(m.id)}" aria-label="Peranan">${["viewer","editor","admin"].map(r=>`<option value="${r}" ${ (m.role||"viewer")===r?"selected":""}>${ROLE_NAME[r]}</option>`).join("")}</select>`;
-  host.innerHTML = members.map(m=>`<li data-id="${esc(m.id)}"><img alt=""><span class="who"><b></b><small></small></span>${roleSel(m)}<button type="button" class="btn danger" data-rm="${esc(m.id)}">Buang</button></li>`).join("");
+  host.innerHTML = members.map(m=>`<li data-id="${esc(m.id)}"><img alt=""><span class="who"><b></b><small></small></span>${roleSel(m)}${shareBtn(m)}<button type="button" class="btn danger" data-rm="${esc(m.id)}">Buang</button></li>`).join("");
   host.querySelectorAll("[data-role]").forEach(sel=>sel.onchange=async()=>{
-    try{ await memCol.doc(sel.dataset.role).update({role: sel.value}); audit("Changed user role", "", "kepada " + ROLE_NAME[sel.value], {target: sel.dataset.role}); toast("Peranan dikemas kini."); }
+    try{ await memCol.doc(sel.dataset.role).update({role: sel.value}); audit("Changed user role", "", "kepada " + ROLE_NAME[sel.value], {target: sel.dataset.role}); toast("Peranan dikemas kini."); shareFolderWith(sel.dataset.role, sel.value, true); }
     catch(e){ toast("Tidak dapat menukar peranan. Cuba lagi."); }
   });
   host.querySelectorAll("li[data-id]").forEach(li=>{
@@ -4991,6 +5015,7 @@ async function renderMembers(){
     li.querySelector("b").textContent = p.name || "Rakan sekerja";
     li.querySelector("small").textContent = p.email || (m && m.added ? "Ditambah " + fmtDate(new Date(m.added).toISOString().slice(0,10)) : "");
   });
+  host.querySelectorAll("[data-share]").forEach(b=>b.onclick=async()=>{ b.disabled = true; const m = members.find(x=>x.id === b.dataset.share); await shareFolderWith(b.dataset.share, (m && m.role) || "viewer"); b.disabled = false; });
   host.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{
     if(!b.dataset.armed){ b.dataset.armed="1"; b.classList.add("armed"); b.textContent="Sahkan buang"; setTimeout(()=>{ if(b.isConnected){ delete b.dataset.armed; b.classList.remove("armed"); b.textContent="Buang"; } },5000); return; }
     try{ await memCol.doc(b.dataset.rm).delete(); audit("Removed user", "", "", {target:b.dataset.rm}); toast("Pengguna dibuang."); }
@@ -5024,6 +5049,11 @@ async function searchUsers(q){
     li.onmousedown = e=>{ e.preventDefault(); if(li.classList.contains("taken")) return; uChosen = h; renderPick(); };
   });
 }
+async function shareFolderWith(email, role, quiet){
+  if(!window.msShareFolder) return null;
+  try{ await window.msShareFolder(email, role); if(!quiet) toast("Folder OneDrive dikongsi dengan " + email + "."); return true; }
+  catch(e){ toast("Tidak dapat berkongsi folder dengan " + email + " secara automatik (" + ((e && (e.status || e.code)) || "ralat") + "). Kongsi folder itu dalam OneDrive secara manual.", 6500); return false; }
+}
 async function addChosen(){
   if(!uChosen) return;
   const b = $("#uAdd"); b.disabled = true; b.textContent = "Menambah…";
@@ -5031,6 +5061,7 @@ async function addChosen(){
     await memCol.doc(uChosen.id).set({id:uChosen.id, role:$("#uRole").value, added:Date.now()});
     audit("Added user", "", "sebagai " + ROLE_NAME[$("#uRole").value], {target:uChosen.id});
     toast(`${uChosen.name} ditambah sebagai ${ROLE_NAME[$("#uRole").value]}.`);
+    await shareFolderWith(uChosen.id, $("#uRole").value);
     uChosen = null; $("#uSearch").value = ""; renderPick();
   }catch(e){ toast("Tidak dapat menambah pengguna. Cuba lagi."); }
   b.textContent = "Tambah pengguna"; $("#uAdd").disabled = !uChosen;
@@ -5252,7 +5283,7 @@ function trText(t){
 const BOX_EN = {"Dokumen Tender":"Tender document","Iklan":"Advert","Tarikh Tutup Tender":"Tender closing date","Penilaian Tender":"Tender evaluation","Minit Sokongan":"Support minute","Surat Setuju Terima dan Penolakan":"Award and reject letter","Surat Penerimaan daripada Pembekal":"Acceptance letter from vendor","Minit Permohonan kepada PU":"Request minute to MD"};
 Object.assign(EN, BOX_EN, {
   "Syarikat Berjaya":"Winning company", "Syarikat Ditolak":"Rejected companies", "Nama Syarikat (Pembekal)":"Company name (vendor)",
-  "Iklan belum selesai":"Advert not done", "Tempoh tutup, dikira dari tarikh dikeluarkan":"Closing period, counted from the issue date", "7 Hari (1 Minggu)":"7 Days (1 Week)", "14 Hari (2 Minggu)":"14 Days (2 Weeks)", "1 Hari":"1 Day", "3 Hari":"3 Days", "Senarai Pembekal":"Supplier list", "Senarai Pembekal Berdaftar":"Registered Suppliers", "Cari nama syarikat atau no. sijil\u2026":"Search company name or certificate no\u2026", "Sijil sah":"Valid certificates", "Sijil tamat tempoh":"Expired certificates", "Nama Pembekal":"Supplier name", "No. Sijil":"Certificate no.", "Sah dari":"Valid from", "Hingga":"Until", "Sah":"Valid", "Tamat tempoh":"Expired", "Belum sah":"Not valid yet", "Pilih":"Select", "Salin":"Copy", "No. sijil disalin":"Certificate no. copied", "Tiada padanan":"No match", "Tiada padanan dalam senarai pembekal":"No match in the supplier list", "Lihat senarai penuh\u2026":"See the full list\u2026", "Pilih daripada senarai":"Choose from the list", "Tekan satu baris untuk memilih syarikat itu.":"Press a row to choose that company.", "Tekan Salin untuk menyalin no. sijil.":"Press Copy to copy the certificate no.", "Jemputan e-mel belum selesai":"E-mail invitation not done", "Tender tertutup":"Closed tender", "Tender tertutup:":"Closed tender:", "Jemputan melalui e-mel sahaja, tiada iklan":"Invitation by e-mail only, no advert", "Ya, jemputan melalui e-mel sahaja (tiada iklan)":"Yes, by e-mail invitation only (no advert)", "Eksport CSV":"Export CSV", "Import CSV":"Import CSV", "Semua pembelian dari permohonan hingga invois.":"Every purchase from the request to the invoice.", "Perlu perhatian":"Needs attention", "Menunggu lebih 30 hari":"Waiting more than 30 days", "Tender ditutup dalam 3 hari":"Tender closing within 3 days", "Jenis pembelian belum dipilih":"Purchase type not set", "Prestasi":"Performance", "selesai dalam 30 hari":"completed in the last 30 days", "hari purata untuk siap":"days on average to complete", "selesai kesemuanya":"completed in total", "Pembelian baharu, 14 hari terakhir":"New purchases, last 14 days", "1 atau 10-20":"1 or 10-20", "Nombor, atau julat seperti 10-20":"A number, or a range like 10-20", "Taip jumlah":"Type the total", "Sehingga B$5,000":"Up to B$5,000", "B$5,001 hingga B$25,000":"B$5,001 to B$25,000", "B$25,001 ke atas":"B$25,001 and above", "Pasang Aplikasi":"Install app", "Pasang":"Install", "Pasang SYSHHB Pembelian pada peranti anda untuk akses pantas dan paparan skrin penuh.":"Install SYSHHB Pembelian on your device for quick access and a full-screen view.", "Aplikasi dipasang.":"App installed.", "Aplikasi belum dipasang. Pasang aplikasi":"App not installed. Install the app", "Pasang pada iPhone / iPad":"Install on iPhone / iPad", "Buka laman ini dalam Safari.":"Open this page in Safari.", "Tekan butang Kongsi (petak dengan anak panah ke atas).":"Tap the Share button (the square with an up arrow).", "Pilih Tambah ke Skrin Utama, kemudian Tambah.":"Choose Add to Home Screen, then Add.", "Gambaran Keseluruhan":"Overview", "Alat":"Tools", "Papan Pemuka":"Dashboard", "Anggaran":"Budget", "Pembelian":"Purchases", "Panduan":"User guide", "Buka menu":"Open menu", "Membaca teks daripada imej…":"Reading text from the image…", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
+  "Iklan belum selesai":"Advert not done", "Salin mesej untuk pemilik sistem":"Copy a message for the system owner", "E-mel pemilik sistem":"E-mail the system owner", "Mesej disalin":"Message copied", "Kongsi folder":"Share folder", "Folder OneDrive sistem dikongsi secara automatik apabila pengguna ditambah. Jika seseorang masih melihat \"Belum ada akses\", tekan Kongsi folder pada namanya.":"The system\u2019s OneDrive folder is shared automatically when a user is added. If someone still sees \"No access yet\", press Share folder next to their name.", "Tempoh tutup, dikira dari tarikh dikeluarkan":"Closing period, counted from the issue date", "7 Hari (1 Minggu)":"7 Days (1 Week)", "14 Hari (2 Minggu)":"14 Days (2 Weeks)", "1 Hari":"1 Day", "3 Hari":"3 Days", "Senarai Pembekal":"Supplier list", "Senarai Pembekal Berdaftar":"Registered Suppliers", "Cari nama syarikat atau no. sijil\u2026":"Search company name or certificate no\u2026", "Sijil sah":"Valid certificates", "Sijil tamat tempoh":"Expired certificates", "Nama Pembekal":"Supplier name", "No. Sijil":"Certificate no.", "Sah dari":"Valid from", "Hingga":"Until", "Sah":"Valid", "Tamat tempoh":"Expired", "Belum sah":"Not valid yet", "Pilih":"Select", "Salin":"Copy", "No. sijil disalin":"Certificate no. copied", "Tiada padanan":"No match", "Tiada padanan dalam senarai pembekal":"No match in the supplier list", "Lihat senarai penuh\u2026":"See the full list\u2026", "Pilih daripada senarai":"Choose from the list", "Tekan satu baris untuk memilih syarikat itu.":"Press a row to choose that company.", "Tekan Salin untuk menyalin no. sijil.":"Press Copy to copy the certificate no.", "Jemputan e-mel belum selesai":"E-mail invitation not done", "Tender tertutup":"Closed tender", "Tender tertutup:":"Closed tender:", "Jemputan melalui e-mel sahaja, tiada iklan":"Invitation by e-mail only, no advert", "Ya, jemputan melalui e-mel sahaja (tiada iklan)":"Yes, by e-mail invitation only (no advert)", "Eksport CSV":"Export CSV", "Import CSV":"Import CSV", "Semua pembelian dari permohonan hingga invois.":"Every purchase from the request to the invoice.", "Perlu perhatian":"Needs attention", "Menunggu lebih 30 hari":"Waiting more than 30 days", "Tender ditutup dalam 3 hari":"Tender closing within 3 days", "Jenis pembelian belum dipilih":"Purchase type not set", "Prestasi":"Performance", "selesai dalam 30 hari":"completed in the last 30 days", "hari purata untuk siap":"days on average to complete", "selesai kesemuanya":"completed in total", "Pembelian baharu, 14 hari terakhir":"New purchases, last 14 days", "1 atau 10-20":"1 or 10-20", "Nombor, atau julat seperti 10-20":"A number, or a range like 10-20", "Taip jumlah":"Type the total", "Sehingga B$5,000":"Up to B$5,000", "B$5,001 hingga B$25,000":"B$5,001 to B$25,000", "B$25,001 ke atas":"B$25,001 and above", "Pasang Aplikasi":"Install app", "Pasang":"Install", "Pasang SYSHHB Pembelian pada peranti anda untuk akses pantas dan paparan skrin penuh.":"Install SYSHHB Pembelian on your device for quick access and a full-screen view.", "Aplikasi dipasang.":"App installed.", "Aplikasi belum dipasang. Pasang aplikasi":"App not installed. Install the app", "Pasang pada iPhone / iPad":"Install on iPhone / iPad", "Buka laman ini dalam Safari.":"Open this page in Safari.", "Tekan butang Kongsi (petak dengan anak panah ke atas).":"Tap the Share button (the square with an up arrow).", "Pilih Tambah ke Skrin Utama, kemudian Tambah.":"Choose Add to Home Screen, then Add.", "Gambaran Keseluruhan":"Overview", "Alat":"Tools", "Papan Pemuka":"Dashboard", "Anggaran":"Budget", "Pembelian":"Purchases", "Panduan":"User guide", "Buka menu":"Open menu", "Membaca teks daripada imej…":"Reading text from the image…", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
 });
 { const BN = Object.keys(BOX_EN).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|"), mt = m=>m==="Tawaran"?"tender":"quotation";
   EN_RX.unshift(
@@ -5305,6 +5336,10 @@ EN_RX.unshift(
   [/^Senarai sehingga (.+)\. (\d+) pembekal\.$/, "List as at $1. $2 suppliers."],
   [/^Menunjukkan (\d+) daripada (\d+)\. Taip untuk menapis\.$/, "Showing $1 of $2. Type to filter."],
   [/^(\d+) pembekal$/, "$1 suppliers"]
+);
+EN_RX.unshift(
+  [/^Folder OneDrive dikongsi dengan (.+)\.$/, "OneDrive folder shared with $1."],
+  [/^Tidak dapat berkongsi folder dengan (.+) secara automatik \((.+)\)\. Kongsi folder itu dalam OneDrive secara manual\.$/, "Could not share the folder with $1 automatically ($2). Share it in OneDrive manually."]
 );
 const ID_EN = {usersDone:"Done"};
 let trBusy = false;
