@@ -1169,7 +1169,7 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
 #msLogin{position:fixed;inset:0;height:100dvh;z-index:45;display:flex;flex-direction:column;background:#18241c;color:#fff;overflow:auto;font-family:inherit}
 #msLogin .ml-hero{position:relative;flex:1 0 auto;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:calc(14px + env(safe-area-inset-top,0px)) 22px 26px;overflow:hidden;background:radial-gradient(70% 34% at 62% 16%,rgba(196,228,186,.55) 0%,rgba(196,228,186,0) 72%),linear-gradient(180deg,#477f52 0%,#245d35 42%,#17462a 100%)}
 #msLogin .ml-mark{position:absolute;left:50%;top:48%;width:min(96%,640px);aspect-ratio:1;transform:translate(-50%,-50%);background-position:center;background-repeat:no-repeat;background-size:contain;opacity:.15;pointer-events:none}
-#msLogin .ml-hero > *:not(.ml-mark){position:relative}
+#msLogin .ml-hero > *:not(.ml-mark):not(.ml-sp){position:relative}
 #msLogin .ml-top{display:flex;align-items:center;gap:14px}
 #msLogin .ml-crest{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.12)}
 #msLogin .ml-crest img{width:52px;height:52px;border-radius:50%;background:#fff}
@@ -1185,6 +1185,8 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
 #msLogin .ml-greet{font-size:clamp(19px,5.9vw,34px);font-weight:800;white-space:nowrap}
 #msLogin .ml-clock{font-size:clamp(17px,5.2vw,30px);white-space:nowrap;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.02em}
 #msLogin .ml-tag{margin:2vh 0 0;font-size:clamp(15px,4.4vw,22px);line-height:1.45;max-width:30em;color:#fff}
+#msLogin .ml-card{display:contents}
+#msLogin .ml-wel,#msLogin .ml-sub,#msLogin .ml-feat,#msLogin .ml-secure,#msLogin .ml-sp{display:none}
 #msLogin .ml-panel{flex:none;display:flex;flex-direction:column;gap:14px;padding:16px 22px calc(22px + env(safe-area-inset-bottom,0px));background:#18241c}
 #msLogin .ml-seg{align-self:flex-end;display:flex;gap:4px;padding:5px;border-radius:18px;background:#2a382d}
 #msLogin .ml-seg button{border:0;border-radius:14px;padding:12px 22px;background:none;color:#a9b9ad;font-size:clamp(15px,4.4vw,18px);font-weight:700;cursor:pointer}
@@ -1195,9 +1197,33 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
 #msLogin .ml-go:disabled{opacity:.75;cursor:default}
 @media (min-width:900px){
   #msLogin{flex-direction:row}
-  #msLogin .ml-hero{flex:1.3;padding:34px 56px 44px}
-  #msLogin .ml-panel{flex:none;width:min(500px,38vw);justify-content:center;padding:48px 44px}
-  #msLogin .ml-dates{margin-top:3vh}
+  #msLogin .ml-hero{flex:1.04;padding:36px 64px 44px;background:radial-gradient(62% 40% at 34% 0%,rgba(196,228,186,.45) 0%,rgba(196,228,186,0) 72%),linear-gradient(180deg,#2c6a3d 0%,#1b5b33 45%,#0f6a3a 100%)}
+  #msLogin .ml-mark{left:50%;top:50%;width:min(94%,860px);opacity:.12}
+  #msLogin .ml-crest{width:48px;height:48px}#msLogin .ml-crest img{width:40px;height:40px}
+  #msLogin .ml-top h1{font-size:20px}
+  #msLogin .ml-dates{margin-top:0}
+  #msLogin .ml-d b{font-size:clamp(96px,8.2vw,132px)}
+  #msLogin .ml-d strong{font-size:18px;margin-top:16px}#msLogin .ml-d small{font-size:14px}
+  #msLogin .ml-d.hj{padding-left:40px}
+  #msLogin .ml-row{margin-top:0}
+  #msLogin .ml-greet,#msLogin .ml-clock{font-size:20px;font-weight:800}
+  #msLogin .ml-tag{font-size:17px;max-width:25em}
+  #msLogin .ml-sp{display:block;position:absolute;width:4px;height:4px;border-radius:50%;background:#ffd86b;box-shadow:0 0 8px 2px rgba(255,216,107,.55);animation:mlTw 4.2s ease-in-out infinite}
+  @keyframes mlTw{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
+  #msLogin .ml-panel{position:relative;flex:1;width:auto;justify-content:center;align-items:center;padding:48px 40px;background:radial-gradient(55% 38% at 10% 100%,rgba(130,100,40,.4) 0%,rgba(130,100,40,0) 70%),radial-gradient(70% 50% at 50% 45%,#1f2d23 0%,#16221a 75%)}
+  #msLogin .ml-seg{position:absolute;top:18px;right:20px;align-self:auto;padding:4px;border-radius:14px}
+  #msLogin .ml-seg button{padding:8px 14px;font-size:14px;border-radius:11px}
+  #msLogin .ml-card{display:flex;flex-direction:column;gap:14px;position:relative;width:min(460px,100%);padding:36px 38px 28px;border-radius:28px;background:#212d24;border:1px solid rgba(255,255,255,.07);box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden}
+  #msLogin .ml-card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#3fae52,#d8c24a 50%,#3fae52)}
+  #msLogin .ml-wel{display:block;margin:0;font-size:32px;font-weight:800;letter-spacing:-.01em}
+  #msLogin .ml-sub{display:block;margin:-8px 0 2px;color:#b4c4b8;font-size:16px}
+  #msLogin .ml-use{font-size:14.5px}
+  #msLogin .ml-go{height:56px;border-radius:14px;font-size:18px}
+  #msLogin .ml-feat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+  #msLogin .ml-feat div{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px 12px;border-radius:14px;background:#2a372d;border:1px solid rgba(255,255,255,.06);text-align:center;font-size:13.5px;font-weight:700;line-height:1.25}
+  #msLogin .ml-feat i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#2f9d4b;color:#fff}
+  #msLogin .ml-feat i svg{width:19px;height:19px}
+  #msLogin .ml-secure{display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 0 0;color:#a9b9ad;font-size:13px}
 }
 </style>
 </head>
@@ -1955,18 +1981,21 @@ const CONFIG = {
     let lg = lang; if(!lg){ try{ lg = localStorage.getItem("apt-lang") === "en" ? "en" : "ms"; }catch(e){ lg = "ms"; } }
     const doms = CONFIG.emailDomains.join(" / "), crest = (document.querySelector("#splash .sp-logo img") || {}).src || "";
     const T = lg === "en"
-      ? {title:"SYSHHB IT Purchase Tracker", greg:"Gregorian", hijri:"Hijri", tag:"Track every purchase from request to invoice, and follow every step with ease.", use:`Use your school email (${doms}) to view or manage purchases.`, btn:"Sign in with Microsoft", opening:"Opening the Microsoft page\u2026"}
-      : {title:"Sistem Pemantauan Pembelian IT SYSHHB", greg:"Masihi", hijri:"Hijrah", tag:"Pantau pembelian dari permohonan hingga invois, dan jejaki setiap langkah dengan mudah.", use:`Gunakan e-mel sekolah anda (${doms}) untuk melihat atau mengurus pembelian.`, btn:"Log masuk dengan Microsoft", opening:"Membuka halaman Microsoft\u2026"};
+      ? {title:"SYSHHB IT Purchase Tracker", greg:"Gregorian", hijri:"Hijri", tag:"Track every purchase from request to invoice, and follow every step with ease.", use:`Use your school email (${doms}) to view or manage purchases.`, btn:"Sign in with Microsoft", opening:"Opening the Microsoft page\u2026", wel:"Welcome", sub:"Sign in to continue", f1:"Create requests", f2:"Track progress", f3:"Get reminders", secure:"Secure sign-in with your school Microsoft account"}
+      : {title:"Sistem Pemantauan Pembelian IT SYSHHB", greg:"Masihi", hijri:"Hijrah", tag:"Pantau pembelian dari permohonan hingga invois, dan jejaki setiap langkah dengan mudah.", use:`Gunakan e-mel sekolah anda (${doms}) untuk melihat atau mengurus pembelian.`, btn:"Log masuk dengan Microsoft", opening:"Membuka halaman Microsoft\u2026", wel:"Selamat datang", sub:"Log masuk untuk meneruskan", f1:"Buat permohonan", f2:"Jejaki langkah", f3:"Terima peringatan", secure:"Log masuk selamat dengan akaun Microsoft sekolah anda"};
     const MS = ["Muharram","Safar","Rabiulawal","Rabiulakhir","Jamadilawal","Jamadilakhir","Rejab","Syaaban","Ramadan","Syawal","Zulkaedah","Zulhijjah"], EN = ["Muharram","Safar","Rabi\u2019 I","Rabi\u2019 II","Jumada I","Jumada II","Rajab","Sha\u2019ban","Ramadan","Shawwal","Dhu al-Qi\u2019dah","Dhu al-Hijjah"], TZ = "Asia/Brunei";
     const L = document.createElement("section"); L.id = "msLogin"; document.body.appendChild(L);
-    L.innerHTML = `<div class="ml-hero"><div class="ml-mark" style="background-image:url(${crest})"></div>
+    L.innerHTML = `<div class="ml-hero"><div class="ml-mark" style="background-image:url(${crest})"></div><i class="ml-sp" style="left:48%;top:12%"></i><i class="ml-sp" style="left:82%;top:15%;animation-delay:-1.2s"></i><i class="ml-sp" style="left:64%;top:46%;animation-delay:-2.1s"></i><i class="ml-sp" style="left:30%;top:69%;animation-delay:-.6s"></i><i class="ml-sp" style="left:90%;top:72%;animation-delay:-3s"></i><i class="ml-sp" style="left:16%;top:88%;animation-delay:-1.8s"></i><i class="ml-sp" style="left:72%;top:90%;animation-delay:-2.6s"></i>
         <header class="ml-top"><span class="ml-crest"><img alt="" src="${crest}"></span><h1>${esc(T.title)}</h1></header>
         <div class="ml-dates"><div class="ml-d"><b class="d1" id="mlD1">&nbsp;</b><strong id="mlG">&nbsp;</strong><small>${T.greg}</small></div><div class="ml-d hj"><b class="d2" id="mlD2">&nbsp;</b><strong id="mlH">&nbsp;</strong><small>${T.hijri}</small></div></div>
         <div class="ml-row"><span class="ml-greet" id="mlGreet">&nbsp;</span><span class="ml-clock" id="mlClock">--:--:-- BNT</span></div>
         <p class="ml-tag">${esc(T.tag)}</p></div>
       <div class="ml-panel"><div class="ml-seg" role="group" aria-label="Language"><button type="button" data-l="en" class="${lg === "en" ? "on" : ""}">English</button><button type="button" data-l="ms" class="${lg === "ms" ? "on" : ""}">Bahasa Melayu</button></div>
-        <p class="ml-use">${esc(T.use)}</p>${msg ? `<div class="ml-err">${esc(msg)}</div>` : ""}
-        <button type="button" class="ml-go" id="msSignIn"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><rect x="2" y="2" width="9.5" height="9.5" fill="#f25022"/><rect x="12.5" y="2" width="9.5" height="9.5" fill="#7fba00"/><rect x="2" y="12.5" width="9.5" height="9.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="9.5" height="9.5" fill="#ffb900"/></svg><span>${esc(T.btn)}</span></button></div>`;
+        <div class="ml-card"><h2 class="ml-wel">${esc(T.wel)}</h2><p class="ml-sub">${esc(T.sub)}</p>
+          <p class="ml-use">${esc(T.use)}</p>${msg ? `<div class="ml-err">${esc(msg)}</div>` : ""}
+          <button type="button" class="ml-go" id="msSignIn"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><rect x="2" y="2" width="9.5" height="9.5" fill="#f25022"/><rect x="12.5" y="2" width="9.5" height="9.5" fill="#7fba00"/><rect x="2" y="12.5" width="9.5" height="9.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="9.5" height="9.5" fill="#ffb900"/></svg><span>${esc(T.btn)}</span></button>
+          <div class="ml-feat"><div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i><span>${esc(T.f1)}</span></div><div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></i><span>${esc(T.f2)}</span></div><div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></i><span>${esc(T.f3)}</span></div></div>
+          <p class="ml-secure"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>${esc(T.secure)}</p></div></div>`;
     const q = id=>L.querySelector("#" + id);
     function tick(){
       const d = new Date(), loc = lg === "en" ? "en-GB" : "ms-MY";
