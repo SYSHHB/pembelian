@@ -1164,6 +1164,41 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
 .hc-tools .lang-sw button{background:linear-gradient(180deg,#e6f4de 0%,#a9d4a1 100%);color:#14381c}
 @media (max-width:900px){ .hc-tools .btn,.hc-tools .theme-btn,.hc-tools .lang-sw button{width:38px;height:38px;border-radius:12px} .hc-title h1{font-size:22px} }
 @media (max-width:900px){ .hero-card{grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr)} .hc-ico{display:none} .hc-pill{padding:9px 14px} .hc-pill b{white-space:nowrap;font-size:13px} }
+
+/* ===== Sign-in page, same layout as the IT Helpdesk System ===== */
+#msLogin{position:fixed;inset:0;height:100dvh;z-index:45;display:flex;flex-direction:column;background:#18241c;color:#fff;overflow:auto;font-family:inherit}
+#msLogin .ml-hero{position:relative;flex:1 0 auto;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:calc(14px + env(safe-area-inset-top,0px)) 22px 26px;overflow:hidden;background:radial-gradient(70% 34% at 62% 16%,rgba(196,228,186,.55) 0%,rgba(196,228,186,0) 72%),linear-gradient(180deg,#477f52 0%,#245d35 42%,#17462a 100%)}
+#msLogin .ml-mark{position:absolute;left:50%;top:48%;width:min(96%,640px);aspect-ratio:1;transform:translate(-50%,-50%);background-position:center;background-repeat:no-repeat;background-size:contain;opacity:.15;pointer-events:none}
+#msLogin .ml-hero > *:not(.ml-mark){position:relative}
+#msLogin .ml-top{display:flex;align-items:center;gap:14px}
+#msLogin .ml-crest{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+#msLogin .ml-crest img{width:52px;height:52px;border-radius:50%;background:#fff}
+#msLogin .ml-top h1{margin:0;font-size:clamp(19px,5.2vw,26px);font-weight:800;line-height:1.2;color:#fff}
+#msLogin .ml-dates{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:2vh}
+#msLogin .ml-d{padding-right:14px;min-width:0}
+#msLogin .ml-d.hj{padding:0 0 0 22px;border-left:1.5px solid rgba(255,255,255,.28)}
+#msLogin .ml-d b{display:block;font-size:clamp(64px,19vw,120px);font-weight:900;line-height:.95;letter-spacing:-.05em}
+#msLogin .ml-d .d1{color:#f4e33b}#msLogin .ml-d .d2{color:#fff}
+#msLogin .ml-d strong{display:block;margin-top:12px;font-size:clamp(15px,4.4vw,26px);font-weight:700;color:#fff}
+#msLogin .ml-d small{display:block;margin-top:4px;font-size:clamp(14px,3.9vw,19px);color:rgba(255,255,255,.78)}
+#msLogin .ml-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:nowrap;margin-top:2vh}
+#msLogin .ml-greet{font-size:clamp(19px,5.9vw,34px);font-weight:800;white-space:nowrap}
+#msLogin .ml-clock{font-size:clamp(17px,5.2vw,30px);white-space:nowrap;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+#msLogin .ml-tag{margin:2vh 0 0;font-size:clamp(15px,4.4vw,22px);line-height:1.45;max-width:30em;color:#fff}
+#msLogin .ml-panel{flex:none;display:flex;flex-direction:column;gap:14px;padding:16px 22px calc(22px + env(safe-area-inset-bottom,0px));background:#18241c}
+#msLogin .ml-seg{align-self:flex-end;display:flex;gap:4px;padding:5px;border-radius:18px;background:#2a382d}
+#msLogin .ml-seg button{border:0;border-radius:14px;padding:12px 22px;background:none;color:#a9b9ad;font-size:clamp(15px,4.4vw,18px);font-weight:700;cursor:pointer}
+#msLogin .ml-seg button.on{background:#18241c;color:#fff}
+#msLogin .ml-use{margin:0;font-size:clamp(14px,3.9vw,18px);line-height:1.5;color:#b4c4b8}
+#msLogin .ml-err{padding:12px 14px;border-radius:14px;background:#3a2d12;color:#f6d98c;font-size:14.5px;line-height:1.45}
+#msLogin .ml-go{display:flex;align-items:center;justify-content:center;gap:16px;width:100%;height:62px;border:0;border-radius:22px;background:linear-gradient(180deg,#94e090 0%,#66bf68 100%);color:#10261a;font-size:clamp(17px,5vw,21px);font-weight:700;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.45)}
+#msLogin .ml-go:disabled{opacity:.75;cursor:default}
+@media (min-width:900px){
+  #msLogin{flex-direction:row}
+  #msLogin .ml-hero{flex:1.3;padding:34px 56px 44px}
+  #msLogin .ml-panel{flex:none;width:min(500px,38vw);justify-content:center;padding:48px 44px}
+  #msLogin .ml-dates{margin-top:3vh}
+}
 </style>
 </head>
 <body>
@@ -1901,7 +1936,9 @@ const CONFIG = {
   const ready = new Promise(r=>readyResolve = r);
 
   /* ---------- Screens ---------- */
+  function removeLogin(){ const L = document.getElementById("msLogin"); if(L){ clearInterval(L._t); L.remove(); } }
   function overlay(html){
+    removeLogin();
     if(window.__splash) window.__splash.hide();
     let o = document.getElementById("msGate");
     if(!o){ o = document.createElement("section"); o.id = "msGate"; o.className = "gate"; document.body.appendChild(o); }
@@ -1910,10 +1947,40 @@ const CONFIG = {
     if(typeof IMG_CREST2 !== "undefined") o.querySelector("#msCrest").src = IMG_CREST2;
     return o;
   }
-  function showSignIn(msg){
-    const o = overlay(`<h2>Log masuk</h2><p>Gunakan akaun Microsoft sekolah anda (${esc(CONFIG.emailDomains.map(d=>d.slice(1)).join(" / "))}).</p>${msg?`<div class="no" style="margin-bottom:14px">${esc(msg)}</div>`:""}<button type="button" class="btn primary" id="msSignIn">Log masuk dengan Microsoft</button>`);
-    o.querySelector("#msSignIn").onclick = e=>{
-      e.target.disabled = true; e.target.textContent = "Membuka halaman Microsoft…";
+  /* Sign-in page: the same layout as the IT Helpdesk System (big dates, greeting, live clock, language switch, Microsoft button) */
+  function showSignIn(msg, lang){
+    const gate = document.getElementById("msGate"); if(gate) gate.hidden = true;
+    if(window.__splash) window.__splash.hide();
+    removeLogin();
+    let lg = lang; if(!lg){ try{ lg = localStorage.getItem("apt-lang") === "en" ? "en" : "ms"; }catch(e){ lg = "ms"; } }
+    const doms = CONFIG.emailDomains.join(" / "), crest = (document.querySelector("#splash .sp-logo img") || {}).src || "";
+    const T = lg === "en"
+      ? {title:"SYSHHB IT Purchase Tracker", greg:"Gregorian", hijri:"Hijri", tag:"Track every purchase from request to invoice, and follow every step with ease.", use:`Use your school email (${doms}) to view or manage purchases.`, btn:"Sign in with Microsoft", opening:"Opening the Microsoft page\u2026"}
+      : {title:"Sistem Pemantauan Pembelian IT SYSHHB", greg:"Masihi", hijri:"Hijrah", tag:"Pantau pembelian dari permohonan hingga invois, dan jejaki setiap langkah dengan mudah.", use:`Gunakan e-mel sekolah anda (${doms}) untuk melihat atau mengurus pembelian.`, btn:"Log masuk dengan Microsoft", opening:"Membuka halaman Microsoft\u2026"};
+    const MS = ["Muharram","Safar","Rabiulawal","Rabiulakhir","Jamadilawal","Jamadilakhir","Rejab","Syaaban","Ramadan","Syawal","Zulkaedah","Zulhijjah"], EN = ["Muharram","Safar","Rabi\u2019 I","Rabi\u2019 II","Jumada I","Jumada II","Rajab","Sha\u2019ban","Ramadan","Shawwal","Dhu al-Qi\u2019dah","Dhu al-Hijjah"], TZ = "Asia/Brunei";
+    const L = document.createElement("section"); L.id = "msLogin"; document.body.appendChild(L);
+    L.innerHTML = `<div class="ml-hero"><div class="ml-mark" style="background-image:url(${crest})"></div>
+        <header class="ml-top"><span class="ml-crest"><img alt="" src="${crest}"></span><h1>${esc(T.title)}</h1></header>
+        <div class="ml-dates"><div class="ml-d"><b class="d1" id="mlD1">&nbsp;</b><strong id="mlG">&nbsp;</strong><small>${T.greg}</small></div><div class="ml-d hj"><b class="d2" id="mlD2">&nbsp;</b><strong id="mlH">&nbsp;</strong><small>${T.hijri}</small></div></div>
+        <div class="ml-row"><span class="ml-greet" id="mlGreet">&nbsp;</span><span class="ml-clock" id="mlClock">--:--:-- BNT</span></div>
+        <p class="ml-tag">${esc(T.tag)}</p></div>
+      <div class="ml-panel"><div class="ml-seg" role="group" aria-label="Language"><button type="button" data-l="en" class="${lg === "en" ? "on" : ""}">English</button><button type="button" data-l="ms" class="${lg === "ms" ? "on" : ""}">Bahasa Melayu</button></div>
+        <p class="ml-use">${esc(T.use)}</p>${msg ? `<div class="ml-err">${esc(msg)}</div>` : ""}
+        <button type="button" class="ml-go" id="msSignIn"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><rect x="2" y="2" width="9.5" height="9.5" fill="#f25022"/><rect x="12.5" y="2" width="9.5" height="9.5" fill="#7fba00"/><rect x="2" y="12.5" width="9.5" height="9.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="9.5" height="9.5" fill="#ffb900"/></svg><span>${esc(T.btn)}</span></button></div>`;
+    const q = id=>L.querySelector("#" + id);
+    function tick(){
+      const d = new Date(), loc = lg === "en" ? "en-GB" : "ms-MY";
+      const day = new Intl.DateTimeFormat("en-GB", {day:"numeric", timeZone:TZ}).format(d), my = new Intl.DateTimeFormat(loc, {month:"long", year:"numeric", timeZone:TZ}).format(d);
+      let hj = ["", "", ""]; try{ const f = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", {day:"numeric", month:"numeric", year:"numeric", timeZone:TZ}).formatToParts(d), g = k=>+f.find(x=>x.type === k).value; hj = [g("day"), (lg === "en" ? EN : MS)[g("month") - 1], g("year")]; }catch(e){}
+      const h = +new Intl.DateTimeFormat("en-GB", {hour:"2-digit", hour12:false, timeZone:TZ}).format(d) % 24;
+      const gr = lg === "en" ? (h < 5 ? "Good night" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : h < 21 ? "Good evening" : "Good night") : (h < 5 ? "Selamat malam" : h < 12 ? "Selamat pagi" : h < 15 ? "Selamat tengah hari" : h < 19 ? "Selamat petang" : "Selamat malam");
+      q("mlD1").textContent = day; q("mlG").textContent = my; q("mlD2").textContent = hj[0]; q("mlH").textContent = hj[1] + " " + hj[2] + "H"; q("mlGreet").textContent = gr;
+      q("mlClock").textContent = new Intl.DateTimeFormat("en-GB", {hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:false, timeZone:TZ}).format(d) + " BNT";
+    }
+    tick(); L._t = setInterval(tick, 1000);
+    L.querySelectorAll(".ml-seg button").forEach(bt=>bt.onclick = ()=>{ try{ localStorage.setItem("apt-lang", bt.dataset.l); }catch(e){} showSignIn(msg, bt.dataset.l); });
+    q("msSignIn").onclick = e=>{
+      const b = e.currentTarget; b.disabled = true; b.querySelector("span").textContent = T.opening;
       pca.loginRedirect({scopes: SCOPES, prompt: "select_account"});
     };
   }
@@ -1928,7 +1995,7 @@ const CONFIG = {
     }
     o.querySelector("#msOut").onclick = signOut;
   }
-  function hideOverlay(){ const o = document.getElementById("msGate"); if(o) o.hidden = true; }
+  function hideOverlay(){ const o = document.getElementById("msGate"); if(o) o.hidden = true; removeLogin(); }
   function signOut(){ try{ sessionStorage.clear(); }catch(e){} pca.logoutRedirect({account, postLogoutRedirectUri: redirectUri}); }
   function addSignOut(){
     if(document.getElementById("msSignOut")) return;
