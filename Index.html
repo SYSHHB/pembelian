@@ -1167,6 +1167,7 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
 
 /* ===== Sign-in page, same layout as the IT Helpdesk System ===== */
 #msLogin{position:fixed;inset:0;height:100dvh;z-index:45;display:flex;flex-direction:column;background:#18241c;color:#fff;overflow:auto;font-family:inherit}
+#msLogin .ml-mark,#msLogin .ml-lines{display:none!important}
 #msLogin .ml-hero{position:relative;flex:1 0 auto;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:calc(14px + env(safe-area-inset-top,0px)) 22px 26px;overflow:hidden;background:radial-gradient(70% 34% at 62% 16%,rgba(196,228,186,.55) 0%,rgba(196,228,186,0) 72%),linear-gradient(180deg,#477f52 0%,#245d35 42%,#17462a 100%)}
 #msLogin .ml-mark{position:absolute;left:50%;top:48%;width:min(96%,640px);aspect-ratio:1;transform:translate(-50%,-50%);background-position:center;background-repeat:no-repeat;background-size:contain;opacity:.15;pointer-events:none}
 #msLogin .ml-lines{position:absolute;left:50%;top:48%;width:min(90%,640px);aspect-ratio:1;transform:translate(-50%,-50%);-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;background:rgba(175,232,180,.3);pointer-events:none}
