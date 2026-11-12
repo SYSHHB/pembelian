@@ -831,7 +831,7 @@ fieldset:disabled .ladd,fieldset:disabled [data-list-rm]{display:none}
 .cat-tabs button[aria-selected="true"] .n{background:rgba(255,255,255,.25);color:inherit}
 
 /* Loading screen */
-#splash{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:linear-gradient(180deg,#0f4023 0%,#0a2e1b 100%);color:#fff;transition:opacity .5s ease,visibility 0s linear .5s;touch-action:manipulation}
+#splash{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:linear-gradient(180deg,#0f4023 0%,#0a2e1b 100%);color:#fff;transition:opacity .5s ease,visibility 0s linear .5s;touch-action:manipulation}
 #splash.hide{opacity:0;visibility:hidden;pointer-events:none}
 #splash .sp-in{display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px;text-align:center}
 #splash .sp-logo{position:relative;width:190px;height:190px;display:grid;place-items:center;margin-bottom:22px}
@@ -1195,6 +1195,8 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
 #msLogin .ml-err{padding:12px 14px;border-radius:14px;background:#3a2d12;color:#f6d98c;font-size:14.5px;line-height:1.45}
 #msLogin .ml-go{display:flex;align-items:center;justify-content:center;gap:16px;width:100%;height:62px;border:0;border-radius:22px;background:linear-gradient(180deg,#94e090 0%,#66bf68 100%);color:#10261a;font-size:clamp(17px,5vw,21px);font-weight:700;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.45)}
 #msLogin .ml-go:disabled{opacity:.75;cursor:default}
+#msLogin.day .ml-hero{background:radial-gradient(46% 34% at 6% 0%,rgba(172,216,134,.78) 0%,rgba(172,216,134,0) 72%),radial-gradient(38% 30% at 86% 2%,rgba(90,206,126,.62) 0%,rgba(90,206,126,0) 72%),radial-gradient(34% 22% at 2% 98%,rgba(84,204,112,.6) 0%,rgba(84,204,112,0) 72%),radial-gradient(24% 42% at 100% 48%,rgba(86,204,116,.6) 0%,rgba(86,204,116,0) 72%),radial-gradient(75% 16% at 50% 100%,rgba(18,96,40,.62) 0%,rgba(18,96,40,0) 75%),linear-gradient(180deg,#26a247 0%,#27a448 60%,#2b9c45 100%)}
+#msLogin.day .ml-mark{opacity:.34;mix-blend-mode:multiply}
 @media (min-width:900px){
   #msLogin{flex-direction:row}
   #msLogin .ml-hero{flex:1.04;padding:36px 64px 44px;background:radial-gradient(62% 40% at 34% 0%,rgba(196,228,186,.45) 0%,rgba(196,228,186,0) 72%),linear-gradient(180deg,#2c6a3d 0%,#1b5b33 45%,#0f6a3a 100%)}
@@ -1210,7 +1212,7 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
   #msLogin .ml-tag{font-size:17px;max-width:25em}
   #msLogin .ml-sp{display:block;position:absolute;width:4px;height:4px;border-radius:50%;background:#ffd86b;box-shadow:0 0 8px 2px rgba(255,216,107,.55);animation:mlTw 4.2s ease-in-out infinite}
   @keyframes mlTw{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
-  #msLogin .ml-panel{position:relative;flex:1;width:auto;justify-content:center;align-items:center;padding:48px 40px;background:radial-gradient(55% 38% at 10% 100%,rgba(130,100,40,.4) 0%,rgba(130,100,40,0) 70%),radial-gradient(70% 50% at 50% 45%,#1f2d23 0%,#16221a 75%)}
+  #msLogin .ml-panel{position:relative;flex:1;width:auto;justify-content:center;align-items:center;padding:48px 40px;background:radial-gradient(55% 38% at 8% 100%,rgba(120,105,35,.55) 0%,rgba(120,105,35,0) 70%),#132114}
   #msLogin .ml-seg{position:absolute;top:18px;right:20px;align-self:auto;padding:4px;border-radius:14px}
   #msLogin .ml-seg button{padding:8px 14px;font-size:14px;border-radius:11px}
   #msLogin .ml-card{display:flex;flex-direction:column;gap:14px;position:relative;width:min(460px,100%);padding:36px 38px 28px;border-radius:28px;background:#212d24;border:1px solid rgba(255,255,255,.07);box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden}
@@ -2003,6 +2005,7 @@ const CONFIG = {
       let hj = ["", "", ""]; try{ const f = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", {day:"numeric", month:"numeric", year:"numeric", timeZone:TZ}).formatToParts(d), g = k=>+f.find(x=>x.type === k).value; hj = [g("day"), (lg === "en" ? EN : MS)[g("month") - 1], g("year")]; }catch(e){}
       const h = +new Intl.DateTimeFormat("en-GB", {hour:"2-digit", hour12:false, timeZone:TZ}).format(d) % 24;
       const gr = lg === "en" ? (h < 5 ? "Good night" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : h < 21 ? "Good evening" : "Good night") : (h < 5 ? "Selamat malam" : h < 12 ? "Selamat pagi" : h < 15 ? "Selamat tengah hari" : h < 19 ? "Selamat petang" : "Selamat malam");
+      L.classList.toggle("day", h >= 5 && h < 17);
       q("mlD1").textContent = day; q("mlG").textContent = my; q("mlD2").textContent = hj[0]; q("mlH").textContent = hj[1] + " " + hj[2] + "H"; q("mlGreet").textContent = gr;
       q("mlClock").textContent = new Intl.DateTimeFormat("en-GB", {hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:false, timeZone:TZ}).format(d) + " BNT";
     }
