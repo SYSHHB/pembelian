@@ -1202,9 +1202,10 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
 @media (max-width:899px){ #msLogin.day .ml-hero{background:radial-gradient(82% 24% at 52% 11%,rgba(192,228,162,.72) 0%,rgba(192,228,162,0) 76%),radial-gradient(40% 24% at 6% 0%,rgba(172,216,134,.6) 0%,rgba(172,216,134,0) 72%),radial-gradient(34% 22% at 2% 98%,rgba(84,204,112,.5) 0%,rgba(84,204,112,0) 72%),radial-gradient(75% 16% at 50% 100%,rgba(18,96,40,.5) 0%,rgba(18,96,40,0) 75%),linear-gradient(180deg,#2aa24a 0%,#27a448 60%,#2b9c45 100%)} }
 @media (min-width:900px){
   #msLogin{flex-direction:row}
-  #msLogin .ml-hero{flex:1.04;padding:36px 64px 44px;background:radial-gradient(62% 40% at 34% 0%,rgba(196,228,186,.45) 0%,rgba(196,228,186,0) 72%),linear-gradient(180deg,#2c6a3d 0%,#1b5b33 45%,#0f6a3a 100%)}
-  #msLogin .ml-mark{left:50%;top:50%;width:min(94%,860px);opacity:.12}
-  #msLogin .ml-lines{top:50%;width:min(94%,860px)}
+  #msLogin .ml-hero{flex:1.04;padding:36px 64px 44px;background:radial-gradient(68% 48% at 0% 4%,rgba(186,213,130,.58) 0%,rgba(186,213,130,0) 72%),radial-gradient(68% 82% at 74% 28%,rgba(8,160,66,.88) 0%,rgba(8,160,66,0) 76%),linear-gradient(160deg,#6f9950 0%,#178c40 54%,#08723b 100%)}
+  #msLogin .ml-mark{left:50%;top:50%;width:min(94%,860px);opacity:.12;mix-blend-mode:multiply}
+  #msLogin .ml-lines{display:none}
+  #msLogin.day .ml-mark{opacity:.13}
   #msLogin .ml-crest{width:48px;height:48px}#msLogin .ml-crest img{width:40px;height:40px}
   #msLogin .ml-top h1{font-size:20px}
   #msLogin .ml-dates{margin-top:0}
@@ -1216,11 +1217,11 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
   #msLogin .ml-tag{font-size:17px;max-width:25em}
   #msLogin .ml-sp{display:block;position:absolute;width:4px;height:4px;border-radius:50%;background:#ffd86b;box-shadow:0 0 8px 2px rgba(255,216,107,.55);animation:mlTw 4.2s ease-in-out infinite}
   @keyframes mlTw{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
-  #msLogin .ml-panel{position:relative;flex:1;width:auto;justify-content:center;align-items:center;padding:48px 40px;background:radial-gradient(55% 38% at 8% 100%,rgba(120,105,35,.55) 0%,rgba(120,105,35,0) 70%),#132114}
+  #msLogin .ml-panel{position:relative;flex:1;width:auto;justify-content:center;align-items:center;padding:48px 40px;background:radial-gradient(55% 38% at 8% 100%,rgba(120,105,35,.28) 0%,rgba(120,105,35,0) 70%),#132114}
   #msLogin .ml-seg{position:absolute;top:18px;right:20px;align-self:auto;padding:4px;border-radius:14px}
   #msLogin .ml-seg button{padding:8px 14px;font-size:14px;border-radius:11px}
-  #msLogin .ml-card{display:flex;flex-direction:column;gap:14px;position:relative;width:min(460px,100%);padding:36px 38px 28px;border-radius:28px;background:#212d24;border:1px solid rgba(255,255,255,.07);box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden}
-  #msLogin .ml-card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#3fae52,#d8c24a 50%,#3fae52)}
+  #msLogin .ml-card{display:flex;flex-direction:column;gap:14px;position:relative;width:min(450px,100%);padding:36px 38px 28px;border-radius:24px;background:#202c24;border:1px solid rgba(255,255,255,.08);box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden}
+  #msLogin .ml-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#268c42,#46b65a 50%,#268c42)}
   #msLogin .ml-wel{display:block;margin:0;font-size:32px;font-weight:800;letter-spacing:-.01em}
   #msLogin .ml-sub{display:block;margin:-8px 0 2px;color:#b4c4b8;font-size:16px}
   #msLogin .ml-use{font-size:14.5px}
