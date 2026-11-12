@@ -1205,27 +1205,31 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
   #msLogin .ml-greet{font-weight:700}
 }
 @media (max-width:899px){
-  #msLogin .ml-hero{padding:23.3px 26px 26px;gap:0;justify-content:flex-start}
-  #msLogin .ml-top{gap:7.7px;margin-left:0;height:49px}
-  #msLogin .ml-top h1{font-size:4.7vw}
-  #msLogin .ml-crest{width:49px;height:49px}#msLogin .ml-crest img{width:40px;height:40px}
-  #msLogin .ml-dates{margin-top:71.7px;grid-template-columns:47.3% 1fr}
+  #msLogin .ml-hero{padding:9.3px 26px 37px;gap:0;justify-content:flex-start;flex:1 1 auto;min-height:0}
+  #msLogin .ml-top{gap:10px;margin-left:-5.3px;height:66.6px;flex:none}
+  #msLogin .ml-top h1{font-size:4.7vw;font-weight:700}
+  #msLogin .ml-crest{width:66.6px;height:66.6px}#msLogin .ml-crest img{width:55px;height:55px}
+  #msLogin .ml-dates{margin-top:auto;padding-top:10px;grid-template-columns:47.3% 1fr}
   #msLogin .ml-d{padding-right:12px}
   #msLogin .ml-d.hj{padding-left:20px}
-  #msLogin .ml-d b{font-size:13.2vw}
-  #msLogin .ml-d strong{margin-top:12.8px;font-size:clamp(12px,4vw,26px);white-space:nowrap;overflow:hidden;text-overflow:clip}
+  #msLogin .ml-d b{font-size:min(13.2vw,6.9vh)}
+  #msLogin .ml-d strong{margin-top:min(18.5px,2.4vh);font-size:clamp(12px,4vw,26px);white-space:nowrap;overflow:hidden;text-overflow:clip}
   #msLogin .ml-d small{margin-top:3px;font-size:3.95vw}
-  #msLogin .ml-row{margin-top:71.4px}
-  #msLogin .ml-greet{font-size:5.7vw}#msLogin .ml-clock{font-size:5.35vw}
-  #msLogin .ml-tag{margin-top:auto;font-size:4.2vw;line-height:1.41}
+  #msLogin .ml-row{margin-top:clamp(20px,8.6vh,90px);flex:none}
+  #msLogin .ml-greet{font-size:5.7vw;font-weight:600}#msLogin .ml-clock{font-size:5.35vw}
+  #msLogin .ml-tag{margin-top:auto;padding-top:14px;font-size:4vw;line-height:1.4}
   #msLogin .ml-mark,#msLogin .ml-lines{top:263px;width:min(88%,640px)}
-  #msLogin .ml-panel{gap:0;padding:12.3px 26px calc(22px + 2.6vh)}
-  #msLogin .ml-seg{padding:4.3px;border-radius:19px}#msLogin .ml-seg button{padding:11.4px 14.5px;font-size:4.6vw;line-height:1.2;border-radius:15px}
-  #msLogin .ml-use{margin-top:16.9px;font-size:4.25vw;line-height:1.5}
+  #msLogin .ml-panel{flex:none;gap:0;padding:0 17.7px calc(17.3px + env(safe-area-inset-bottom,0px))}
+  #msLogin .ml-seg{padding:4.3px;border-radius:19px;margin-bottom:14.3px}
+  #msLogin .ml-seg button{padding:9.8px 15.3px;font-size:4.5vw;line-height:1.2;border-radius:15px;font-weight:600}
+  #msLogin .ml-card{display:block;position:relative;padding:20px 19px;border-radius:30px;background:#13803a;border:1px solid rgba(255,255,255,.2);box-shadow:0 14px 36px rgba(0,56,18,.4);overflow:hidden}
+  #msLogin .ml-card::before{content:"";position:absolute;left:34px;right:34px;top:0;height:3px;border-radius:0 0 3px 3px;background:linear-gradient(90deg,#3fae52,#d8c24a 50%,#3fae52)}
+  #msLogin .ml-use{margin:0;font-size:4.3vw;line-height:1.35}
   #msLogin .ml-err{margin-top:10px}
-  #msLogin .ml-go{margin-top:15.5px;height:55.3px;border-radius:22px;font-size:4.6vw;gap:14px}
-  #msLogin .ml-go svg{width:22px;height:22px}
+  #msLogin .ml-go{margin-top:16.8px;height:60px;border-radius:30px;font-size:4.9vw;gap:14px}
+  #msLogin .ml-go svg{width:24px;height:24px}
 }
+@media (max-width:899px) and (max-height:700px){ #msLogin .ml-tag{display:none} #msLogin .ml-panel{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))} }
 @media (min-width:900px){
   #msLogin{flex-direction:row}
   #msLogin .ml-hero{flex:1.04;padding:36px 64px 44px;background:radial-gradient(62% 40% at 34% 0%,rgba(196,228,186,.45) 0%,rgba(196,228,186,0) 72%),linear-gradient(180deg,#2c6a3d 0%,#1b5b33 45%,#0f6a3a 100%)}
@@ -1276,7 +1280,6 @@ body .stats .stat::after{content:"";position:absolute;left:auto;bottom:auto;top:
 #msLogin .ml-feat div{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
 #msLogin .ml-feat i{background:#fff;color:#19923e}
 #msLogin .ml-err{background:rgba(0,0,0,.26);color:#fff0c2}
-@media (max-width:899px){ #msLogin .ml-top h1{font-weight:700} #msLogin .ml-greet{font-weight:600} #msLogin .ml-seg button{font-weight:600} }
 </style>
 </head>
 <body>
@@ -2032,7 +2035,7 @@ const CONFIG = {
     if(window.__splash) window.__splash.hide();
     removeLogin(); themeColor("#19923e");
     let lg = lang; if(!lg){ try{ lg = localStorage.getItem("apt-lang") === "en" ? "en" : "ms"; }catch(e){ lg = "ms"; } }
-    const doms = CONFIG.emailDomains.join(" / "), crest = (document.querySelector("#splash .sp-logo img") || {}).src || "";
+    const doms = CONFIG.emailDomains[0], crest = (document.querySelector("#splash .sp-logo img") || {}).src || "";
     const T = lg === "en"
       ? {title:"SYSHHB IT Purchase Tracker", greg:"Gregorian", hijri:"Hijri", tag:"Track every purchase from request to invoice, and follow every step with ease.", use:`Use your school email (${doms}) to manage purchases.`, btn:"Sign in with Microsoft", opening:"Opening the Microsoft page\u2026", wel:"Welcome", sub:"Sign in to continue", f1:"Create requests", f2:"Track progress", f3:"Get reminders", secure:"Secure sign-in with your school Microsoft account"}
       : {title:"Sistem Pemantauan Pembelian IT SYSHHB", greg:"Masihi", hijri:"Hijrah", tag:"Pantau setiap pembelian dari permohonan hingga invois dengan mudah.", use:`Log masuk dengan e-mel sekolah (${doms}).`, btn:"Log masuk dengan Microsoft", opening:"Membuka halaman Microsoft\u2026", wel:"Selamat datang", sub:"Log masuk untuk meneruskan", f1:"Buat permohonan", f2:"Jejaki langkah", f3:"Terima peringatan", secure:"Log masuk selamat dengan akaun Microsoft sekolah anda"};
