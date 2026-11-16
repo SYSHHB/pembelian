@@ -2070,6 +2070,21 @@ var st,ct,ut,lt,dt,ht,pt,gt,ft,mt=function(){function t(e,t,r){this.networkInter
    Fill in clientId below (see SETUP.md).
    ===================================================================== */
 window.MS_MODE = true;
+/* Script integrity (see SRI-hashes.md): paste the sha384 value of each file here. An empty value means "not checked yet". */
+const SRI = {
+  "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js": "",
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js": "",
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js": "",
+  "https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js": "",
+  "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js": "",
+  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js": "",
+  "https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.4/lib/msal-browser.min.js": "",
+  "https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js": "",
+  "https://alcdn.msftauth.net/browser/2.38.2/js/msal-browser.min.js": "",
+  "https://unpkg.com/@azure/msal-browser@2.38.4/lib/msal-browser.min.js": ""
+};
+const sriApply = (sc, src)=>{ const h = (typeof SRI !== "undefined" && SRI[src]) || ""; if(h){ sc.integrity = h; sc.crossOrigin = "anonymous"; } };
+
 const CONFIG = {
   clientId: "598ea952-e9df-4684-a109-85832dc34e59",
   tenant: "syayasan.edu.bn",
@@ -2105,7 +2120,7 @@ const CONFIG = {
     "https://alcdn.msftauth.net/browser/2.38.2/js/msal-browser.min.js",
     "https://unpkg.com/@azure/msal-browser@2.38.4/lib/msal-browser.min.js"
   ];
-  const loadScript = src=>new Promise((res, rej)=>{ const sc = document.createElement("script"); sc.src = src; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+  const loadScript = src=>new Promise((res, rej)=>{ const sc = document.createElement("script"); sc.src = src; sriApply(sc, src); sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
   let useImpl = null, implReady;
   const implPromise = new Promise(r=>implReady = r);
   window.claude = {use: async name=>{ await implPromise; return useImpl(name); }};
@@ -2849,7 +2864,7 @@ const CONFIG = {
   window.cleanOcr = cleanOcr; window.prepImage = prepImage;
   window.ocrText = async function(file){
     const name = file.name.toLowerCase(), f = {};
-    if(name.endsWith(".pdf")){ const lib = await pdfLib(); const doc = await lib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise; return await ocrImages(await pdfPagesAsImages(doc), ocrToast(f)); }
+    if(name.endsWith(".pdf")){ const lib = await pdfLib(); const doc = await lib.getDocument({isEvalSupported: false, data: new Uint8Array(await file.arrayBuffer())}).promise; return await ocrImages(await pdfPagesAsImages(doc), ocrToast(f)); }
     if(/\.(jpe?g|png|webp)$/.test(name)) return await ocrImages([file], ocrToast(f));
     return {text:"", conf:0};
   };
@@ -2858,7 +2873,7 @@ const CONFIG = {
     let text = "", ocr = null; const f = {};
     if(name.endsWith(".pdf")){
       const lib = await pdfLib();
-      const doc = await lib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise;
+      const doc = await lib.getDocument({isEvalSupported: false, data: new Uint8Array(await file.arrayBuffer())}).promise;
       text = await pdfLayout(doc);
       if(text.replace(/\s/g,"").length < 80){ ocr = await ocrImages(await pdfPagesAsImages(doc), ocrToast(f)); text = ocr.text; }
     } else if(name.endsWith(".docx")){
@@ -3174,14 +3189,14 @@ function renderBudgets(){
       <span class="bh"><b>${esc(code)}</b><span>${esc(rest.join(" - "))}</span></span>
       <span class="bnums"><span class="bused">${money(used)}</span><span class="bof">/ ${money(amt)}</span></span>
       <span class="bbar"><i style="width:${pct.toFixed(1)}%"></i></span>
-      <span class="bfoot"><span>${left<0?"Melebihi anggaran":"Baki"} ${money(Math.abs(left))}</span><span>${mine.length} pembelian</span><span class="brep" role="button" tabindex="0" data-rep="${y}|${c}|${i}">Laporan</span></span>
+      <span class="bfoot"><span>${left<0?"Melebihi anggaran":"Baki"} ${money(Math.abs(left))}</span><span>${mine.length} pembelian</span><span class="brep" role="button" tabindex="0" data-rep="${esc(y)}|${esc(c)}|${i}">Laporan</span></span>
     </button>`;
     });
     const total = heads.reduce((a,b)=>a+(Number(b.amt)||0),0), usedAll = heads.reduce((a,b)=>a+mineCat.reduce((x,it)=>x+headShare(it, b.t),0),0);
-    return `<div class="bgroup"><h3>${esc(CAT_LABEL[c])} ${esc(y)}${heads.length?` <span>Jumlah ${money(usedAll)} / ${money(total)}</span> <button type="button" class="btn mini brep-g" data-rep="${y}|${c}|all">Laporan semua tajuk</button>`:""}</h3>${heads.length ? `<div class="bgrid">${cards.join("")}</div>` : `<p class="bnone">Bajet ${esc(CAT_LABEL[c])} ${esc(y)} belum ditetapkan.${canBudget()?" Tekan Urus bajet untuk menambahnya.":""}</p>`}</div>`;
+    return `<div class="bgroup"><h3>${esc(CAT_LABEL[c])} ${esc(y)}${heads.length?` <span>Jumlah ${money(usedAll)} / ${money(total)}</span> <button type="button" class="btn mini brep-g" data-rep="${esc(y)}|${esc(c)}|all">Laporan semua tajuk</button>`:""}</h3>${heads.length ? `<div class="bgrid">${cards.join("")}</div>` : `<p class="bnone">Bajet ${esc(CAT_LABEL[c])} ${esc(y)} belum ditetapkan.${canBudget()?" Tekan Urus bajet untuk menambahnya.":""}</p>`}</div>`;
   });
   const none = live.filter(it=>cats.includes(catOf(it)) && !headsFor(y, catOf(it)).some(b=>b.t===it.budgetHead));
-  host.innerHTML = `<div class="bhead"><h2>Penggunaan anggaran mengikut Tajuk Perbelanjaan</h2><div class="bctl"><select id="bYearSel" aria-label="Tahun bajet">${ys.map(v=>`<option value="${v}" ${v===y?"selected":""}>${v}</option>`).join("")}</select>${canBudget()?`<button type="button" class="btn" id="btnBudgets">Urus bajet</button>`:""}</div></div>${groups.join("")}${none.length?`<p class="bnone">${none.length} pembelian ${esc(y)} belum dipilih Tajuk Perbelanjaan.</p>`:""}`;
+  host.innerHTML = `<div class="bhead"><h2>Penggunaan anggaran mengikut Tajuk Perbelanjaan</h2><div class="bctl"><select id="bYearSel" aria-label="Tahun bajet">${ys.map(v=>`<option value="${esc(v)}" ${v===y?"selected":""}>${esc(v)}</option>`).join("")}</select>${canBudget()?`<button type="button" class="btn" id="btnBudgets">Urus bajet</button>`:""}</div></div>${groups.join("")}${none.length?`<p class="bnone">${none.length} pembelian ${esc(y)} belum dipilih Tajuk Perbelanjaan.</p>`:""}`;
   host.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{ filter = filter===b.dataset.f ? "all" : b.dataset.f; render(); });
   $("#bYearSel").onchange = e=>{ bYear = e.target.value; if(filter.startsWith("bh:")) filter = "all"; render(); };
   const bb = $("#btnBudgets"); if(bb) bb.onclick = openBudgets;
@@ -3671,17 +3686,32 @@ const BUDGET_HEADS = [
 const CATS = ["Sekolah","Office"];
 const BUD_LS = "apt-budgets";
 let BUDGETS = {"2026": {Sekolah: BUDGET_HEADS.map(b=>({...b})), Office: []}};
-try{ const b = JSON.parse(localStorage.getItem(BUD_LS)||"null"); if(b && typeof b==="object") BUDGETS = b; }catch(e){}
+try{ const cb = cleanBudgets(JSON.parse(localStorage.getItem(BUD_LS)||"null")); if(Object.keys(cb).length) BUDGETS = cb; }catch(e){}
 let bYear = null;
 const curYear = ()=>today().slice(0,4);
-function yearOf(it){ return String(it?.budgetYear || (it?.stages?.s601?.date||"").slice(0,4) || (it?.created ? new Date(it.created).getFullYear() : curYear())); }
+function yearOf(it){
+  const ok = v=>/^\d{4}$/.test(String(v == null ? "" : v)) ? String(v) : "";
+  return ok(it?.budgetYear) || ok((it?.stages?.s601?.date || "").slice(0, 4)) || (it?.created ? String(new Date(it.created).getFullYear()) : curYear());
+}
+/* Shared data is never trusted: only 4-digit years, known purchase types, text titles and numeric amounts are kept */
+function cleanBudgets(b){
+  const out = {}; if(!b || typeof b !== "object") return out;
+  Object.keys(b).forEach(y=>{
+    if(!/^\d{4}$/.test(y) || !b[y] || typeof b[y] !== "object") return;
+    out[y] = {};
+    CATS.forEach(c=>{ out[y][c] = (Array.isArray(b[y][c]) ? b[y][c] : []).map(r=>({t: String(r && r.t != null ? r.t : "").trim().slice(0, 200), amt: Number(r && r.amt) || 0})).filter(r=>r.t); });
+  });
+  return out;
+}
+function cleanItem(it){ if(it && it.budgetYear != null && !/^\d{4}$/.test(String(it.budgetYear))) delete it.budgetYear; return it; }
+function cleanImported(it){ cleanItem(it); if(it && it.id != null && !/^[\w.-]{1,64}$/.test(String(it.id))) delete it.id; return it; }
 function catOf(it){ return it?.category || "Sekolah"; }
 function headsFor(y, c){ return (BUDGETS[y] && BUDGETS[y][c]) || []; }
 function yearsList(extra){ const s = new Set([...Object.keys(BUDGETS), curYear(), ...items.map(yearOf), ...(extra||[])].filter(Boolean)); return [...s].sort(); }
 function canBudget(){ return col ? isAdmin : canEdit; }
 function buildYearSelect(y){
   const sel = $("#budgetYear"); const ys = yearsList([y]);
-  sel.innerHTML = ys.map(v=>`<option value="${v}">${v}</option>`).join("");
+  sel.innerHTML = ys.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
   sel.value = y;
 }
 function buildBudgetSelect(cur){
@@ -3694,7 +3724,7 @@ function buildBudgetSelect(cur){
   sel.innerHTML = html;
   sel.value = cur || "";
 }
-function loadBudgets(b){ if(b && typeof b==="object" && Object.keys(b).length){ BUDGETS = b; try{ localStorage.setItem(BUD_LS, JSON.stringify(b)); }catch(e){} } }
+function loadBudgets(b){ const cb = cleanBudgets(b); if(Object.keys(cb).length){ BUDGETS = cb; try{ localStorage.setItem(BUD_LS, JSON.stringify(cb)); }catch(e){} } }
 async function saveBudgets(){
   try{ localStorage.setItem(BUD_LS, JSON.stringify(BUDGETS)); }catch(e){}
   if(db && col){ await db.collection("settings").doc("budgets").set({years: BUDGETS, updated: Date.now()}); }
@@ -3715,7 +3745,7 @@ function budRowHTML(b){ return `<div class="bud-row"><input data-b="t" placehold
 function updBudTotal(){ const t = [...document.querySelectorAll("#bdRows [data-b=amt]")].reduce((a,i)=>a+(Number(i.value)||0),0); $("#bdTotal").textContent = `Jumlah bajet ${CAT_LABEL[bdCat]} ${bdYearSel}: ${money(t)}`; }
 function renderBudEditor(){
   const ys = [...new Set([...Object.keys(bdDraft), bdYearSel])].sort();
-  $("#bdYear").innerHTML = ys.map(y=>`<option value="${y}">${y}</option>`).join(""); $("#bdYear").value = bdYearSel;
+  $("#bdYear").innerHTML = ys.map(y=>`<option value="${esc(y)}">${esc(y)}</option>`).join(""); $("#bdYear").value = bdYearSel;
   document.querySelectorAll("#bdCats [data-bc]").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.bc===bdCat)));
   const rows = (bdDraft[bdYearSel]?.[bdCat]) || [];
   $("#bdRows").innerHTML = (rows.length ? rows : [{}]).map(budRowHTML).join("");
@@ -3768,7 +3798,7 @@ const LIBS = {
 };
 const loaded = {};
 function loadScript(src){
-  return loaded[src] ||= new Promise((res,rej)=>{ const sc=document.createElement("script"); sc.src=src; sc.onload=res; sc.onerror=()=>{ delete loaded[src]; rej({code:"lib"}); }; document.head.appendChild(sc); });
+  return loaded[src] ||= new Promise((res,rej)=>{ const sc=document.createElement("script"); sc.src=src; if(typeof sriApply === "function") sriApply(sc, src); sc.onload=res; sc.onerror=()=>{ delete loaded[src]; rej({code:"lib"}); }; document.head.appendChild(sc); });
 }
 async function pdfLib(){
   await loadScript(LIBS.pdfw); await loadScript(LIBS.pdf);
@@ -3777,7 +3807,7 @@ async function pdfLib(){
 }
 async function readPdf(file, maxImgs){
   const lib = await pdfLib();
-  const doc = await lib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;
+  const doc = await lib.getDocument({isEvalSupported: false, data:new Uint8Array(await file.arrayBuffer())}).promise;
   let text = ""; const imgs = [];
   const n = Math.min(doc.numPages, 4);
   for(let p=1;p<=n;p++){
@@ -4785,7 +4815,7 @@ async function showDoc(){
   }
   try{
     const lib = await pdfLib();
-    const doc = await lib.getDocument({data:new Uint8Array(await blob.arrayBuffer())}).promise;
+    const doc = await lib.getDocument({isEvalSupported: false, data:new Uint8Array(await blob.arrayBuffer())}).promise;
     host.innerHTML = "";
     for(let p=1;p<=doc.numPages;p++){
       const page = await doc.getPage(p);
@@ -5350,7 +5380,7 @@ async function importCsv(file){
     let it = null;
     if(ji>=0 && r[ji]){ try{ it = JSON.parse(r[ji]); }catch(e){} }
     if(!it) it = rowToItem(head, r);
-    if(it && String(it.title||"").trim()) found.push(it);
+    if(it && typeof it === "object" && String(it.title||"").trim()) found.push(cleanImported(it));
   });
   const newId = ()=>"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
   const same = (a,b)=>String(a||"").trim().toLowerCase()===String(b||"").trim().toLowerCase();
@@ -5882,7 +5912,7 @@ async function init(){
     let firstSnap = true;
     col.onSnapshot(snap=>{
       const before = new Set(items.filter(isComplete).map(i=>i.id));
-      items = snap.docs.map(d=>({...d.data(), id:d.id}));
+      items = snap.docs.map(d=>cleanItem({...d.data(), id:d.id}));
       if(!firstSnap){ const nw = items.find(i=>isComplete(i) && !before.has(i.id)); if(nw) celebrate(nw); }
       firstSnap = false;
       render();
@@ -6108,7 +6138,7 @@ async function supReadFile(file){
   toast("Membaca fail PDF…");
   let res;
   try{
-    const lib = await pdfLib(), doc = await lib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise, pages = [];
+    const lib = await pdfLib(), doc = await lib.getDocument({isEvalSupported: false, data: new Uint8Array(await file.arrayBuffer())}).promise, pages = [];
     for(let n = 1; n <= doc.numPages; n++){ const tc = await (await doc.getPage(n)).getTextContent(); pages.push(tc.items.map(i=>({s: i.str, x: i.transform[4], y: i.transform[5], w: i.width}))); }
     res = supParsePages(pages);
   }catch(e){ res = {list: [], skipped: []}; }
@@ -6245,7 +6275,7 @@ function openBudgetReport(o){
   const fill = ()=>{
     const ys = yearsList(), y = $("#brYear").value || (ys.includes(bYear) ? bYear : (ys.includes(curYear()) ? curYear() : ys[ys.length - 1])), c = $("#brCat").value || "Sekolah";
     $("#brYear").innerHTML = ys.map(v=>`<option value="${esc(v)}" ${v === y ? "selected" : ""}>${esc(v)}</option>`).join("");
-    $("#brCat").innerHTML = CATS.map(v=>`<option value="${v}" ${v === c ? "selected" : ""}>${esc(CAT_LABEL[v])}</option>`).join("");
+    $("#brCat").innerHTML = CATS.map(v=>`<option value="${esc(v)}" ${v === c ? "selected" : ""}>${esc(CAT_LABEL[v])}</option>`).join("");
     const heads = headsFor($("#brYear").value, $("#brCat").value);
     $("#brHead").innerHTML = `<option value="all">Semua tajuk</option>` + heads.map((b, i)=>`<option value="${i}">${esc(b.t)}</option>`).join("");
   };
