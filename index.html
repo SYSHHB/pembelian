@@ -6250,7 +6250,7 @@ function openBudgetReport(o){
 /* ---------- Extra 601 forms (Variation order and Add budget) ---------- */
 function voRowHTML(l){
   l = l || {}; const q = l.qty == null ? "" : l.qty, range = isRangeQty(q);
-  return `<tr><td><textarea data-i="desc" placeholder="cth. barang tambahan">${esc(l.desc)}</textarea></td><td><input class="num" data-i="qty" type="text" inputmode="text" autocomplete="off" placeholder="1 atau 10-20" value="${esc(q)}"></td><td><input class="num" data-i="unitPrice" type="number" min="0" step="0.01" value="${esc(l.unitPrice)}"></td><td class="tot"><input class="num" data-i="total" type="number" min="0" step="0.01" value="${esc(l.total != null && l.total !== "" ? l.total : "")}" ${range ? "" : "readonly"}></td><td><button type="button" class="mini" data-vo-rm aria-label="Buang baris">✕</button></td></tr>`;
+  return `<tr><td><textarea data-i="desc" placeholder="cth. barang tambahan">${esc(l.desc)}</textarea></td><td><input class="num" data-i="qty" type="text" inputmode="text" autocomplete="off" placeholder="1 atau 10-20" value="${esc(q)}"></td><td><input class="num" data-i="unitPrice" type="number" min="0" step="0.01" value="${esc(l.unitPrice)}"></td><td class="tot"><input class="num" data-i="total" type="number" min="0" step="0.01" value="${esc(l.total != null && l.total !== "" ? l.total : "")}" title="Jumlah boleh diubah secara manual" ${(l.total != null && l.total !== "" && Number(l.total) !== (Number(q) || 0) * (Number(l.unitPrice) || 0)) ? 'data-manual="1"' : ""}></td><td><button type="button" class="mini" data-vo-rm aria-label="Buang baris">✕</button></td></tr>`;
 }
 function voBoxHTML(it, K){
   const v = it.stages?.[K.k] || {}, heads = headsFor(yearOf(it), catOf(it)), lines = (v.lines && v.lines.length) ? v.lines : [{}];
@@ -6280,8 +6280,8 @@ function voHTML(it, st601){
 function wireVO(){
   document.querySelectorAll("#steps .step.vo").forEach(box=>{
     const rows = box.querySelector(".vo-rows"), totEl = box.querySelector(".vo-total");
-    const calc = ()=>{ let sum = 0; rows.querySelectorAll("tr").forEach(tr=>{ const q = tr.querySelector('[data-i="qty"]').value, u = Number(tr.querySelector('[data-i="unitPrice"]').value) || 0, ti = tr.querySelector('[data-i="total"]'); let t; if(isRangeQty(q)){ ti.readOnly = false; t = Number(ti.value) || 0; } else { t = (Number(q) || 0) * u; ti.readOnly = true; ti.value = t ? t.toFixed(2) : ""; } sum += t; }); totEl.textContent = "Jumlah " + money(sum); };
-    rows.addEventListener("input", calc);
+    const calc = ()=>{ let sum = 0; rows.querySelectorAll("tr").forEach(tr=>{ const q = tr.querySelector('[data-i="qty"]').value, u = Number(tr.querySelector('[data-i="unitPrice"]').value) || 0, ti = tr.querySelector('[data-i="total"]'); let t; if(ti.dataset.manual === "1" || isRangeQty(q)){ t = Number(ti.value) || 0; } else { t = (Number(q) || 0) * u; ti.value = t ? t.toFixed(2) : ""; } sum += t; }); totEl.textContent = "Jumlah " + money(sum); };
+    rows.addEventListener("input", e=>{ const ti = e.target.closest ? e.target.closest('[data-i="total"]') : null; if(ti){ if(ti.value === "") delete ti.dataset.manual; else ti.dataset.manual = "1"; } calc(); });
     box.querySelector("[data-vo-add]").onclick = ()=>{ rows.insertAdjacentHTML("beforeend", voRowHTML({})); calc(); };
     rows.addEventListener("click", e=>{ const b = e.target.closest("[data-vo-rm]"); if(!b) return; b.closest("tr").remove(); if(!rows.children.length) rows.insertAdjacentHTML("beforeend", voRowHTML({})); calc(); });
     const sel = box.querySelector('[data-f="budgetHead"]'), ab = box.querySelector('[data-f="approvedBudget"]');
