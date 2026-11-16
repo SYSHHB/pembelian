@@ -4283,7 +4283,7 @@ function build602(d){
   <div class="f2-bar">BAHAGIAN I : UNTUK DIISI OLEH BAHAGIAN</div>
   <p class="sm">A.&nbsp;&nbsp;Keterangan pembelian barang / penyediaan kerja: -</p>
   <div class="f2-desc dv">${FB("notes", d.notes, "Terangkan pembelian")}</div>
-  <p class="sm">B.&nbsp;&nbsp;Anggaran pembelian (Ruj 601)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="ul dv"><span class="fld">${M(itemsTotal((d.lines||[]).filter(l=>l.desc||l.qty||l.unitPrice)))}</span></span></p>
+  <p class="sm">B.&nbsp;&nbsp;Anggaran pembelian (Ruj 601)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="ul dv"><span class="fld">${reqText(d, M)}</span></span></p>
   <p class="sm">C.&nbsp;&nbsp;Ringkasan sebutharga yang diperolehi:-</p>
   <table class="f2-tbl">
     <tr><th>Bil.</th><th>Nama Syarikat</th><th>No Sijil Pembekal</th><th>Harga<br>(B$)</th><th>Tempoh<br>Siap / Pembekalan</th><th>Tempoh Sah<br>Laku Sebutharga</th></tr>
@@ -4554,7 +4554,7 @@ function repDetails(def, st, it){
     add("Bahagian", it.division);
     add("Untuk", it.forWho);
     add("Barang", lines.map(l=>`${l.desc||""}${l.qty?` (${l.qty})`:""}`).join("; "));
-    add("Jumlah dimohon", lines.length ? money(itemsTotal(lines)) : "");
+    add("Jumlah dimohon", (lines.length || extrasOf(it).length) ? reqText(it, money) : "");
     add("Tajuk Perbelanjaan", it.budgetHead);
     add("Anggaran diluluskan", it.approvedBudget ? money(+it.approvedBudget) : "");
     add("Dalam anggaran", it.inBudget);
@@ -5185,7 +5185,7 @@ function wordValues(form, d){
   }
   if(form === "602"){
     const s = d.stages?.s602 || {};
-    Object.assign(v, {anggaran: M(itemsTotal((d.lines||[]).filter(l=>l.desc||l.qty||l.unitPrice))), sup: (d.supplier||"").toUpperCase(), cert: d.supplierCert || "",
+    Object.assign(v, {anggaran: reqText(d, M), sup: (d.supplier||"").toUpperCase(), cert: d.supplierCert || "",
       harga: M(s.amount), tempoh: s.deliveryTerm || "", sah: s.quoteValidity || validity(d), tarikh: dmy(s.date), notes: String(d.notes||"").replace(/\s*\n+\s*/g, " ")});
   }
   if(form === "607"){
@@ -6312,6 +6312,12 @@ function openPrintVO(kind){
   $("#pvSave").hidden = !pvEdit;
   $("#pageSize").textContent = `@media print{@page{size:${f.page};margin:0}}`;
   renderPv(); $("#printView").showModal(); modPages(); fitPages();
+}
+/* Requested amount: the first 601 total, followed by + the total of each extra 601 (Varian Order / Tambah Budget) */
+function reqText(it, fmt){
+  const main = itemsTotal((it.lines || []).filter(l=>l.desc || l.qty || l.unitPrice || l.total));
+  const parts = [main].concat(extrasOf(it).map(x=>x.amt)).filter((v, i)=>v > 0 || (i === 0 && main > 0));
+  return parts.map(v=>fmt(v)).join(" + ");
 }
 /* ---------- Closed tender tick in the Advert box ---------- */
 document.addEventListener("change", e=>{
