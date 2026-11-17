@@ -1377,6 +1377,18 @@ body:has(#splash:not(.hide)) .bnav,body:has(#splash:not(.hide)) .fab{visibility:
 .mn-sub{font-weight:600}.mn-pur,.mn-note{color:var(--muted);font-size:13.5px}
 .mn-act{display:flex;gap:8px;margin-top:4px}
 .mn-none{text-align:center;padding:18px 0}
+
+/* ===== Boss approval ===== */
+.appr{display:grid;gap:8px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(127,127,127,.07)}
+.appr h4{margin:0;font-size:14px}
+.appr p{margin:0;font-size:13.5px;color:var(--muted)}
+.appr-chip{display:inline-flex;align-items:center;border-radius:999px;padding:4px 12px;font-weight:700;font-size:13px;width:fit-content;background:rgba(127,127,127,.2)}
+.appr-chip.pend{background:#f6d85f;color:#3a2c00}.appr-chip.ok{background:#2e8b57;color:#fff}.appr-chip.bad{background:#c8453b;color:#fff}.appr-chip.chg{background:#e9902e;color:#2b1700}
+.appr-btns{display:flex;gap:8px;flex-wrap:wrap}
+.appr textarea{width:100%;min-height:60px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 10px;font:inherit}
+.tag.appr{font-weight:700}.tag.appr.pend{background:#f6d85f;color:#3a2c00}.tag.appr.ok{background:#2e8b57;color:#fff}.tag.appr.bad{background:#c8453b;color:#fff}.tag.appr.chg{background:#e9902e;color:#2b1700}
+.appr-banner{display:block;width:100%;margin:0 0 10px;padding:12px 14px;border-radius:14px;border:1px solid #f6d85f;background:rgba(246,216,95,.16);color:var(--ink);font-weight:700;font-size:14px;text-align:left;cursor:pointer}
+.appr-banner[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -1451,7 +1463,7 @@ body:has(#splash:not(.hide)) .bnav,body:has(#splash:not(.hide)) .fab{visibility:
         <button class="btn" id="btnBell" aria-expanded="false" aria-controls="notePanel">Pemberitahuan<span class="badge" id="badge" hidden>0</span></button>
         <div class="note-panel" id="notePanel" hidden>
           <div class="np-head"><strong>Pemberitahuan</strong><button type="button" class="mini" id="btnReadAll">Tanda semua dibaca</button></div>
-          <div class="np-tabs" role="tablist"><button type="button" role="tab" data-nt="all" aria-selected="true">Semua<span class="n" id="ntAll">0</span></button><button type="button" role="tab" data-nt="tender" aria-selected="false">Tender<span class="n" id="ntTender">0</span></button><button type="button" role="tab" data-nt="minit" aria-selected="false">Minit<span class="n" id="ntMinit">0</span></button></div>
+          <div class="np-tabs" role="tablist"><button type="button" role="tab" data-nt="all" aria-selected="true">Semua<span class="n" id="ntAll">0</span></button><button type="button" role="tab" data-nt="tender" aria-selected="false">Tender<span class="n" id="ntTender">0</span></button><button type="button" role="tab" data-nt="minit" aria-selected="false">Minit<span class="n" id="ntMinit">0</span></button><button type="button" role="tab" data-nt="approval" aria-selected="false">Kelulusan<span class="n" id="ntAppr">0</span></button></div>
           <ul id="noteList"></ul>
         </div>
       </div>
@@ -1505,7 +1517,8 @@ body:has(#splash:not(.hide)) .bnav,body:has(#splash:not(.hide)) .fab{visibility:
     <button type="button" class="btn clear-f" id="btnClearF" hidden>✕ Kosongkan tapisan</button>
   </div>
 
-  <div class="list" id="list"></div>
+  <button type="button" class="appr-banner" id="apprBanner" hidden></button>
+    <div class="list" id="list"></div>
 </div>
 
 <nav class="bnav" id="bnav" aria-label="Menu utama"><button type="button" data-v="list" class="on"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d='m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><path d='M9 22V12h6v10'/></svg><span>Utama</span></button><button type="button" data-v="dash"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x='3' y='3' width='7' height='7' rx='1'/><rect x='14' y='3' width='7' height='7' rx='1'/><rect x='14' y='14' width='7' height='7' rx='1'/><rect x='3' y='14' width='7' height='7' rx='1'/></svg><span>Ringkasan</span></button><button type="button" data-v="bud"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x='3' y='4' width='18' height='18' rx='2'/><path d='M16 2v4M8 2v4M3 10h18'/></svg><span>Anggaran</span></button><button type="button" data-v="more"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx='12' cy='12' r='1.4'/><circle cx='19' cy='12' r='1.4'/><circle cx='5' cy='12' r='1.4'/></svg><span>Lagi</span></button></nav>
@@ -1723,6 +1736,7 @@ body:has(#splash:not(.hide)) .bnav,body:has(#splash:not(.hide)) .fab{visibility:
         <li><b>Pemerhati</b>: melihat pembelian sahaja.</li>
         <li><b>Penyunting</b>: menambah dan mengemas kini pembelian serta memuat naik dokumen.</li>
         <li><b>Pentadbir</b>: semua di atas, serta mengurus pengguna, bajet dan Log Audit.</li>
+        <li><b>Bos</b>: boleh melihat dan menyunting semua bahagian sistem, dan meluluskan Borang 601 sebelum pembelian diteruskan.</li>
       </ul>
       <p>Jika anda melihat “Anda belum mempunyai akses ke sistem ini”, minta pentadbir menambah anda dalam <b>Pengguna</b>, kemudian muat semula halaman.</p>
     </details>
@@ -2006,7 +2020,7 @@ body:has(#splash:not(.hide)) .bnav,body:has(#splash:not(.hide)) .fab{visibility:
         <ul class="ua-menu" id="uResults" role="listbox" hidden></ul>
       </div>
       <div class="ua-row">
-        <select id="uRole" aria-label="Peranan"><option value="viewer">Pemerhati (lihat sahaja)</option><option value="editor">Penyunting (boleh tambah dan sunting pembelian)</option><option value="admin">Pentadbir (boleh sunting dan urus pengguna)</option></select>
+        <select id="uRole" aria-label="Peranan"><option value="viewer">Pemerhati (lihat sahaja)</option><option value="editor">Penyunting (boleh tambah dan sunting pembelian)</option><option value="admin">Pentadbir (boleh sunting dan urus pengguna)</option><option value="boss">Bos (boleh sunting semua dan meluluskan 601)</option></select>
         <button type="button" class="btn primary" id="uAdd" disabled>Tambah pengguna</button>
       </div>
     </div>
@@ -3290,8 +3304,7 @@ function renderDash(){
 function render(){
   { const nc = $("#navCount"); if(nc) nc.textContent = items.length; }
   renderOverview();
-  renderNotes();
-  renderStats();
+  renderNotes(); renderApprBanner(); renderStats();
   try{ renderDash(); hdUpdatePg(); }catch(e){}
   renderBudgets();
   const q = $("#q").value.trim().toLowerCase();
@@ -3304,6 +3317,7 @@ function render(){
   if(filter==="active") list = list.filter(it=>cancelIdx(it)<0 && stageIndex(it)<STAGES.length);
   else if(filter==="done") list = list.filter(it=>cancelIdx(it)<0 && stageIndex(it)===STAGES.length);
   else if(filter==="cancelled") list = list.filter(it=>cancelIdx(it)>=0);
+  else if(filter==="appr") list = list.filter(it=>cancelIdx(it)<0 && apprState(it)==="pending");
   else if(filter.startsWith("bh:")){ const p = parseBh(filter); list = list.filter(it=>cancelIdx(it)<0 && p.h && yearOf(it)===p.y && catOf(it)===p.c && (it.budgetHead===p.h.t || headShare(it, p.h.t) > 0)); }
   else if(filter!=="all") list = list.filter(it=>cancelIdx(it)<0 && stageIndex(it)===Number(filter));
   if($("#fCat").value==="_none" && !items.some(it=>!it.category)) $("#fCat").value = "";
@@ -3317,7 +3331,7 @@ function render(){
   const note = $("#filterNote");
   { const cb = $("#btnClearF"); if(cb) cb.hidden = !(filter!=="all" || $("#q").value.trim() || $("#fCat").value || $("#fMethod").value); }
   if(filter!=="all"){
-    const name = filter==="done" ? "Selesai" : filter==="active" ? "Dalam proses" : filter==="cancelled" ? "Dibatalkan" : filter.startsWith("bh:") ? (p=>p.h ? `${p.h.t.split(" - ")[0]} ${p.h.t.split(" - ").slice(-1)[0]}, ${CAT_LABEL[p.c]} ${p.y}` : "Tajuk Perbelanjaan")(parseBh(filter)) : "Di langkah "+STAGES[Number(filter)].code;
+    const name = filter==="done" ? "Selesai" : filter==="active" ? "Dalam proses" : filter==="cancelled" ? "Dibatalkan" : filter==="appr" ? "Menunggu kelulusan Bos" : filter.startsWith("bh:") ? (p=>p.h ? `${p.h.t.split(" - ")[0]} ${p.h.t.split(" - ").slice(-1)[0]}, ${CAT_LABEL[p.c]} ${p.y}` : "Tajuk Perbelanjaan")(parseBh(filter)) : "Di langkah "+STAGES[Number(filter)].code;
     note.innerHTML = `Paparan: ${esc(name)} <button type="button" id="clr">Papar semua</button>`;
     $("#clr").onclick=()=>{filter="all";render();};
   } else note.textContent = list.length===items.length ? `${items.length} pembelian` : `${list.length} daripada ${items.length} pembelian`;
@@ -3341,8 +3355,7 @@ function render(){
     const doneN = STAGES.filter(s=>it.stages?.[s.k]?.done).length, pct = Math.round(doneN/STAGES.length*100);
     return `<button type="button" class="row ${ci>=0?"is-cancel":fin?"is-fin":""}" data-id="${esc(it.id)}">
       <div>
-        <p class="name"><span class="rowno">${ix+1}.</span> ${esc(it.title||"Untitled")}</p>
-        ${(it.category||it.method)?`<div class="tags">${it.category?`<span class="tag cat">${esc(CAT_LABEL[it.category]||it.category)}</span>`:""}${it.method?`<span class="tag met">${esc(METHOD_LABEL[it.method]||it.method)}</span>`:""}${needsMinit(it)?`<div class="tags-col">${[...MINIT, ...BOXES].map(m=>`<span class="tag mn ${it.stages?.[m.k]?.done?"ok":""}">${esc(m.code)}${it.stages?.[m.k]?.done?" ✓":""}</span>`).join("")}</div>`:""}</div>`:""}
+        <p class="name"><span class="rowno">${ix+1}.</span> ${esc(it.title||"Untitled")}</p> ${apprTag(it)} ${(it.category||it.method)?`<div class="tags">${it.category?`<span class="tag cat">${esc(CAT_LABEL[it.category]||it.category)}</span>`:""}${it.method?`<span class="tag met">${esc(METHOD_LABEL[it.method]||it.method)}</span>`:""}${needsMinit(it)?`<div class="tags-col">${[...MINIT, ...BOXES].map(m=>`<span class="tag mn ${it.stages?.[m.k]?.done?"ok":""}">${esc(m.code)}${it.stages?.[m.k]?.done?" ✓":""}</span>`).join("")}</div>`:""}</div>`:""}
         <div style="display:flex;align-items:center"><div class="pbar" style="flex:1"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
         <div class="meta">${meta||"&nbsp;"}</div>
         ${refs?`<div class="refs">${refs}</div>`:""}
@@ -3444,8 +3457,7 @@ function stepsHTML(it){
         </div>
         <div class="fields">
           ${s.k==="s601" ? `<div class="items-slot full"></div><label class="f full">Ulasan mengenai keperluan / penyediaan kerja<textarea name="notes" rows="4">${esc(it.notes)}</textarea></label>` : ""}
- ${s.k==="s601" && needsMinit(it) ? XKINDS.map(K=>`<label class="chk vo-tick full"><input type="checkbox" data-f="${K.on}" ${st[K.on]?"checked":""}> ${K.tick}</label>`).join("") : ""}
-          ${s.k==="s602" ? `<label class="f">Nama Syarikat<input name="supplier" value="${esc(supplierVal(it))}"></label><label class="f">No Sijil Pembekal<input name="supplierCert" placeholder="cth. YSHHB/SP/260017" value="${esc(it.supplierCert || CERT_PREFIX)}"></label>` : ""}
+ ${s.k==="s601" && needsMinit(it) ? XKINDS.map(K=>`<label class="chk vo-tick full"><input type="checkbox" data-f="${K.on}" ${st[K.on]?"checked":""}> ${K.tick}</label>`).join("") : ""} ${s.k==="s601" ? apprBoxHTML() : ""} ${s.k==="s602" ? `<label class="f">Nama Syarikat<input name="supplier" value="${esc(supplierVal(it))}"></label><label class="f">No Sijil Pembekal<input name="supplierCert" placeholder="cth. YSHHB/SP/260017" value="${esc(it.supplierCert || CERT_PREFIX)}"></label>` : ""}
           ${s.fields.map(f0=>{ let f = f0, sv = st;
             if(f0.prefixFn){ f = {...f0, prefix: f0.prefixFn(it)}; const cur = String(st[f0.k]||"").trim().toUpperCase(); if(/^YSHHB-PO-(S-|M-)?$/.test(cur)) sv = {...st, [f0.k]: ""}; }
             if(s.k==="inv" && f0.k==="date" && !st.date && it.stages?.do?.date) sv = {...st, date: it.stages.do.date};
@@ -4027,7 +4039,8 @@ async function save(){
   if(broken){ toast("Lengkapkan langkah mengikut urutan: 601, 602, T-607, Indent, DO, Invois."); return; }
   const id = editingId || ("p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6));
   const old = items.find(x=>x.id===id);
-  const rec = {...d, id, updated:Date.now(), created: old?.created || Date.now()};
+  if(d.stages.s601?.done && !(old && old.stages?.s601?.done) && !apprOKFor(old, d)){ toast(old?.approval601?.status === "approved" ? "Butiran 601 diubah selepas kelulusan. Hantar semula untuk kelulusan Bos." : "Borang 601 perlu diluluskan oleh Bos sebelum ditandakan selesai."); return; }
+  const rec = {...d, id, updated:Date.now(), created: old?.created || Date.now(), ...(old?.approval601 ? {approval601: old.approval601} : {})};
   try{
     if(col){ await col.doc(id).set(rec); }
     else { const i=items.findIndex(x=>x.id===id); if(i>=0) items[i]=rec; else items.push(rec); persistLocal(); render(); }
@@ -4132,6 +4145,7 @@ function buildNotes(){
       }
     }
   });
+  items.forEach(it=>{ apprNotes(it).forEach(n=>out.push(n)); });
   return out.sort((a,b)=>((seen.has(a.id)?1:0)-(seen.has(b.id)?1:0)) || ((a.pri??99)-(b.pri??99)));
 }
 let noteTab = "all";
@@ -4142,15 +4156,16 @@ function renderNotes(){
   { const tb = $("#tbBadge"); if(tb){ tb.hidden = !unread; tb.textContent = unread; } }
   const mn = all.filter(n=>n.cat==="minit"), mnUnread = mn.filter(n=>!seen.has(n.id)).length;
   const tn = all.filter(n=>n.cat==="tender"), tnUnread = tn.filter(n=>!seen.has(n.id)).length;
+  const ap = all.filter(n=>n.cat==="approval"), apUnread = ap.filter(n=>!seen.has(n.id)).length; { const na = $("#ntAppr"); if(na){ na.textContent = ap.length; na.classList.toggle("on", apUnread>0); } }
   $("#ntTender").textContent = tn.length; $("#ntTender").classList.toggle("on", tnUnread>0);
   $("#ntAll").textContent = all.length; $("#ntAll").classList.toggle("on", unread>0);
   $("#ntMinit").textContent = mn.length; $("#ntMinit").classList.toggle("on", mnUnread>0);
   document.querySelectorAll("#notePanel [data-nt]").forEach(t=>t.setAttribute("aria-selected", String(t.dataset.nt===noteTab)));
-  const notes = noteTab==="minit" ? mn : noteTab==="tender" ? tn : all;
+  const notes = noteTab==="approval" ? ap : noteTab==="minit" ? mn : noteTab==="tender" ? tn : all;
   $("#noteList").innerHTML = notes.length
     ? notes.map(n=>`<li class="${n.kind} ${seen.has(n.id)?"":"unread"}"><button type="button" data-item="${esc(n.item)}" data-note="${esc(n.id)}" data-step="${esc(n.step||"")}"><strong>${esc(n.title)}</strong><span>${esc(n.text)}</span></button></li>`).join("")
-    : noteTab==="tender"
-      ? `<li class="none">Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.</li>`
+    : noteTab==="approval" ? `<li class="none">Tiada kelulusan tertunggak. Pemberitahuan kelulusan Borang 601 muncul di sini.</li>`
+    : noteTab==="tender" ? `<li class="none">Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.</li>`
     : noteTab==="minit"
       ? `<li class="none">Tiada minit yang tertunggak. Pemberitahuan Minit Permohonan kepada PU muncul di sini untuk pembelian secara Tawaran atau Sebutharga.</li>`
       : `<li class="none">Belum ada pemberitahuan. Pemberitahuan akan muncul apabila pembelian selesai atau memerlukan perhatian.</li>`;
@@ -5462,8 +5477,8 @@ $("#impGo").onclick = async ()=>{
 };
 
 /* ---------- Login and users ---------- */
-let userCap = null, me = null, isAdmin = false, memCol = null, members = [], shareAdmin = false, myRole = "viewer", auditSub = false;
-function applyRole(r){ myRole = r; canEdit = r==="editor" || r==="admin"; isAdmin = r==="admin"; }
+let userCap = null, me = null, isAdmin = false, isBoss = false, memCol = null, members = [], shareAdmin = false, myRole = "viewer", auditSub = false;
+function applyRole(r){ myRole = r; canEdit = r==="editor" || r==="admin" || r==="boss"; isAdmin = r==="admin" || r==="boss"; isBoss = r==="boss"; }
 function subscribeAudit(){
   if(auditSub || !auditCol) return; auditSub = true;
   auditCol.orderBy("at","desc").limit(500).onSnapshot(snap=>{ auditRows = snap.docs.map(d=>({...d.data(), id:d.id})); renderAudit(); }, ()=>{ auditSub = false; });
@@ -5477,7 +5492,7 @@ function showMe(){
   $("#meName").textContent = me.name || "Telah log masuk";
 }
 let uChosen = null, uHits = [];
-const ROLE_NAME = {viewer:"Pemerhati", editor:"Penyunting", admin:"Pentadbir"};
+const ROLE_NAME = {viewer:"Pemerhati", editor:"Penyunting", admin:"Pentadbir", boss:"Bos"};
 function shareBtn(m){ return window.msShareFolder ? `<button type="button" class="btn" data-share="${esc(m.id)}">Kongsi folder</button>` : ""; }
 async function renderMembers(){
   const admins = $("#uAdmins"), host = $("#uMembers"); if(!host) return;
@@ -5490,7 +5505,7 @@ async function renderMembers(){
     : "Belum ada pengguna ditambah. Hanya orang dalam senarai ini (dan pemilik sistem) boleh log masuk.";
   const ids = members.map(m=>m.id);
   const ps = ids.length && userCap ? await userCap.profiles(ids) : {};
-  const roleSel = m=>`<select class="u-role" data-role="${esc(m.id)}" aria-label="Peranan">${["viewer","editor","admin"].map(r=>`<option value="${r}" ${ (m.role||"viewer")===r?"selected":""}>${ROLE_NAME[r]}</option>`).join("")}</select>`;
+  const roleSel = m=>`<select class="u-role" data-role="${esc(m.id)}" aria-label="Peranan">${["viewer","editor","admin","boss"].map(r=>`<option value="${r}" ${ (m.role||"viewer")===r?"selected":""}>${ROLE_NAME[r]}</option>`).join("")}</select>`;
   host.innerHTML = members.map(m=>`<li data-id="${esc(m.id)}"><img alt=""><span class="who"><b></b><small></small></span>${roleSel(m)}${shareBtn(m)}<button type="button" class="btn danger" data-rm="${esc(m.id)}">Buang</button></li>`).join("");
   host.querySelectorAll("[data-role]").forEach(sel=>sel.onchange=async()=>{
     try{ await memCol.doc(sel.dataset.role).update({role: sel.value}); audit("Changed user role", "", "kepada " + ROLE_NAME[sel.value], {target: sel.dataset.role}); toast("Peranan dikemas kini."); shareFolderWith(sel.dataset.role, sel.value, true); }
@@ -5672,7 +5687,7 @@ Object.assign(EN, {
   "Tiada minit yang tertunggak. Pemberitahuan Minit Permohonan kepada PU muncul di sini untuk pembelian secara Tawaran atau Sebutharga.":"No minutes outstanding. Request minute to MD reminders for tender or quotation purchases show here.",
   "Tapis jenis pembelian":"Filter by purchase type", "Tapis kaedah pembelian":"Filter by purchase method"
 });
-const EN_ROLE = {Pemerhati:"Viewer", Penyunting:"Editor", Pentadbir:"Admin"};
+const EN_ROLE = {Pemerhati:"Viewer", Penyunting:"Editor", Pentadbir:"Admin", Bos:"Boss"};
 const UNIT = {Hari:["day","days"], Minggu:["week","weeks"], Bulan:["month","months"], Tahun:["year","years"]};
 const trIn = x => trText(x) ?? x.replace(/Invois/g,"Invoice");
 const EN_RX = [
@@ -5701,7 +5716,7 @@ const EN_RX = [
   [/^Dokumen dimuat naik: (\d+) daripada (\d+) \(Indent, DO, Invois\)\. Masih diperlukan: (.+)\.$/, (m,a,b,c)=>`Documents uploaded: ${a} of ${b} (Indent, DO, Invoice). Still needed: ${c.replace(/Invois/g,"Invoice")}.`],
   [/^(\d+) (Hari|Minggu|Bulan|Tahun)$/, (m,n,u)=>`${n} ${UNIT[u][n==="1"?0:1]}`],
   [/^Selamat datang, (.+)$/, "Welcome, $1"],
-  [/^(.*), (Pemerhati|Penyunting|Pentadbir)$/, (m,a,r)=>`${a}, ${EN_ROLE[r]}`],
+  [/^(.*), (Pemerhati|Penyunting|Pentadbir|Bos)$/, (m,a,r)=>`${a}, ${EN_ROLE[r]}`],
   [/^Menunggu di (.+)$/, (m,a)=>`Waiting at ${trIn(a)}`],
   [/^(.+): semua 6 langkah selesai dan dokumen Indent, DO dan Invois telah dimuat naik\.$/, "$1: all 6 steps are done and the Indent, DO and Invoice documents are uploaded."],
   [/^(.+): muat naik dokumen (.+)\.$/, (m,a,b)=>`${a}: upload the ${b.replace(/Invois/g,"Invoice")} document.`],
@@ -5770,7 +5785,7 @@ function trText(t){
 const BOX_EN = {"Dokumen Tender":"Tender document","Iklan":"Advert","Tarikh Tutup Tender":"Tender closing date","Penilaian Tender":"Tender evaluation","Minit Sokongan / T606":"Support minute / T606","Minit Sokongan":"Support minute","Surat Setuju Terima dan Penolakan":"Award and reject letter","Surat Penerimaan daripada Pembekal":"Acceptance letter from vendor","Minit Permohonan kepada PU":"Request minute to MD"};
 Object.assign(EN, BOX_EN, {
   "Syarikat Berjaya":"Winning company", "Syarikat Ditolak":"Rejected companies", "Nama Syarikat (Pembekal)":"Company name (vendor)",
-  "Iklan belum selesai":"Advert not done", "Rujukan Minit":"Minute References", "Minit Sokongan / T606":"Support minute / T606", "Minit Permohonan kepada PU":"Application minute to PU", "Minit Sokongan / T-606":"Support minute / T-606", "Minit Variation Order / T-613":"Variation Order minute / T-613", "Tambah rujukan":"Add reference", "Sunting rujukan":"Edit reference", "Cari rujukan…":"Search references…", "Rujukan":"Reference", "Perkara":"Subject", "Tiada rujukan lagi.":"No references yet.", "Rujukan ini sudah wujud.":"This reference already exists.", "Rujukan disalin.":"Reference copied.", "Rujukan disimpan.":"Reference saved.", "Rujukan dipadam.":"Reference deleted.", "Sila isi rujukan.":"Please fill in the reference.", "Tekan sekali lagi untuk padam":"Press once more to delete", "Tidak dapat menyimpan rujukan. Cuba lagi.":"Could not save the reference. Try again.", "Tidak dapat memadam rujukan. Cuba lagi.":"Could not delete the reference. Try again.", "Anda tidak mempunyai kebenaran untuk mengubah rujukan.":"You do not have permission to change references.", "Menambah rujukan minit":"Added a minute reference", "Mengubah rujukan minit":"Edited a minute reference", "Memadam rujukan minit":"Deleted a minute reference", "Hanya pentadbir boleh menukar tarikh Hijrah.":"Only administrators can change the Hijri date.", "Tetapan tarikh Hijrah":"Hijri date settings", "Tambah 601 lain (Varian Order)":"Add another 601 (Variation Order)", "Tambah 601 lain (Tambah budget)":"Add another 601 (Add budget)", "Varian Order (601 tambahan)":"Variation Order (additional 601)", "Tambah Budget (601 tambahan)":"Add Budget (additional 601)", "Borang 601 (Varian Order)":"Form 601 (Variation Order)", "Borang 601 (Tambah Budget)":"Form 601 (Add Budget)", "Tarikh 601":"601 date", "Tajuk Perbelanjaan":"Expenditure head", "Anggaran yang diluluskan (B$)":"Approved budget (B$)", "Pratonton borang dengan butiran Varian Order ini.":"Preview of the form with the details of this Variation Order.", "Pratonton borang dengan butiran Tambah Budget ini.":"Preview of the form with the details of this Add Budget.", "Laporan Anggaran":"Budget Report", "Laporan semua tajuk":"Report for all heads", "Laporan":"Report", "Pilih anggaran untuk melihat semua pembelian di bawahnya, lengkap dengan butiran barang. Laporan boleh dicetak atau dimuat turun sebagai PDF.":"Choose a budget to see every purchase under it, with the item details. The report can be printed or saved as a PDF.", "Tajuk Perbelanjaan":"Expenditure head", "Semua tajuk":"All heads", "Tunjuk butiran barang (kuantiti dan harga)":"Show item details (quantity and price)", "Papar laporan":"Show report", "Semua pembelian di bawah anggaran ini. Muat turun PDF atau cetak.":"Every purchase under this budget. Download the PDF or print.", "LAPORAN ANGGARAN PERBELANJAAN":"BUDGET EXPENDITURE REPORT", "Tahun":"Year", "Anggaran":"Budget", "Perbelanjaan":"Expenditure", "Baki":"Balance", "No. Fail / Tarikh":"File no. / Date", "Butiran Pembelian":"Purchase details", "Pemohon / Bahagian":"Applicant / Division", "Pembekal":"Supplier", "Kaedah":"Method", "Jumlah (B$)":"Amount (B$)", "Jumlah kecil":"Subtotal", "Jumlah perbelanjaan":"Total expenditure", "Tiada pembelian untuk tajuk ini.":"No purchases under this head.", "Semua tajuk perbelanjaan":"All expenditure heads", "Tiada tajuk perbelanjaan dipilih":"No expenditure head chosen", "Muat naik senarai terkini (PDF)":"Upload latest list (PDF)", "Gantikan senarai ini dengan fail PDF yang terkini.":"Replace this list with the latest PDF file.", "Semak senarai baharu":"Check the new list", "Gunakan senarai ini":"Use this list", "Senarai setakat":"List as at", "Pembekal dijumpai":"Suppliers found", "Pembekal baharu":"New suppliers", "Dikeluarkan daripada senarai":"Removed from the list", "Maklumat berubah":"Details changed", "Membaca fail PDF…":"Reading the PDF file…", "Hanya pentadbir boleh memuat naik senarai pembekal.":"Only administrators can upload the supplier list.", "Fail mesti dalam format PDF.":"The file must be a PDF.", "Tidak dapat membaca jadual pembekal daripada fail ini. Pastikan ia senarai pembekal YSHHB dalam format PDF.":"Could not read the supplier table from this file. Make sure it is the YSHHB supplier list as a PDF.", "Tetapan":"Settings", "Penyesuaian tarikh Hijrah":"Hijri date adjustment", "Gunakan jika tarikh Hijrah berbeza daripada pengumuman rasmi. Perubahan dipaparkan kepada semua pengguna sistem.":"Use this when the Hijri date differs from the official announcement. The change is shown to all users of the system.", "Tarikh sistem (tanpa penyesuaian)":"System date (no adjustment)", "Tarikh dipaparkan":"Date shown", "Penyesuaian (hari)":"Adjustment (days)", "Atau pilih tarikh Hijrah hari ini":"Or choose today\u2019s Hijri date", "Tetapkan semula":"Reset", "Simpan penyesuaian":"Save adjustment", "Belum pernah diubah.":"Never changed.", "Hanya pentadbir boleh menukar tetapan.":"Only administrators can change settings.", "Tarikh itu terlalu jauh daripada tarikh sistem (maksimum 5 hari).":"That date is too far from the system date (maximum 5 days).", "Tetapan disimpan. Tarikh Hijrah dikemas kini untuk semua pengguna.":"Settings saved. The Hijri date is updated for all users.", "Tidak dapat menyimpan ke storan kongsi. Cuba lagi.":"Could not save to the shared storage. Try again.", "SYSHHB IT Sistem Pemantauan Pembelian":"SYSHHB IT Purchase Tracker", "Eksport / Import":"Export / Import", "Muat turun semua pembelian sebagai fail yang boleh dibuka dalam Excel.":"Download every purchase as a file that opens in Excel.", "Tambah atau kemas kini pembelian daripada fail CSV.":"Add or update purchases from a CSV file.", "Ringkasan":"Summary", "baru sebentar tadi":"just now", "Utama":"Home", "Lagi":"More", "Cari pembelian\u2026":"Search purchases\u2026", "Terbaharu":"Recently added", "Lihat semua":"View all", "Belum ada pembelian.":"No purchases yet.", "Tanpa tajuk":"Untitled", "Menu utama":"Main menu", "Cari pembelian":"Search purchases", "Salin mesej untuk pemilik sistem":"Copy a message for the system owner", "E-mel pemilik sistem":"E-mail the system owner", "Mesej disalin":"Message copied", "Kongsi folder":"Share folder", "Folder OneDrive sistem dikongsi secara automatik apabila pengguna ditambah. Jika seseorang masih melihat \"Belum ada akses\", tekan Kongsi folder pada namanya.":"The system\u2019s OneDrive folder is shared automatically when a user is added. If someone still sees \"No access yet\", press Share folder next to their name.", "Tempoh tutup, dikira dari tarikh dikeluarkan":"Closing period, counted from the issue date", "7 Hari (1 Minggu)":"7 Days (1 Week)", "14 Hari (2 Minggu)":"14 Days (2 Weeks)", "1 Hari":"1 Day", "3 Hari":"3 Days", "Senarai Pembekal":"Supplier list", "Senarai Pembekal Berdaftar":"Registered Suppliers", "Cari nama syarikat atau no. sijil\u2026":"Search company name or certificate no\u2026", "Sijil sah":"Valid certificates", "Sijil tamat tempoh":"Expired certificates", "Nama Pembekal":"Supplier name", "No. Sijil":"Certificate no.", "Sah dari":"Valid from", "Hingga":"Until", "Sah":"Valid", "Tamat tempoh":"Expired", "Belum sah":"Not valid yet", "Pilih":"Select", "Salin":"Copy", "No. sijil disalin":"Certificate no. copied", "Tiada padanan":"No match", "Tiada padanan dalam senarai pembekal":"No match in the supplier list", "Lihat senarai penuh\u2026":"See the full list\u2026", "Pilih daripada senarai":"Choose from the list", "Tekan satu baris untuk memilih syarikat itu.":"Press a row to choose that company.", "Tekan Salin untuk menyalin no. sijil.":"Press Copy to copy the certificate no.", "Jemputan e-mel belum selesai":"E-mail invitation not done", "Tender tertutup":"Closed tender", "Tender tertutup:":"Closed tender:", "Jemputan melalui e-mel sahaja, tiada iklan":"Invitation by e-mail only, no advert", "Ya, jemputan melalui e-mel sahaja (tiada iklan)":"Yes, by e-mail invitation only (no advert)", "Eksport CSV":"Export CSV", "Import CSV":"Import CSV", "Semua pembelian dari permohonan hingga invois.":"Every purchase from the request to the invoice.", "Perlu perhatian":"Needs attention", "Menunggu lebih 30 hari":"Waiting more than 30 days", "Tender ditutup dalam 3 hari":"Tender closing within 3 days", "Jenis pembelian belum dipilih":"Purchase type not set", "Prestasi":"Performance", "selesai dalam 30 hari":"completed in the last 30 days", "hari purata untuk siap":"days on average to complete", "selesai kesemuanya":"completed in total", "Pembelian baharu, 14 hari terakhir":"New purchases, last 14 days", "1 atau 10-20":"1 or 10-20", "Nombor, atau julat seperti 10-20":"A number, or a range like 10-20", "Taip jumlah":"Type the total", "Sehingga B$5,000":"Up to B$5,000", "B$5,001 hingga B$25,000":"B$5,001 to B$25,000", "B$25,001 ke atas":"B$25,001 and above", "Pasang Aplikasi":"Install app", "Pasang":"Install", "Pasang SYSHHB Pembelian pada peranti anda untuk akses pantas dan paparan skrin penuh.":"Install SYSHHB Pembelian on your device for quick access and a full-screen view.", "Aplikasi dipasang.":"App installed.", "Aplikasi belum dipasang. Pasang aplikasi":"App not installed. Install the app", "Pasang pada iPhone / iPad":"Install on iPhone / iPad", "Buka laman ini dalam Safari.":"Open this page in Safari.", "Tekan butang Kongsi (petak dengan anak panah ke atas).":"Tap the Share button (the square with an up arrow).", "Pilih Tambah ke Skrin Utama, kemudian Tambah.":"Choose Add to Home Screen, then Add.", "Gambaran Keseluruhan":"Overview", "Alat":"Tools", "Papan Pemuka":"Dashboard", "Anggaran":"Budget", "Pembelian":"Purchases", "Panduan":"User guide", "Buka menu":"Open menu", "Membaca teks daripada imej…":"Reading text from the image…", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
+  "Iklan belum selesai":"Advert not done", "Rujukan Minit":"Minute References", "Bos":"Boss", "Bos (boleh sunting semua dan meluluskan 601)":"Boss (can edit everything and approve 601)", "Kelulusan Bos":"Boss approval", "Belum dihantar":"Not sent yet", "Borang 601 perlu diluluskan oleh Bos sebelum diteruskan. Bos akan menyemak butiran dahulu.":"Form 601 must be approved by the Boss before it can go ahead. The Boss will check the details first.", "Hantar untuk kelulusan Bos":"Send for Boss approval", "Hantar semula untuk kelulusan":"Send again for approval", "Simpan pembelian dahulu, kemudian hantar untuk kelulusan.":"Save the purchase first, then send it for approval.", "Menunggu kelulusan Bos":"Waiting for Boss approval", "Terima":"Accept", "Tolak":"Reject", "Sebab penolakan (wajib jika menolak)":"Reason for rejecting (required)", "Sebab penolakan":"Reason for rejecting", "Diluluskan":"Approved", "601 boleh diteruskan.":"601 can go ahead.", "Diubah selepas kelulusan":"Changed after approval", "Butiran 601 telah diubah selepas diluluskan. Hantar semula untuk kelulusan Bos.":"The 601 details were changed after approval. Send it again for Boss approval.", "Ditolak":"Rejected", "Tiada kelulusan diperlukan":"No approval needed", "Pembelian ini dibuat sebelum sistem kelulusan Bos.":"This purchase was made before the Boss approval system.", "Belum ada pengguna dengan peranan Bos. Tambah Bos di menu Pengguna.":"No user has the Boss role yet. Add a Boss in the Users menu.", "Perlu kelulusan Bos dahulu":"Boss approval needed first", "Permintaan kelulusan dihantar kepada Bos.":"Approval request sent to the Boss.", "601 diluluskan.":"601 approved.", "601 ditolak.":"601 rejected.", "Sila nyatakan sebab penolakan.":"Please give the reason for rejecting.", "Simpan perubahan pada Borang 601 dahulu.":"Save your changes to Form 601 first.", "Hanya Bos boleh memberi kelulusan.":"Only the Boss can give approval.", "Tidak dapat menyimpan kelulusan. Cuba lagi.":"Could not save the approval. Try again.", "Butiran 601 diubah selepas kelulusan. Hantar semula untuk kelulusan Bos.":"The 601 details were changed after approval. Send it again for Boss approval.", "Borang 601 perlu diluluskan oleh Bos sebelum ditandakan selesai.":"Form 601 must be approved by the Boss before it is marked done.", "601 diluluskan":"601 approved", "601 ditolak":"601 rejected", "Kelulusan":"Approval", "Tiada kelulusan tertunggak. Pemberitahuan kelulusan Borang 601 muncul di sini.":"No approvals waiting. Form 601 approval notices appear here.", "601 menunggu kelulusan anda":"601 awaiting your approval", "Butiran 601 diubah selepas kelulusan":"601 details changed after approval", "Memohon kelulusan 601":"Requested 601 approval", "Meluluskan 601":"Approved 601", "Menolak 601":"Rejected 601", "Minit Sokongan / T606":"Support minute / T606", "Minit Permohonan kepada PU":"Application minute to PU", "Minit Sokongan / T-606":"Support minute / T-606", "Minit Variation Order / T-613":"Variation Order minute / T-613", "Tambah rujukan":"Add reference", "Sunting rujukan":"Edit reference", "Cari rujukan…":"Search references…", "Rujukan":"Reference", "Perkara":"Subject", "Tiada rujukan lagi.":"No references yet.", "Rujukan ini sudah wujud.":"This reference already exists.", "Rujukan disalin.":"Reference copied.", "Rujukan disimpan.":"Reference saved.", "Rujukan dipadam.":"Reference deleted.", "Sila isi rujukan.":"Please fill in the reference.", "Tekan sekali lagi untuk padam":"Press once more to delete", "Tidak dapat menyimpan rujukan. Cuba lagi.":"Could not save the reference. Try again.", "Tidak dapat memadam rujukan. Cuba lagi.":"Could not delete the reference. Try again.", "Anda tidak mempunyai kebenaran untuk mengubah rujukan.":"You do not have permission to change references.", "Menambah rujukan minit":"Added a minute reference", "Mengubah rujukan minit":"Edited a minute reference", "Memadam rujukan minit":"Deleted a minute reference", "Hanya pentadbir boleh menukar tarikh Hijrah.":"Only administrators can change the Hijri date.", "Tetapan tarikh Hijrah":"Hijri date settings", "Tambah 601 lain (Varian Order)":"Add another 601 (Variation Order)", "Tambah 601 lain (Tambah budget)":"Add another 601 (Add budget)", "Varian Order (601 tambahan)":"Variation Order (additional 601)", "Tambah Budget (601 tambahan)":"Add Budget (additional 601)", "Borang 601 (Varian Order)":"Form 601 (Variation Order)", "Borang 601 (Tambah Budget)":"Form 601 (Add Budget)", "Tarikh 601":"601 date", "Tajuk Perbelanjaan":"Expenditure head", "Anggaran yang diluluskan (B$)":"Approved budget (B$)", "Pratonton borang dengan butiran Varian Order ini.":"Preview of the form with the details of this Variation Order.", "Pratonton borang dengan butiran Tambah Budget ini.":"Preview of the form with the details of this Add Budget.", "Laporan Anggaran":"Budget Report", "Laporan semua tajuk":"Report for all heads", "Laporan":"Report", "Pilih anggaran untuk melihat semua pembelian di bawahnya, lengkap dengan butiran barang. Laporan boleh dicetak atau dimuat turun sebagai PDF.":"Choose a budget to see every purchase under it, with the item details. The report can be printed or saved as a PDF.", "Tajuk Perbelanjaan":"Expenditure head", "Semua tajuk":"All heads", "Tunjuk butiran barang (kuantiti dan harga)":"Show item details (quantity and price)", "Papar laporan":"Show report", "Semua pembelian di bawah anggaran ini. Muat turun PDF atau cetak.":"Every purchase under this budget. Download the PDF or print.", "LAPORAN ANGGARAN PERBELANJAAN":"BUDGET EXPENDITURE REPORT", "Tahun":"Year", "Anggaran":"Budget", "Perbelanjaan":"Expenditure", "Baki":"Balance", "No. Fail / Tarikh":"File no. / Date", "Butiran Pembelian":"Purchase details", "Pemohon / Bahagian":"Applicant / Division", "Pembekal":"Supplier", "Kaedah":"Method", "Jumlah (B$)":"Amount (B$)", "Jumlah kecil":"Subtotal", "Jumlah perbelanjaan":"Total expenditure", "Tiada pembelian untuk tajuk ini.":"No purchases under this head.", "Semua tajuk perbelanjaan":"All expenditure heads", "Tiada tajuk perbelanjaan dipilih":"No expenditure head chosen", "Muat naik senarai terkini (PDF)":"Upload latest list (PDF)", "Gantikan senarai ini dengan fail PDF yang terkini.":"Replace this list with the latest PDF file.", "Semak senarai baharu":"Check the new list", "Gunakan senarai ini":"Use this list", "Senarai setakat":"List as at", "Pembekal dijumpai":"Suppliers found", "Pembekal baharu":"New suppliers", "Dikeluarkan daripada senarai":"Removed from the list", "Maklumat berubah":"Details changed", "Membaca fail PDF…":"Reading the PDF file…", "Hanya pentadbir boleh memuat naik senarai pembekal.":"Only administrators can upload the supplier list.", "Fail mesti dalam format PDF.":"The file must be a PDF.", "Tidak dapat membaca jadual pembekal daripada fail ini. Pastikan ia senarai pembekal YSHHB dalam format PDF.":"Could not read the supplier table from this file. Make sure it is the YSHHB supplier list as a PDF.", "Tetapan":"Settings", "Penyesuaian tarikh Hijrah":"Hijri date adjustment", "Gunakan jika tarikh Hijrah berbeza daripada pengumuman rasmi. Perubahan dipaparkan kepada semua pengguna sistem.":"Use this when the Hijri date differs from the official announcement. The change is shown to all users of the system.", "Tarikh sistem (tanpa penyesuaian)":"System date (no adjustment)", "Tarikh dipaparkan":"Date shown", "Penyesuaian (hari)":"Adjustment (days)", "Atau pilih tarikh Hijrah hari ini":"Or choose today\u2019s Hijri date", "Tetapkan semula":"Reset", "Simpan penyesuaian":"Save adjustment", "Belum pernah diubah.":"Never changed.", "Hanya pentadbir boleh menukar tetapan.":"Only administrators can change settings.", "Tarikh itu terlalu jauh daripada tarikh sistem (maksimum 5 hari).":"That date is too far from the system date (maximum 5 days).", "Tetapan disimpan. Tarikh Hijrah dikemas kini untuk semua pengguna.":"Settings saved. The Hijri date is updated for all users.", "Tidak dapat menyimpan ke storan kongsi. Cuba lagi.":"Could not save to the shared storage. Try again.", "SYSHHB IT Sistem Pemantauan Pembelian":"SYSHHB IT Purchase Tracker", "Eksport / Import":"Export / Import", "Muat turun semua pembelian sebagai fail yang boleh dibuka dalam Excel.":"Download every purchase as a file that opens in Excel.", "Tambah atau kemas kini pembelian daripada fail CSV.":"Add or update purchases from a CSV file.", "Ringkasan":"Summary", "baru sebentar tadi":"just now", "Utama":"Home", "Lagi":"More", "Cari pembelian\u2026":"Search purchases\u2026", "Terbaharu":"Recently added", "Lihat semua":"View all", "Belum ada pembelian.":"No purchases yet.", "Tanpa tajuk":"Untitled", "Menu utama":"Main menu", "Cari pembelian":"Search purchases", "Salin mesej untuk pemilik sistem":"Copy a message for the system owner", "E-mel pemilik sistem":"E-mail the system owner", "Mesej disalin":"Message copied", "Kongsi folder":"Share folder", "Folder OneDrive sistem dikongsi secara automatik apabila pengguna ditambah. Jika seseorang masih melihat \"Belum ada akses\", tekan Kongsi folder pada namanya.":"The system\u2019s OneDrive folder is shared automatically when a user is added. If someone still sees \"No access yet\", press Share folder next to their name.", "Tempoh tutup, dikira dari tarikh dikeluarkan":"Closing period, counted from the issue date", "7 Hari (1 Minggu)":"7 Days (1 Week)", "14 Hari (2 Minggu)":"14 Days (2 Weeks)", "1 Hari":"1 Day", "3 Hari":"3 Days", "Senarai Pembekal":"Supplier list", "Senarai Pembekal Berdaftar":"Registered Suppliers", "Cari nama syarikat atau no. sijil\u2026":"Search company name or certificate no\u2026", "Sijil sah":"Valid certificates", "Sijil tamat tempoh":"Expired certificates", "Nama Pembekal":"Supplier name", "No. Sijil":"Certificate no.", "Sah dari":"Valid from", "Hingga":"Until", "Sah":"Valid", "Tamat tempoh":"Expired", "Belum sah":"Not valid yet", "Pilih":"Select", "Salin":"Copy", "No. sijil disalin":"Certificate no. copied", "Tiada padanan":"No match", "Tiada padanan dalam senarai pembekal":"No match in the supplier list", "Lihat senarai penuh\u2026":"See the full list\u2026", "Pilih daripada senarai":"Choose from the list", "Tekan satu baris untuk memilih syarikat itu.":"Press a row to choose that company.", "Tekan Salin untuk menyalin no. sijil.":"Press Copy to copy the certificate no.", "Jemputan e-mel belum selesai":"E-mail invitation not done", "Tender tertutup":"Closed tender", "Tender tertutup:":"Closed tender:", "Jemputan melalui e-mel sahaja, tiada iklan":"Invitation by e-mail only, no advert", "Ya, jemputan melalui e-mel sahaja (tiada iklan)":"Yes, by e-mail invitation only (no advert)", "Eksport CSV":"Export CSV", "Import CSV":"Import CSV", "Semua pembelian dari permohonan hingga invois.":"Every purchase from the request to the invoice.", "Perlu perhatian":"Needs attention", "Menunggu lebih 30 hari":"Waiting more than 30 days", "Tender ditutup dalam 3 hari":"Tender closing within 3 days", "Jenis pembelian belum dipilih":"Purchase type not set", "Prestasi":"Performance", "selesai dalam 30 hari":"completed in the last 30 days", "hari purata untuk siap":"days on average to complete", "selesai kesemuanya":"completed in total", "Pembelian baharu, 14 hari terakhir":"New purchases, last 14 days", "1 atau 10-20":"1 or 10-20", "Nombor, atau julat seperti 10-20":"A number, or a range like 10-20", "Taip jumlah":"Type the total", "Sehingga B$5,000":"Up to B$5,000", "B$5,001 hingga B$25,000":"B$5,001 to B$25,000", "B$25,001 ke atas":"B$25,001 and above", "Pasang Aplikasi":"Install app", "Pasang":"Install", "Pasang SYSHHB Pembelian pada peranti anda untuk akses pantas dan paparan skrin penuh.":"Install SYSHHB Pembelian on your device for quick access and a full-screen view.", "Aplikasi dipasang.":"App installed.", "Aplikasi belum dipasang. Pasang aplikasi":"App not installed. Install the app", "Pasang pada iPhone / iPad":"Install on iPhone / iPad", "Buka laman ini dalam Safari.":"Open this page in Safari.", "Tekan butang Kongsi (petak dengan anak panah ke atas).":"Tap the Share button (the square with an up arrow).", "Pilih Tambah ke Skrin Utama, kemudian Tambah.":"Choose Add to Home Screen, then Add.", "Gambaran Keseluruhan":"Overview", "Alat":"Tools", "Papan Pemuka":"Dashboard", "Anggaran":"Budget", "Pembelian":"Purchases", "Panduan":"User guide", "Buka menu":"Open menu", "Membaca teks daripada imej…":"Reading text from the image…", "Belum dipilih":"Not set", "Dokumen belum dapat dipaparkan":"The document can\u2019t be shown right now", "Cuba lagi":"Try again", "Semak sambungan internet anda, kemudian tekan Cuba lagi.":"Check your internet connection, then press Try again.", "Semak sambungan internet anda, kemudian tekan Cuba lagi. Anda juga boleh menggunakan Buka di OneDrive atau Muat turun.":"Check your internet connection, then press Try again. You can also use Open in OneDrive or Download.", "Fail ini mungkin belum dikongsi dengan anda, atau telah dialih. Minta pemilik sistem menyemak perkongsian folder OneDrive, atau gunakan Buka di OneDrive.":"This file may not have been shared with you, or it was moved. Ask the system owner to check the OneDrive folder sharing, or use Open in OneDrive.", "Tender dibuka hari ini":"Tender opens today", "Tender akan dibuka":"Tender opening soon", "Tender dijadualkan":"Tender scheduled", "Tender sedang berjalan":"Tender in progress", "Tiada peringatan tender. Tarikh dikeluarkan dan tarikh tutup tender dipantau di sini, termasuk peringatan 3, 2 dan 1 hari sebelum tender dibuka dan ditutup.":"No tender reminders. Tender issue and closing dates are monitored here, with reminders 3, 2 and 1 days before a tender opens and closes.", "Tender":"Tender", "LAPORAN PEMBELIAN":"PURCHASE REPORT", "1. Ringkasan":"1. Summary", "Tajuk pembelian":"Purchase title", "Anggaran diluluskan":"Approved budget", "Jumlah pembelian":"Purchase total", "Tempoh keseluruhan":"Total duration", "Semua langkah selesai":"All steps completed", "Selesai, semua dokumen lengkap":"Completed, all documents attached", "2. Senarai barang":"2. Items", "Bil.":"No.", "Keterangan":"Description", "Harga seunit":"Unit price", "Jumlah keseluruhan":"Grand total", "3. Ulasan keperluan":"3. Justification", "Langkah":"Step", "Belum":"Not done", "Jumlah dimohon":"Amount requested", "Ulasan keperluan":"Justification", "Nama fail":"File name", "Tiada barang direkodkan":"No items recorded", "Tiada dokumen dilampirkan.":"No documents attached.", "Untuk":"For", "Dalam anggaran":"Within budget", "Borang 601":"Form 601", "Borang 602":"Form 602", "No Sijil Pembekal":"Supplier certificate no.", "cth. 2 Minggu":"e.g. 2 Weeks", "cth. 3F - Peralatan ICT (Pejabat)":"e.g. 3F - ICT Equipment (Office)", "cth. Laman web Yayasan, Pelita Brunei":"e.g. Yayasan website, Pelita Brunei", "cth. S26/336 bertarikh 11/09/2026":"e.g. S26/336 dated 11/09/2026", "Minit sokongan keputusan penilaian sebelum surat setuju terima":"Minute supporting the evaluation result before the award letter", "No. Rujukan Surat Setuju Terima":"Award letter ref. no.", "Bulan / Tahun Surat Setuju Terima":"Award letter month / year", "Surat setuju terima kepada syarikat berjaya dan surat penolakan kepada syarikat lain":"Award letter to the winning company and reject letters to the others", "Surat penerimaan daripada syarikat berjaya":"The winning company’s acceptance letter", "Salinan Surat Setuju Terima":"Copy of award letter", "Jumlah boleh diubah secara manual":"Total can be changed manually", "cth. 1 Tahun":"e.g. 1 Year", "cth. Pembelian 6 Type C Dongle":"e.g. Purchase of 6 Type C dongles", "Surat Penerimaan daripada Pembekal belum diterima":"Acceptance letter from vendor not received"
 });
 { const BN = Object.keys(BOX_EN).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|"), mt = m=>m==="Tawaran"?"tender":"quotation";
   EN_RX.unshift(
@@ -5832,7 +5847,7 @@ EN_RX.unshift(
   [/^(\d+) pembelian dalam sistem\. Carian mencari tajuk, pembekal, no\. PO, no\. DO dan sebutharga\.$/, "$1 purchases in the system. Search finds the title, supplier, PO no., DO no. and quotation."],
   [/^(\d+) min lalu$/, "$1 min ago"], [/^(\d+) jam lalu$/, "$1 h ago"], [/^(\d+) hari lalu$/, "$1 days ago"]
 );
-EN_RX.unshift([/^Dijana pada (.+) oleh (.*)$/, "Generated on $1 by $2"], [/^Muka surat (\d+) \/ (\d+)$/, "Page $1 / $2"], [/^\+(\d+) item lain$/, "+$1 more items"], [/^Tahun (\d{4}) · (.+)$/, "Year $1 · $2"], [/^(.+) \(sambungan\)$/, "$1 (continued)"], [/^Dikemas kini oleh (.+) pada (.+)$/, "Last updated by $1 on $2"], [/^Pembelian: (.+)$/, "Purchase: $1"], [/^Nombor (\d+) sudah wujud dalam senarai ini\. Sila gunakan nombor lain\.$/, "Number $1 already exists in this list. Please use another number."], [/^Rujukan ini sudah wujud\. Sila gunakan rujukan lain\.$/, "This reference already exists. Please use another reference."], [/^Format: (.+)$/, "Format: $1"], [/^Fail: (.+)$/, "File: $1"], [/^Hanya (\d+) pembekal dibaca, jauh lebih sedikit daripada senarai semasa \((\d+)\)\. Semak fail anda\.$/, "Only $1 suppliers were read, far fewer than the current list ($2). Check your file."], [/^(\d+) baris tidak dapat dibaca: (.+)$/, "$1 rows could not be read: $2"], [/^Senarai pembekal dikemas kini: (\d+) pembekal$/, "Supplier list updated: $1 suppliers"]);
+EN_RX.unshift([/^Dijana pada (.+) oleh (.*)$/, "Generated on $1 by $2"], [/^Muka surat (\d+) \/ (\d+)$/, "Page $1 / $2"], [/^\+(\d+) item lain$/, "+$1 more items"], [/^Tahun (\d{4}) · (.+)$/, "Year $1 · $2"], [/^(.+) \(sambungan\)$/, "$1 (continued)"], [/^Dikemas kini oleh (.+) pada (.+)$/, "Last updated by $1 on $2"], [/^Pembelian: (.+)$/, "Purchase: $1"], [/^Nombor (\d+) sudah wujud dalam senarai ini\. Sila gunakan nombor lain\.$/, "Number $1 already exists in this list. Please use another number."], [/^Rujukan ini sudah wujud\. Sila gunakan rujukan lain\.$/, "This reference already exists. Please use another reference."], [/^Format: (.+)$/, "Format: $1"], [/^(.+): (.+) menghantar Borang 601 untuk kelulusan\.$/, "$1: $2 sent Form 601 for approval."], [/^(.+): diluluskan oleh (.+)\.$/, "$1: approved by $2."], [/^(.+): ditolak oleh (.+)\. Sebab: (.*)$/, "$1: rejected by $2. Reason: $3"], [/^(.+): hantar semula untuk kelulusan Bos\.$/, "$1: send it again for Boss approval."], [/^Dihantar oleh (.+) pada (\d{2}\/\d{2}\/\d{4})$/, "Sent by $1 on $2"], [/^Diluluskan oleh (.+) pada (\d{2}\/\d{2}\/\d{4})$/, "Approved by $1 on $2"], [/^Ditolak oleh (.+) pada (\d{2}\/\d{2}\/\d{4})\. Sebab: (.*)$/, "Rejected by $1 on $2. Reason: $3"], [/^1 pembelian menunggu kelulusan anda\. Tekan untuk menapis\.$/, "1 purchase is waiting for your approval. Tap to filter."], [/^(\d+) pembelian menunggu kelulusan anda\. Tekan untuk menapis\.$/, "$1 purchases are waiting for your approval. Tap to filter."], [/^Fail: (.+)$/, "File: $1"], [/^Hanya (\d+) pembekal dibaca, jauh lebih sedikit daripada senarai semasa \((\d+)\)\. Semak fail anda\.$/, "Only $1 suppliers were read, far fewer than the current list ($2). Check your file."], [/^(\d+) baris tidak dapat dibaca: (.+)$/, "$1 rows could not be read: $2"], [/^Senarai pembekal dikemas kini: (\d+) pembekal$/, "Supplier list updated: $1 suppliers"]);
 const ID_EN = {usersDone:"Done"};
 let trBusy = false;
 const SKIP = "#pvPages, script, style, #meName";
@@ -5905,7 +5920,7 @@ function persistLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(items)
 function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||"[]"); }catch(e){ return []; } }
 function applyMode(){
   $("#btnNew").hidden = !canEdit;
-  $("#mode").textContent = col ? (isAdmin ? "Pentadbir" : canEdit ? "Penyunting" : "Pemerhati, lihat sahaja") : "Disimpan pada peranti ini";
+  $("#mode").textContent = col ? (isBoss ? "Bos" : isAdmin ? "Pentadbir" : canEdit ? "Penyunting" : "Pemerhati, lihat sahaja") : "Disimpan pada peranti ini";
   $("#btnUsers").hidden = !(col && isAdmin);
   $("#btnAudit").hidden = !(col && isAdmin);
   $("#btnSettings").hidden = !(col && (isAdmin || (me && me.isOwner)));
@@ -6489,6 +6504,115 @@ $("#mnList").addEventListener("click", async e=>{
   else if(op){ e.preventDefault(); $("#mnDlg").close(); openDlg(op.dataset.mnOpen); }
 });
 try{ Object.assign(AUDIT_MS, {"Added minute reference":"Menambah rujukan minit", "Edited minute reference":"Mengubah rujukan minit", "Deleted minute reference":"Memadam rujukan minit"}); }catch(e){}
+/* ---------- Boss approval for Borang 601 ---------- */
+const apprActive = ()=>typeof col !== "undefined" && !!col;
+function apprHash(str){ let h = 5381; for(let i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0; return h.toString(36); }
+/* A fingerprint of what the Boss checks: title, items, justification, budget head and any extra 601 form */
+function s601Digest(it){
+  const st = it.stages || {}, s6 = st.s601 || {}, has = l=>l && (l.desc || l.qty || l.unitPrice || l.total);
+  const ln = l=>[String(l.desc || "").trim(), String(l.qty == null ? "" : l.qty).trim(), Number(l.unitPrice || 0).toFixed(2), Number(lineTotal(l) || 0).toFixed(2)];
+  const ex = (k, on)=>{ const v = st[k]; return (s6[on] && v) ? {h: v.budgetHead || "", a: String(v.approvedBudget || ""), d: v.date || "", l: (v.lines || []).filter(has).map(ln)} : null; };
+  return apprHash(JSON.stringify({t: String(it.title || "").trim(), n: String(it.notes || "").trim(), h: it.budgetHead || "", a: String(it.approvedBudget || ""), d: s6.date || "", l: (it.lines || []).filter(has).map(ln), vo: ex("vo601", "voOn"), tb: ex("tb601", "tbOn")}));
+}
+const apprLegacy = it=>!!(it.stages?.s601?.done || STAGES.some((x, i)=>i > 0 && it.stages?.[x.k]?.done));
+function apprState(it){
+  const a = it.approval601;
+  if(!a || !a.status) return apprLegacy(it) ? "legacy" : "none";
+  if(a.status === "approved") return a.digest === s601Digest(it) ? "approved" : "changed";
+  return a.status;
+}
+const apprOK = it=>{ if(!apprActive()) return true; const t = apprState(it); return t === "approved" || t === "legacy"; };
+function apprOKFor(old, d){
+  if(!apprActive()) return true;
+  if(old && !old.approval601 && apprLegacy(old)) return true;
+  const a = old && old.approval601; return !!(a && a.status === "approved" && a.digest === s601Digest(d));
+}
+const apprDate = ts=>ts ? dmy(new Date(ts).toLocaleDateString("en-CA")) : "";
+function apprInner(){
+  const it = items.find(x=>x.id === editingId) || null, a = (it && it.approval601) || {}, stt = it ? apprState(it) : "none";
+  const chip = (c, t)=>`<span class="appr-chip ${c}">${t}</span>`;
+  const canReq = canEdit && !isBoss && it, resend = stt === "changed" || stt === "rejected";
+  let h = `<h4>Kelulusan Bos</h4>`;
+  if(stt === "legacy") return h + chip("", "Tiada kelulusan diperlukan") + `<p>Pembelian ini dibuat sebelum sistem kelulusan Bos.</p>`;
+  if(stt === "pending") h += chip("pend", "Menunggu kelulusan Bos") + `<p>${esc("Dihantar oleh " + (a.requestedByName || "pengguna") + " pada " + apprDate(a.requestedAt))}</p>`;
+  else if(stt === "approved") h += chip("ok", "Diluluskan") + `<p>${esc("Diluluskan oleh " + (a.byName || "Bos") + " pada " + apprDate(a.at))}</p><p>601 boleh diteruskan.</p>`;
+  else if(stt === "changed") h += chip("chg", "Diubah selepas kelulusan") + `<p>Butiran 601 telah diubah selepas diluluskan. Hantar semula untuk kelulusan Bos.</p>`;
+  else if(stt === "rejected") h += chip("bad", "Ditolak") + `<p>${esc("Ditolak oleh " + (a.byName || "Bos") + " pada " + apprDate(a.at) + ". Sebab: " + (a.note || ""))}</p>`;
+  else h += chip("", "Belum dihantar") + `<p>Borang 601 perlu diluluskan oleh Bos sebelum diteruskan. Bos akan menyemak butiran dahulu.</p>`;
+  if(!it) h += `<p>Simpan pembelian dahulu, kemudian hantar untuk kelulusan.</p>`;
+  const btns = [];
+  if(canReq && (stt === "none" || resend)) btns.push(`<button type="button" class="btn primary" id="apprReq">${resend ? "Hantar semula untuk kelulusan" : "Hantar untuk kelulusan Bos"}</button>`);
+  if(isBoss && it && stt !== "approved") btns.push(`<button type="button" class="btn primary" id="apprOk">Terima</button>`);
+  if(btns.length) h += `<div class="appr-btns">${btns.join("")}</div>`;
+  if(isBoss && it && stt === "pending") h += `<textarea id="apprNote" rows="2" placeholder="Sebab penolakan (wajib jika menolak)" aria-label="Sebab penolakan"></textarea><div class="appr-btns"><button type="button" class="btn danger" id="apprNo">Tolak</button></div>`;
+  if(isAdmin && !isBoss && !(members || []).some(m=>m.role === "boss")) h += `<p>Belum ada pengguna dengan peranan Bos. Tambah Bos di menu Pengguna.</p>`;
+  return h;
+}
+const apprBoxHTML = ()=>apprActive() ? `<div class="appr full" id="apprBox">${apprInner()}</div>` : "";
+function lockAppr(){
+  const box = document.querySelector('#steps .step[data-k="s601"]'); if(!box) return;
+  const cb = box.querySelector('input[data-f="done"]'); if(!cb) return;
+  const it = items.find(x=>x.id === editingId), ok = !apprActive() || (it && apprOK(it));
+  if(!ok && !cb.checked){ cb.disabled = true; cb.title = "Perlu kelulusan Bos dahulu"; } else { cb.disabled = false; cb.title = ""; }
+}
+function refreshAppr(){ const box = $("#apprBox"); if(box) box.innerHTML = apprInner(); lockAppr(); }
+async function apprWrite(id, approval){
+  const i = items.findIndex(x=>x.id === id); if(i < 0) return false;
+  const rec = {...items[i], approval601: approval, updated: Date.now()};
+  if(col){ await col.doc(id).set(rec); }
+  items[i] = rec; if(!col) persistLocal();
+  render(); refreshAppr(); return true;
+}
+async function apprRequest(){
+  const it = items.find(x=>x.id === editingId); if(!it || !canEdit || isBoss) return;
+  if(s601Digest(draftFromForm()) !== s601Digest(it)){ toast("Simpan perubahan pada Borang 601 dahulu."); return; }
+  try{
+    await apprWrite(it.id, {status: "pending", digest: s601Digest(it), requestedBy: (me && me.id) || "", requestedByName: (me && (me.name || me.id)) || "", requestedAt: Date.now()});
+    try{ audit("Requested 601 approval", nameOf(it), ""); }catch(e){}
+    toast("Permintaan kelulusan dihantar kepada Bos.");
+  }catch(e){ toast("Tidak dapat menyimpan kelulusan. Cuba lagi."); }
+}
+async function apprDecide(ok){
+  const it = items.find(x=>x.id === editingId); if(!it) return;
+  if(!isBoss){ toast("Hanya Bos boleh memberi kelulusan."); return; }
+  if(s601Digest(draftFromForm()) !== s601Digest(it)){ toast("Simpan perubahan pada Borang 601 dahulu."); return; }
+  const noteEl = $("#apprNote"), note = (noteEl && noteEl.value || "").trim().slice(0, 300);
+  if(!ok && !note){ toast("Sila nyatakan sebab penolakan."); if(noteEl) noteEl.focus(); return; }
+  const prev = it.approval601 || {};
+  try{
+    await apprWrite(it.id, {...prev, status: ok ? "approved" : "rejected", digest: s601Digest(it), by: (me && me.id) || "", byName: (me && (me.name || me.id)) || "", at: Date.now(), note: ok ? "" : note});
+    try{ audit(ok ? "Approved 601" : "Rejected 601", nameOf(it), ok ? "" : note); }catch(e){}
+    toast(ok ? "601 diluluskan." : "601 ditolak.");
+  }catch(e){ toast("Tidak dapat menyimpan kelulusan. Cuba lagi."); }
+}
+function apprTag(it){
+  if(!apprActive()) return "";
+  const stt = apprState(it), done = it.stages?.s601?.done;
+  const t = stt === "pending" ? ["pend", "Menunggu kelulusan Bos"] : stt === "rejected" ? ["bad", "601 ditolak"] : stt === "changed" ? ["chg", "Diubah selepas kelulusan"] : (stt === "approved" && !done) ? ["ok", "601 diluluskan"] : null;
+  return t ? `<div class="tags"><span class="tag appr ${t[0]}">${t[1]}</span></div>` : "";
+}
+function apprNotes(it){
+  const out = [], a = it.approval601; if(!a || !apprActive() || cancelIdx(it) >= 0) return out;
+  const stt = apprState(it), nm = nameOf(it), mine = !!(me && a.requestedBy && a.requestedBy === me.id), recent = ts=>Date.now() - (ts || 0) < 14 * 864e5;
+  const base = {cat: "approval", item: it.id, step: "s601"};
+  if(stt === "pending" && isBoss) out.push({...base, id: `${it.id}:apr:req:${a.requestedAt}`, kind: "warn urgent", pri: -3, title: "601 menunggu kelulusan anda", text: `${nm}: ${a.requestedByName || "Pengguna"} menghantar Borang 601 untuk kelulusan.`});
+  if(stt === "approved" && mine && recent(a.at)) out.push({...base, id: `${it.id}:apr:ok:${a.at}`, kind: "ok", pri: -2, title: "601 diluluskan", text: `${nm}: diluluskan oleh ${a.byName || "Bos"}.`});
+  if(stt === "rejected" && mine && recent(a.at)) out.push({...base, id: `${it.id}:apr:no:${a.at}`, kind: "warn urgent", pri: -2, title: "601 ditolak", text: `${nm}: ditolak oleh ${a.byName || "Bos"}. Sebab: ${a.note || "-"}`});
+  if(stt === "changed" && (mine || isBoss) && !it.stages?.s601?.done) out.push({...base, id: `${it.id}:apr:chg:${a.at}`, kind: "warn", pri: -1, title: "Butiran 601 diubah selepas kelulusan", text: `${nm}: hantar semula untuk kelulusan Bos.`});
+  return out;
+}
+function renderApprBanner(){
+  const b = $("#apprBanner"); if(!b) return;
+  const n = (isBoss && apprActive()) ? items.filter(it=>cancelIdx(it) < 0 && apprState(it) === "pending").length : 0;
+  b.hidden = !n; if(n) b.textContent = `${n} pembelian menunggu kelulusan anda. Tekan untuk menapis.`;
+}
+$("#apprBanner").onclick = ()=>{ filter = "appr"; render(); };
+$("#steps").addEventListener("click", e=>{
+  const b = e.target.closest("#apprReq, #apprOk, #apprNo"); if(!b) return; e.preventDefault();
+  if(b.id === "apprReq") apprRequest(); else apprDecide(b.id === "apprOk");
+});
+{ const w = wireSteps; wireSteps = function(){ w.apply(this, arguments); lockAppr(); }; }
+try{ Object.assign(AUDIT_MS, {"Requested 601 approval":"Memohon kelulusan 601", "Approved 601":"Meluluskan 601", "Rejected 601":"Menolak 601"}); }catch(e){}
 /* ---------- Closed tender tick in the Advert box ---------- */
 document.addEventListener("change", e=>{
   const c = e.target.closest ? e.target.closest('[data-f="closed"]') : null; if(!c) return;
