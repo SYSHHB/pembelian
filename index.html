@@ -6559,7 +6559,10 @@ $("#mnList").addEventListener("click", async e=>{
 });
 try{ Object.assign(AUDIT_MS, {"Added minute reference":"Menambah rujukan minit", "Edited minute reference":"Mengubah rujukan minit", "Deleted minute reference":"Memadam rujukan minit"}); }catch(e){}
 /* ---------- Boss approval for Borang 601 ---------- */
-const apprActive = ()=>typeof col !== "undefined" && !!col;
+/* Boss approval for Borang 601 is switched off. Set APPROVAL_ON to true to bring back the box, the lock, the tags, the banner and the notices. */
+const APPROVAL_ON = false;
+const apprActive = ()=>APPROVAL_ON && typeof col !== "undefined" && !!col;
+if(!APPROVAL_ON){ const tb = document.querySelector('[data-nt="approval"]'); if(tb) tb.style.display = "none"; }
 function apprHash(str){ let h = 5381; for(let i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0; return h.toString(36); }
 /* A fingerprint of what the Boss checks: title, items, justification, budget head and any extra 601 form */
 function s601Digest(it){
