@@ -1389,6 +1389,18 @@ body:has(#splash:not(.hide)) .bnav,body:has(#splash:not(.hide)) .fab{visibility:
 .tag.appr{font-weight:700}.tag.appr.pend{background:#f6d85f;color:#3a2c00}.tag.appr.ok{background:#2e8b57;color:#fff}.tag.appr.bad{background:#c8453b;color:#fff}.tag.appr.chg{background:#e9902e;color:#2b1700}
 .appr-banner{display:block;width:100%;margin:0 0 10px;padding:12px 14px;border-radius:14px;border:1px solid #f6d85f;background:rgba(246,216,95,.16);color:var(--ink);font-weight:700;font-size:14px;text-align:left;cursor:pointer}
 .appr-banner[hidden]{display:none}
+
+/* ===== Borang T-607: signing block (space to sign, centred block) ===== */
+.t7 .sig.t7-sign{margin:2mm 0 0 auto;width:max-content;max-width:100%;text-align:center;line-height:1.3}
+.t7-sign .t7-space{height:15mm}
+
+/* ===== Borang T-607: header laid out like the original form (compact T-607 box centred over the date) ===== */
+.t7 .t7-head{gap:0;margin:0 0 2mm 40mm}
+.t7 .t7-head > div{margin-left:47.7mm;width:max-content;text-align:center}
+.t7 .t7-head b{display:block;width:auto;padding:.6mm 2.6mm;margin-top:1.1mm;text-align:center}
+.t7 .t7-head i{display:block;text-align:center;margin:1mm 0 0}
+.t7 .row2{grid-template-columns:1fr 48mm}
+.pv-pages .t7 .row2 .fld{font-weight:400 !important}
 </style>
 </head>
 <body>
@@ -4494,11 +4506,12 @@ function build607(d){
         <span>${box("Supporting documents")}</span><span>Salinan dokumen-dokumen sokongan (seperti dalam <i>Table 1)</i></span>
       </div>
       <p style="margin-top:3mm">Sekian disampaikan untuk perhatian dan tindakan pihak Tuan / Puan selanjutnya.</p>
-      <p style="margin:2mm 0 0 45mm">Dengan hormat,</p>
-      <div class="sig" style="margin-top:5mm">
+      <div class="sig t7-sign">
+        <div>Dengan hormat,</div>
+        <div class="t7-space" aria-hidden="true"></div>
         <div class="bd">[ ${esc(REQUESTER.toUpperCase())}]</div>
         <div><span class="fld">${esc(POSITION)}</span></div>
-        <div><span class="fld">Bahagian ${esc(DIVISION)}</span></div>
+        <div><span class="fld">Bahagian ${esc(DIVISION)} (Perkhidmatan Korporat)</span></div>
       </div>
     </div>
     <div>
