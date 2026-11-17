@@ -4591,7 +4591,7 @@ function modPages(){
     pg.style.zoom = "";
     const land = pg.classList.contains("land");
     const PW = (land ? 297 : 210) * mm, PH = (land ? 210 : 297) * mm;
-    const ml = 19.1 * mm, mt = (land ? 14.3 : 25.4) * mm, mb = (land ? 15 : 25.4) * mm, cw = PW - 2 * ml, ch = PH - mt - mb;
+    const ml = 19.1 * mm, mt = (land ? 14.3 : 25.4) * mm, mb = (land ? 10 : 25.4) * mm, cw = PW - 2 * ml, ch = land ? PH - 16 * mm : PH - mt - mb;
     pg.classList.add("mod");
     let w = pg.querySelector(":scope > .fitwrap");
     if(!w){
@@ -4601,10 +4601,20 @@ function modPages(){
     }
     w.style.left = ml + "px"; w.style.top = mt + "px";
     const fit = z=>{ w.style.width = (cw / z) + "px"; w.style.transform = z < 1 ? `scale(${z})` : ""; return w.offsetHeight * z; };
+    let zf = 1;
     if(fit(1) > ch){
       let lo = 0.5, hi = 1;
       for(let i = 0; i < 9; i++){ const mid = (lo + hi) / 2; if(fit(mid) <= ch) lo = mid; else hi = mid; }
-      fit(lo);
+      fit(lo); zf = lo;
+    }
+    // T-607 (landscape): put the form in the middle of the A4 page, across and down
+    if(land){
+      const t7 = w.querySelector(".t7");
+      if(t7){
+        const cs = getComputedStyle(t7), tr = cs.gridTemplateColumns.split(" ").map(parseFloat).filter(x=>!isNaN(x)); const nw = (parseFloat(cs.marginLeft) || 0) + tr.reduce((x, y)=>x + y, 0) + (parseFloat(cs.columnGap) || 0) * Math.max(0, tr.length - 1);
+        w.style.left = Math.max(0, (PW - nw * zf) / 2) + "px";
+        w.style.top = Math.max(8 * mm, (PH - w.offsetHeight * zf) / 2) + "px";
+      }
     }
   });
 }
