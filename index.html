@@ -1441,6 +1441,73 @@ body:has(#splash:not(.hide)) .bnav,body:has(#splash:not(.hide)) .fab{visibility:
 .dp-btn:disabled{opacity:.45;cursor:default}
 .dp-src{position:absolute !important;left:0;bottom:0;width:100% !important;height:1px !important;opacity:0;pointer-events:none;margin:0 !important;padding:0 !important;border:0 !important}
 .dp-bad{border-color:#c8453b !important}
+
+/* ===== User guide, GitBook style ===== */
+dialog#manualDlg.gb{width:min(1240px,98vw);max-width:98vw;height:min(92vh,920px);max-height:92vh;padding:0;overflow:hidden;border-radius:16px}
+dialog#manualDlg.gb[open]{display:flex;flex-direction:column}
+.gb-top{display:flex;align-items:center;gap:12px;flex:none;padding:10px 16px;border-bottom:1px solid var(--line);border-top:4px solid var(--gold);background:var(--surface)}
+.gb-menu{display:none;flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;width:38px;height:38px;font-size:18px;cursor:pointer;padding:0}
+.gb-brand{display:flex;align-items:center;gap:10px;min-width:0}
+.gb-brand img{width:32px;height:32px;object-fit:contain;flex:none}
+.gb-brand b{display:block;font-size:16px;line-height:1.2}
+.gb-brand small{display:block;color:var(--muted);font-size:12px}
+.gb-search{flex:1;min-width:140px;max-width:380px;margin-left:auto}
+.gb-search input{width:100%;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:0 12px;font-size:14px}
+.gb-body{position:relative;flex:1;min-height:0;display:grid;grid-template-columns:268px minmax(0,1fr) 210px}
+.gb-side{overflow:auto;padding:14px 10px 28px;border-right:1px solid var(--line);background:var(--bg)}
+.gb-gt{margin:18px 8px 6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.gb-side .gb-gt:first-child,.gb-toc .gb-gt:first-child{margin-top:4px}
+.gb-side a,.gb-toc a{display:block;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px;line-height:1.35}
+.gb-side a:hover,.gb-toc a:hover{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.gb-side a.on{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);font-weight:700;box-shadow:inset 3px 0 0 var(--accent)}
+.gb-side a.gb-hit{padding:9px 10px;border:1px solid var(--line);margin:0 0 8px;background:var(--surface)}
+.gb-hit b{display:block;font-size:14px}.gb-hit span{display:block;font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:400}
+.gb-none{margin:10px 8px;color:var(--muted);font-size:14px}
+.gb-main{overflow:auto;scroll-behavior:smooth;padding:28px clamp(18px,4vw,48px) 48px}
+#gbArticle{max-width:760px;margin:0 auto}
+.gb-crumb{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+#gbArticle h1{margin:0 0 18px;font-size:30px;line-height:1.2}
+.gb-content{font-size:15.5px;line-height:1.65}
+.gb-content h2{margin:30px 0 10px;font-size:21px;padding-top:6px;scroll-margin-top:12px}
+.gb-content p{margin:0 0 12px}
+.gb-content ul,.gb-content ol{margin:0 0 14px;padding-left:22px}
+.gb-content li{margin:5px 0}
+.gb-content code,.manp-body code{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.92em}
+.gb-content kbd,.manp-body kbd{display:inline-block;min-width:22px;text-align:center;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:0 6px;font:600 .9em/1.6 inherit;background:var(--surface)}
+.gb-tbl{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:14.5px}
+.gb-tbl th{background:var(--bg);text-align:left;font-size:12.5px;color:var(--muted)}
+.gb-tbl th,.gb-tbl td{border:1px solid var(--line);padding:9px 12px;vertical-align:top}
+.gb-note{border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent);border-radius:8px;padding:11px 14px;margin:14px 0}
+.gb-note b{display:block;margin-bottom:3px}
+.gb-note.tip{border-color:#2e8b57;background:color-mix(in srgb,#2e8b57 10%,transparent)}
+.gb-note.info{border-color:#3b82c4;background:color-mix(in srgb,#3b82c4 10%,transparent)}
+.gb-note.warn{border-color:#e9902e;background:color-mix(in srgb,#e9902e 13%,transparent)}
+.gb-pn{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:40px}
+.gb-pn a{display:block;border:1px solid var(--line);border-radius:12px;padding:12px 16px;text-decoration:none;color:var(--ink);background:var(--surface)}
+.gb-pn a:hover{border-color:var(--accent)}
+.gb-pn small{display:block;color:var(--muted);font-size:12px}
+.gb-pn b{display:block;font-size:15px;color:var(--accent)}
+.gb-pn .next{text-align:right;grid-column:2}
+.gb-toc{overflow:auto;padding:28px 12px;border-left:1px solid var(--line)}
+.gb-body mark{background:#f6d85f;color:#3a2c00;border-radius:3px;padding:0 2px}
+@media (max-width:1100px){ .gb-body{grid-template-columns:260px minmax(0,1fr)} .gb-toc{display:none} }
+@media (max-width:860px){
+  dialog#manualDlg.gb{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0;margin:0}
+  .gb-body{grid-template-columns:minmax(0,1fr)} .gb-menu{display:block}
+  .gb-top{flex-wrap:wrap;gap:8px;padding:8px 12px} .gb-brand{flex:1} .gb-brand small{display:none}
+  .gb-search{order:5;max-width:none;flex:1 1 100%;margin-left:0}
+  .man-acts .btn{padding:6px 8px;font-size:12px}
+  .gb-side{position:absolute;z-index:3;left:0;top:0;bottom:0;width:min(300px,86vw);transform:translateX(-102%);transition:transform .2s;box-shadow:6px 0 24px rgba(0,0,0,.25);background:var(--surface)}
+  dialog#manualDlg.gb-open .gb-side{transform:none}
+  #gbArticle h1{font-size:25px} .gb-main{padding:20px 16px 40px}
+  .gb-pn{grid-template-columns:1fr}.gb-pn .next{grid-column:1}
+}
+.manp-body h4{font-size:11.5pt;margin:8px 0 3px;color:#000;break-after:avoid}
+.manp-body .gb-note{border-left:3px solid #777;background:#f2f2f2;padding:4px 8px;margin:6px 0}
+.manp-body .gb-note b{display:inline;margin-right:4px}
+.manp-body .gb-tbl{width:100%;border-collapse:collapse;margin:4px 0 8px;font-size:10pt}
+.manp-body .gb-tbl th,.manp-body .gb-tbl td{border:1px solid #777;padding:2px 5px;text-align:left;vertical-align:top;background:none;color:#000}
+@media (max-width:560px){ .gb-lb{display:none} .man-acts .btn{padding:6px 10px;font-size:15px} .gb-brand b{font-size:15px} }
 </style>
 </head>
 <body>
@@ -1785,273 +1852,18 @@ body:has(#splash:not(.hide)) .bnav,body:has(#splash:not(.hide)) .fab{visibility:
     </ol>
   </div>
 </dialog>
-<dialog id="manualDlg" aria-labelledby="manTitle">
-  <div class="ua-head"><h3 id="manTitle">Panduan Pengguna</h3><div class="man-acts"><button type="button" class="btn" id="manPrint">🖨 Cetak</button><button type="button" class="btn" id="manPdf">⬇ Muat turun PDF</button><button type="button" class="ua-x" id="manClose" aria-label="Tutup">✕</button></div></div>
-  <div class="dlg-body ua-body man"><div class="ms-only">
-    <p class="man-intro">Sistem Pemantauan Pembelian merekod setiap pembelian dari permohonan hingga invois, menyimpan dokumen, memberi peringatan dan menyediakan laporan. Tekan setiap tajuk di bawah untuk membaca langkahnya.</p>
-
-    <details open><summary>1. Membuka sistem dan peranan pengguna</summary>
-      <ol>
-        <li>Buka laman sistem dan log masuk dengan akaun Microsoft syayasan.edu.bn anda.</li>
-        <li>Tekan <b>Log masuk</b> pada skrin selamat datang.</li>
-      </ol>
-      <p>Setiap pengguna mempunyai satu peranan:</p>
-      <ul>
-        <li><b>Pemerhati</b>: melihat pembelian sahaja.</li>
-        <li><b>Penyunting</b>: menambah dan mengemas kini pembelian serta memuat naik dokumen.</li>
-        <li><b>Pentadbir</b>: semua di atas, serta mengurus pengguna, bajet dan Log Audit.</li>
-        <li><b>Bos</b>: boleh melihat dan menyunting semua bahagian sistem, dan meluluskan Borang 601 sebelum pembelian diteruskan.</li>
-      </ul>
-      <p>Jika anda melihat “Anda belum mempunyai akses ke sistem ini”, minta pentadbir menambah anda dalam <b>Pengguna</b>, kemudian muat semula halaman.</p>
-    </details>
-
-    <details><summary>2. Menambah pembelian baharu</summary>
-      <ol>
-        <li>Tekan <b>Pembelian baharu</b>.</li>
-        <li>Isi <b>Tajuk pembelian</b>, contohnya “24 Unit Desktop”.</li>
-        <li>Pilih <b>Jenis pembelian</b>: Pembelian Sekolah atau Pembelian Office.</li>
-        <li>Pilih <b>Kaedah pembelian</b> mengikut jumlah:
-          <ul><li><b>Pembelian Terus</b>: sehingga B$5,000</li><li><b>Sebutharga (SH)</b>: B$5,001 hingga B$25,000</li><li><b>Tawaran (TN)</b>: B$25,001 ke atas</li></ul>
-          Sistem memberi amaran jika kaedah tidak sepadan dengan jumlah barang, dengan butang untuk menukarnya.</li>
-        <li>Pilih <b>Tahun bajet</b> dan <b>Tajuk Perbelanjaan</b>. Anggaran yang diluluskan diisi secara automatik.</li>
-        <li>Isi <b>Senarai Barang</b>: keterangan, kuantiti dan harga seunit. Tekan <b>Tambah barang</b> untuk baris baharu. Untuk Sebutharga dan Tawaran, <b>Jumlah</b> setiap baris boleh diubah sendiri.</li>
-        <li>Tekan <b>Simpan pembelian</b>.</li>
-      </ol>
-    </details>
-
-    <details><summary>3. Langkah untuk Sebutharga dan Tawaran</summary>
-      <p>Untuk Sebutharga dan Tawaran, kotak berwarna emas dipaparkan sebelum 601. Lengkapkan mengikut susunan:</p>
-      <ol>
-        <li><b>Minit Permohonan kepada PU</b>: no. rujukan dan tarikh minit.</li>
-        <li><b>Dokumen Tender</b>: no. dan tajuk tender. Tarikh tutup diisi sendiri 2 minggu selepas tarikh dikeluarkan (boleh diubah).</li>
-        <li><b>Iklan</b>: tempat dan tarikh iklan. Untuk tender tertutup (jemputan melalui e-mel sahaja), tandakan <b>Tender tertutup</b>.</li>
-        <li><b>Tarikh Tutup Tender</b>: tarikh dan masa tutup, bilangan tawaran diterima. Kiraan hari dipaparkan.</li>
-        <li><b>Penilaian Tender</b>: tarikh penilaian, syarikat dan harga dicadangkan.</li>
-        <li><b>Minit Sokongan</b>: no. rujukan dan tarikh minit.</li>
-        <li><b>Surat Setuju Terima dan Penolakan</b>: syarikat berjaya dan no. rujukan surat setuju terima, serta setiap syarikat ditolak dengan no. rujukan surat penolakan.</li>
-        <li><b>Surat Penerimaan daripada Pembekal</b>: surat penerimaan daripada syarikat berjaya.</li>
-      </ol>
-      <p>Nama syarikat dicadangkan mengalir sendiri ke Syarikat Berjaya, Nama Syarikat (Pembekal) dan Nama Syarikat dalam 602. Anda masih boleh mengubahnya.</p>
-      <p>Tandakan <b>Selesai</b> pada setiap kotak apabila siap. Tag di senarai pembelian bertukar hijau dengan ✓.</p>
-    </details>
-
-    <details><summary>4. Langkah 601 hingga Invois</summary>
-      <ol>
-        <li><b>601</b>: permohonan pembelian.</li>
-        <li><b>602</b>: maklumat syarikat dan sebutharga.</li>
-        <li><b>T-607</b>: permohonan penyediaan Borang Pesanan.</li>
-        <li><b>Indent</b>: no. PO, tarikh PO, tarikh tandatangan Ketua Bahagian dan Pengarah Urusan, catatan PO.</li>
-        <li><b>DO</b>: no. DO, tarikh, diterima oleh, jaminan.</li>
-        <li><b>Invois</b>: no. dan tarikh invois.</li>
-      </ol>
-      <p>Tarikh 601, 602 dan T-607 diisi dengan tarikh hari ini secara automatik sehingga langkah itu ditanda Selesai. Anda boleh menukarnya.</p>
-      <p>Tandakan <b>Selesai</b> apabila sesuatu langkah siap, atau <b>Batal</b> jika pembelian dibatalkan.</p>
-    </details>
-
-    <details><summary>5. Melampirkan fail dan isian automatik</summary>
-      <ol>
-        <li>Tekan <b>Lampirkan fail</b> pada langkah yang berkaitan. Fail PDF, Word, Excel, JPG dan PNG diterima (Word dan Excel sehingga 10 MB).</li>
-        <li>Untuk <b>Indent, DO, Invois, 602</b> dan <b>Surat Setuju Terima dan Penolakan</b>, sistem membaca dokumen dan mengisi maklumat secara automatik.</li>
-        <li>Satu fail Word yang mengandungi banyak surat penolakan akan menambah setiap syarikat dan no. rujukannya.</li>
-        <li>Untuk fail yang sudah dilampirkan dalam Surat Setuju Terima dan Penolakan, tekan <b>Baca surat</b>.</li>
-        <li>Semak maklumat yang diisi, kemudian tekan <b>Simpan pembelian</b>.</li>
-      </ol>
-      <p>Anda juga boleh menggunakan kotak <b>Muat naik dokumen</b> di atas borang untuk beberapa dokumen sekali gus. Fail Word lama (.doc) dan Excel dilampirkan tetapi tidak dibaca.</p>
-    </details>
-
-    <details><summary>6. Mencetak borang</summary>
-      <ol>
-        <li>Dalam borang pembelian, tekan <b>Borang 601</b>, <b>Borang 602</b> atau <b>T-607</b>.</li>
-        <li>Semak dan betulkan maklumat terus pada pratonton jika perlu.</li>
-        <li>Tekan <b>Muat turun PDF</b>, <b>Muat turun Word</b> atau <b>Cetak</b>.</li>
-      </ol>
-      <p>Butang <b>Sebutharga, Indent, DO</b> dan <b>Invois</b> membuka dokumen yang telah dilampirkan.</p>
-    </details>
-
-    <details><summary>7. Laporan pembelian</summary>
-      <ol>
-        <li>Apabila semua langkah 601 hingga Invois ditanda Selesai, butang <b>Buat laporan</b> dipaparkan.</li>
-        <li>Tekan butang itu untuk melihat laporan dua muka surat: ringkasan, senarai barang, setiap langkah dengan butirannya dan senarai dokumen.</li>
-        <li>Tekan <b>Muat turun PDF</b> atau <b>Cetak</b>.</li>
-      </ol>
-    </details>
-
-    <details><summary>8. Pemberitahuan</summary>
-      <p>Tekan ikon loceng <b>Pemberitahuan</b> di bahagian atas halaman. Tab <b>Semua</b> menunjukkan semua peringatan; tab <b>Tender</b> memantau tarikh tender; tab <b>Minit</b> menunjukkan minit yang tertunggak.</p>
-      <p>Tab <b>Tender</b> menunjukkan tarikh dikeluarkan dan tarikh tutup setiap tender, serta peringatan <b>3, 2 dan 1 hari</b> sebelum tender dibuka dan sebelum tender ditutup, pada hari ia dibuka atau ditutup, dan apabila tarikh tutup telah lepas. Yang paling mendesak dipaparkan dahulu.</p>
-      <p>Peringatan dihantar untuk langkah yang belum siap, tarikh tutup tender, dokumen yang belum dilampirkan dan invois yang tidak sama dengan jumlah Indent. Tekan peringatan untuk membuka pembelian itu.</p>
-    </details>
-
-    <details><summary>9. Mencari dan menapis</summary>
-      <ul>
-        <li><b>Semua / Pembelian Sekolah / Pembelian Office</b>: tapis mengikut jenis.</li>
-        <li><b>Kotak carian</b>: cari tajuk, syarikat, no. PO, no. DO dan lain-lain.</li>
-        <li><b>Semua kaedah</b>: tapis Pembelian Terus, Sebutharga atau Tawaran.</li>
-        <li><b>Bulatan status</b> (601, 602, Selesai, Dibatalkan) dan <b>kad bajet</b>: tekan untuk menapis.</li>
-        <li><b>✕ Kosongkan tapisan</b>: buang semua tapisan sekali gus.</li>
-      </ul>
-    </details>
-
-    <details><summary>10. Bajet tahunan (Pentadbir)</summary>
-      <ol>
-        <li>Pilih tahun pada bahagian <b>Penggunaan anggaran</b>. Sistem membuka tahun semasa secara automatik.</li>
-        <li>Tekan <b>Urus bajet</b>.</li>
-        <li>Pilih <b>Tahun</b> dan tab <b>Pembelian Sekolah</b> atau <b>Pembelian Office</b>.</li>
-        <li>Isi setiap Tajuk Perbelanjaan dan anggarannya. Tekan <b>+ Tambah tajuk</b> untuk menambah.</li>
-        <li>Untuk tahun baharu, tekan <b>+ Tahun baharu</b>. Tajuk dan jumlah tahun sebelumnya disalin untuk dikemas kini.</li>
-        <li>Tekan <b>Simpan bajet</b>.</li>
-      </ol>
-      <p>Lakukan ini pada awal Januari setiap tahun.</p>
-    </details>
-
-    <details><summary>11. Pengguna dan Log Audit (Pentadbir)</summary>
-      <ul>
-        <li><b>Pengguna</b>: cari rakan sekerja, tambah mereka dan pilih peranan. Kongsi folder OneDrive sistem dengan mereka: Boleh lihat untuk Pemerhati, Boleh edit untuk Penyunting dan Pentadbir.</li>
-        <li><b>Log Audit</b>: lihat siapa membuat perubahan dan bila.</li>
-      </ul>
-    </details>
-
-    <details><summary>12. Lain-lain</summary>
-      <ul>
-        <li><b>Eksport ke Excel (CSV)</b>: muat turun semua pembelian untuk dibuka dalam Excel.</li>
-        <li><b>BM / EN</b>: tukar bahasa paparan.</li>
-        <li><b>Butang bulan</b>: tukar mod cerah atau gelap.</li>
-        <li>Perubahan oleh pengguna lain dipaparkan secara automatik.</li>
-      </ul>
-    </details>
+<dialog id="manualDlg" class="gb" aria-labelledby="manTitle">
+  <div class="gb-top">
+    <button type="button" class="gb-menu" id="gbMenu" aria-label="Kandungan">☰</button>
+    <div class="gb-brand"><img id="gbCrest" alt=""><div><b id="manTitle">Panduan Pengguna</b><small id="gbSub">Sistem Pemantauan Pembelian</small></div></div>
+    <div class="gb-search"><input type="search" id="gbQ" placeholder="Cari dalam panduan…" autocomplete="off" aria-label="Cari dalam panduan"></div>
+    <div class="man-acts"><button type="button" class="btn" id="manPrint">🖨 Cetak</button><button type="button" class="btn" id="manPdf">⬇ Muat turun PDF</button><button type="button" class="ua-x" id="manClose" aria-label="Tutup">✕</button></div>
   </div>
-  <div class="en-only">
-    <p class="man-intro">The Purchase Tracker records every purchase from the request to the invoice, keeps the documents, sends reminders and produces reports. Tap each heading below to read the steps.</p>
-
-    <details open><summary>1. Opening the system and user roles</summary>
-      <ol>
-        <li>Open the system website and sign in with your syayasan.edu.bn Microsoft account.</li>
-        <li>Press <b>Log masuk</b> (Log in) on the welcome screen.</li>
-      </ol>
-      <p>Each user has one role:</p>
-      <ul>
-        <li><b>Viewer</b>: can only view purchases.</li>
-        <li><b>Editor</b>: can add and update purchases and upload documents.</li>
-        <li><b>Admin</b>: everything above, plus managing users, budgets and the Audit Log.</li>
-      </ul>
-      <p>If you see “You don’t have access to this system yet”, ask an admin to add you under <b>Users</b>, then reload the page.</p>
-    </details>
-
-    <details><summary>2. Adding a new purchase</summary>
-      <ol>
-        <li>Press <b>New purchase</b>.</li>
-        <li>Fill in the <b>Purchase title</b>, for example “24 Unit Desktop”.</li>
-        <li>Choose the <b>Purchase type</b>: School purchase or Office purchase.</li>
-        <li>Choose the <b>Purchase method</b> by amount:
-          <ul><li><b>Direct purchase</b>: up to B$5,000</li><li><b>Quotation (SH)</b>: B$5,001 to B$25,000</li><li><b>Tender (TN)</b>: B$25,001 and above</li></ul>
-          The system warns you if the method doesn’t match the item total, with a button to switch.</li>
-        <li>Choose the <b>Budget year</b> and <b>Expenditure head</b>. The approved budget fills in automatically.</li>
-        <li>Fill in the <b>Items</b>: description, quantity and unit price. Press <b>Add item</b> for another row. For quotations and tenders, each row’s <b>Total</b> can be edited by hand.</li>
-        <li>Press <b>Save purchase</b>.</li>
-      </ol>
-    </details>
-
-    <details><summary>3. Steps for quotations and tenders</summary>
-      <p>For quotations and tenders, gold boxes appear before 601. Complete them in order:</p>
-      <ol>
-        <li><b>Request minute to MD</b>: minute reference number and date.</li>
-        <li><b>Tender document</b>: tender number and title. The closing date fills in as 2 weeks after the issue date (you can change it).</li>
-        <li><b>Advert</b>: where and when it was advertised. For a closed tender (invitation by e-mail only), tick <b>Closed tender</b>.</li>
-        <li><b>Tender closing date</b>: closing date and time, number of bids received. A countdown shows.</li>
-        <li><b>Tender evaluation</b>: evaluation date, recommended company and price.</li>
-        <li><b>Support minute</b>: minute reference number and date.</li>
-        <li><b>Award and reject letter</b>: the winning company and award letter reference, plus each rejected company with its reject letter reference.</li>
-        <li><b>Acceptance letter from vendor</b>: the winning company’s acceptance letter.</li>
-      </ol>
-      <p>The recommended company flows on to the winning company, the vendor name and the company name in 602. You can still change them.</p>
-      <p>Tick <b>Completed</b> on each box when it’s done. The tags in the purchase list turn green with ✓.</p>
-    </details>
-
-    <details><summary>4. Steps 601 to Invoice</summary>
-      <ol>
-        <li><b>601</b>: purchase request.</li>
-        <li><b>602</b>: company and quotation details.</li>
-        <li><b>T-607</b>: request to prepare the order form.</li>
-        <li><b>Indent</b>: PO number, PO date, dates signed by the Head of Division and the Managing Director, PO remarks.</li>
-        <li><b>DO</b>: DO number, date, received by, warranty.</li>
-        <li><b>Invoice</b>: invoice number and date.</li>
-      </ol>
-      <p>The 601, 602 and T-607 dates fill in with today’s date until the step is ticked Completed. You can change them.</p>
-      <p>Tick <b>Completed</b> when a step is done, or <b>Cancel</b> if the purchase is cancelled.</p>
-    </details>
-
-    <details><summary>5. Attaching files and auto-fill</summary>
-      <ol>
-        <li>Press <b>Attach file</b> on the relevant step. PDF, Word, Excel, JPG and PNG files are accepted (Word and Excel up to 10 MB).</li>
-        <li>For <b>Indent, DO, Invoice, 602</b> and <b>Award and reject letter</b>, the system reads the document and fills in the details automatically.</li>
-        <li>One Word file with many reject letters adds each company and its reference number.</li>
-        <li>For files already attached to the Award and reject letter, press <b>Read letter</b>.</li>
-        <li>Check the details that were filled in, then press <b>Save purchase</b>.</li>
-      </ol>
-      <p>You can also use the <b>Upload documents</b> box above the form for several documents at once. Old Word (.doc) and Excel files are attached but not read.</p>
-    </details>
-
-    <details><summary>6. Printing forms</summary>
-      <ol>
-        <li>In the purchase form, press <b>Borang 601</b>, <b>Borang 602</b> or <b>T-607</b>.</li>
-        <li>Check and correct the details directly on the preview if needed.</li>
-        <li>Press <b>Download PDF</b>, <b>Download Word</b> or <b>Print</b>.</li>
-      </ol>
-      <p>The <b>Quotation, Indent, DO</b> and <b>Invoice</b> buttons open the attached documents.</p>
-    </details>
-
-    <details><summary>7. Purchase report</summary>
-      <ol>
-        <li>When every step from 601 to Invoice is ticked Completed, the <b>Create report</b> button appears.</li>
-        <li>Press it to see a two-page report: summary, items, each step with its details, and the list of documents.</li>
-        <li>Press <b>Download PDF</b> or <b>Print</b>.</li>
-      </ol>
-    </details>
-
-    <details><summary>8. Notifications</summary>
-      <p>Press the <b>Notifications</b> bell at the top of the page. The <b>All</b> tab shows every reminder; the <b>Tender</b> tab monitors tender dates; the <b>Minutes</b> tab shows outstanding minutes.</p>
-      <p>The <b>Tender</b> tab shows each tender’s issue date and closing date, with reminders <b>3, 2 and 1 days</b> before a tender opens and before it closes, on the day itself, and when the closing date has passed. The most urgent come first.</p>
-      <p>Reminders are sent for unfinished steps, tender closing dates, documents not yet attached, and invoices that don’t match the Indent amount. Tap a reminder to open that purchase.</p>
-    </details>
-
-    <details><summary>9. Searching and filtering</summary>
-      <ul>
-        <li><b>All / School purchase / Office purchase</b>: filter by type.</li>
-        <li><b>Search box</b>: search the title, company, PO number, DO number and more.</li>
-        <li><b>All methods</b>: filter direct purchases, quotations or tenders.</li>
-        <li><b>Status circles</b> (601, 602, Completed, Cancelled) and <b>budget cards</b>: tap to filter.</li>
-        <li><b>✕ Clear filter</b>: remove every filter at once.</li>
-      </ul>
-    </details>
-
-    <details><summary>10. Yearly budget (Admin)</summary>
-      <ol>
-        <li>Choose the year in the <b>Budget use</b> section. The system opens on the current year automatically.</li>
-        <li>Press <b>Manage budget</b>.</li>
-        <li>Choose the <b>Year</b> and the <b>School purchase</b> or <b>Office purchase</b> tab.</li>
-        <li>Enter each expenditure head and its budget. Press <b>+ Add head</b> to add more.</li>
-        <li>For a new year, press <b>+ New year</b>. The previous year’s heads and amounts are copied for you to update.</li>
-        <li>Press <b>Save budget</b>.</li>
-      </ol>
-      <p>Do this at the start of January every year.</p>
-    </details>
-
-    <details><summary>11. Users and Audit Log (Admin)</summary>
-      <ul>
-        <li><b>Users</b>: search for colleagues, add them and choose a role. Share the system’s OneDrive folder with them: Can view for Viewers, Can edit for Editors and Admins.</li>
-        <li><b>Audit Log</b>: see who made changes and when.</li>
-      </ul>
-    </details>
-
-    <details><summary>12. Other</summary>
-      <ul>
-        <li><b>Export to Excel (CSV)</b>: download every purchase to open in Excel.</li>
-        <li><b>BM / EN</b>: change the display language.</li>
-        <li><b>Moon button</b>: switch light or dark mode.</li>
-        <li>Changes by other users appear automatically.</li>
-      </ul>
-    </details>
-  </div></div>
+  <div class="gb-body">
+    <nav class="gb-side" id="gbSide" aria-label="Kandungan"></nav>
+    <main class="gb-main" id="gbMain"><article id="gbArticle"></article></main>
+    <aside class="gb-toc" id="gbToc" aria-label="Pada halaman ini"></aside>
+  </div>
 </dialog>
 <dialog id="impDlg" aria-labelledby="impTitle">
   <div class="ua-head"><h3 id="impTitle">Import dari Excel (CSV)</h3><button type="button" class="ua-x" id="impClose" aria-label="Tutup">✕</button></div>
@@ -3204,7 +3016,7 @@ function lineTotal(r){ return (r && r.total!=null && r.total!=="") ? (Number(r.t
 function itemsTotal(list){ return (list||[]).reduce((a,r)=>a+lineTotal(r),0); }
 /* Qty can be a plain number (1, 4, 10, 45) or a range typed by hand (1 - 20, 10-20). A range cannot be multiplied, so the line total is typed in. */
 function isRangeQty(q){ q = String(q == null ? "" : q).trim(); return q !== "" && !/^\d+(\.\d+)?$/.test(q); }
-function manualTotal(){ const f = document.getElementById("frm"); return !!(f && f.method && (f.method.value==="Sebutharga" || f.method.value==="Tender")); }
+function manualTotal(){ return true; }
 function bestAmountBase(it){
   const inv=it.stages?.inv?.amount, po=it.stages?.indent?.amount, q=it.stages?.s602?.amount;
   return Number(inv||po||q||itemsTotal(it.lines)||it.stages?.s601?.amount||0);
@@ -3438,9 +3250,9 @@ function render(){
 function itemRowHTML(l={}){
   return `<tr>
     <td><textarea data-i="desc" placeholder="cth. Tp-Link Type-C Hub 3 in 1 UH3020C">${esc(l.desc)}</textarea></td>
-    <td><input class="num" data-i="qty" type="text" inputmode="text" autocomplete="off" placeholder="1 atau 10-20" title="Nombor, atau julat seperti 10-20" value="${esc(l.qty)}"></td>
+    <td><input class="num" data-i="qty" type="text" inputmode="text" autocomplete="off" placeholder="1 atau 10-20" title="Nombor, julat seperti 10-20, atau kosongkan jika anda hanya tahu jumlah harga" value="${esc(l.qty)}"></td>
     <td><input class="num" data-i="unitPrice" type="number" min="0" step="0.01" value="${esc(l.unitPrice)}"></td>
-    ${(manualTotal() || isRangeQty(l.qty)) ? `<td class="tot"><input class="num" data-i="total" type="number" min="0" step="0.01" value="${esc(l.total!=null && l.total!=="" ? l.total : (((Number(l.qty)||0)*(Number(l.unitPrice)||0)) || ""))}" title="Jumlah boleh diubah secara manual"${l.total!=null && l.total!=="" && Number(l.total)!==(Number(l.qty)||0)*(Number(l.unitPrice)||0) ? ' data-manual="1"' : ""}></td>` : `<td class="tot">${money((Number(l.qty)||0)*(Number(l.unitPrice)||0))}</td>`}
+    ${(manualTotal() || isRangeQty(l.qty)) ? `<td class="tot"><input class="num" data-i="total" type="number" min="0" step="0.01" placeholder="Taip jumlah" value="${esc(l.total!=null && l.total!=="" ? l.total : (((Number(l.qty)||0)*(Number(l.unitPrice)||0)) || ""))}" title="Jumlah boleh diubah secara manual"${l.total!=null && l.total!=="" && Number(l.total)!==(Number(l.qty)||0)*(Number(l.unitPrice)||0) ? ' data-manual="1"' : ""}></td>` : `<td class="tot">${money((Number(l.qty)||0)*(Number(l.unitPrice)||0))}</td>`}
     <td><input type="hidden" data-i="use" value="${esc(l.use)}"><input type="hidden" data-i="serials" value="${esc(l.serials)}">${canEdit?'<button type="button" class="mini x" aria-label="Buang barang">✕</button>':''}</td>
   </tr>`;
 }
@@ -3451,7 +3263,7 @@ function readItems(){
 }
 function wireItems(){
   document.querySelectorAll("#itemRows tr").forEach(tr=>{
-    const bindTotal = ti=>{ ti.oninput = ()=>{ if(ti.value === "") delete ti.dataset.manual; else ti.dataset.manual = "1"; updTotal(); }; };
+    const bindTotal = ti=>{ ti.oninput = ()=>{ if(ti.value === "") delete ti.dataset.manual; else ti.dataset.manual = "1"; updTotal(); }; ti.onchange = ()=>{ if(ti.value === ""){ delete ti.dataset.manual; upd(); } }; };
     const upd = ()=>{
       const qi = tr.querySelector('[data-i="qty"]'), clean = qi.value.replace(/[^\d.\s\-\u2013\u2014]/g, "");
       if(clean !== qi.value) qi.value = clean;
@@ -4661,8 +4473,7 @@ window.addEventListener("resize", ()=>{ if($("#printView").open) fitPages(); });
 FORMS.manual = {title:"Panduan Pengguna", page:"A4", pdf:{format:"a4", orientation:"portrait"}};
 function paginateManual(){
   const host = $("#pvPages"); host.innerHTML = "";
-  const en = LANG==="en";
-  const src = document.querySelector(`#manualDlg .${en?"en-only":"ms-only"}`);
+  const en = LANG === "en", L = en ? "en" : "ms";
   const title = en ? "User Guide" : "Panduan Pengguna", sub = en ? "Purchase Tracker, Yayasan Sultan Haji Hassanal Bolkiah" : "Sistem Pemantauan Pembelian, Yayasan Sultan Haji Hassanal Bolkiah";
   const newPage = ()=>{ const p = document.createElement("div"); p.className = "a4 manp"; p.innerHTML = `<div class="manp-body"></div>`; host.appendChild(p); return p.firstElementChild; };
   let body = newPage();
@@ -4671,21 +4482,21 @@ function paginateManual(){
   const head = document.createElement("div"); head.className = "manp-head";
   head.innerHTML = `<img src="${IMG_CREST}" alt=""><div><h1></h1><p></p></div>`; head.querySelector("h1").textContent = title; head.querySelector("p").textContent = sub;
   put([head]);
-  const intro = src.querySelector(".man-intro"); if(intro){ const p = document.createElement("p"); p.textContent = intro.textContent.replace(/\s*(Tekan setiap tajuk|Tap each heading).*$/, ""); put([p]); }
-  src.querySelectorAll("details").forEach(d=>{
-    const h = document.createElement("h3"); h.textContent = d.querySelector("summary").textContent;
-    const kids = [...d.children].filter(c=>c.tagName!=="SUMMARY").map(c=>c.cloneNode(true));
+  GB.forEach(g=>g.pages.forEach(pg=>{
+    const [t, html] = pg[L], h = document.createElement("h3"); h.textContent = g[L] + " › " + t;
+    const box = document.createElement("div"); box.innerHTML = html;
+    const kids = [...box.children].map(c=>{ if(c.tagName === "H2"){ const h4 = document.createElement("h4"); h4.textContent = c.textContent; return h4; } return c; });
     put([h, kids[0]].filter(Boolean));
     kids.slice(1).forEach(k=>{
       if(/^(OL|UL)$/.test(k.tagName)){
-        const start = Number(k.getAttribute("start")||1); let list = k.cloneNode(false); list.setAttribute("start", start); put([list]);
+        const start = Number(k.getAttribute("start") || 1); let list = k.cloneNode(false); list.setAttribute("start", start); put([list]);
         let n = start;
         [...k.children].forEach(li=>{ list.appendChild(li); if(!fits()){ li.remove(); list = k.cloneNode(false); list.setAttribute("start", n); body = newPage(); body.appendChild(list); list.appendChild(li); } n++; });
       } else put([k]);
     });
-  });
+  }));
   const pages = host.querySelectorAll(".a4.manp");
-  pages.forEach((p,i)=>{ const f = document.createElement("div"); f.className = "manp-foot"; f.textContent = `${title} · ${en?"Page":"Muka surat"} ${i+1} / ${pages.length}`; p.appendChild(f); });
+  pages.forEach((p, i)=>{ const f = document.createElement("div"); f.className = "manp-foot"; f.textContent = `${title} · ${en ? "Page" : "Muka surat"} ${i + 1} / ${pages.length}`; p.appendChild(f); });
 }
 function openManualPrint(then){
   pvForm = "manual"; pvEdit = false; pvDraft = null;
@@ -6498,7 +6309,7 @@ function openBudgetReport(o){
 /* ---------- Extra 601 forms (Variation order and Add budget) ---------- */
 function voRowHTML(l){
   l = l || {}; const q = l.qty == null ? "" : l.qty, range = isRangeQty(q);
-  return `<tr><td><textarea data-i="desc" placeholder="cth. barang tambahan">${esc(l.desc)}</textarea></td><td><input class="num" data-i="qty" type="text" inputmode="text" autocomplete="off" placeholder="1 atau 10-20" value="${esc(q)}"></td><td><input class="num" data-i="unitPrice" type="number" min="0" step="0.01" value="${esc(l.unitPrice)}"></td><td class="tot"><input class="num" data-i="total" type="number" min="0" step="0.01" value="${esc(l.total != null && l.total !== "" ? l.total : "")}" title="Jumlah boleh diubah secara manual" ${(l.total != null && l.total !== "" && Number(l.total) !== (Number(q) || 0) * (Number(l.unitPrice) || 0)) ? 'data-manual="1"' : ""}></td><td><button type="button" class="mini" data-vo-rm aria-label="Buang baris">✕</button></td></tr>`;
+  return `<tr><td><textarea data-i="desc" placeholder="cth. barang tambahan">${esc(l.desc)}</textarea></td><td><input class="num" data-i="qty" type="text" inputmode="text" autocomplete="off" placeholder="1 atau 10-20" value="${esc(q)}"></td><td><input class="num" data-i="unitPrice" type="number" min="0" step="0.01" value="${esc(l.unitPrice)}"></td><td class="tot"><input class="num" data-i="total" type="number" min="0" step="0.01" placeholder="Taip jumlah" value="${esc(l.total != null && l.total !== "" ? l.total : "")}" title="Jumlah boleh diubah secara manual" ${(l.total != null && l.total !== "" && Number(l.total) !== (Number(q) || 0) * (Number(l.unitPrice) || 0)) ? 'data-manual="1"' : ""}></td><td><button type="button" class="mini" data-vo-rm aria-label="Buang baris">✕</button></td></tr>`;
 }
 function voBoxHTML(it, K){
   const v = it.stages?.[K.k] || {}, heads = headsFor(yearOf(it), catOf(it)), lines = (v.lines && v.lines.length) ? v.lines : [{}];
@@ -6830,6 +6641,471 @@ function parseDateText(txt, month){
   scan(document);
   new MutationObserver(ms=>{ ms.forEach(m=>m.addedNodes.forEach(n=>{ if(n.nodeType === 1) scan(n); })); }).observe(document.body, {childList: true, subtree: true});
 })();
+/* ---------- User guide (GitBook style) ---------- */
+const GB = [
+{id:"start", ms:"Bermula", en:"Getting started", pages:[
+{id:"intro", ms:["Pengenalan", `<p>Sistem Pemantauan Pembelian merekod setiap pembelian dari permohonan hingga invois, menyimpan dokumen, memberi peringatan dan menyediakan borang serta laporan untuk Yayasan Sultan Haji Hassanal Bolkiah.</p>
+<h2 id="apa">Apa yang boleh dilakukan</h2>
+<ul><li>Merekod pembelian dan mengikuti setiap langkah: <b>601, 602, T-607, Indent, DO</b> dan <b>Invois</b>.</li>
+<li>Untuk Sebutharga dan Tawaran, mengisi minit, tender, iklan, penilaian dan surat dalam kotak berwarna emas.</li>
+<li>Melampirkan dokumen dan mengisi maklumat secara automatik daripada dokumen itu.</li>
+<li>Mencetak Borang 601, 602 dan T-607 sebagai kertas, PDF atau Word.</li>
+<li>Memantau anggaran tahunan dan menjana Laporan Anggaran.</li>
+<li>Menerima peringatan tender dan langkah yang tertunggak.</li></ul>
+<h2 id="menu">Menu sistem</h2>
+<table class="gb-tbl"><thead><tr><th>Menu</th><th>Kegunaan</th></tr></thead><tbody>
+<tr><td><b>Pembelian</b></td><td>Halaman utama: carian, kad ringkasan, senarai pembelian.</td></tr>
+<tr><td><b>Pembelian baharu</b></td><td>Menambah satu pembelian.</td></tr>
+<tr><td><b>Papan Pemuka</b></td><td>Graf dan ringkasan prestasi.</td></tr>
+<tr><td><b>Anggaran</b></td><td>Penggunaan bajet mengikut tajuk perbelanjaan.</td></tr>
+<tr><td><b>Laporan Anggaran</b></td><td>Laporan bajet untuk dicetak atau dimuat turun.</td></tr>
+<tr><td><b>Senarai Rujukan</b></td><td>No. rujukan minit dan T-607.</td></tr>
+<tr><td><b>Senarai Pembekal</b></td><td>Pembekal berdaftar dan no. sijil mereka.</td></tr>
+<tr><td><b>Eksport / Import</b></td><td>Muat turun atau muat naik data dalam fail CSV.</td></tr>
+<tr><td><b>Log Audit</b>, <b>Pengguna</b>, <b>Tetapan</b></td><td>Untuk Pentadbir.</td></tr>
+<tr><td><b>Panduan</b></td><td>Panduan ini.</td></tr></tbody></table>
+<div class="gb-note tip"><b>Petua</b>Pada telefon, gunakan menu di bahagian bawah (Utama, Ringkasan, Anggaran, Lagi) dan butang bulat <b>+</b> untuk pembelian baharu. Anda boleh memasang sistem sebagai aplikasi melalui butang <b>Pasang Aplikasi</b>.</div>`],
+ en:["Introduction", `<p>The Purchase Tracker records every purchase from request to invoice, stores documents, gives reminders and prepares forms and reports for Yayasan Sultan Haji Hassanal Bolkiah.</p>
+<h2 id="apa">What you can do</h2>
+<ul><li>Record purchases and follow each step: <b>601, 602, T-607, Indent, DO</b> and <b>Invoice</b>.</li>
+<li>For quotations and tenders, fill in the minutes, tender, advert, evaluation and letters in the gold boxes.</li>
+<li>Attach documents and let the system fill in details from them.</li>
+<li>Print Forms 601, 602 and T-607 on paper, as PDF or as Word.</li>
+<li>Follow the yearly budget and create the Budget Report.</li>
+<li>Receive reminders for tenders and unfinished steps.</li></ul>
+<h2 id="menu">System menu</h2>
+<table class="gb-tbl"><thead><tr><th>Menu</th><th>Use</th></tr></thead><tbody>
+<tr><td><b>Purchases</b></td><td>Main page: search, summary cards, purchase list.</td></tr>
+<tr><td><b>New purchase</b></td><td>Add one purchase.</td></tr>
+<tr><td><b>Dashboard</b></td><td>Charts and a performance summary.</td></tr>
+<tr><td><b>Budget</b></td><td>Budget use by expenditure head.</td></tr>
+<tr><td><b>Budget Report</b></td><td>Budget report to print or download.</td></tr>
+<tr><td><b>References</b></td><td>Minute and T-607 reference numbers.</td></tr>
+<tr><td><b>Supplier list</b></td><td>Registered suppliers and their certificate numbers.</td></tr>
+<tr><td><b>Export / Import</b></td><td>Download or upload data as a CSV file.</td></tr>
+<tr><td><b>Audit log</b>, <b>Users</b>, <b>Settings</b></td><td>For Administrators.</td></tr>
+<tr><td><b>User guide</b></td><td>This guide.</td></tr></tbody></table>
+<div class="gb-note tip"><b>Tip</b>On a phone, use the bottom menu (Home, Summary, Budget, More) and the round <b>+</b> button for a new purchase. You can install the system as an app with the <b>Install app</b> button.</div>`]},
+{id:"signin", ms:["Log masuk dan peranan", `<h2 id="masuk">Log masuk</h2>
+<ol><li>Buka laman sistem.</li><li>Tekan <b>Log masuk dengan Microsoft</b> dan gunakan akaun syayasan.edu.bn anda.</li></ol>
+<p>Jika anda melihat “Anda belum mempunyai akses ke sistem ini”, minta Pentadbir menambah anda dalam <b>Pengguna</b>, kemudian muat semula halaman.</p>
+<h2 id="peranan">Peranan pengguna</h2>
+<table class="gb-tbl"><thead><tr><th>Peranan</th><th>Boleh</th></tr></thead><tbody>
+<tr><td><b>Pemerhati</b></td><td>Melihat pembelian, dokumen, laporan dan senarai.</td></tr>
+<tr><td><b>Penyunting</b></td><td>Semua di atas, serta menambah dan mengemas kini pembelian, memuat naik dokumen, mengimport CSV dan menambah rujukan.</td></tr>
+<tr><td><b>Pentadbir</b></td><td>Semua di atas, serta Pengguna, bajet, Log Audit, Tetapan dan senarai pembekal (muat naik PDF dan tambah manual).</td></tr>
+<tr><td><b>Bos</b></td><td>Boleh melihat dan menyunting semua bahagian sistem, sama seperti Pentadbir.</td></tr></tbody></table>
+<div class="gb-note info"><b>Maklumat</b>Menu yang tidak dibenarkan untuk peranan anda tidak dipaparkan.</div>`],
+ en:["Signing in and roles", `<h2 id="masuk">Signing in</h2>
+<ol><li>Open the system page.</li><li>Press <b>Log in with Microsoft</b> and use your syayasan.edu.bn account.</li></ol>
+<p>If you see “You do not have access to this system yet”, ask an Administrator to add you under <b>Users</b>, then reload the page.</p>
+<h2 id="peranan">User roles</h2>
+<table class="gb-tbl"><thead><tr><th>Role</th><th>Can</th></tr></thead><tbody>
+<tr><td><b>Viewer</b></td><td>See purchases, documents, reports and lists.</td></tr>
+<tr><td><b>Editor</b></td><td>All of the above, plus add and update purchases, upload documents, import CSV and add references.</td></tr>
+<tr><td><b>Admin</b></td><td>All of the above, plus Users, budgets, Audit log, Settings and the supplier list (PDF upload and manual add).</td></tr>
+<tr><td><b>Boss</b></td><td>Can see and edit every part of the system, the same as an Admin.</td></tr></tbody></table>
+<div class="gb-note info"><b>Note</b>Menus that your role may not use are not shown.</div>`]},
+{id:"home", ms:["Halaman Pembelian", `<p>Halaman <b>Pembelian</b> ialah halaman pertama selepas log masuk.</p>
+<ul><li><b>Kotak carian</b> di atas: cari tajuk, syarikat, no. PO, no. DO dan lain-lain. Tekan <kbd>/</kbd> untuk terus menaip di kotak ini.</li>
+<li><b>Kad nombor</b>: jumlah pembelian, dalam proses, selesai dan dibatalkan.</li>
+<li><b>Terbaharu</b>: pembelian yang baru ditambah.</li>
+<li><b>Jubin penapis</b>: tekan untuk menapis senarai.</li>
+<li><b>Senarai pembelian</b>: setiap kad menunjukkan tajuk, jenis, kaedah, jumlah harga, kemajuan dan bulatan langkah (601 hingga Invois) dengan tarikh setiap langkah yang telah siap.</li></ul>
+<p>Tekan satu pembelian untuk membukanya. Hijau bermakna selesai, kuning bermakna langkah semasa.</p>
+<div class="gb-note tip"><b>Petua</b>Perubahan oleh pengguna lain dipaparkan secara automatik tanpa memuat semula halaman.</div>`],
+ en:["The Purchases page", `<p>The <b>Purchases</b> page is the first page after you sign in.</p>
+<ul><li><b>Search box</b> at the top: find a title, company, PO no., DO no. and more. Press <kbd>/</kbd> to start typing in it.</li>
+<li><b>Number cards</b>: total purchases, in progress, completed and cancelled.</li>
+<li><b>Recently added</b>: the newest purchases.</li>
+<li><b>Filter tiles</b>: tap to filter the list.</li>
+<li><b>Purchase list</b>: each card shows the title, type, method, total price, progress and the step circles (601 to Invoice) with the date of every finished step.</li></ul>
+<p>Tap a purchase to open it. Green means done and yellow is the current step.</p>
+<div class="gb-note tip"><b>Tip</b>Changes made by other users appear automatically, without reloading the page.</div>`]}
+]},
+{id:"use", ms:"Menggunakan sistem", en:"Using the system", pages:[
+{id:"new", ms:["Menambah pembelian baharu", `<ol><li>Tekan <b>Pembelian baharu</b>.</li>
+<li>Isi <b>Tajuk pembelian</b>, contohnya “24 Unit Desktop”.</li>
+<li>Pilih <b>Jenis pembelian</b>: Pembelian Sekolah atau Pembelian Office.</li>
+<li>Pilih <b>Kaedah pembelian</b> mengikut jumlah (lihat jadual di bawah).</li>
+<li>Pilih <b>Tahun bajet</b> dan <b>Tajuk Perbelanjaan</b>. Anggaran yang diluluskan diisi secara automatik.</li>
+<li>Isi <b>Senarai Barang</b>: keterangan, kuantiti dan harga seunit. Tekan <b>Tambah barang</b> untuk baris baharu.</li>
+<li>Tekan <b>Simpan pembelian</b>.</li></ol>
+<table class="gb-tbl"><thead><tr><th>Kaedah</th><th>Jumlah</th></tr></thead><tbody>
+<tr><td>Pembelian Terus</td><td>Sehingga B$5,000</td></tr>
+<tr><td>Sebutharga (SH)</td><td>B$5,001 hingga B$25,000</td></tr>
+<tr><td>Tawaran (TN)</td><td>B$25,001 ke atas</td></tr></tbody></table>
+<div class="gb-note warn"><b>Perhatian</b>Sistem memberi amaran jika kaedah tidak sepadan dengan jumlah barang, dengan butang untuk menukarnya.</div>
+<div class="gb-note tip"><b>Petua</b><b>Jumlah</b> setiap baris barang boleh ditaip sendiri untuk semua kaedah. Jika anda hanya tahu jumlah harga, biarkan kuantiti kosong dan taip jumlahnya. Jika kuantiti dan harga seunit diisi, jumlah dikira sendiri. Kosongkan kotak Jumlah untuk kembali kepada pengiraan automatik.</div>
+<p>Anda juga boleh memuat naik dokumen di bahagian atas borang supaya sistem mengisi maklumat secara automatik. Lihat <b>Melampirkan fail dan isian automatik</b>.</p>`],
+ en:["Adding a new purchase", `<ol><li>Press <b>New purchase</b>.</li>
+<li>Fill in <b>Purchase title</b>, for example “24 Desktop Units”.</li>
+<li>Choose the <b>Purchase type</b>: School purchase or Office purchase.</li>
+<li>Choose the <b>Purchase method</b> by amount (see the table below).</li>
+<li>Choose the <b>Budget year</b> and <b>Expenditure head</b>. The approved budget fills in automatically.</li>
+<li>Fill in the <b>Items</b>: description, quantity and unit price. Press <b>Add item</b> for another row.</li>
+<li>Press <b>Save purchase</b>.</li></ol>
+<table class="gb-tbl"><thead><tr><th>Method</th><th>Amount</th></tr></thead><tbody>
+<tr><td>Direct purchase</td><td>Up to B$5,000</td></tr>
+<tr><td>Sebutharga / quotation (SH)</td><td>B$5,001 to B$25,000</td></tr>
+<tr><td>Tender (TN)</td><td>B$25,001 and above</td></tr></tbody></table>
+<div class="gb-note warn"><b>Note</b>The system warns you if the method does not match the item total, with a button to change it.</div>
+<div class="gb-note tip"><b>Tip</b>The <b>Total</b> of each item row can be typed by hand for every method. If you only know the total price, leave the quantity empty and type the total. When quantity and unit price are filled in, the total is worked out for you. Clear the Total box to go back to automatic.</div>
+<p>You can also upload documents at the top of the form so the system fills in details automatically. See <b>Attaching files and auto-fill</b>.</p>`]},
+{id:"steps", ms:["Langkah 601 hingga Invois", `<p>Setiap pembelian melalui enam langkah. Buka satu pembelian untuk melihat dan mengisi setiap langkah.</p>
+<table class="gb-tbl"><thead><tr><th>Langkah</th><th>Isi</th></tr></thead><tbody>
+<tr><td><b>601</b></td><td>Permohonan pembelian: barang, justifikasi, tarikh 601, catatan.</td></tr>
+<tr><td><b>602</b></td><td>Maklumat syarikat, no. sijil, sebutharga dan harga yang disokong.</td></tr>
+<tr><td><b>T-607</b></td><td>Permohonan penyediaan Borang Pesanan: rujukan, tarikh, dokumen yang disertakan.</td></tr>
+<tr><td><b>Indent</b></td><td>No. PO, tarikh PO, tarikh tandatangan Ketua Bahagian dan Pengarah Urusan, catatan PO.</td></tr>
+<tr><td><b>DO</b></td><td>No. DO, tarikh, diterima oleh, jaminan.</td></tr>
+<tr><td><b>Invois</b></td><td>No. dan tarikh invois, jumlah invois.</td></tr></tbody></table>
+<ul><li>Tarikh 601, 602 dan T-607 diisi dengan tarikh hari ini secara automatik sehingga langkah itu ditanda <b>Selesai</b>. Anda boleh menukarnya.</li>
+<li>Tandakan <b>Selesai</b> apabila sesuatu langkah siap, atau <b>Batal</b> jika pembelian dibatalkan.</li>
+<li>Jumlah Tuntutan dalam Indent mengikut harga sebutharga yang disokong, dan Jumlah Invois mengikut Indent. Sistem memberi peringatan jika invois tidak sama dengan Indent.</li></ul>
+<div class="gb-note tip"><b>Petua</b>Gunakan butang <b>Borang 601</b>, <b>Borang 602</b> dan <b>T-607</b> di bahagian bawah borang untuk mencetak.</div>`],
+ en:["Steps 601 to Invoice", `<p>Every purchase goes through six steps. Open a purchase to see and fill in each step.</p>
+<table class="gb-tbl"><thead><tr><th>Step</th><th>Fill in</th></tr></thead><tbody>
+<tr><td><b>601</b></td><td>Purchase request: items, justification, 601 date, remarks.</td></tr>
+<tr><td><b>602</b></td><td>Company details, certificate no., quotation and the supported price.</td></tr>
+<tr><td><b>T-607</b></td><td>Request to prepare the Order Form: reference, date, documents attached.</td></tr>
+<tr><td><b>Indent</b></td><td>PO no., PO date, dates signed by the Head of Division and the Managing Director, PO remarks.</td></tr>
+<tr><td><b>DO</b></td><td>DO no., date, received by, warranty.</td></tr>
+<tr><td><b>Invoice</b></td><td>Invoice no. and date, invoice total.</td></tr></tbody></table>
+<ul><li>The 601, 602 and T-607 dates fill in with today’s date until the step is marked <b>Completed</b>. You can change them.</li>
+<li>Mark <b>Completed</b> when a step is finished, or <b>Cancel</b> if the purchase is cancelled.</li>
+<li>The claim total in Indent follows the supported quotation price, and the invoice total follows the Indent. The system reminds you if the invoice differs from the Indent.</li></ul>
+<div class="gb-note tip"><b>Tip</b>Use the <b>Form 601</b>, <b>Form 602</b> and <b>T-607</b> buttons at the bottom of the form to print.</div>`]},
+{id:"tender", ms:["Sebutharga dan Tawaran", `<p>Untuk Sebutharga dan Tawaran, kotak berwarna emas dipaparkan sebelum 601. Lengkapkan mengikut susunan:</p>
+<ol><li><b>Minit Permohonan kepada PU</b>: no. rujukan dan tarikh minit.</li>
+<li><b>Dokumen Tender</b>: no. dan tajuk tender. Tarikh tutup diisi sendiri 2 minggu selepas tarikh dikeluarkan (boleh diubah).</li>
+<li><b>Iklan</b>: tempat dan tarikh iklan. Untuk tender tertutup (jemputan melalui e-mel sahaja), tandakan <b>Tender tertutup</b>.</li>
+<li><b>Tarikh Tutup Tender</b>: tarikh dan masa tutup, bilangan tawaran diterima. Kiraan hari dipaparkan.</li>
+<li><b>Penilaian Tender</b>: tarikh penilaian, syarikat dan harga dicadangkan.</li>
+<li><b>Minit Sokongan / T606</b>: no. rujukan dan tarikh minit.</li>
+<li><b>Surat Setuju Terima dan Penolakan</b>: syarikat berjaya dan no. rujukan surat setuju terima, serta setiap syarikat ditolak dengan no. rujukan surat penolakan.</li>
+<li><b>Surat Penerimaan daripada Pembekal</b>: surat penerimaan daripada syarikat berjaya.</li></ol>
+<p>Nama syarikat dicadangkan mengalir sendiri ke Syarikat Berjaya, Nama Syarikat (Pembekal) dan Nama Syarikat dalam 602. Anda masih boleh mengubahnya.</p>
+<div class="gb-note tip"><b>Petua</b>Tandakan <b>Selesai</b> pada setiap kotak apabila siap. Tag di senarai pembelian bertukar hijau dengan ✓. No. minit boleh diambil daripada <b>Senarai Rujukan</b>.</div>`],
+ en:["Quotations and tenders", `<p>For quotations and tenders, gold boxes appear before 601. Complete them in this order:</p>
+<ol><li><b>Application minute to PU</b>: reference no. and minute date.</li>
+<li><b>Tender document</b>: tender no. and title. The closing date fills in 2 weeks after the issue date (you can change it).</li>
+<li><b>Advert</b>: place and date of the advert. For a closed tender (invitations by e-mail only), tick <b>Closed tender</b>.</li>
+<li><b>Tender closing date</b>: closing date and time, number of bids received. The days left are shown.</li>
+<li><b>Tender evaluation</b>: evaluation date, recommended company and price.</li>
+<li><b>Support minute / T606</b>: reference no. and minute date.</li>
+<li><b>Award and reject letter</b>: the successful company and the award letter reference, and each rejected company with its rejection letter reference.</li>
+<li><b>Acceptance letter from vendor</b>: the acceptance letter from the successful company.</li></ol>
+<p>The company name flows by itself into Successful company, Company name (vendor) and the company name in 602. You can still change it.</p>
+<div class="gb-note tip"><b>Tip</b>Tick <b>Completed</b> on each box when done. The tag on the purchase list turns green with ✓. Minute numbers can be taken from <b>References</b>.</div>`]},
+{id:"extra601", ms:["Varian Order dan Tambah Budget", `<p>Pada kotak <b>601</b> untuk Sebutharga dan Tawaran, terdapat dua kotak tanda untuk 601 tambahan:</p>
+<ul><li><b>Tambah 601 lain (Varian Order)</b></li><li><b>Tambah 601 lain (Tambah budget)</b></li></ul>
+<p>Setiap satu membuka borang 601 tambahan dengan tarikh, tajuk perbelanjaan, anggaran yang diluluskan, senarai barang (jumlah boleh diubah sendiri) dan ulasan. Gunakan butang <b>Borang 601 (Varian Order)</b> atau <b>Borang 601 (Tambah Budget)</b> untuk mencetaknya.</p>
+<h2 id="kesan">Kesan pada jumlah</h2>
+<ul><li>Jumlah setiap 601 tambahan dikira di bawah tajuk perbelanjaannya sendiri pada kad Anggaran dan Laporan Anggaran.</li>
+<li>Pada Borang 602, baris <b>Anggaran pembelian (Ruj 601)</b> menunjukkan jumlah 601 asal dan setiap 601 tambahan, contohnya <b>B$15,144.00 + B$7,606.00</b>.</li>
+<li>Jika jumlah akhir (PO, invois atau sebutharga) sudah merangkumi semuanya, jumlah tidak dikira dua kali.</li></ul>
+<div class="gb-note info"><b>Maklumat</b>Menyahtanda kotak tidak memadam data. Data dikekalkan jika anda menandakannya semula.</div>`],
+ en:["Variation Order and Add Budget", `<p>In the <b>601</b> box for quotations and tenders there are two tick boxes for an extra 601:</p>
+<ul><li><b>Add another 601 (Variation Order)</b></li><li><b>Add another 601 (Add budget)</b></li></ul>
+<p>Each one opens an extra 601 form with a date, expenditure head, approved budget, items (the total can be typed by hand) and comments. Use the <b>Form 601 (Variation Order)</b> or <b>Form 601 (Add Budget)</b> button to print it.</p>
+<h2 id="kesan">Effect on the totals</h2>
+<ul><li>The total of each extra 601 is counted under its own expenditure head on the Budget cards and in the Budget Report.</li>
+<li>On Form 602, the line <b>Purchase estimate (Ref 601)</b> shows the original 601 total and each extra 601, for example <b>B$15,144.00 + B$7,606.00</b>.</li>
+<li>If the final amount (PO, invoice or quotation) already covers everything, the amount is not counted twice.</li></ul>
+<div class="gb-note info"><b>Note</b>Unticking a box does not delete the data. It is kept if you tick it again.</div>`]},
+{id:"dates", ms:["Menaip tarikh", `<p>Semua tarikh dalam sistem menggunakan format <b>17-Nov-2026</b>.</p>
+<ul><li>Taip tarikh terus di dalam kotak, atau tekan butang <b>kalendar</b> di sebelahnya untuk memilih.</li>
+<li>Selepas anda berpindah ke kotak lain, tarikh ditulis semula dalam format yang betul.</li>
+<li>Kotak bulan (Surat Setuju Terima dan Penolakan) menggunakan <b>Nov-2026</b>.</li></ul>
+<h2 id="cara">Cara menaip yang diterima</h2>
+<table class="gb-tbl"><thead><tr><th>Anda taip</th><th>Hasil</th></tr></thead><tbody>
+<tr><td><code>5-dec-2026</code></td><td>05-Dec-2026</td></tr>
+<tr><td><code>17/11/2026</code> atau <code>17-11-26</code></td><td>17-Nov-2026</td></tr>
+<tr><td><code>17112026</code></td><td>17-Nov-2026</td></tr>
+<tr><td><code>3 Mac 2027</code> atau <code>12 Okt 2026</code></td><td>03-Mar-2027, 12-Oct-2026</td></tr></tbody></table>
+<div class="gb-note warn"><b>Perhatian</b>Tarikh yang tidak wujud, seperti 31-Feb-2026, ditolak dan kotak kembali kepada tarikh sebelumnya.</div>
+<p>Borang cetak, fail Word, laporan dan senarai juga memaparkan tarikh dalam format ini. Anda boleh menaip tarikh dengan cara yang sama semasa membetulkan pratonton borang.</p>`],
+ en:["Entering dates", `<p>All dates in the system use the format <b>17-Nov-2026</b>.</p>
+<ul><li>Type the date straight into the box, or press the <b>calendar</b> button beside it to pick one.</li>
+<li>When you move to another box, the date is rewritten in the correct format.</li>
+<li>Month boxes (Award and reject letter) use <b>Nov-2026</b>.</li></ul>
+<h2 id="cara">Accepted ways of typing</h2>
+<table class="gb-tbl"><thead><tr><th>You type</th><th>Result</th></tr></thead><tbody>
+<tr><td><code>5-dec-2026</code></td><td>05-Dec-2026</td></tr>
+<tr><td><code>17/11/2026</code> or <code>17-11-26</code></td><td>17-Nov-2026</td></tr>
+<tr><td><code>17112026</code></td><td>17-Nov-2026</td></tr>
+<tr><td><code>3 Mac 2027</code> or <code>12 Okt 2026</code></td><td>03-Mar-2027, 12-Oct-2026</td></tr></tbody></table>
+<div class="gb-note warn"><b>Note</b>A date that does not exist, such as 31-Feb-2026, is refused and the box goes back to the earlier date.</div>
+<p>Printed forms, Word files, reports and lists also show dates in this format. You can type dates the same way when correcting a form preview.</p>`]},
+{id:"files", ms:["Melampirkan fail dan isian automatik", `<ol><li>Tekan <b>Lampirkan fail</b> pada langkah yang berkaitan. Fail PDF, Word, Excel, JPG dan PNG diterima (Word dan Excel sehingga 10 MB).</li>
+<li>Untuk Indent, DO, Invois, 602 dan Surat Setuju Terima dan Penolakan, sistem membaca dokumen dan mengisi maklumat secara automatik.</li>
+<li>Satu fail Word yang mengandungi banyak surat penolakan akan menambah setiap syarikat dan no. rujukannya.</li>
+<li>Untuk fail yang sudah dilampirkan dalam Surat Setuju Terima dan Penolakan, tekan <b>Baca surat</b>.</li>
+<li>Semak maklumat yang diisi, kemudian tekan <b>Simpan pembelian</b>.</li></ol>
+<p>Anda juga boleh menggunakan kotak <b>Muat naik dokumen untuk mengisi secara automatik</b> di atas borang untuk beberapa dokumen sekali gus.</p>
+<div class="gb-note info"><b>Maklumat</b>Fail Word lama (.doc) dan Excel dilampirkan tetapi tidak dibaca. Dokumen imbasan perlu jelas supaya dapat dibaca.</div>
+<p>Butang <b>Sebutharga</b>, <b>Indent</b>, <b>DO</b> dan <b>Invois</b> di bahagian bawah borang membuka dokumen yang telah dilampirkan.</p>`],
+ en:["Attaching files and auto-fill", `<ol><li>Press <b>Attach file</b> on the relevant step. PDF, Word, Excel, JPG and PNG files are accepted (Word and Excel up to 10 MB).</li>
+<li>For Indent, DO, Invoice, 602 and the Award and reject letter, the system reads the document and fills in the details automatically.</li>
+<li>One Word file holding many rejection letters adds every company with its reference no.</li>
+<li>For a file already attached in the Award and reject letter, press <b>Read letter</b>.</li>
+<li>Check the details that were filled in, then press <b>Save purchase</b>.</li></ol>
+<p>You can also use the <b>Upload documents to fill in automatically</b> box above the form to add several documents at once.</p>
+<div class="gb-note info"><b>Note</b>Old Word (.doc) and Excel files are attached but not read. Scanned documents must be clear enough to read.</div>
+<p>The <b>Quotation</b>, <b>Indent</b>, <b>DO</b> and <b>Invoice</b> buttons at the bottom of the form open the documents that were attached.</p>`]},
+{id:"search", ms:["Mencari dan menapis", `<ul><li><b>Semua / Pembelian Sekolah / Pembelian Office</b>: tapis mengikut jenis.</li>
+<li><b>Kotak carian</b>: cari tajuk, syarikat, no. PO, no. DO dan lain-lain. Tekan <kbd>/</kbd> untuk terus menaip.</li>
+<li><b>Semua kaedah</b>: tapis Pembelian Terus, Sebutharga atau Tawaran.</li>
+<li><b>Bulatan status</b> (601, 602, Selesai, Dibatalkan) dan <b>kad bajet</b>: tekan untuk menapis.</li>
+<li><b>✕ Kosongkan tapisan</b>: buang semua tapisan sekali gus.</li></ul>`],
+ en:["Searching and filtering", `<ul><li><b>All / School purchase / Office purchase</b>: filter by type.</li>
+<li><b>Search box</b>: find a title, company, PO no., DO no. and more. Press <kbd>/</kbd> to start typing.</li>
+<li><b>All methods</b>: filter Direct purchase, Sebutharga or Tender.</li>
+<li><b>Status circles</b> (601, 602, Completed, Cancelled) and <b>budget cards</b>: tap to filter.</li>
+<li><b>✕ Clear filters</b>: remove all filters at once.</li></ul>`]},
+{id:"alerts", ms:["Pemberitahuan", `<p>Tekan ikon loceng <b>Pemberitahuan</b> di bahagian atas halaman.</p>
+<ul><li>Tab <b>Semua</b> menunjukkan semua peringatan.</li><li>Tab <b>Tender</b> memantau tarikh tender.</li><li>Tab <b>Minit</b> menunjukkan minit yang tertunggak.</li></ul>
+<p>Tab Tender menunjukkan tarikh dikeluarkan dan tarikh tutup setiap tender, serta peringatan 3, 2 dan 1 hari sebelum tender dibuka dan sebelum tender ditutup, pada hari ia dibuka atau ditutup, dan apabila tarikh tutup telah lepas. Yang paling mendesak dipaparkan dahulu.</p>
+<p>Peringatan juga dihantar untuk langkah yang belum siap, dokumen yang belum dilampirkan dan invois yang tidak sama dengan jumlah Indent. Tekan peringatan untuk membuka pembelian itu.</p>`],
+ en:["Notifications", `<p>Press the <b>Notifications</b> bell at the top of the page.</p>
+<ul><li>The <b>All</b> tab shows every reminder.</li><li>The <b>Tender</b> tab follows tender dates.</li><li>The <b>Minute</b> tab shows minutes that are still outstanding.</li></ul>
+<p>The Tender tab shows the issue and closing dates of each tender, with reminders 3, 2 and 1 days before a tender opens and before it closes, on the day it opens or closes, and when the closing date has passed. The most urgent is shown first.</p>
+<p>Reminders are also sent for unfinished steps, documents not yet attached and invoices that differ from the Indent total. Tap a reminder to open that purchase.</p>`]}
+]},
+{id:"docs", ms:"Borang dan laporan", en:"Forms and reports", pages:[
+{id:"forms", ms:["Mencetak borang, PDF dan Word", `<ol><li>Dalam borang pembelian, tekan <b>Borang 601</b>, <b>Borang 602</b> atau <b>T-607</b>.</li>
+<li>Semak pratonton. Betulkan maklumat terus pada kotak berwarna kuning jika perlu.</li>
+<li>Tekan <b>Muat turun PDF</b>, <b>Muat turun Word</b> atau <b>Cetak</b>.</li></ol>
+<ul><li><b>Tutup</b> mengekalkan pembetulan anda pada pembelian itu; <b>Simpan</b> menyimpannya.</li>
+<li>Semua borang berukuran A4. Borang T-607 dicetak mengufuk dan diletakkan di tengah muka surat.</li>
+<li>Jika teks kerja panjang, borang dikecilkan sedikit supaya muat pada satu muka surat.</li>
+<li>Tarikh dipaparkan seperti <b>17-Nov-2026</b>.</li></ul>
+<div class="gb-note info"><b>Maklumat</b>Muat turun PDF memerlukan sambungan internet. Fail Word dibuat daripada templat borang asal supaya mudah disunting.</div>
+<div class="gb-note tip"><b>Petua</b>Pada T-607, ruang untuk tandatangan disediakan di bawah “Dengan hormat,”.</div>`],
+ en:["Printing forms, PDF and Word", `<ol><li>In the purchase form, press <b>Form 601</b>, <b>Form 602</b> or <b>T-607</b>.</li>
+<li>Check the preview. Correct details directly in the yellow boxes if needed.</li>
+<li>Press <b>Download PDF</b>, <b>Download Word</b> or <b>Print</b>.</li></ol>
+<ul><li><b>Close</b> keeps your corrections on that purchase; <b>Save</b> saves them.</li>
+<li>All forms are A4. The T-607 prints in landscape and sits in the middle of the page.</li>
+<li>If the work text is long, the form is made slightly smaller so it fits on one page.</li>
+<li>Dates are shown like <b>17-Nov-2026</b>.</li></ul>
+<div class="gb-note info"><b>Note</b>Downloading a PDF needs an internet connection. The Word file is made from the original form template so it is easy to edit.</div>
+<div class="gb-note tip"><b>Tip</b>On the T-607, space for a signature is left under “Dengan hormat,”.</div>`]},
+{id:"report", ms:["Laporan pembelian", `<ol><li>Apabila semua langkah 601 hingga Invois ditanda Selesai, butang <b>Buat laporan</b> dipaparkan.</li>
+<li>Tekan butang itu untuk melihat laporan dua muka surat: ringkasan, senarai barang, setiap langkah dengan butirannya dan senarai dokumen.</li>
+<li>Tekan <b>Muat turun PDF</b> atau <b>Cetak</b>.</li></ol>`],
+ en:["Purchase report", `<ol><li>When all steps 601 to Invoice are marked Completed, the <b>Create report</b> button appears.</li>
+<li>Press it to see a two-page report: summary, item list, each step with its details and the document list.</li>
+<li>Press <b>Download PDF</b> or <b>Print</b>.</li></ol>`]},
+{id:"budget", ms:["Anggaran dan Laporan Anggaran", `<h2 id="anggaran">Menu Anggaran</h2>
+<p>Kad <b>Anggaran</b> menunjukkan anggaran, perbelanjaan dan baki bagi setiap tajuk perbelanjaan. Pilih tahun pada bahagian atas (tahun semasa dibuka secara automatik). Tekan satu kad untuk menapis pembelian bagi tajuk itu.</p>
+<h2 id="urus">Mengurus bajet (Pentadbir)</h2>
+<ol><li>Tekan <b>Urus bajet</b>.</li><li>Pilih <b>Tahun</b> dan tab Pembelian Sekolah atau Pembelian Office.</li>
+<li>Isi setiap <b>Tajuk Perbelanjaan</b> dan anggarannya. Tekan <b>+ Tambah tajuk</b> untuk menambah.</li>
+<li>Untuk tahun baharu, tekan <b>+ Tahun baharu</b>. Tajuk dan jumlah tahun sebelumnya disalin untuk dikemas kini.</li>
+<li>Tekan <b>Simpan bajet</b>.</li></ol>
+<div class="gb-note tip"><b>Petua</b>Lakukan ini pada awal Januari setiap tahun.</div>
+<h2 id="laporan">Laporan Anggaran</h2>
+<p>Buka dari menu <b>Laporan Anggaran</b>, dari pautan <b>Laporan</b> pada kad bajet, atau dari <b>Laporan semua tajuk</b> pada tajuk kumpulan.</p>
+<ul><li>Pilih tahun, jenis, tajuk perbelanjaan (satu atau semua) dan sama ada barang dipaparkan.</li>
+<li>Laporan dipaparkan pada A4 mengufuk: ringkasan dan jadual pembelian dengan nombor muka surat dan jumlah.</li>
+<li>Pembelian yang dibatalkan tidak dimasukkan. Varian Order dan Tambah Budget dipaparkan di bawah tajuk masing-masing.</li>
+<li>Tekan <b>Muat turun PDF</b> atau <b>Cetak</b>.</li></ul>`],
+ en:["Budget and the Budget Report", `<h2 id="anggaran">The Budget menu</h2>
+<p>The <b>Budget</b> cards show the estimate, spending and balance for each expenditure head. Choose the year at the top (the current year opens automatically). Tap a card to filter the purchases for that head.</p>
+<h2 id="urus">Managing the budget (Admin)</h2>
+<ol><li>Press <b>Manage budget</b>.</li><li>Choose the <b>Year</b> and the School purchase or Office purchase tab.</li>
+<li>Fill in each <b>Expenditure head</b> and its amount. Press <b>+ Add head</b> to add one.</li>
+<li>For a new year, press <b>+ New year</b>. The heads and amounts of the previous year are copied for you to update.</li>
+<li>Press <b>Save budget</b>.</li></ol>
+<div class="gb-note tip"><b>Tip</b>Do this at the start of January each year.</div>
+<h2 id="laporan">The Budget Report</h2>
+<p>Open it from the <b>Budget Report</b> menu, from the <b>Report</b> link on a budget card, or from <b>Report for all heads</b> on a group title.</p>
+<ul><li>Choose the year, type, expenditure head (one or all) and whether the items are shown.</li>
+<li>The report is A4 landscape: a summary and a table of purchases with page numbers and totals.</li>
+<li>Cancelled purchases are left out. Variation Orders and Add Budget amounts appear under their own heads.</li>
+<li>Press <b>Download PDF</b> or <b>Print</b>.</li></ul>`]}
+]},
+{id:"lists", ms:"Senarai", en:"Lists", pages:[
+{id:"suppliers", ms:["Senarai Pembekal", `<p>Menu <b>Senarai Pembekal</b> menunjukkan pembekal berdaftar dengan no. sijil dan tempoh sah. Gunakan kotak carian (nama atau no. sijil) dan penapis status. Tekan <b>Salin</b> untuk menyalin no. sijil.</p>
+<h2 id="auto">Isian automatik</h2>
+<p>Di bawah kotak nama syarikat dalam borang, tekan <b>Pilih daripada senarai</b>. Apabila nama atau no. sijil sepadan dengan senarai, kotak lain diisi dan satu nota menunjukkan sama ada sijil masih sah.</p>
+<h2 id="pdf">Memuat naik senarai terkini (Pentadbir)</h2>
+<ol><li>Tekan <b>Muat naik senarai terkini (PDF)</b> dan pilih fail PDF senarai pembekal.</li>
+<li>Semak halaman ringkasan: pembekal dijumpai, baharu, dikeluarkan dan berubah.</li>
+<li>Semak tarikh <b>Senarai setakat</b>, kemudian sahkan. Senarai bertukar untuk semua pengguna.</li></ol>
+<h2 id="manual">Menambah pembekal secara manual (Pentadbir)</h2>
+<ol><li>Tekan <b>Tambah pembekal secara manual</b>.</li>
+<li>Isi nama syarikat, digit no. sijil (YSHHB/SP/ sudah ada), tarikh sah dari dan hingga.</li>
+<li>Tekan <b>Simpan</b>.</li></ol>
+<ul><li>No. sijil atau nama yang sudah ada dalam senarai ditolak dengan amaran.</li>
+<li>Pembekal manual ditanda <b>Manual</b> dan boleh disunting atau dibuang. Penapis <b>Ditambah manual</b> memaparkannya sahaja.</li>
+<li>Pembekal manual turut digunakan untuk isian automatik. Jika PDF baharu sudah mengandungi no. sijil yang sama, salinan manual dibuang secara automatik.</li></ul>`],
+ en:["Supplier list", `<p>The <b>Supplier list</b> menu shows registered suppliers with their certificate numbers and validity. Use the search box (name or certificate no.) and the status filter. Press <b>Copy</b> to copy a certificate number.</p>
+<h2 id="auto">Auto-fill</h2>
+<p>Under the company name box in a form, press <b>Choose from the list</b>. When a name or certificate no. matches the list, the other box is filled in and a note shows whether the certificate is still valid.</p>
+<h2 id="pdf">Uploading the latest list (Admin)</h2>
+<ol><li>Press <b>Upload latest list (PDF)</b> and choose the supplier list PDF.</li>
+<li>Check the summary page: suppliers found, new, removed and changed.</li>
+<li>Check the <b>List as at</b> date, then confirm. The list changes for every user.</li></ol>
+<h2 id="manual">Adding a supplier manually (Admin)</h2>
+<ol><li>Press <b>Add supplier manually</b>.</li>
+<li>Fill in the company name, the certificate no. digits (YSHHB/SP/ is already there), valid-from and until dates.</li>
+<li>Press <b>Save</b>.</li></ol>
+<ul><li>A certificate no. or name that is already in the list is refused with a warning.</li>
+<li>Manual suppliers carry a <b>Manual</b> tag and can be edited or removed. The <b>Added manually</b> filter shows only them.</li>
+<li>Manual suppliers also work for auto-fill. If a new PDF already holds the same certificate no., the manual copy is dropped automatically.</li></ul>`]},
+{id:"refs", ms:["Senarai Rujukan", `<p>Menu <b>Senarai Rujukan</b> menyimpan nombor rujukan supaya tiada nombor yang sama digunakan dua kali. Terdapat empat tab:</p>
+<table class="gb-tbl"><thead><tr><th>Tab</th><th>Contoh format</th></tr></thead><tbody>
+<tr><td>Minit Permohonan kepada PU</td><td><code>(37)YSHHB/TM/TAWARAN</code></td></tr>
+<tr><td>Minit Sokongan / T-606</td><td><code>(037)YSHHB/TM/TAWARAN/T606</code></td></tr>
+<tr><td>Minit Variation Order / T-613</td><td><code>(037)JKT YSHHB/TN/BTM/2026</code></td></tr>
+<tr><td>Rujukan T-607</td><td><code>YSHHB/TM/024/2026/154</code></td></tr></tbody></table>
+<ol><li>Pilih tab, kemudian tekan <b>Tambah rujukan</b>. Nombor seterusnya dicadangkan; anda boleh menggantikannya.</li>
+<li>Isi tarikh, perkara dan, jika perlu, pembelian yang berkaitan. Tekan <b>Simpan</b>.</li>
+<li>Tekan <b>Sunting</b> untuk mengubah atau memadam (tekan dua kali untuk memadam). Tekan <b>Salin</b> untuk menyalin rujukan.</li></ol>
+<div class="gb-note warn"><b>Perhatian</b>Jika nombor sudah wujud dalam tab yang sama, amaran “Nombor … sudah wujud” dipaparkan dan rujukan tidak disimpan. Untuk Rujukan T-607, nombor yang sama dibenarkan pada tahun yang berbeza.</div>
+<p>Gunakan kotak carian untuk mencari rujukan, perkara atau pembelian.</p>`],
+ en:["References", `<p>The <b>References</b> menu stores reference numbers so the same number is never used twice. There are four tabs:</p>
+<table class="gb-tbl"><thead><tr><th>Tab</th><th>Example format</th></tr></thead><tbody>
+<tr><td>Application minute to PU</td><td><code>(37)YSHHB/TM/TAWARAN</code></td></tr>
+<tr><td>Support minute / T-606</td><td><code>(037)YSHHB/TM/TAWARAN/T606</code></td></tr>
+<tr><td>Variation Order minute / T-613</td><td><code>(037)JKT YSHHB/TN/BTM/2026</code></td></tr>
+<tr><td>T-607 reference</td><td><code>YSHHB/TM/024/2026/154</code></td></tr></tbody></table>
+<ol><li>Choose a tab, then press <b>Add reference</b>. The next number is suggested; you can replace it.</li>
+<li>Fill in the date, the subject and, if needed, the related purchase. Press <b>Save</b>.</li>
+<li>Press <b>Edit</b> to change or delete (press twice to delete). Press <b>Copy</b> to copy the reference.</li></ol>
+<div class="gb-note warn"><b>Note</b>If the number already exists in the same tab, the warning “Number … already exists” appears and the reference is not saved. For the T-607 reference, the same number is allowed in a different year.</div>
+<p>Use the search box to find a reference, subject or purchase.</p>`]},
+{id:"export", ms:["Eksport dan Import", `<ul><li><b>Eksport ke Excel (CSV)</b>: muat turun semua pembelian sebagai fail yang boleh dibuka dalam Excel.</li>
+<li><b>Import CSV</b>: pilih fail CSV yang dieksport daripada sistem ini. Sistem menunjukkan berapa pembelian baharu dan berapa akan dikemas kini. Tekan untuk mengesahkan.</li></ul>
+<div class="gb-note info"><b>Maklumat</b>Import memerlukan peranan Penyunting atau lebih tinggi. Gunakan fail daripada Eksport supaya semua lajur dikenali.</div>`],
+ en:["Export and import", `<ul><li><b>Export to Excel (CSV)</b>: download all purchases as a file you can open in Excel.</li>
+<li><b>Import CSV</b>: choose a CSV file that was exported from this system. The system shows how many purchases are new and how many will be updated. Press to confirm.</li></ul>
+<div class="gb-note info"><b>Note</b>Importing needs the Editor role or higher. Use a file from Export so every column is recognised.</div>`]}
+]},
+{id:"admin", ms:"Pentadbiran", en:"Administration", pages:[
+{id:"users", ms:["Pengguna", `<p>Menu <b>Pengguna</b> (Pentadbir sahaja) mengurus siapa yang boleh menggunakan sistem.</p>
+<ol><li>Cari rakan sekerja dan tambah mereka.</li><li>Pilih peranan: Pemerhati, Penyunting, Pentadbir atau Bos.</li>
+<li>Kongsi folder OneDrive sistem dengan mereka: <b>Boleh lihat</b> untuk Pemerhati, <b>Boleh edit</b> untuk Penyunting, Pentadbir dan Bos.</li></ol>
+<div class="gb-note tip"><b>Petua</b>Jika pengguna melihat “Anda belum mempunyai akses”, semak bahawa mereka ada dalam senarai dan folder telah dikongsi, kemudian minta mereka memuat semula halaman.</div>`],
+ en:["Users", `<p>The <b>Users</b> menu (Admins only) manages who can use the system.</p>
+<ol><li>Find a colleague and add them.</li><li>Choose the role: Viewer, Editor, Admin or Boss.</li>
+<li>Share the system’s OneDrive folder with them: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors, Admins and Bosses.</li></ol>
+<div class="gb-note tip"><b>Tip</b>If a user sees “You do not have access yet”, check that they are in the list and the folder has been shared, then ask them to reload the page.</div>`]},
+{id:"settings", ms:["Tetapan (tarikh Hijrah)", `<p>Tarikh Hijrah di kad atas dikira oleh sistem. Jika ia berbeza sehari atau dua daripada pengumuman rasmi, Pentadbir boleh melaraskannya.</p>
+<ol><li>Tekan ikon <b>gear</b> pada kotak tarikh Hijrah, atau buka menu <b>Tetapan</b>.</li>
+<li>Laraskan sehingga 5 hari ke depan atau ke belakang, atau pilih tarikh Hijrah sebenar.</li>
+<li>Tekan <b>Simpan</b>. Semua pengguna melihat tarikh yang sama.</li></ol>
+<div class="gb-note info"><b>Maklumat</b>Pengguna lain yang menekan kotak tarikh Hijrah akan melihat mesej bahawa hanya Pentadbir boleh menukarnya.</div>`],
+ en:["Settings (Hijri date)", `<p>The Hijri date in the top card is worked out by the system. If it differs by a day or two from the official announcement, an Admin can adjust it.</p>
+<ol><li>Press the <b>gear</b> icon on the Hijri date box, or open the <b>Settings</b> menu.</li>
+<li>Adjust up to 5 days forward or back, or pick the real Hijri date.</li>
+<li>Press <b>Save</b>. Every user sees the same date.</li></ol>
+<div class="gb-note info"><b>Note</b>Other users who tap the Hijri date box see a message that only Admins can change it.</div>`]},
+{id:"audit", ms:["Log Audit", `<p>Menu <b>Log Audit</b> (Pentadbir) menunjukkan siapa membuat perubahan dan bila. Ia merekod, antaranya, pembelian baharu dan dikemas kini, dokumen dimuat naik, eksport dan import, perubahan senarai pembekal, rujukan dan tetapan.</p>`],
+ en:["Audit log", `<p>The <b>Audit log</b> menu (Admin) shows who made a change and when. It records, among others, new and updated purchases, uploaded documents, exports and imports, supplier list changes, references and settings.</p>`]}
+]},
+{id:"help", ms:"Bantuan", en:"Help", pages:[
+{id:"tips", ms:["Petua dan kekunci pintas", `<ul><li><kbd>/</kbd>: terus menaip dalam kotak carian pada halaman Pembelian.</li>
+<li><b>BM / EN</b>: tukar bahasa paparan.</li>
+<li><b>Butang bulan</b>: tukar mod cerah atau gelap.</li>
+<li><b>Pasang Aplikasi</b>: pasang sistem pada telefon atau komputer untuk akses pantas dan skrin penuh.</li>
+<li>Perubahan oleh pengguna lain dipaparkan secara automatik.</li>
+<li>Pada telefon, butang bulat <b>+</b> menambah pembelian baharu.</li></ul>
+<div class="gb-note tip"><b>Petua</b>Gunakan kotak carian di bahagian atas panduan ini untuk mencari mana-mana topik.</div>`],
+ en:["Tips and shortcuts", `<ul><li><kbd>/</kbd>: start typing in the search box on the Purchases page.</li>
+<li><b>BM / EN</b>: switch the display language.</li>
+<li><b>Moon button</b>: switch between light and dark mode.</li>
+<li><b>Install app</b>: install the system on a phone or computer for quick, full-screen access.</li>
+<li>Changes by other users appear automatically.</li>
+<li>On a phone, the round <b>+</b> button adds a new purchase.</li></ul>
+<div class="gb-note tip"><b>Tip</b>Use the search box at the top of this guide to find any topic.</div>`]},
+{id:"faq", ms:["Soalan lazim", `<h2 id="akses">Saya melihat “Anda belum mempunyai akses”.</h2>
+<p>Minta Pentadbir menambah anda dalam <b>Pengguna</b> dan berkongsi folder OneDrive, kemudian muat semula halaman.</p>
+<h2 id="tarikh">Tarikh saya ditolak.</h2>
+<p>Gunakan format <b>17-Nov-2026</b> dan pastikan tarikh itu wujud. Lihat <b>Menaip tarikh</b>.</p>
+<h2 id="kaedah">Kaedah pembelian tidak sepadan dengan jumlah.</h2>
+<p>Tekan butang dalam amaran untuk menukar kaedah, atau semak harga dan kuantiti barang.</p>
+<h2 id="rujukan">No. rujukan sudah wujud.</h2>
+<p>Nombor itu sudah digunakan dalam tab yang sama di <b>Senarai Rujukan</b>. Gunakan nombor lain.</p>
+<h2 id="pdf">Muat turun PDF tidak berfungsi.</h2>
+<p>Butang PDF memerlukan sambungan internet. Cuba lagi, atau gunakan <b>Cetak</b> atau <b>Muat turun Word</b>.</p>
+<h2 id="baca">Dokumen tidak dibaca secara automatik.</h2>
+<p>Gunakan fail PDF, Word, JPG atau PNG yang jelas. Fail Word lama (.doc) dan Excel dilampirkan sahaja. Anda masih boleh mengisi maklumat sendiri.</p>
+<h2 id="menu">Saya tidak nampak Pengguna, Tetapan atau Log Audit.</h2>
+<p>Menu ini untuk Pentadbir sahaja.</p>`],
+ en:["FAQ", `<h2 id="akses">I see “You do not have access yet”.</h2>
+<p>Ask an Admin to add you under <b>Users</b> and share the OneDrive folder, then reload the page.</p>
+<h2 id="tarikh">My date was refused.</h2>
+<p>Use the format <b>17-Nov-2026</b> and make sure the date exists. See <b>Entering dates</b>.</p>
+<h2 id="kaedah">The purchase method does not match the amount.</h2>
+<p>Press the button in the warning to change the method, or check the item prices and quantities.</p>
+<h2 id="rujukan">The reference number already exists.</h2>
+<p>That number is already used in the same tab of <b>References</b>. Use another number.</p>
+<h2 id="pdf">Downloading a PDF does not work.</h2>
+<p>The PDF button needs an internet connection. Try again, or use <b>Print</b> or <b>Download Word</b>.</p>
+<h2 id="baca">A document was not read automatically.</h2>
+<p>Use a clear PDF, Word, JPG or PNG file. Old Word (.doc) and Excel files are attached only. You can still fill in the details yourself.</p>
+<h2 id="menu">I cannot see Users, Settings or Audit log.</h2>
+<p>These menus are for Admins only.</p>`]}
+]}
+];
+let gbCur = "intro", gbQ = "";
+const gbLang = ()=>LANG === "en" ? "en" : "ms", gbT = (ms, en)=>gbLang() === "en" ? en : ms;
+const gbPages = ()=>GB.flatMap(g=>g.pages.map(p=>({id: p.id, g, ms: p.ms, en: p.en})));
+const gbPlain = html=>{ const d = document.createElement("div"); d.innerHTML = html; return (d.textContent || "").replace(/\s+/g, " ").trim(); };
+const gbIdx = {};
+const gbSearchText = p=>{ const L = gbLang(), k = p.id + L; return gbIdx[k] || (gbIdx[k] = p[L][0] + " " + gbPlain(p[L][1])); };
+const GB_SKIP = ["amp", "lt", "gt", "quot", "39"];
+const gbTokens = q=>q.toLowerCase().split(/\s+/).filter(t=>t.length >= 2 && !GB_SKIP.includes(t));
+const gbRe = toks=>new RegExp("(" + toks.map(t=>t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")", "gi");
+function gbSide(){
+  const side = $("#gbSide"), L = gbLang(), q = gbQ.trim();
+  if(q.length >= 2){
+    const toks = gbTokens(q), hits = [];
+    gbPages().forEach(p=>{
+      const text = gbSearchText(p), low = text.toLowerCase();
+      if(toks.length && toks.every(t=>low.includes(t))){
+        const tl = p[L][0].toLowerCase(), score = toks.reduce((a, t)=>a + (tl.includes(t) ? 10 : 0), 0), idx = low.indexOf(toks[0]), st = Math.max(0, idx - 50);
+        hits.push({p, score, snip: (st > 0 ? "…" : "") + text.slice(st, st + 140) + (st + 140 < text.length ? "…" : "")});
+      }
+    });
+    hits.sort((a, b)=>b.score - a.score);
+    const re = toks.length ? gbRe(toks) : null;
+    side.innerHTML = `<p class="gb-gt">${gbT("Hasil carian", "Search results")} (${hits.length})</p>` + (hits.length ? hits.map(h=>`<a href="#" class="gb-hit" data-pg="${h.p.id}"><b>${esc(h.p[L][0])}</b><span>${re ? esc(h.snip).replace(re, "<mark>$1</mark>") : esc(h.snip)}</span></a>`).join("") : `<p class="gb-none">${gbT("Tiada hasil.", "No results.")}</p>`);
+    return;
+  }
+  side.innerHTML = GB.map(g=>`<p class="gb-gt">${esc(g[L])}</p>` + g.pages.map(p=>`<a href="#" data-pg="${p.id}" class="${p.id === gbCur ? "on" : ""}">${esc(p[L][0])}</a>`).join("")).join("");
+}
+function gbHighlight(root, toks){
+  if(!toks.length) return; const re = gbRe(toks), test = new RegExp(re.source, "i"), box = root.querySelector(".gb-content"); if(!box) return;
+  const w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), nodes = []; while(w.nextNode()) nodes.push(w.currentNode);
+  nodes.forEach(n=>{ if(!test.test(n.nodeValue)) return; const sp = document.createElement("span"); sp.innerHTML = esc(n.nodeValue).replace(re, "<mark>$1</mark>"); n.replaceWith(...sp.childNodes); });
+}
+function gbRender(){
+  const L = gbLang(), pgs = gbPages(); let i = pgs.findIndex(p=>p.id === gbCur); if(i < 0){ i = 0; gbCur = pgs[0].id; }
+  const p = pgs[i], prev = pgs[i - 1], next = pgs[i + 1];
+  $("#manTitle").textContent = gbT("Panduan Pengguna", "User Guide"); $("#gbSub").textContent = gbT("Sistem Pemantauan Pembelian", "Purchase Tracker");
+  $("#gbQ").placeholder = gbT("Cari dalam panduan…", "Search the guide…"); $("#gbMenu").setAttribute("aria-label", gbT("Kandungan", "Contents"));
+  $("#manPrint").innerHTML = '🖨<span class="gb-lb"> ' + gbT("Cetak", "Print") + "</span>"; $("#manPdf").innerHTML = '⬇<span class="gb-lb"> ' + gbT("Muat turun PDF", "Download PDF") + "</span>"; $("#manPrint").setAttribute("aria-label", gbT("Cetak", "Print")); $("#manPdf").setAttribute("aria-label", gbT("Muat turun PDF", "Download PDF")); $("#manClose").setAttribute("aria-label", gbT("Tutup", "Close"));
+  gbSide();
+  const art = $("#gbArticle");
+  art.innerHTML = `<div class="gb-crumb">${esc(p.g[L])}</div><h1>${esc(p[L][0])}</h1><div class="gb-content">${p[L][1]}</div><nav class="gb-pn">${prev ? `<a href="#" data-pg="${prev.id}" class="prev"><small>← ${gbT("Sebelumnya", "Previous")}</small><b>${esc(prev[L][0])}</b></a>` : "<span></span>"}${next ? `<a href="#" data-pg="${next.id}" class="next"><small>${gbT("Seterusnya", "Next")} →</small><b>${esc(next[L][0])}</b></a>` : "<span></span>"}</nav>`;
+  const hs = [...art.querySelectorAll(".gb-content h2")];
+  $("#gbToc").innerHTML = hs.length ? `<p class="gb-gt">${gbT("Pada halaman ini", "On this page")}</p>` + hs.map(h=>`<a href="#" data-sec="${h.id}">${esc(h.textContent)}</a>`).join("") : "";
+  if(gbQ.trim().length >= 2) gbHighlight(art, gbTokens(gbQ));
+  $("#gbMain").scrollTop = 0;
+}
+function openGuide(id){ try{ $("#gbCrest").src = IMG_CREST; }catch(e){} if(id) gbCur = id; $("#manualDlg").classList.remove("gb-open"); gbRender(); $("#manualDlg").showModal(); }
+const gbGo = e=>{ const a = e.target.closest("[data-pg]"); if(!a) return; e.preventDefault(); gbCur = a.dataset.pg; gbRender(); $("#manualDlg").classList.remove("gb-open"); };
+$("#gbSide").addEventListener("click", gbGo); $("#gbArticle").addEventListener("click", gbGo);
+$("#gbToc").addEventListener("click", e=>{ const a = e.target.closest("[data-sec]"); if(!a) return; e.preventDefault(); const t = document.getElementById(a.dataset.sec); if(t) t.scrollIntoView({behavior: "smooth", block: "start"}); });
+$("#gbQ").addEventListener("input", ()=>{ gbQ = $("#gbQ").value; gbSide(); });
+$("#gbQ").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); const a = $("#gbSide .gb-hit"); if(a) a.click(); } });
+$("#gbMenu").onclick = ()=>$("#manualDlg").classList.toggle("gb-open");
+{ const al = applyLang; applyLang = function(){ al.apply(this, arguments); try{ if($("#manualDlg").open) gbRender(); }catch(e){} }; }
 /* ---------- Closed tender tick in the Advert box ---------- */
 document.addEventListener("change", e=>{
   const c = e.target.closest ? e.target.closest('[data-f="closed"]') : null; if(!c) return;
@@ -6944,7 +7220,7 @@ $("#btnNew").onclick = ()=>openDlg(null);
 $("#btnSave").onclick = save;
 $("#btnDel").onclick = del;
 $("#btnCsv").onclick = exportCsv;
-$("#btnManual").onclick = ()=>$("#manualDlg").showModal();
+$("#btnManual").onclick = ()=>openGuide();
 $("#manClose").onclick = ()=>$("#manualDlg").close();
 $("#manPrint").onclick = ()=>openManualPrint("print");
 $("#manPdf").onclick = ()=>openManualPrint("pdf");
