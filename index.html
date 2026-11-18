@@ -2919,7 +2919,7 @@ const CLOSING = {k:"tenderClose", code:"Tarikh Tutup Tender", what:"Peringatan t
   {k:"closeTime", label:"Masa Tutup", type:"time"},
   {k:"bids", label:"Bilangan Tawaran Diterima", type:"number"}
 ],
-  prefill: it=>({closeDate: it.stages?.tenderDoc?.closeDate || ""}),
+  prefill: it=>({closeDate: it.stages?.tenderDoc?.closeDate || "", closeTime: it.stages?.tenderClose?.done ? "" : "14:30"}),
   extra: (it, st)=>{
     if(st.done || !st.closeDate) return st.done ? "" : `<p class="tc-left">Masukkan tarikh tutup untuk mendapat peringatan.</p>`;
     const left = daysBetween(today(), st.closeDate);
@@ -2950,8 +2950,10 @@ function tenderHTML(it){
   if(!needsTender(it)) return "";
   return BOXES.map(B=>boxHTML(B, it)).join("");
 }
+const AUTO_MEDIA_RX = /^(tender tertutup\. tiada iklan\. jemputan melalui e-mel sahaja\.|tender terbuka\. laman web, instagram dan facebook\.|close(d)? tender\.? no advert\.? e-?mail only\.?)$/i;
 function boxHTML(B, it){
   let st = it.stages?.[B.k] || {};
+  if(B.k === "advert" && st.media && AUTO_MEDIA_RX.test(String(st.media).trim())) st = {...st, media: ""};
   if(B.prefill){ st = {...st}; const p = B.prefill(it); for(const k in p) if(!st[k]) st[k] = p[k]; }
   if(B.follow){ st = {...st}; const p = B.follow(it); for(const k in p) if(p[k] && (!st[k+"Manual"] || !String(st[k]||"").trim())) st[k] = p[k]; }
   return `<div class="minit-box">
@@ -6810,7 +6812,7 @@ const GB = [
 <li><b>Nombor Rujukan Sebutharga / Tender</b>: isi <b>No. Rujukan Tender</b> dan tarikh rujukan (pilihan, tidak menghalang langkah seterusnya).</li>
 <li><b>Dokumen Tender</b>: no. dan tajuk tender. <b>No. Tender</b> diisi sendiri daripada No. Rujukan Tender di atas (contoh: <code>(042) JKT YSHHB/SH/BTM/2026</code>), dan masih boleh disunting. Tarikh tutup diisi sendiri 2 minggu selepas tarikh dikeluarkan (boleh diubah).</li>
 <li><b>Iklan</b>: tempat dan tarikh iklan. Untuk tender tertutup (jemputan melalui e-mel sahaja), tandakan <b>Tender tertutup</b>. Untuk tender terbuka (melalui laman web, Instagram dan Facebook), tandakan <b>Tender terbuka</b>. Hanya satu daripada dua boleh ditandakan.</li>
-<li><b>Tarikh Tutup Tender</b>: tarikh dan masa tutup, bilangan tawaran diterima. Kiraan hari dipaparkan.</li>
+<li><b>Tarikh Tutup Tender</b>: tarikh dan masa tutup, bilangan tawaran diterima. Masa tutup diisi sendiri 02:30 PM (boleh diubah). Kiraan hari dipaparkan.</li>
 <li><b>Penilaian Tender</b>: tarikh penilaian, syarikat dan harga dicadangkan.</li>
 <li><b>Minit Sokongan / T606</b>: no. rujukan dan tarikh minit.</li>
 <li><b>Surat Setuju Terima dan Penolakan</b>: syarikat berjaya dan no. rujukan surat setuju terima, serta setiap syarikat ditolak dengan no. rujukan surat penolakan.</li>
@@ -6822,7 +6824,7 @@ const GB = [
 <li><b>Quotation / Tender reference no.</b>: fill in the <b>Tender reference no.</b> and the reference date (optional, it does not block the next steps).</li>
 <li><b>Tender document</b>: tender no. and title. The <b>Tender no.</b> fills in by itself from the Tender reference no. above (for example <code>(042) JKT YSHHB/SH/BTM/2026</code>) and can still be edited. The closing date fills in 2 weeks after the issue date (you can change it).</li>
 <li><b>Advert</b>: place and date of the advert. For a closed tender (invitations by e-mail only), tick <b>Closed tender</b>. For an open tender (through the website, Instagram and Facebook), tick <b>Open tender</b>. Only one of the two can be ticked.</li>
-<li><b>Tender closing date</b>: closing date and time, number of bids received. The days left are shown.</li>
+<li><b>Tender closing date</b>: closing date and time, number of bids received. The closing time fills in as 02:30 PM (you can change it). The days left are shown.</li>
 <li><b>Tender evaluation</b>: evaluation date, recommended company and price.</li>
 <li><b>Support minute / T606</b>: reference no. and minute date.</li>
 <li><b>Award and reject letter</b>: the successful company and the award letter reference, and each rejected company with its rejection letter reference.</li>
@@ -7164,17 +7166,11 @@ function s601FilesHTML(){
   const box = (k, label, opt, hint)=>`<div class="s6f"><div class="s6f-h"><b>${label}</b>${opt ? ` <small>(pilihan)</small>` : ""}</div>${hint ? `<p class="s6f-none">${hint}</p>` : ""}${filesHTML(k) || `<p class="s6f-none">Tiada fail.</p>`}</div>`;
   return `<div class="s6files full"><h4>Dokumen 601</h4>${box("s601", "Sebutharga", false, "")}${box("req601", "Permintaan daripada E-mel atau Minit", true, "Pilihan. Muat naik e-mel atau minit permintaan jika ada.")}</div>`;
 }
-/* ---------- Closed and open tender ticks in the Advert box (only one of the two) ---------- */
+/* ---------- Closed and open tender ticks in the Advert box: only one of the two, and no text is put in "Diiklankan di" ---------- */
 document.addEventListener("change", e=>{
-  const c = e.target.closest ? e.target.closest('[data-f="closed"], [data-f="openTender"]') : null; if(!c) return;
-  const box = c.closest(".step"), media = box && box.querySelector('[data-f="media"]'); if(!media) return;
-  const isClosed = c.dataset.f === "closed", other = box.querySelector(isClosed ? '[data-f="openTender"]' : '[data-f="closed"]');
-  const CL = "Tender tertutup. Tiada iklan. Jemputan melalui e-mel sahaja.", OP = "Tender terbuka. Laman web, Instagram dan Facebook.";
-  const mine = isClosed ? CL : OP, theirs = isClosed ? OP : CL;
-  if(c.checked){
-    if(other && other.checked){ other.checked = false; if(media.value.trim() === theirs) media.value = ""; }
-    if(!media.value.trim()) media.value = mine;
-  } else if(media.value.trim() === mine) media.value = "";
+  const c = e.target.closest ? e.target.closest('[data-f="closed"], [data-f="openTender"]') : null; if(!c || !c.checked) return;
+  const other = c.closest(".step").querySelector(c.dataset.f === "closed" ? '[data-f="openTender"]' : '[data-f="closed"]');
+  if(other) other.checked = false;
 });
 /* ---------- Views, sidebar and the header card ---------- */
 let hdView = "list";
