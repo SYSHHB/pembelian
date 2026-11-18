@@ -1478,7 +1478,7 @@ dialog#manualDlg.gb[open]{display:flex;flex-direction:column}
 .gb-tbl th{background:var(--bg);text-align:left;font-size:12.5px;color:var(--muted)}
 .gb-tbl th,.gb-tbl td{border:1px solid var(--line);padding:9px 12px;vertical-align:top}
 .gb-note{border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent);border-radius:8px;padding:11px 14px;margin:14px 0}
-.gb-note b{display:block;margin-bottom:3px}
+.gb-note > b:first-child{display:block;margin-bottom:3px}
 .gb-note.tip{border-color:#2e8b57;background:color-mix(in srgb,#2e8b57 10%,transparent)}
 .gb-note.info{border-color:#3b82c4;background:color-mix(in srgb,#3b82c4 10%,transparent)}
 .gb-note.warn{border-color:#e9902e;background:color-mix(in srgb,#e9902e 13%,transparent)}
@@ -3497,14 +3497,14 @@ function wireSteps(){
 }
 
 /* ---------- Read details from a file attached to a step (602, Indent, DO, Invois) ---------- */
-const STEP_DOC = {s602:"602", indent:"indent", do:"do", inv:"invoice"};
+const STEP_DOC = {s601:"quotation", s602:"602", indent:"indent", do:"do", inv:"invoice"};
 async function extractAny(file){
   if(sampleFn && !sampleFn.local){ try{ return await extractDoc(file); }catch(e){ if(!window.localExtractDoc) throw e; } }
   if(window.localExtractDoc) return await window.localExtractDoc(file);
   return await extractDoc(file);
 }
 async function fillStepFromDocs(k, files){
-  const code = STAGES.find(s=>s.k===k)?.code || k;
+  const code = STAGES.find(s=>s.k===(k === "s601" ? "s602" : k))?.code || k;
   const msgs = [];
   let d = draftFromForm();
   for(const file of files){
@@ -3905,10 +3905,11 @@ async function autoFill(files){
       const n = mergeInto(d, r);
       const sk = STAGE_OF[r.docType];
       let att = "";
-      if(assets && ATTACH_STEPS.includes(sk) && /\.(pdf|jpe?g|png|webp|docx?|xlsx?)$/i.test(file.name)){
-        const list = d.stages[sk].files ||= [];
+      const ak = r.docType === "quotation" ? "s601" : (sk === "s601" ? null : sk);
+      if(assets && ak && ATTACH_STEPS.includes(ak) && /\.(pdf|jpe?g|png|webp|docx?|xlsx?)$/i.test(file.name)){
+        const list = (d.stages[ak] ||= {}).files ||= [];
         if(!list.some(f=>f.name===file.name)){
-          try{ const rec = await storeFile(file); list.push(rec); if(!OFFICE_RX.test(file.name)) odSync(rec, file, sk, d.title); att = ` dan dilampirkan pada ${STAGES.find(x=>x.k===sk).code}`; }
+          try{ const rec = await storeFile(file); list.push(rec); if(!OFFICE_RX.test(file.name)) odSync(rec, file, ak, d.title); att = ` dan dilampirkan pada ${STAGES.find(x=>x.k===ak).code}`; }
           catch(e){ att = ", tetapi fail tidak dapat dilampirkan"; }
         }
       } else if(/\.docx$/i.test(file.name)) att = ". Fail Word tidak dilampirkan; simpan sebagai PDF untuk menyimpan salinan";
@@ -3971,7 +3972,7 @@ async function del(){
 /* ---------- Notifications ---------- */
 const SEEN_KEY = "asset-purchase-tracker-seen";
 const DOC_STEPS = ["indent","do","inv"];
-const ATTACH_STEPS = ["s601","req601","s602","indent","do","inv","minitP","minitS","tenderDoc","advert","tenderClose","tenderEval","awardLetter","acceptLetter"];
+const ATTACH_STEPS = ["s601","req601","indent","do","inv","minitP","minitS","tenderDoc","advert","tenderClose","tenderEval","awardLetter","acceptLetter"];
 const DOC_STAGES = () => STAGES.filter(s=>DOC_STEPS.includes(s.k));
 function docCount(it){ return DOC_STAGES().filter(s=>(it.stages?.[s.k]?.files||[]).length).length; }
 function allDocs(it){ return docCount(it)===DOC_STEPS.length; }
@@ -4709,14 +4710,14 @@ let dvFiles = [], dvIdx = 0, dvKey = "";
 function updDocBtns(){
   { const rb = $("#btnReport"); if(rb){ let ok = false; try{ const d = draftFromForm(); ok = stageIndex(d)===STAGES.length && cancelIdx(d)<0; }catch(e){} rb.hidden = !ok; } }
   document.querySelectorAll("[data-doc]").forEach(b=>{
-    const n = (draftFiles[b.dataset.doc]||[]).length;
+    const dk = b.dataset.doc, n = (dk === "s602" ? [...(draftFiles.s601 || []), ...(draftFiles.s602 || [])] : (draftFiles[dk] || [])).length;
     b.classList.toggle("has", n>0); b.classList.toggle("none", n===0);
     b.title = n ? `${n} fail` : "Belum ada fail dimuat naik";
   });
 }
 async function openDoc(k){
-  const files = (draftFiles[k]||[]).slice();
-  if(!files.length){ toast(`Belum ada fail ${DOC_TITLE[k]} dimuat naik. Lampirkan fail di langkah ${k==="s602"?"602":STAGES.find(s=>s.k===k).code}.`, 4500); return; }
+  const files = (k === "s602" ? [...(draftFiles.s601 || []), ...(draftFiles.s602 || [])] : (draftFiles[k] || [])).slice();
+  if(!files.length){ toast(`Belum ada fail ${DOC_TITLE[k]} dimuat naik. Lampirkan fail di langkah ${k==="s602"?"601":STAGES.find(s=>s.k===k).code}.`, 4500); return; }
   dvFiles = files; dvIdx = files.length-1; dvKey = k;
   $("#dvTitle").textContent = DOC_TITLE[k];
   $("#dvTabs").innerHTML = files.length>1 ? files.map((f,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===dvIdx}">${esc(f.name)}</button>`).join("") : "";
@@ -6857,7 +6858,7 @@ const GB = [
 <div class="gb-note warn"><b>Note</b>A date that does not exist, such as 31-Feb-2026, is refused and the box goes back to the earlier date.</div>
 <p>Printed forms, Word files, reports and lists also show dates in this format. You can type dates the same way when correcting a form preview.</p>`]},
 {id:"files", ms:["Melampirkan fail dan isian automatik", `<ol><li>Tekan <b>Lampirkan fail</b> pada langkah yang berkaitan. Fail PDF, Word, Excel, JPG dan PNG diterima (Word dan Excel sehingga 10 MB).</li>
-<li>Untuk Indent, DO, Invois, 602 dan Surat Setuju Terima dan Penolakan, sistem membaca dokumen dan mengisi maklumat secara automatik.</li>
+<li>Sebutharga dilampirkan di langkah <b>601</b> (kotak <b>Sebutharga</b>); langkah 602 tidak perlu memuat naik fail. Untuk Sebutharga, Indent, DO, Invois dan Surat Setuju Terima dan Penolakan, sistem membaca dokumen dan mengisi maklumat secara automatik (sebutharga mengisi maklumat syarikat dan harga dalam 602).</li>
 <li>Satu fail Word yang mengandungi banyak surat penolakan akan menambah setiap syarikat dan no. rujukannya.</li>
 <li>Untuk fail yang sudah dilampirkan dalam Surat Setuju Terima dan Penolakan, tekan <b>Baca surat</b>.</li>
 <li>Semak maklumat yang diisi, kemudian tekan <b>Simpan pembelian</b>.</li></ol>
@@ -6865,7 +6866,7 @@ const GB = [
 <div class="gb-note info"><b>Maklumat</b>Fail Word lama (.doc) dan Excel dilampirkan tetapi tidak dibaca. Dokumen imbasan perlu jelas supaya dapat dibaca.</div>
 <p>Butang <b>Sebutharga</b>, <b>Indent</b>, <b>DO</b> dan <b>Invois</b> di bahagian bawah borang membuka dokumen yang telah dilampirkan.</p>`],
  en:["Attaching files and auto-fill", `<ol><li>Press <b>Attach file</b> on the relevant step. PDF, Word, Excel, JPG and PNG files are accepted (Word and Excel up to 10 MB).</li>
-<li>For Indent, DO, Invoice, 602 and the Award and reject letter, the system reads the document and fills in the details automatically.</li>
+<li>The quotation is attached in step <b>601</b> (the <b>Quotation</b> box); step 602 needs no upload. For the quotation, Indent, DO, Invoice and the Award and reject letter, the system reads the document and fills in the details automatically (the quotation fills in the company and price details in 602).</li>
 <li>One Word file holding many rejection letters adds every company with its reference no.</li>
 <li>For a file already attached in the Award and reject letter, press <b>Read letter</b>.</li>
 <li>Check the details that were filled in, then press <b>Save purchase</b>.</li></ol>
