@@ -2927,7 +2927,6 @@ const CLOSING = {k:"tenderClose", code:"Tarikh Tutup Tender", what:"Peringatan t
 };
 function closeDateOf(it){ const s = it.stages || {}; return s.tenderClose?.closeDate || s.tenderDoc?.closeDate || ""; }
 const EVAL = {k:"tenderEval", code:"Penilaian Tender", what:"Penilaian tawaran / sebutharga yang diterima", fields:[
-  {k:"date", label:"Tarikh Penilaian", type:"date"},
   {k:"chosen", label:"Syarikat Dicadangkan", full:true},
   {k:"price", label:"Harga Dicadangkan (B$)", type:"number"}
 ]};
@@ -6812,7 +6811,7 @@ const GB = [
 <li><b>Dokumen Tender</b>: no. dan tajuk tender. <b>No. Tender</b> diisi sendiri daripada No. Rujukan Tender di atas (contoh: <code>(042) JKT YSHHB/SH/BTM/2026</code>), dan masih boleh disunting. Tarikh tutup diisi sendiri 2 minggu selepas tarikh dikeluarkan (boleh diubah).</li>
 <li><b>Iklan</b>: tarikh iklan. Untuk tender tertutup (jemputan melalui e-mel sahaja), tandakan <b>Tender tertutup</b>. Untuk tender terbuka (melalui laman web, Instagram dan Facebook), tandakan <b>Tender terbuka</b>. Hanya satu daripada dua boleh ditandakan.</li>
 <li><b>Tarikh Tutup Tender</b>: tarikh dan masa tutup, bilangan tawaran diterima. Masa tutup diisi sendiri 02:30 PM (boleh diubah). Kiraan hari dipaparkan.</li>
-<li><b>Penilaian Tender</b>: tarikh penilaian, syarikat dan harga dicadangkan.</li>
+<li><b>Penilaian Tender</b>: syarikat dan harga dicadangkan.</li>
 <li><b>Minit Sokongan / T606</b>: no. rujukan dan tarikh minit.</li>
 <li><b>Surat Setuju Terima dan Penolakan</b>: syarikat berjaya dan no. rujukan surat setuju terima, serta setiap syarikat ditolak dengan no. rujukan surat penolakan.</li>
 <li><b>Surat Penerimaan daripada Pembekal</b>: surat penerimaan daripada syarikat berjaya.</li></ol>
@@ -6824,7 +6823,7 @@ const GB = [
 <li><b>Tender document</b>: tender no. and title. The <b>Tender no.</b> fills in by itself from the Tender reference no. above (for example <code>(042) JKT YSHHB/SH/BTM/2026</code>) and can still be edited. The closing date fills in 2 weeks after the issue date (you can change it).</li>
 <li><b>Advert</b>: date of the advert. For a closed tender (invitations by e-mail only), tick <b>Closed tender</b>. For an open tender (through the website, Instagram and Facebook), tick <b>Open tender</b>. Only one of the two can be ticked.</li>
 <li><b>Tender closing date</b>: closing date and time, number of bids received. The closing time fills in as 02:30 PM (you can change it). The days left are shown.</li>
-<li><b>Tender evaluation</b>: evaluation date, recommended company and price.</li>
+<li><b>Tender evaluation</b>: recommended company and price.</li>
 <li><b>Support minute / T606</b>: reference no. and minute date.</li>
 <li><b>Award and reject letter</b>: the successful company and the award letter reference, and each rejected company with its rejection letter reference.</li>
 <li><b>Acceptance letter from vendor</b>: the acceptance letter from the successful company.</li></ol>
