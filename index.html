@@ -1644,6 +1644,54 @@ body .pg-head h2{font-size:28px!important}
 .rental-box .r-pay-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .rental-box .r-psum{font-size:13.5px;color:var(--muted);font-weight:600}
 .rental-box .r-add{margin-top:12px}
+
+/* ===== Guide v2: livelier GitBook-style reading experience ===== */
+.gb-top{position:relative}
+.gb-prog{position:absolute;left:0;bottom:-1px;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--accent));border-radius:0 3px 3px 0;transition:width .12s linear;pointer-events:none}
+.gb-brand img{padding:3px;border-radius:9px;background:var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.gb-side{background:linear-gradient(180deg,var(--surface) 0%,var(--bg) 60%)}
+.gb-gt{display:flex;align-items:center;gap:8px;margin:20px 8px 8px}
+.gb-gt::after{content:"";flex:1;height:1px;background:var(--line)}
+.gb-side a{display:flex;align-items:center;gap:10px;transition:background .15s,transform .15s}
+.gb-side a:hover{transform:translateX(3px)}
+.gb-n{flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:700;background:var(--surface);border:1px solid var(--line);color:var(--muted);font-variant-numeric:tabular-nums}
+.gb-side a.on{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 20%,transparent),transparent)}
+.gb-side a.on .gb-n{background:var(--accent);border-color:transparent;color:var(--accent-ink)}
+.gb-side a.gb-hit .gb-n{display:none}
+.gb-hero{position:relative;overflow:hidden;border-radius:18px;padding:22px 24px 20px;margin:0 0 26px;background:linear-gradient(135deg,var(--band) 0%,var(--band-2) 100%);color:#fff;box-shadow:0 14px 34px -16px rgba(15,61,36,.7)}
+.gb-hero::before{content:"";position:absolute;right:-50px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(243,216,61,.55) 0%,rgba(243,216,61,0) 70%);pointer-events:none}
+.gb-hero::after{content:"";position:absolute;left:-30px;bottom:-70px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(82,193,133,.35) 0%,rgba(82,193,133,0) 70%);pointer-events:none}
+.gb-hero .gb-crumb{position:relative;color:var(--gold);display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(243,216,61,.14);margin:0 0 12px}
+#gbArticle .gb-hero h1{position:relative;color:#fff;margin:0 0 12px;font-size:32px;letter-spacing:-.01em}
+.gb-meta{position:relative;display:flex;gap:8px;flex-wrap:wrap}
+.gb-chip{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);color:#EAF6EE}
+.gb-content h2{display:flex;align-items:center;gap:10px;margin:36px 0 12px}
+.gb-content h2::before{content:"";flex:none;width:4px;height:22px;border-radius:4px;background:linear-gradient(180deg,var(--gold),var(--accent))}
+.gb-content > p:first-child{font-size:16.5px;color:var(--ink);opacity:.92}
+.gb-content img{max-width:100%;border-radius:12px;box-shadow:0 6px 20px -10px rgba(0,0,0,.35)}
+.gb-note{position:relative;padding:12px 16px 12px 46px;margin:16px 0;border-width:0;border-left-width:4px;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.gb-note::before{content:"💡";position:absolute;left:12px;top:11px;font-size:17px;line-height:1}
+.gb-note.tip::before{content:"✅"}
+.gb-note.info::before{content:"ℹ️"}
+.gb-note.warn::before{content:"⚠️"}
+.gb-tbl{border-radius:12px;overflow:hidden;border:1px solid var(--line);border-collapse:separate;border-spacing:0}
+.gb-tbl th,.gb-tbl td{border-width:0 1px 1px 0;border-color:var(--line)}
+.gb-tbl th{text-transform:uppercase;letter-spacing:.05em;font-size:11.5px;font-weight:800;color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+.gb-tbl tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--bg) 55%,transparent)}
+.gb-tbl tbody tr:hover td{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.gb-content code{color:var(--accent)}
+.gb-pn{gap:14px}
+.gb-pn a{position:relative;overflow:hidden;transition:transform .15s,border-color .15s,box-shadow .15s;padding:16px 18px}
+.gb-pn a::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);opacity:0;transition:opacity .15s}
+.gb-pn a:hover{transform:translateY(-2px);box-shadow:0 10px 24px -14px rgba(15,61,36,.5)}
+.gb-pn a:hover::before{opacity:1}
+.gb-pn a.next::before{left:auto;right:0}
+.gb-pn .prev small::before{content:"";}
+.gb-pn b{font-size:16px}
+#gbArticle{max-width:780px}
+.gb-toc a{border-left:2px solid transparent;border-radius:0 8px 8px 0;margin-left:2px}
+.gb-toc a:hover{border-left-color:var(--accent)}
+.gb-body mark{background:linear-gradient(180deg,transparent 40%,#f6d85f 40%);color:inherit}
 </style>
 </head>
 <body>
@@ -7796,6 +7844,52 @@ const drop = $("#drop");
 drop.addEventListener("drop", e=>autoFill([...e.dataTransfer.files]));
 init().finally(()=>{ try{ setTimeout(()=>window.__splash.hide(), col ? 3500 : 0); }catch(e){} });
 applyLang();
+</script>
+
+<script>
+/* Guide v2 enhancements: numbered pages, hero header, reading meta, progress bar. Non-destructive: wraps existing render output. */
+(function(){
+  const side = document.getElementById("gbSide"), art = document.getElementById("gbArticle"), main = document.getElementById("gbMain");
+  const top = document.querySelector("#manualDlg .gb-top");
+  if(!side || !art || !main || !top) return;
+
+  const bar = document.createElement("div"); bar.className = "gb-prog"; top.appendChild(bar);
+  main.addEventListener("scroll", ()=>{
+    const h = main.scrollHeight - main.clientHeight;
+    bar.style.width = (h > 0 ? Math.min(100, main.scrollTop / h * 100) : 0) + "%";
+  }, {passive: true});
+
+  const numberSide = ()=>{
+    const pgs = gbPages();
+    side.querySelectorAll("a[data-pg]:not(.gb-hit)").forEach(a=>{
+      if(a.querySelector(".gb-n")) return;
+      const idx = pgs.findIndex(p=>p.id === a.dataset.pg) + 1;
+      const s = document.createElement("span"); s.className = "gb-n"; s.textContent = idx || "•";
+      a.prepend(s);
+    });
+  };
+  new MutationObserver(numberSide).observe(side, {childList: true});
+
+  const decorate = ()=>{
+    if(art.querySelector(".gb-hero")) return;
+    const crumb = art.querySelector(".gb-crumb"), h1 = art.querySelector("h1"), body = art.querySelector(".gb-content");
+    if(!crumb || !h1 || !body) return;
+    const L = gbLang(), pgs = gbPages(), i = pgs.findIndex(p=>p.id === gbCur);
+    const words = gbPlain(body.innerHTML).split(" ").filter(Boolean).length;
+    const mins = Math.max(1, Math.round(words / 200));
+    const sections = body.querySelectorAll("h2").length;
+    const hero = document.createElement("div"); hero.className = "gb-hero";
+    const meta = document.createElement("div"); meta.className = "gb-meta";
+    meta.innerHTML =
+      `<span class="gb-chip">📄 ${i + 1} / ${pgs.length}</span>` +
+      `<span class="gb-chip">⏱ ${mins} ${gbT("min bacaan", "min read")}</span>` +
+      (sections ? `<span class="gb-chip">🧭 ${sections} ${gbT("bahagian", sections === 1 ? "section" : "sections")}</span>` : "");
+    hero.append(crumb, h1, meta);
+    art.prepend(hero);
+    main.scrollTop = 0;
+  };
+  new MutationObserver(decorate).observe(art, {childList: true});
+})();
 </script>
 </body>
 </html>
