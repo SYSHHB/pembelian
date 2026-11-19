@@ -3125,7 +3125,7 @@ function syncPicks(){
     const tot = itemsTotal(readItems()), want = m === "Sewaan" ? "" : methodFor(tot); { const dl = $("#dlg"); if(dl) dl.dataset.rental = m === "Sewaan" ? "1" : ""; }
     if(want && m && want!==m){ h.className = "seg-hint warn"; h.innerHTML = `Jumlah ${money(tot)} sesuai untuk ${esc(METHOD_LABEL[want])}. <button type="button" class="mini" data-pickm="${esc(want)}">Tukar ke ${esc(METHOD_LABEL[want])}</button>`; }
     else if(want && !m){ h.className = "seg-hint warn"; h.innerHTML = `Jumlah ${money(tot)}: pilih ${esc(METHOD_LABEL[want])}. <button type="button" class="mini" data-pickm="${esc(want)}">Pilih ${esc(METHOD_LABEL[want])}</button>`; }
-    else { h.className = "seg-hint"; h.textContent = (m==="Sebutharga"||m==="Tender") ? "Tab Minit Permohonan kepada PPU dipaparkan di bawah." : (m==="Sewaan" ? "Tajuk perbelanjaan 2F Penyewaan dipilih secara automatik. Butiran sewaan dipaparkan di bawah." : ""); }
+    else { h.className = "seg-hint"; h.innerHTML = (m==="Sebutharga"||m==="Tender") ? "Tab Minit Permohonan kepada PPU dipaparkan di bawah." : (m==="Sewaan" ? rentalHint() : ""); }
     h.querySelectorAll("[data-pickm]").forEach(b=>b.onclick=()=>{ const t = document.querySelector(`#frm .seg[data-pick="method"] [data-v="${b.dataset.pickm}"]`); if(t && f.method.value!==b.dataset.pickm) t.click(); });
   }
 }
@@ -3863,6 +3863,7 @@ function fillDialog(it){
   buildBudgetSelect(it.budgetHead || "");
   GENERAL.forEach(n=>{ if(f[n]) f[n].value = it[n] ?? ""; });
   buildYearSelect(it.budgetYear || (it.id ? yearOf(it) : curYear())); buildBudgetSelect(it.budgetHead || "");
+  if(it.method === "Sewaan" && it.budgetHead && !headsFor(f.budgetYear.value || curYear(), f.category.value || "Sekolah").some(h=>h.t === it.budgetHead)){ const rh = rentalHeadFor(f.budgetYear.value || curYear()); if(rh){ f.category.value = "Sekolah"; buildBudgetSelect(rh.t); } }
   draftFiles = {};
   draftExtra = {};
   [...STAGES, ...MINIT, ...BOXES].forEach(s=>draftExtra[s.k] = {...(it.stages?.[s.k]||{})}); draftExtra.vo601 = {...(it.stages?.vo601||{})}; draftExtra.tb601 = {...(it.stages?.tb601||{})};
@@ -7009,7 +7010,7 @@ const GB = [
 <li><b>Acceptance letter from vendor</b>: the acceptance letter from the successful company.</li></ol>
 <p>The company name flows by itself into Successful company, Company name (vendor) and the company name in 602. You can still change it.</p>
 <div class="gb-note tip"><b>Tip</b>Tick <b>Completed</b> on each box when done. The tag on the purchase list turns green with ✓. Minute numbers can be taken from <b>References</b>.</div>`]},
-{id:"rental", ms:["Sewaan Tahunan / Bulanan", `<p>Gunakan kaedah <b>Sewaan Tahunan / Bulanan</b> untuk komputer dan alatan yang disewa. Apabila kaedah ini dipilih, <b>Jenis pembelian</b> bertukar kepada Pembelian Sekolah dan tajuk perbelanjaan <b>2F - Perbelanjaan Berulang-ulang - Penyewaan Komputer dan Alatan Pejabat/Kelas (Sekolah Yayasan)</b> dipilih secara automatik.</p>
+{id:"rental", ms:["Sewaan Tahunan / Bulanan", `<p>Gunakan kaedah <b>Sewaan Tahunan / Bulanan</b> untuk komputer dan alatan yang disewa. Apabila kaedah ini dipilih, <b>Jenis pembelian</b> bertukar kepada Pembelian Sekolah dan tajuk perbelanjaan <b>2F - Perbelanjaan Berulang-ulang - Penyewaan Komputer dan Alatan Pejabat/Kelas(Sekolah Yayasan)</b> dipilih secara automatik.</p>
 <h2 id="butiran">Butiran sewaan</h2>
 <ul><li><b>Jenis sewaan</b>: laptop, desktop, laptop dan desktop, atau lain-lain.</li>
 <li><b>Sewaan bermula (bulan)</b> dan <b>Tempoh sewaan</b> (tahun atau bulan). Bulan tamat dikira sendiri.</li>
@@ -7022,7 +7023,7 @@ const GB = [
 <p>Sewaan boleh sudah bermula pada tahun lepas atau sedang berjalan. Isi bulan mula sebenar dan tempoh sewaan. Untuk setiap tahun bajet, buat satu pembelian dan pilih <b>Tahun bajet</b> yang sepadan. Bulan bayaran diisi sendiri mengikut bahagian sewaan yang jatuh dalam tahun itu. Contoh: sewaan bermula Mac 2025 selama 3 tahun, tahun bajet 2026 ialah Jan-2026 hingga Dis-2026. Anda boleh mengubah bulan bayaran ikut invois pembekal.</p>
 <p>Jumlah yang dikira dalam <b>Anggaran</b> ialah jumlah sebulan × bilangan bulan bayaran dalam tahun bajet itu.</p>
 <div class="gb-note info"><b>Maklumat</b>Langkah 601 hingga Invois tidak dipaparkan untuk sewaan. Bulatan langkah ditanda sendiri: 601 dan 602 apabila fail yang diluluskan dimuat naik, serta Indent, DO dan Invois apabila rujukannya diisi. Tandakan <b>Selesai</b> apabila sewaan bagi tahun bajet itu selesai.</div>`],
- en:["Yearly / Monthly Rental", `<p>Use the <b>Yearly / Monthly Rental</b> method for rented computers and equipment. When this method is chosen, the <b>Purchase type</b> changes to School purchase and the expenditure head <b>2F - Perbelanjaan Berulang-ulang - Penyewaan Komputer dan Alatan Pejabat/Kelas (Sekolah Yayasan)</b> is selected automatically.</p>
+ en:["Yearly / Monthly Rental", `<p>Use the <b>Yearly / Monthly Rental</b> method for rented computers and equipment. When this method is chosen, the <b>Purchase type</b> changes to School purchase and the expenditure head <b>2F - Perbelanjaan Berulang-ulang - Penyewaan Komputer dan Alatan Pejabat/Kelas(Sekolah Yayasan)</b> is selected automatically.</p>
 <h2 id="butiran">Rental details</h2>
 <ul><li><b>Type of rental</b>: laptop, desktop, laptop and desktop, or others.</li>
 <li><b>Rental started (month)</b> and <b>Rental period</b> (years or months). The end month is worked out for you.</li>
@@ -7375,7 +7376,7 @@ function s601FilesHTML(){
 }
 /* ---------- Yearly / Monthly Rental ---------- */
 const RENTAL_METHOD = "Sewaan";
-const RENTAL_HEAD = "2F - Perbelanjaan Berulang-ulang - Penyewaan Komputer dan Alatan Pejabat/Kelas (Sekolah Yayasan)";
+const RENTAL_HEAD = "2F - Perbelanjaan Berulang-ulang - Penyewaan Komputer dan Alatan Pejabat/Kelas(Sekolah Yayasan)";
 const RENTAL_FILES = [["rTender", "Dokumen Tender"], ["rAward", "Surat Setuju Terima"], ["r601", "601 yang diluluskan"], ["r602", "602 yang diluluskan"]];
 let rentalDraft = {}, stagesBackup = {};
 function monthNum(ym){ const m = /^(\d{4})-(\d{2})$/.exec(ym || ""); return m ? (+m[1]) * 12 + (+m[2]) - 1 : null; }
@@ -7416,12 +7417,27 @@ function rentalApply(d){
   d.stages = S;
 }
 function rentalBackup(d){ if(STAGES.some(s=>d.stages[s.k])) stagesBackup = JSON.parse(JSON.stringify(d.stages)); }
+/* the head is found in the budget by its name, so small spelling or spacing differences do not matter */
+function rentalHeadFor(y){ const list = headsFor(y, "Sekolah"); return list.find(h=>/penyewaan\s*komputer/i.test(h.t)) || list.find(h=>/\b2F\b/i.test(h.t) && /penyewaan/i.test(h.t)) || null; }
 function rentalAuto(){
-  const f = $("#frm"); f.category.value = "Sekolah"; buildBudgetSelect(RENTAL_HEAD);
-  const b = headsFor(f.budgetYear.value || curYear(), "Sekolah").find(h=>h.t === RENTAL_HEAD);
-  if(f.approvedBudget && b && !String(f.approvedBudget.value).trim()) f.approvedBudget.value = b.amt;
+  const f = $("#frm"); f.category.value = "Sekolah";
+  const y = f.budgetYear.value || curYear(), h = rentalHeadFor(y);
+  buildBudgetSelect(h ? h.t : RENTAL_HEAD);
+  if(f.approvedBudget && h && !String(f.approvedBudget.value).trim()) f.approvedBudget.value = h.amt;
   $("#budgetHead").dispatchEvent(new Event("change")); syncPicks();
 }
+function rentalHint(){
+  const y = ($("#frm").budgetYear && $("#frm").budgetYear.value) || curYear(), base = "Tajuk perbelanjaan 2F Penyewaan dipilih secara automatik. Butiran sewaan dipaparkan di bawah.";
+  if(rentalHeadFor(y)) return esc(base);
+  return esc(base) + ` <span class="r-warn">⚠ ${esc(mnT("Tajuk ini belum ada dalam bajet " + y + ".", "This head is not in the " + y + " budget yet."))}</span> ` + (canBudget() ? `<button type="button" class="mini" data-addhead="1">${esc(mnT("Tambah ke bajet", "Add to budget"))}</button>` : esc(mnT("Minta Pentadbir tambahnya dalam Urus bajet.", "Ask an Admin to add it in Manage budget.")));
+}
+$("#methodHint").addEventListener("click", async e=>{
+  const b = e.target.closest ? e.target.closest("[data-addhead]") : null; if(!b) return;
+  const y = $("#frm").budgetYear.value || curYear(); if(!BUDGETS[y]) BUDGETS[y] = {Sekolah: [], Office: []}; if(!BUDGETS[y].Sekolah) BUDGETS[y].Sekolah = [];
+  if(!rentalHeadFor(y)) BUDGETS[y].Sekolah.push({t: RENTAL_HEAD, amt: 0});
+  try{ await saveBudgets(); }catch(err){}
+  rentalAuto(); toast(mnT("Tajuk ditambah ke bajet " + y + ". Kemas kini anggarannya di Urus bajet.", "Head added to the " + y + " budget. Update its amount in Manage budget."), 5000);
+});
 function rentalCardLines(it){
   const r = it.rental || {}, s = r.start, e = rentalEnd(r), out = [];
   if(s) out.push([mnT("Sewaan", "Rental"), mnMonthTxt(s) + (e ? " " + mnT("hingga", "to") + " " + mnMonthTxt(e) : "") + (rentalMonths(r) ? " (" + rentalMonths(r) + " " + mnT("bulan", "months") + ")" : "")]);
@@ -7486,7 +7502,7 @@ function rentalWire(){
   });
   rentalUpdate();
 }
-$("#budgetYear").addEventListener("change", ()=>{ try{ if($("#frm").method.value === RENTAL_METHOD) rentalUpdate(); }catch(e){} });
+$("#budgetYear").addEventListener("change", ()=>{ try{ if($("#frm").method.value === RENTAL_METHOD){ const cur = $("#budgetHead").value; if(!cur || /penyewaan/i.test(cur)){ const h = rentalHeadFor($("#frm").budgetYear.value); buildBudgetSelect(h ? h.t : RENTAL_HEAD); $("#budgetHead").dispatchEvent(new Event("change")); } syncPicks(); rentalUpdate(); } }catch(e){} });
 /* ---------- GitBook-style sidebar: group headings and a search box ---------- */
 (function(){
   const nav = document.querySelector("#sideNav .actions"); if(!nav) return;
