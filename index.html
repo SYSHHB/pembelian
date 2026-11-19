@@ -4120,7 +4120,7 @@ async function del(){
 /* ---------- Notifications ---------- */
 const SEEN_KEY = "asset-purchase-tracker-seen";
 const DOC_STEPS = ["indent","do","inv"];
-const ATTACH_STEPS = ["s601","req601","refTender","cancelMinit","rTender","rAward","rAccept","r601","r602","rIndent","rDO","rInv","indent","do","inv","minitP","minitS","tenderDoc","advert","tenderClose","tenderEval","awardLetter","acceptLetter"];
+const ATTACH_STEPS = ["s601","req601","refTender","cancelMinit","rTender","rAward","rAccept","rT601","rT602","rTInd","rTDO","r601","r602","rIndent","rDO","rInv","indent","do","inv","minitP","minitS","tenderDoc","advert","tenderClose","tenderEval","awardLetter","acceptLetter"];
 const DOC_STAGES = () => STAGES.filter(s=>DOC_STEPS.includes(s.k));
 function docCount(it){ return DOC_STAGES().filter(s=>(it.stages?.[s.k]?.files||[]).length).length; }
 function allDocs(it){ return it && it.method === "Sewaan" ? true : docCount(it)===DOC_STEPS.length; }
@@ -5049,7 +5049,7 @@ function odMsg(code, name){
   }
 }
 function odSync(rec, file, k, title){
-  const code = ({req601: "601 Permintaan", rTender: "Sewaan Dokumen Tender", rAward: "Sewaan Surat Setuju Terima", r601: "Sewaan 601", r602: "Sewaan 602", rAccept: "Sewaan Surat Penerimaan", rIndent: "Sewaan Indent", rDO: "Sewaan DO", rInv: "Sewaan Invois"})[k] || (/^p\d+_/.test(k) ? "Sewaan " + k.replace("_", " ") : "") || [...STAGES, ...MINIT, ...BOXES].find(s=>s.k===k)?.code || k;
+  const code = ({req601: "601 Permintaan", rTender: "Sewaan Dokumen Tender", rAward: "Sewaan Surat Setuju Terima", r601: "Sewaan 601", r602: "Sewaan 602", rAccept: "Sewaan Surat Penerimaan", rIndent: "Sewaan Indent", rDO: "Sewaan DO", rInv: "Sewaan Invois", rT601: "Sewaan Tender 601", rT602: "Sewaan Tender 602", rTInd: "Sewaan Tender Indent", rTDO: "Sewaan Tender DO"})[k] || (/^p\d+_/.test(k) ? "Sewaan " + k.replace("_", " ") : "") || [...STAGES, ...MINIT, ...BOXES].find(s=>s.k===k)?.code || k;
   const t = title || ($("#frm").title ? $("#frm").title.value : "");
   odUpload(file, code, t).then(res=>{
     if(res.ok){
@@ -7024,7 +7024,7 @@ const GB = [
 <ul><li><b>Jenis sewaan</b> (laptop, desktop, laptop dan desktop, mesin fotostat atau lain-lain), <b>Sewaan bermula (bulan)</b> dan <b>Tempoh sewaan</b> (tahun atau bulan). Bulan tamat dikira sendiri.</li>
 <li><b>Bilangan unit</b> dan <b>Harga seunit</b> untuk laptop dan desktop. Tekan <b>+ Tambah barang</b> untuk barang lain seperti monitor, headset atau pencetak, sebanyak yang perlu. Pilih sama ada harga itu sebulan atau setahun.</li>
 <li><b>Jumlah sewaan sebulan</b> dikira sendiri dan <b>Harga setahun</b> ialah 12 bulan. Taip jumlah sebulan anda sendiri jika berbeza.</li>
-<li>Muat naik <b>Dokumen Tender</b>, <b>Surat Setuju Terima kepada Pembekal</b> dan <b>Surat Penerimaan daripada Pembekal</b> sekali sahaja di bawah <b>Dokumen sewaan</b>.</li></ul>
+<li>Muat naik dokumen sewaan sekali sahaja di bawah <b>Dokumen sewaan</b>: <b>Dokumen Tender</b>, <b>Surat Setuju Terima kepada Pembekal</b>, <b>Surat Penerimaan daripada Pembekal</b>, <b>Tender 601</b>, <b>Tender 602</b>, <b>Tender Indent</b> dan <b>Tender Nota Penghantaran (DO)</b>.</li></ul>
 <h2 id="bayaran">Bayaran bulanan atau berkala</h2>
 <p>Setiap bayaran ialah satu kad di bawah <b>Bayaran</b>. Tekan <b>+ Tambah bayaran</b> untuk bulan atau suku tahun yang seterusnya. Bayaran baharu bermula pada bulan selepas bayaran terakhir dan sama panjang, dan boleh diubah. Setiap bayaran ada:</p>
 <ul><li><b>Bayaran sewaan dari bulan … hingga bulan …</b>, ikut invois pembekal.</li>
@@ -7040,7 +7040,7 @@ const GB = [
 <ul><li><b>Type of rental</b> (laptop, desktop, laptop and desktop, photocopy machine or others), <b>Rental started (month)</b> and <b>Rental period</b> (years or months). The end month is worked out for you.</li>
 <li><b>Number of units</b> and <b>Price per unit</b> for laptops and desktops. Press <b>+ Add item</b> for other items such as monitors, headsets or printers, as many as you need. Choose whether the price is per month or per year.</li>
 <li><b>Monthly rental total</b> is worked out for you and the <b>Yearly price</b> is 12 months. Type your own monthly total if it differs.</li>
-<li>Upload the <b>Tender Document</b>, <b>Award Letter to Vendor</b> and <b>Acceptance Letter From Vendor</b> once under <b>Rental documents</b>.</li></ul>
+<li>Upload the rental documents once under <b>Rental documents</b>: <b>Tender Document</b>, <b>Award Letter to Vendor</b>, <b>Acceptance Letter From Vendor</b>, <b>Tender 601</b>, <b>Tender 602</b>, <b>Tender Indent</b> and <b>Tender Delivery Order</b>.</li></ul>
 <h2 id="bayaran">Monthly or periodic payments</h2>
 <p>Each payment is one card under <b>Payments</b>. Press <b>+ Add payment</b> for the next month or quarter. A new payment starts the month after the last payment and has the same length, and you can change it. Each payment has:</p>
 <ul><li><b>Rental payment from month … to month …</b>, following the vendor invoice.</li>
@@ -7391,7 +7391,7 @@ function s601FilesHTML(){
 /* ---------- Yearly / Monthly Rental ---------- */
 const RENTAL_METHOD = "Sewaan";
 const RENTAL_HEAD = "2F - Perbelanjaan Berulang-ulang - Penyewaan Komputer dan Alatan Pejabat/Kelas(Sekolah Yayasan)";
-const RENTAL_MAIN_FILES = [["rTender", "Dokumen Tender", "Tender Document"], ["rAward", "Surat Setuju Terima kepada Pembekal", "Award Letter to Vendor"], ["rAccept", "Surat Penerimaan daripada Pembekal", "Acceptance Letter From Vendor"]];
+const RENTAL_MAIN_FILES = [["rTender", "Dokumen Tender", "Tender Document"], ["rAward", "Surat Setuju Terima kepada Pembekal", "Award Letter to Vendor"], ["rAccept", "Surat Penerimaan daripada Pembekal", "Acceptance Letter From Vendor"], ["rT601", "Tender 601", "Tender 601"], ["rT602", "Tender 602", "Tender 602"], ["rTInd", "Tender Indent", "Tender Indent"], ["rTDO", "Tender Nota Penghantaran (DO)", "Tender Delivery Order"]];
 const RENTAL_PAY_FILES = [["601", "601", "601"], ["602", "602", "602"], ["607", "T-607", "T-607"], ["ind", "Indent", "Indent"], ["do", "Nota Penghantaran (DO)", "Delivery Order"], ["inv", "Invois", "Invoice"]];
 const RENTAL_LEGACY = {r601: "601", r602: "602", rIndent: "ind", rDO: "do", rInv: "inv"};
 const attachOK = k=>ATTACH_STEPS.includes(k) || /^p\d+_(601|602|607|ind|do|inv)$/.test(k);
