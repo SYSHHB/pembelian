@@ -3259,6 +3259,7 @@ function dtChip(d){ const x = fmtDate(d), m = /^(\d{2}-[A-Za-z]{3})-(\d{4})$/.ex
 function daysBetween(a,b){ return Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/86400000); }
 function today(){ const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); }
 function stageIndex(it){ for(let i=0;i<STAGES.length;i++){ if(!it.stages?.[STAGES[i].k]?.done) return i; } return STAGES.length; }
+function isOngoing(it){ return cancelIdx(it)<0 && stageIndex(it)<STAGES.length; }
 function cancelIdx(it){ for(let i=0;i<STAGES.length;i++){ if(it.stages?.[STAGES[i].k]?.cancelled) return i; } return -1; }
 function lastDate(it, upTo){ let d=""; for(let i=0;i<upTo;i++){ const s=it.stages?.[STAGES[i].k]; const sd = STAGES[i].k === "indent" && s?.pdDate ? s.pdDate : s?.date; if(s?.done && sd) d=sd; } return d; }
 function lineTotal(r){ return (r && r.total!=null && r.total!=="") ? (Number(r.total)||0) : (Number(r?.qty)||0)*(Number(r?.unitPrice)||0); }
@@ -3440,7 +3441,7 @@ function render(){
     sort==="new" ? (b.updated||0)-(a.updated||0) :
     sort==="wait" ? waitDays(b)-waitDays(a) :
     sort==="value" ? bestAmount(b)-bestAmount(a) :
-    (Number(b.fileNo)||0)-(Number(a.fileNo)||0) || (b.updated||0)-(a.updated||0));
+    (isOngoing(b)?1:0)-(isOngoing(a)?1:0) || (Number(b.fileNo)||0)-(Number(a.fileNo)||0) || (b.updated||0)-(a.updated||0));
   if(filter==="active") list = list.filter(it=>cancelIdx(it)<0 && stageIndex(it)<STAGES.length);
   else if(filter==="done") list = list.filter(it=>cancelIdx(it)<0 && stageIndex(it)===STAGES.length);
   else if(filter==="cancelled") list = list.filter(it=>cancelIdx(it)>=0);
@@ -8216,7 +8217,7 @@ applyLang();
   }
   function renderPurchases(){
     const qq = (q("waQ").value || "").trim().toLowerCase();
-    let list = items.slice().sort((a, b) => (Number(b.fileNo) || 0) - (Number(a.fileNo) || 0));
+    let list = items.slice().sort((a, b) => (isOngoing(b) ? 1 : 0) - (isOngoing(a) ? 1 : 0) || (Number(b.fileNo) || 0) - (Number(a.fileNo) || 0));
     if(qq) list = list.filter(it => [nameOf(it), supplierVal(it), it.fileNo, it.stages?.indent?.ref, it.stages?.do?.ref, it.stages?.inv?.ref].some(v => String(v || "").toLowerCase().includes(qq)));
     q("waPList").innerHTML = list.length
       ? list.slice(0, 300).map(it => `<button type="button" class="wa-item ${it.id === S.sel ? "on" : ""}" data-id="${esc(it.id)}"><b>${esc(nameOf(it))}</b><small>${esc(waShort(it))}</small></button>`).join("")
