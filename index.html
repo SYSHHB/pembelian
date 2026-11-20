@@ -8161,6 +8161,8 @@ applyLang();
   }
   function waMessage(it){
     const en = lang();
+    // stage name follows the language: Invois (Malay) / Invoice (English)
+    const cd = st => (st.k === "inv" && en) ? "Invoice" : st.code;
     const L = {
       head: en ? "Update from Purchase Tracker System" : "Kemas kini daripada Purchase Tracker System",
       title: en ? "Title" : "Tajuk", po: en ? "PO no." : "No. PO", co: en ? "Company" : "Syarikat", tot: en ? "Total" : "Jumlah",
@@ -8171,14 +8173,14 @@ applyLang();
     const cur = stageIndex(it), ci = cancelIdx(it), done = [], todo = [];
     STAGES.forEach((s, i) => {
       const st = it.stages?.[s.k];
-      if(st?.done){ const d = (s.k === "indent" && st.pdDate) ? st.pdDate : st.date; done.push(s.code + (d ? " (" + dmy(d) + ")" : "")); }
-      else if(ci < 0 && cur < STAGES.length && i > cur) todo.push(s.code);
+      if(st?.done){ const d = (s.k === "indent" && st.pdDate) ? st.pdDate : st.date; done.push(cd(s) + (d ? " (" + dmy(d) + ")" : "")); }
+      else if(ci < 0 && cur < STAGES.length && i > cur) todo.push(cd(s));
     });
     const w = (ci < 0 && cur < STAGES.length) ? waitDays(it) : -1;
     let now;
-    if(ci >= 0) now = L.cancelled + STAGES[ci].code;
+    if(ci >= 0) now = L.cancelled + cd(STAGES[ci]);
     else if(cur >= STAGES.length) now = L.completed;
-    else now = STAGES[cur].code + (w > 0 ? L.wait.replace("N", w) : "");
+    else now = cd(STAGES[cur]) + (w > 0 ? L.wait.replace("N", w) : "");
     const po = it.stages?.indent?.ref || "-", sup = supplierVal(it) || "-", amt = bestAmount(it);
     const lines = [
       L.head + " (" + stampNow() + ")",
