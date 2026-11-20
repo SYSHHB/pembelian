@@ -1796,7 +1796,7 @@ body[data-view="wa"] #waView{display:block}
       <button class="btn nav-go active" id="navDash" type="button">Papan Pemuka</button>
       <button class="btn nav-go" id="navList" type="button">Pembelian<span class="nbadge" id="navCount">0</span></button>
       <button class="btn primary" id="btnNew" hidden>Pembelian baharu</button>
-      <button class="btn nav-go" id="navBud" type="button">Anggaran</button><button class="btn nav-go" id="navWa" type="button">💬 WhatsApp</button>
+      <button class="btn nav-go" id="navBud" type="button">Anggaran</button><button class="btn nav-go" id="navWa" type="button"><svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#25D366"/><path d="M12 5.4a6.6 6.6 0 0 0-5.7 9.9l-.9 3.2 3.3-.9A6.6 6.6 0 1 0 12 5.4z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.4 9.3c.2-.4.4-.4.6-.4h.4c.1 0 .3 0 .4.3l.6 1.4c.1.2 0 .4-.1.5l-.4.5c.5 1 1.3 1.8 2.3 2.3l.5-.5c.1-.1.3-.2.5-.1l1.4.7c.2.1.3.2.3.4v.4c0 .2-.2.6-.5.8-.4.3-1 .4-1.6.2-1.7-.5-3.2-1.8-4.1-3.5-.4-.8-.5-1.6-.3-2.2z" fill="#fff"/></svg> WhatsApp</button>
       <button class="btn" id="navRep" type="button">Laporan Anggaran</button>
       <button class="btn" id="navMn" type="button">Senarai Rujukan</button>
       <button class="btn" id="navSup" type="button">Senarai Pembekal</button>
@@ -8311,7 +8311,7 @@ applyLang();
 
   // ---- side menu item and view switching ----
   const nb = q("navBud"), wb = nb.cloneNode(false);
-  wb.id = "navWaTab"; wb.textContent = "WhatsApp"; wb.classList.remove("active");
+  wb.id = "navWaTab"; wb.innerHTML = '<svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#25D366"/><path d="M12 5.4a6.6 6.6 0 0 0-5.7 9.9l-.9 3.2 3.3-.9A6.6 6.6 0 1 0 12 5.4z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.4 9.3c.2-.4.4-.4.6-.4h.4c.1 0 .3 0 .4.3l.6 1.4c.1.2 0 .4-.1.5l-.4.5c.5 1 1.3 1.8 2.3 2.3l.5-.5c.1-.1.3-.2.5-.1l1.4.7c.2.1.3.2.3.4v.4c0 .2-.2.6-.5.8-.4.3-1 .4-1.6.2-1.7-.5-3.2-1.8-4.1-3.5-.4-.8-.5-1.6-.3-2.2z" fill="#fff"/></svg><span>WhatsApp</span>'; wb.classList.remove("active");
   nb.after(wb);
   wb.onclick = () => hdSetView("wa");
 
@@ -8610,5 +8610,13 @@ body:has(#msLogin) #uxCpNav,body:has(#msLogin) #uxCpSide,body:has(#msGate:not([h
   }
 })();
 </script>
+
+<style id="ux-wa-icon">
+/* WhatsApp menu item: real logo, no stray box */
+.wa-ic{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4px;margin-right:8px}
+#navWaTab,#navWa{display:flex!important;align-items:center;gap:8px}
+#navWaTab::before,#navWaTab::after,#navWa::before,#navWa::after{content:none!important;display:none!important}
+#navWaTab .wa-ic,#navWa .wa-ic{margin-right:0}
+</style>
 </body>
 </html>
