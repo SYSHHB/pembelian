@@ -7827,7 +7827,7 @@ function hdSetView(v){
     $("#hcTime").innerHTML = t.slice(0, 5) + "<i>" + t.slice(5) + "</i>";
   }
   tick(); setInterval(tick, 1000);
-  let v = "list"; try{ v = sessionStorage.getItem("apt-view") || "list"; }catch(e){} hdSetView(["dash","list","bud"].includes(v) ? v : "list");
+  try{ sessionStorage.removeItem("apt-view"); }catch(e){} hdSetView("list"); /* refresh always opens the Utama (home) page */
 })();
 
 $("#btnNew").onclick = ()=>openDlg(null);
@@ -8323,7 +8323,7 @@ applyLang();
   { const al = applyLang; applyLang = function(){ al.apply(this, arguments); try{ labels(); if(hdView === "wa"){ renderWa(); const it = S.sel && items.find(x => x.id === S.sel); if(it){ q("waText").value = waMessage(it); renderPrev(); } } }catch(e){} }; }
 
   // ---- open a purchase straight from a link: ...?p=ID ----
-  const pid = new URLSearchParams(location.search).get("p");
+  const pid = new URLSearchParams(location.search).get("p"); if(pid){ try{ history.replaceState(null, "", location.pathname); }catch(e){} } /* so a refresh does not reopen the purchase */
   if(pid){
     let tries = 0;
     const t = setInterval(() => {
