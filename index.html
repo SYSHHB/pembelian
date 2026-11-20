@@ -8526,5 +8526,53 @@ applyLang();
   .ux-cp-btn span,.ux-cp-btn kbd{display:none}
 }
 </style>
+
+<style id="ux-fullview">
+/* Full text in every list row: rows never shrink, and their text is never cut off */
+.wa-plist > *, .wa-clist > *, .wam-list > *, #list > *, .list > *{flex:0 0 auto!important}
+.wa-plist,.wa-clist,.wam-list{overflow:auto;max-height:62vh!important;padding:2px 4px 2px 2px;gap:10px!important}
+.wa-item{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:6px!important;min-height:64px!important;height:auto!important;padding:14px 16px!important;line-height:1.45!important;overflow:visible!important;white-space:normal!important;text-align:left!important;border-radius:14px!important}
+.wa-item b{display:block!important;width:100%;font-size:15.5px!important;line-height:1.4!important;margin:0!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;word-break:break-word}
+.wa-item small{display:block!important;width:100%;font-size:13.5px!important;line-height:1.45!important;margin:0!important;color:var(--muted);white-space:normal!important;overflow:visible!important;word-break:break-word}
+.wa-crow{display:flex;gap:8px;align-items:stretch}
+.wa-crow .wa-item{flex:1 1 auto;min-width:0}
+.wam-row{display:flex!important;flex-direction:column!important;align-items:flex-start;gap:4px;min-height:58px;height:auto!important;padding:12px 14px!important;line-height:1.45!important;white-space:normal!important;overflow:visible!important;font-size:15px!important}
+.wam-row small{display:block!important;font-size:13.5px!important;white-space:normal!important;overflow:visible!important;margin:0!important}
+@media (min-width:821px){
+  .wa-plist,.wa-clist,.wam-list{max-height:70vh!important}
+  .wa-item{min-height:70px!important;padding:16px 18px!important}
+  .wa-item b{font-size:16px!important}
+}
+@media (max-width:820px){
+  .wa-item{min-height:60px!important}
+}
+</style>
+
+<style id="ux-hide-on-login">
+/* The quick search button is only for the app, never on the sign-in page */
+body:has(#msLogin) #uxCpBtn, body:has(#msLogin) #uxCp, body:has(#msGate:not([hidden])) #uxCpBtn, body:has(#gate:not([hidden])) #uxCpBtn{display:none!important}
+</style>
+
+<script>
+/* Hide the quick search button (and block its shortcut) while the sign-in page is showing */
+(function(){
+  const btn = document.getElementById("uxCpBtn"), pal = document.getElementById("uxCp");
+  const onLogin = () => {
+    const l = document.getElementById("msLogin"), g = document.getElementById("msGate"), k = document.getElementById("gate");
+    return !!l || (!!g && !g.hidden) || (!!k && !k.hidden);
+  };
+  const sync = () => {
+    const off = onLogin();
+    window.__uxSignIn = off;
+    if(btn) btn.style.display = off ? "none" : "";
+    if(off && pal) pal.classList.remove("open");
+  };
+  document.addEventListener("keydown", e => { if(window.__uxSignIn && (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k"){ e.stopImmediatePropagation(); e.preventDefault(); } }, true);
+  new MutationObserver(sync).observe(document.body, {childList: true, subtree: false, attributes: true, attributeFilter: ["hidden"]});
+  new MutationObserver(sync).observe(document.getElementById("gate") || document.body, {attributes: true, attributeFilter: ["hidden"]});
+  sync();
+  setInterval(sync, 700);
+})();
+</script>
 </body>
 </html>
