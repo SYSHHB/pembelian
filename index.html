@@ -8698,5 +8698,31 @@ body:has(#msLogin) #uxCpTop,body:has(#msGate:not([hidden])) #uxCpTop,body:has(#g
   setInterval(ensureWa, 800);
 })();
 </script>
+
+<style id="ux-search-single">
+/* One search only: the top search bar of the side menu. The squeezed copy and the Ctrl K label are removed. */
+#uxCpTop,#uxCpSide{display:none!important}
+</style>
+
+<script>
+/* The top search bar (Cari pembelian…, with the / key) opens the quick search for pages and purchases */
+(function(){
+  function openSearch(){
+    const o = document.getElementById("uxCpBtn");
+    document.body.classList.remove("nav-open");
+    if(o) o.click();
+  }
+  const sb = document.getElementById("sbSearch");
+  if(sb){ sb.onclick = openSearch; }
+  document.addEventListener("keydown", e => {
+    if(e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if(t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if(window.__uxSignIn) return;
+    e.preventDefault();
+    openSearch();
+  });
+})();
+</script>
 </body>
 </html>
