@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-0PZRwWrzL2vWX0Z82uoxIyx3Wwd1hw+4VPmmggjEzHE=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-r6xrMfgG0ebRnQ6u0s6zQvW2jr+2mncJtPeOQvILZ0g=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-9PeLdNlFGYPe6S6t4/cLcSxmF35aXwhumIDLvPqxRX0=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-1+kbFn3fbRlj5hC+DHSNy3yrWkhj/5CKXZPevtqao7Y=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <script>
 /* Frame guard: do not run inside a page from another origin (clickjacking). A same-origin frame (Microsoft sign-in renewal) is fine. */
@@ -1756,6 +1756,63 @@ body[data-view="wa"] #waView{display:block}
 .wa-prev:empty{display:none}
 .wa-prev a{color:#128C7E;font-weight:700;text-decoration:underline}
 </style>
+<style id="featStyle">
+.dlg-acts{display:flex;gap:8px;flex-wrap:wrap}
+.mg-bar{display:flex;gap:14px;flex-wrap:wrap;padding:10px 20px;border-bottom:1px solid var(--line)}
+.mg-bar label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+.mg-bar select{padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);font:inherit}
+.mg-paper{background:#fff;color:#14251B;padding:20px;border-radius:12px;font-size:13px;line-height:1.45}
+.mg-paper h2{margin:0 0 2px;font-size:20px;color:#0F3D24}
+.mg-paper h3{margin:20px 0 8px;font-size:14px;color:#0F3D24;border-bottom:2px solid #D6E3D9;padding-bottom:4px}
+.mg-sub,.mg-note{color:#5B6E61;font-size:12px;margin:2px 0 10px}
+.mg-none{color:#5B6E61;font-style:italic}
+.mg-cat{margin:10px 0 4px;font-weight:700}
+.mg-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:10px 0}
+.mg-card{border:1px solid #D6E3D9;border-radius:12px;padding:10px 12px;background:#F4F8F5}
+.mg-card.wide{grid-column:span 2}
+.mg-card span{display:block;font-size:11px;color:#5B6E61}
+.mg-card b{display:block;font-size:20px}
+.mg-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.mg-tbl th,.mg-tbl td{padding:6px 8px;border-bottom:1px solid #E3ECE5;text-align:left;vertical-align:top}
+.mg-tbl th{background:#EDF3EE;font-size:11.5px}
+.mg-tbl .r{text-align:right;white-space:nowrap}
+.mg-tbl tr.warn td{background:#FFF1D2}
+.mg-tbl tr.bad td{background:#FBE0E3}
+.mg-tbl small{color:#5B6E61}
+.mg-bars .row{display:grid;grid-template-columns:36px 1fr minmax(120px,auto);gap:8px;align-items:center;margin:3px 0}
+.mg-bars i{display:block;height:10px;border-radius:6px;background:#2F8F4E;min-width:2px}
+.mg-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:700px){.mg-two{grid-template-columns:1fr}.mg-card.wide{grid-column:span 1}}
+.bk-list{list-style:none;margin:0;padding:0}
+.bk-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.bk-row small{display:block;color:var(--muted);margin-top:2px}
+.bk-row.none,.bk-list .none{color:var(--muted);padding:14px 0}
+.bk-act{display:flex;gap:6px;flex-wrap:wrap}
+.bk-restore{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;background:var(--field)}
+.bk-files{display:grid;gap:6px;margin:8px 0}
+.collab{margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
+.collab h4{margin:0 0 8px}
+.co-cur{margin:0 0 8px;color:var(--muted);font-size:13px}
+.co-row{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:10px}
+.co-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+.co-row select,.co-row input{padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);font:inherit}
+.co-row input{flex:1;min-width:160px}
+.co-list{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}
+.co-list li{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface)}
+.co-list li.none{border:0;background:none;color:var(--muted);padding:0}
+.co-h{display:flex;align-items:center;gap:6px}
+.co-h small{color:var(--muted)}
+.co-h .mini{margin-left:auto}
+.co-list p{margin:4px 0 0;white-space:pre-wrap;word-break:break-word}
+.co-new{display:flex;gap:8px;align-items:flex-end}
+.co-new textarea{flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);font:inherit;resize:vertical}
+.tag.asg{background:#E6F0FF;color:#1A4C9A}
+.tag.cm{background:#F1ECFA;color:#5B3C9A}
+#navMg{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M3%203v18h18'/%3E%3Cpath%20d='M7%2016l4-5%204%203%205-7'/%3E%3C/svg%3E")}
+#navAc{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Ccircle%20cx='12'%20cy='12'%20r='9'/%3E%3Cpath%20d='M12%207v5l3%202'/%3E%3C/svg%3E")}
+#navBk{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cellipse%20cx='12'%20cy='5'%20rx='8'%20ry='3'/%3E%3Cpath%20d='M4%205v14c0%201.7%203.6%203%208%203s8-1.3%208-3V5'/%3E%3Cpath%20d='M4%2012c0%201.7%203.6%203%208%203s8-1.3%208-3'/%3E%3C/svg%3E")}
+#navTr{--ic:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='black'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M3%206h18M8%206V4h8v2M6%206l1%2014h10l1-14'/%3E%3C/svg%3E")}
+</style>
 </head>
 <body>
 <div id="splash" role="status" aria-live="polite" aria-busy="true">
@@ -1808,6 +1865,10 @@ body[data-view="wa"] #waView{display:block}
       <button class="btn" id="navRep" type="button">Laporan Anggaran</button>
       <button class="btn" id="navMn" type="button">Senarai Rujukan</button>
       <button class="btn" id="navSup" type="button">Senarai Pembekal</button>
+      <button class="btn" id="navMg" type="button">Laporan Pengurusan</button>
+      <button class="btn" id="navAc" type="button" hidden>Aktiviti Pengguna</button>
+      <button class="btn" id="navBk" type="button" hidden>Sandaran</button>
+      <button class="btn" id="navTr" type="button" hidden>Tong Kitar Semula</button>
       <button class="btn" id="navXI" type="button">Eksport / Import</button>
       <button class="btn" id="btnCsv">Eksport CSV</button>
       <button class="btn" id="btnImport" type="button" hidden>Import CSV</button>
@@ -1899,6 +1960,28 @@ body[data-view="wa"] #waView{display:block}
     <label class="br-chk"><input type="checkbox" id="brDetail" checked><span>Tunjuk butiran barang (kuantiti dan harga)</span></label>
     <div class="set-foot"><button class="btn primary" id="brGo" type="button">Papar laporan</button></div>
   </div>
+</dialog>
+<dialog id="mgDlg" aria-labelledby="mgTitle">
+  <div class="dlg-head"><h3 id="mgTitle">Laporan Pengurusan</h3><div class="dlg-acts"><button class="btn" id="mgPdf" type="button">Muat turun PDF</button><button class="btn" id="mgClose" type="button">Tutup</button></div></div>
+  <div class="mg-bar"><label>Tahun<select id="mgYearSel"></select></label><label>Bulan<select id="mgMonthSel"></select></label></div>
+  <div class="dlg-body"><div id="mgPaper" class="mg-paper"></div></div>
+</dialog>
+<dialog id="acDlg" aria-labelledby="acTitle">
+  <div class="dlg-head"><h3 id="acTitle">Aktiviti Pengguna</h3><div class="dlg-acts"><button class="btn" id="acCsv" type="button">Eksport CSV</button><button class="btn" id="acRefresh" type="button">Muat semula</button><button class="btn" id="acClose" type="button">Tutup</button></div></div>
+  <div class="mg-bar"><label>Tempoh<select id="acDays"><option value="1">Hari ini</option><option value="7" selected>7 hari</option><option value="30">30 hari</option><option value="90">90 hari</option></select></label></div>
+  <div class="dlg-body"><div id="acBody" class="mg-paper"></div></div>
+</dialog>
+<dialog id="bkDlg" aria-labelledby="bkTitle">
+  <div class="dlg-head"><h3 id="bkTitle">Sandaran</h3><div class="dlg-acts"><button class="btn primary" id="bkNow" type="button">Sandarkan sekarang</button><button class="btn" id="bkClose" type="button">Tutup</button></div></div>
+  <div class="set-sec">
+    <p class="set-note" id="bkInfo"></p>
+    <div id="bkRestore" class="bk-restore" hidden></div>
+    <ul class="bk-list" id="bkList"></ul>
+  </div>
+</dialog>
+<dialog id="trDlg" aria-labelledby="trTitle">
+  <div class="dlg-head"><h3 id="trTitle">Tong Kitar Semula</h3><button class="btn" id="trClose" type="button">Tutup</button></div>
+  <div class="set-sec"><ul class="bk-list" id="trList"></ul></div>
 </dialog>
 <dialog id="mnDlg" aria-labelledby="mnTitle">
   <div class="dlg-head"><h3 id="mnTitle">Senarai Rujukan</h3><button class="btn" id="mnClose" type="button">Tutup</button></div>
@@ -2031,6 +2114,18 @@ body[data-view="wa"] #waView{display:block}
         <p class="docprog" id="docProg"></p>
         <div class="steps" id="steps"></div>
       </fieldset>
+      <section class="collab" id="collab" hidden>
+        <h4>Tugasan &amp; Perbincangan</h4>
+        <p class="co-cur" id="coCur"></p>
+        <div class="co-row" id="coAssignRow">
+          <label>Perlu tindakan oleh<select id="coWho"></select></label>
+          <input id="coNote" maxlength="200" placeholder="Nota tugasan (pilihan)" autocomplete="off" aria-label="Nota tugasan">
+          <button type="button" class="btn" id="coAssign">Tugaskan</button>
+          <button type="button" class="btn" id="coClear" hidden>Kosongkan</button>
+        </div>
+        <ul class="co-list" id="coList"></ul>
+        <div class="co-new" id="coNew"><textarea id="coText" maxlength="1000" rows="2" placeholder="Tulis komen… (Ctrl+Enter untuk hantar)" aria-label="Komen"></textarea><button type="button" class="btn primary" id="coSend">Hantar</button></div>
+      </section>
     </div>
     <div class="dlg-foot">
       <button class="btn danger" type="button" id="btnDel">Padam pembelian</button>
@@ -2277,6 +2372,9 @@ const CONFIG = {
   docsFolder: "Dokumen",
   pollSeconds: 30,
   tenantId: "",               // optional: your Microsoft Entra Directory (tenant) ID. If filled in, accounts from any other directory are refused.
+  backupTime: "18:30",        // daily backup starts at this time (Brunei time)
+  backupKeepDays: 30,         // how many daily backups to keep
+  timezone: "Asia/Brunei",
   idleMinutes: 30,            // sign out automatically after this many minutes with no activity (0 = off)
   tokenStorage: "localStorage" // "sessionStorage" = sign-in is forgotten when the tab/browser closes (safer on shared computers)
 };
@@ -2542,10 +2640,12 @@ Object.freeze(CONFIG); Object.freeze(CONFIG.emailDomains);   // settings cannot 
   /* ---------- Data adapter with the shape the app expects ---------- */
   const clean = v=>JSON.parse(JSON.stringify(v === undefined ? null : v));
   const mapErr = e=>{ throw (e && (e.status === 403 || e.status === 401)) ? {code:"invalid_argument", message:"Tiada kebenaran"} : e; };
+  const dayKey = ts=>new Date((ts || Date.now()) + 8*36e5).toISOString().slice(0, 10);   // calendar day in Brunei (UTC+8)
   const monthFile = d=>`audit-${(d || new Date()).toISOString().slice(0,7)}.json`;
   const searchCache = {};
   function filesFor(col){
     if(col === "audit"){ const now = new Date(); const prev = new Date(now.getFullYear(), now.getMonth()-1, 15); return [monthFile(now), monthFile(prev)]; }
+    if(col === "presence"){ const t = Date.now(); return [`presence-${dayKey(t)}.json`, `presence-${dayKey(t - 864e5)}.json`]; }
     return [col + ".json"];
   }
   async function readMap(col){
@@ -2559,7 +2659,8 @@ Object.freeze(CONFIG); Object.freeze(CONFIG.emailDomains);   // settings cannot 
     return {docs: docs.map(x=>({id: x.id, data: ()=>x.d}))};
   };
   function collection(col){
-    const writeFile = ()=> col === "audit" ? monthFile() : col + ".json";
+    const presFile = id=>{ const m = /^p(\d{4})(\d{2})(\d{2})-/.exec(String(id)); return m ? `presence-${m[1]}-${m[2]}-${m[3]}.json` : `presence-${dayKey()}.json`; };
+    const writeFile = id=> col === "audit" ? monthFile() : col === "presence" ? presFile(id) : col + ".json";
     function q(order, lim){
       return {
         orderBy: (f, dir)=>q({f, dir: dir || "asc"}, lim),
@@ -2579,10 +2680,10 @@ Object.freeze(CONFIG); Object.freeze(CONFIG.emailDomains);   // settings cannot 
         set: d=>{
           let data = clean(d);
           if(col === "members" && searchCache[id]) data = {...data, name: searchCache[id].name, email: searchCache[id].email};
-          return mutate(writeFile(), m=>{ m[id] = data; return m; }, {}).catch(mapErr);
+          return mutate(writeFile(id), m=>{ m[id] = data; return m; }, {}).catch(mapErr);
         },
-        update: d=>mutate(writeFile(), m=>{ m[id] = {...(m[id] || {}), ...clean(d)}; return m; }, {}).catch(mapErr),
-        delete: ()=>mutate(writeFile(), m=>{ delete m[id]; return m; }, {}).catch(mapErr)
+        update: d=>mutate(writeFile(id), m=>{ m[id] = {...(m[id] || {}), ...clean(d)}; return m; }, {}).catch(mapErr),
+        delete: ()=>mutate(writeFile(id), m=>{ delete m[id]; return m; }, {}).catch(mapErr)
       })
     };
   }
@@ -2703,6 +2804,132 @@ Object.freeze(CONFIG); Object.freeze(CONFIG.emailDomains);   // settings cannot 
     }
   };
 
+  /* ==== EXTRA-ADAPTER-START: backup and restore, e-mail, sign-in history ==== */
+  const BK_DIR = "Backup";
+  const BK_FILES = ["purchases", "members", "minit", "settings", "trash", "comments", "assign", "mail"];
+  const BK_NAME_OK = /^(purchases|members|minit|settings|trash|comments|assign|mail|audit-\d{4}-\d{2})\.json$/;
+  const itemUrl = (id, name)=>`/drives/${ROOT.driveId}/items/${id}` + (name ? `:/${encodeURIComponent(name)}` : "");
+  async function child(parentId, name, create){
+    try{ return await (await graph(itemUrl(parentId, name))).json(); }
+    catch(e){
+      if(e.status !== 404) throw e;
+      if(!create) return null;
+      try{ return await (await graph(itemUrl(parentId) + "/children", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({name, folder:{}, "@microsoft.graph.conflictBehavior":"fail"})})).json(); }
+      catch(e2){ if(e2.status === 409) return await (await graph(itemUrl(parentId, name))).json(); throw e2; }
+    }
+  }
+  async function putFile(dirId, name, text){
+    const base = itemUrl(dirId, name), blob = new Blob([text], {type:"application/json"});
+    if(blob.size <= 3.5*1024*1024){
+      await graph(`${base}:/content?@microsoft.graph.conflictBehavior=replace`, {method:"PUT", headers:{"Content-Type":"application/json"}, body: blob});
+      return;
+    }
+    const s = await (await graph(`${base}:/createUploadSession`, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({item:{"@microsoft.graph.conflictBehavior":"replace"}})})).json();
+    const CH = 320*1024*10;
+    for(let st = 0; st < blob.size; st += CH){
+      const en = Math.min(st + CH, blob.size);
+      const r = await fetch(s.uploadUrl, {method:"PUT", headers:{"Content-Range": `bytes ${st}-${en-1}/${blob.size}`}, body: blob.slice(st, en)});
+      if(!r.ok && r.status !== 202) throw {code:"upload_failed"};
+    }
+  }
+  async function getText(dirId, name){
+    const m = await (await graph(itemUrl(dirId, name) + "?select=id,@microsoft.graph.downloadUrl")).json();
+    return await (await fetch(m["@microsoft.graph.downloadUrl"])).text();
+  }
+  const backup = {
+    async status(day){
+      const root = await child(ROOT.id, BK_DIR, false); if(!root) return {done:false};
+      const dir = await child(root.id, day, false); if(!dir) return {done:false};
+      return {done: !!(await child(dir.id, "_complete.json", false))};
+    },
+    /* Copies every data file into Backup/<day>/. Two people never run the same day's backup at once (a claim file is created first). */
+    async run(day, by, force){
+      const root = await child(ROOT.id, BK_DIR, true), dir = await child(root.id, day, true);
+      if(!force){
+        try{ await graph(itemUrl(dir.id, "_claim.json") + ":/content?@microsoft.graph.conflictBehavior=fail", {method:"PUT", headers:{"Content-Type":"application/json"}, body: JSON.stringify({by, at: Date.now()})}); }
+        catch(e){
+          if(e.status !== 409) throw e;
+          const c = await (await graph(itemUrl(dir.id, "_claim.json"))).json();
+          if(Date.now() - Date.parse(c.lastModifiedDateTime) < 20*60000) return {skipped:true};
+        }
+      }
+      const names = [...BK_FILES.map(n=>n + ".json"), ...filesFor("audit")], done = [];
+      for(const n of names){
+        const r = await readJson(n, true);
+        if(r && r.data != null){ await putFile(dir.id, n, JSON.stringify(r.data, null, 1)); done.push(n); }
+      }
+      await putFile(dir.id, "_complete.json", JSON.stringify({at: Date.now(), by, files: done}));
+      await backup.prune(+CONFIG.backupKeepDays || 30, root.id);
+      return {day, files: done.length};
+    },
+    /* Keeps the newest <keep> daily folders; safety copies made before a restore are never removed automatically. */
+    async prune(keep, rootId){
+      const root = rootId ? {id: rootId} : await child(ROOT.id, BK_DIR, false); if(!root) return;
+      const kids = ((await (await graph(itemUrl(root.id) + "/children?$select=id,name,folder&$top=500")).json()).value || [])
+        .filter(k=>k.folder && /^\d{4}-\d{2}-\d{2}$/.test(k.name)).sort((a, b)=>b.name.localeCompare(a.name));
+      for(const k of kids.slice(keep)){ try{ await graph(itemUrl(k.id), {method:"DELETE"}); }catch(e){} }
+    },
+    async list(){
+      const root = await child(ROOT.id, BK_DIR, false); if(!root) return [];
+      const kids = ((await (await graph(itemUrl(root.id) + "/children?$select=id,name,folder&$top=500")).json()).value || []).filter(k=>k.folder);
+      return kids.map(k=>({id: k.id, name: k.name, kind: /^\d{4}-\d{2}-\d{2}$/.test(k.name) ? "daily" : "safety"})).sort((a, b)=>b.name.localeCompare(a.name));
+    },
+    async files(dirId){
+      const kids = ((await (await graph(itemUrl(dirId) + "/children?$select=id,name,size,file&$top=100")).json()).value || []).filter(k=>k.file && !k.name.startsWith("_"));
+      return kids.map(k=>({name: k.name, size: k.size || 0}));
+    },
+    /* Replaces the chosen live files with the copies from a backup. A safety copy of the current data is made first. */
+    async restore(dirId, names, by){
+      // 1) read and check EVERY chosen file first, so a damaged file stops the restore before anything is changed
+      const loaded = [];
+      for(const name of names){
+        if(!BK_NAME_OK.test(name)) continue;
+        let data = null; try{ data = JSON.parse(await getText(dirId, name)); }catch(e){}
+        if(!data || typeof data !== "object" || Array.isArray(data)) throw {code:"bad_backup", message:name};
+        loaded.push([name, data]);
+      }
+      if(!loaded.length) return {restored: 0};
+      // 2) safety copy of the data as it is now (so this restore can itself be undone)
+      const t = new Date(Date.now() + 8*36e5).toISOString();
+      await backup.run("pra-pulih-" + t.slice(0, 10) + "-" + t.slice(11, 16).replace(":", ""), by, true);
+      // 3) replace
+      let n = 0;
+      for(const [name, data] of loaded){
+        const cur = await readJson(name, true);
+        await writeJson(name, data, cur.etag);
+        notify(name); n++;
+      }
+      return {restored: n};
+    }
+  };
+  /* Mail.Send is asked for separately, only when an e-mail is actually sent, so a tenant that blocks it never affects sign-in. */
+  const MAIL_SCOPE = ["Mail.Send"];
+  const mail = {
+    async send(to, subject, text){
+      let t; try{ t = (await pca.acquireTokenSilent({scopes: MAIL_SCOPE, account})).accessToken; }catch(e){ return {ok:false, reason:"consent"}; }
+      try{
+        const r = await fetch(GRAPH + "/me/sendMail", {method:"POST", headers:{Authorization:"Bearer " + t, "Content-Type":"application/json"},
+          body: JSON.stringify({message:{subject, body:{contentType:"Text", content:text}, toRecipients: to.map(a=>({emailAddress:{address:a}}))}, saveToSentItems:true})});
+        return r.ok ? {ok:true} : {ok:false, reason:"error", status:r.status};
+      }catch(e){ return {ok:false, reason:"network"}; }
+    },
+    grant(){ return pca.acquireTokenRedirect({scopes: MAIL_SCOPE, account}); }
+  };
+  /* Sign-in history (one file per day) for the user activity report */
+  const history = {
+    async load(days){
+      const names = []; for(let i = 0; i < days; i++) names.push(`presence-${dayKey(Date.now() - i*864e5)}.json`);
+      const out = [];
+      for(let i = 0; i < names.length; i += 6){
+        const maps = await Promise.all(names.slice(i, i + 6).map(n=>readJson(n).then(r=>r.data || {}).catch(()=>({}))));
+        maps.forEach(m=>Object.entries(m).forEach(([id, d])=>{ if(d && typeof d === "object") out.push({...d, id}); }));
+      }
+      return out;
+    },
+    async prune(){ try{ await graph(fileUrl(`presence-${dayKey(Date.now() - 100*864e5)}.json`), {method:"DELETE"}); }catch(e){} }
+  };
+  /* ==== EXTRA-ADAPTER-END ==== */
+
   useImpl = async name=>{
       await ready;
       switch(name){
@@ -2710,6 +2937,9 @@ Object.freeze(CONFIG); Object.freeze(CONFIG.emailDomains);   // settings cannot 
         case "user": return user;
         case "assets": return DOCS ? {upload} : null;
         case "downloads": return downloads;
+        case "backup": return backup;
+        case "mail": return mail;
+        case "history": return history;
         case "sample": return {local: true};
         default: return null;
       }
@@ -3580,7 +3810,7 @@ function render(){
     const doneN = STAGES.filter(s=>it.stages?.[s.k]?.done).length, pct = Math.round(doneN/STAGES.length*100);
     return `<button type="button" class="row ${ci>=0?"is-cancel":fin?"is-fin":""}" data-id="${esc(it.id)}">
       <div>
-        <p class="name">${esc(it.title||"Untitled")}</p> ${apprTag(it)} ${(it.category||it.method)?`<div class="tags">${it.category?`<span class="tag cat">${esc(CAT_LABEL[it.category]||it.category)}</span>`:""}${it.method?`<span class="tag met">${esc(METHOD_LABEL[it.method]||it.method)}</span>`:""}${needsMinit(it)?`<div class="tags-col">${[...MINIT, ...BOXES].map(m=>`<span class="tag mn ${it.stages?.[m.k]?.done?"ok":""}">${esc(m.code)}${it.stages?.[m.k]?.done?" ✓":""}</span>`).join("")}</div>`:""}</div>`:""}
+        <p class="name">${esc(it.title||"Untitled")}</p> ${apprTag(it)}${typeof collabChips === "function" ? collabChips(it) : ""} ${(it.category||it.method)?`<div class="tags">${it.category?`<span class="tag cat">${esc(CAT_LABEL[it.category]||it.category)}</span>`:""}${it.method?`<span class="tag met">${esc(METHOD_LABEL[it.method]||it.method)}</span>`:""}${needsMinit(it)?`<div class="tags-col">${[...MINIT, ...BOXES].map(m=>`<span class="tag mn ${it.stages?.[m.k]?.done?"ok":""}">${esc(m.code)}${it.stages?.[m.k]?.done?" ✓":""}</span>`).join("")}</div>`:""}</div>`:""}
         <div style="display:flex;align-items:center"><div class="pbar" style="flex:1"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
         <div class="meta">${meta||"&nbsp;"}</div>
         ${refs?`<div class="refs">${refs}</div>`:""}
@@ -3959,6 +4189,7 @@ function openDlg(id, stepK){
   $("#btnSave").hidden = !canEdit;
   $("#btnDel").hidden = !canEdit || !id;
   resetDel();
+  if(typeof renderCollab === "function") renderCollab();
   $("#autoBox").hidden = !(canEdit && sampleFn);
   $("#autoLog").innerHTML = "";
   $("#dlg").showModal();
@@ -4286,7 +4517,7 @@ async function save(){
     else { const i=items.findIndex(x=>x.id===id); if(i>=0) items[i]=rec; else items.push(rec); persistLocal(); render(); }
     $("#dlg").close();
     if(col) logSave(old, rec);
-    if(isComplete(rec) && !(old && isComplete(old))) celebrate(rec);
+    if(isComplete(rec) && !(old && isComplete(old))){ celebrate(rec); if(typeof notifyComplete === "function") notifyComplete(rec); }
     else { const w = mnSaveWarn(rec); toast((editingId?"Pembelian disimpan.":"Pembelian ditambah.") + (w ? " " + w : ""), w ? 8000 : undefined); }
   }catch(e){
     if(e && e.code==="invalid_argument"){ canEdit=false; applyMode(); toast("Anda hanya mempunyai akses lihat. Perubahan tidak disimpan."); }
@@ -4300,14 +4531,18 @@ async function del(){
   const b = $("#btnDel");
   if(!b.dataset.armed){
     b.dataset.armed = "1"; b.textContent = "Klik sekali lagi untuk padam"; b.classList.add("armed");
-    toast("Klik “Klik sekali lagi untuk padam” untuk mengesahkan. Tindakan ini tidak boleh dibatalkan.", 4000);
+    toast("Klik “Klik sekali lagi untuk padam” untuk mengesahkan. Pembelian akan disimpan dalam Tong Kitar Semula selama 30 hari.", 4000);
     clearTimeout(del._t); del._t = setTimeout(resetDel, 5000);
     return;
   }
   resetDel();
   const goneName = nameOf(items.find(x=>x.id===editingId) || {});
   try{
-    if(col){ await col.doc(editingId).delete(); audit("Deleted purchase", goneName, ""); }
+    if(col){
+      const rec = items.find(x=>x.id===editingId);
+      if(trashCol && rec) await trashCol.doc(editingId).set({deletedAt: Date.now(), deletedBy: (me && me.id) || "", deletedByName: (me && me.name) || "", name: goneName, data: rec});   // kept in the recycle bin for 30 days
+      await col.doc(editingId).delete(); audit("Deleted purchase", goneName, "");
+    }
     else { items = items.filter(x=>x.id!==editingId); persistLocal(); render(); }
     $("#dlg").close(); toast("Pembelian dipadam.");
   }catch(e){ toast("Tidak dapat memadam. Cuba lagi."); }
@@ -4387,6 +4622,7 @@ function buildNotes(){
   });
   items.forEach(it=>{ apprNotes(it).forEach(n=>out.push(n)); });
   if(isAdmin) presNotes().forEach(n=>out.push(n));
+  if(typeof featNotes === "function") featNotes().forEach(n=>out.push(n));
   return out.sort((a,b)=>((seen.has(a.id)?1:0)-(seen.has(b.id)?1:0)) || ((a.pri??99)-(b.pri??99)));
 }
 let noteTab = "all";
@@ -5883,7 +6119,7 @@ async function startPresence(){
     if(sid){ const s = await presCol.doc(sid).get(); if(!s.exists || !s.data() || s.data().end || s.data().by !== me.id) sid = null; }   // a page refresh continues the same session
     if(sid){ await presCol.doc(sid).update({last: now}); }
     else {
-      sid = "s" + now.toString(36) + Math.random().toString(36).slice(2, 6);
+      sid = "p" + bnDayOf(now).replace(/-/g, "") + "-" + now.toString(36) + Math.random().toString(36).slice(2, 6);
       await presCol.doc(sid).set({by: me.id, name: me.name || me.id, role: myRole, dev: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Telefon" : "Komputer", start: now, last: now});
       try{ sessionStorage.setItem("apt-sid", sid); }catch(e){}
     }
@@ -5906,9 +6142,6 @@ function subscribePresence(){
       if(known.has(r.id)) return; known.add(r.id);
       if(!first && me && r.by !== me.id && now - r.start < 5*60000 && !r.end) toast(lt(`${r.name || r.by} baru log masuk.`, `${r.name || r.by} just signed in.`));
     });
-    if(first && canEdit){   // tidy: remove sessions older than 3 days
-      presRows.filter(r=>now - (r.last || r.start) > PRES_KEEP).slice(0, 20).forEach(r=>presCol.doc(r.id).delete().catch(()=>{}));
-    }
     first = false;
     renderNotes();
   }, ()=>{ presSub = false; });
@@ -5925,6 +6158,365 @@ function presNotes(){
         : lt(`${who}${role} log masuk pada ${fmtStamp(r.start)}. Tempoh penggunaan: ${presDur(p.ms)}.`, `${who}${role} signed in at ${fmtStamp(r.start)}. Time used: ${presDur(p.ms)}.`)};
   });
 }
+/* ===================== Backup, recycle bin, e-mail, reports, activity, comments and tasks ===================== */
+const cfg = (k, d)=>(typeof CONFIG !== "undefined" && CONFIG[k] != null) ? CONFIG[k] : d;
+let trashCol = null, commentsCol = null, assignCol = null, trashRows = [], commentRows = [], assignRows = [];
+const TRASH_KEEP = 30*864e5, COMMENT_MAX = 1000;
+function bnParts(){   // the calendar day and clock time in Brunei, whatever the computer's own time zone is
+  const o = {};
+  new Intl.DateTimeFormat("en-CA", {timeZone: cfg("timezone", "Asia/Brunei"), year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", hourCycle:"h23"})
+    .formatToParts(new Date()).forEach(p=>{ o[p.type] = p.value; });
+  return {day: `${o.year}-${o.month}-${o.day}`, mins: (+o.hour)*60 + (+o.minute)};
+}
+const bnDayOf = ts=>new Date(ts + 8*36e5).toISOString().slice(0, 10);
+
+/* ---------- Daily backup ---------- */
+let bkBusy = false, bkDoneDay = "", bkFailAt = 0;
+async function backupTick(force){
+  if(bkBusy || !col || !canEdit || !me) return;
+  if(!force && Date.now() - bkFailAt < 10*60000) return;
+  let bk = null; try{ bk = await claude.use("backup"); }catch(e){}
+  if(!bk) return;
+  const t = bnParts(), hm = String(cfg("backupTime", "18:30")).split(":"), at = (+hm[0] || 0)*60 + (+hm[1] || 0);
+  if(!force && (t.mins < at || bkDoneDay === t.day)) return;
+  bkBusy = true;
+  try{
+    if(!force){ const s = await bk.status(t.day); if(s.done){ bkDoneDay = t.day; return; } }
+    const r = await bk.run(t.day, me.id, !!force);
+    if(r && r.skipped) return;
+    bkDoneDay = t.day;
+    audit("Backup done", "", lt(`${r.files} fail disandarkan`, `${r.files} files backed up`));
+    if(force) toast(lt(`Sandaran siap (${r.files} fail).`, `Backup complete (${r.files} files).`));
+    bkRender();
+  }catch(e){ bkFailAt = Date.now(); if(force) toast(lt("Sandaran gagal. Semak sambungan dan cuba lagi.", "Backup failed. Check your connection and try again.")); }
+  finally{ bkBusy = false; }
+}
+function startBackupScheduler(){ setTimeout(()=>backupTick(false), 20000); setInterval(()=>backupTick(false), 60000); }
+async function bkRender(){
+  const host = $("#bkList"); if(!host || !$("#bkDlg").open) return;
+  let bk = null, list = [];
+  try{ bk = await claude.use("backup"); list = bk ? await bk.list() : []; }
+  catch(e){ host.textContent = lt("Tidak dapat membaca senarai sandaran.", "Could not read the backup list."); return; }
+  $("#bkInfo").textContent = lt(`Sandaran automatik setiap hari selepas ${cfg("backupTime", "18:30")} (waktu Brunei), sebaik sahaja seorang pengguna yang boleh menyunting membuka sistem. ${cfg("backupKeepDays", 30)} hari terkini disimpan.`,
+    `Automatic backup every day after ${cfg("backupTime", "18:30")} (Brunei time), as soon as a user who can edit has the system open. The latest ${cfg("backupKeepDays", 30)} days are kept.`);
+  host.innerHTML = list.length ? list.map(b=>`<li class="bk-row"><div><b>${esc(b.name)}</b>${b.kind === "safety" ? ` <span class="tag">${esc(lt("Salinan keselamatan", "Safety copy"))}</span>` : ""}</div><button type="button" class="btn mini" data-bk="${esc(b.id)}" data-bkn="${esc(b.name)}">${esc(lt("Pulihkan…", "Restore…"))}</button></li>`).join("")
+    : `<li class="none">${esc(lt("Belum ada sandaran.", "No backups yet."))}</li>`;
+  host.querySelectorAll("[data-bk]").forEach(btn=>btn.onclick=()=>bkRestoreOpen(btn.dataset.bk, btn.dataset.bkn));
+}
+async function bkRestoreOpen(id, name){
+  let bk = null, files = [];
+  try{ bk = await claude.use("backup"); files = await bk.files(id); }catch(e){ toast(lt("Tidak dapat membuka sandaran ini.", "Could not open this backup.")); return; }
+  const box = $("#bkRestore"), safe = new Set(["purchases.json", "minit.json", "settings.json", "trash.json", "comments.json", "assign.json", "mail.json"]);
+  box.hidden = false;
+  box.innerHTML = `<h4>${esc(lt("Pulihkan daripada", "Restore from"))} ${esc(name)}</h4>
+    <p class="set-note">${esc(lt("Fail yang dipilih akan MENGGANTIKAN data semasa. Salinan keselamatan data semasa dibuat dahulu, supaya pemulihan ini juga boleh dibatalkan.", "The files you choose will REPLACE the current data. A safety copy of the current data is made first, so this restore can itself be undone."))}</p>
+    <div class="bk-files">${files.map(f=>`<label><input type="checkbox" value="${esc(f.name)}" ${safe.has(f.name) ? "checked" : ""}> ${esc(f.name)}${f.name === "members.json" ? " (" + esc(lt("pengguna dan peranan", "users and roles")) + ")" : ""}</label>`).join("") || esc(lt("Tiada fail.", "No files."))}</div>
+    <div class="set-foot"><button type="button" class="btn" id="bkCancel">${esc(lt("Batal", "Cancel"))}</button><button type="button" class="btn danger" id="bkGo">${esc(lt("Pulihkan fail terpilih", "Restore selected files"))}</button></div>`;
+  $("#bkCancel").onclick = ()=>{ box.hidden = true; };
+  $("#bkGo").onclick = async ()=>{
+    const names = [...box.querySelectorAll("input:checked")].map(i=>i.value); if(!names.length) return;
+    if(!confirm(lt(`Gantikan data semasa dengan sandaran ${name}?\n\n${names.join(", ")}`, `Replace the current data with the backup from ${name}?\n\n${names.join(", ")}`))) return;
+    $("#bkGo").disabled = true;
+    try{ const r = await bk.restore(id, names, me.id); audit("Restored backup", "", `${name}: ${r.restored}`); toast(lt(`Dipulihkan: ${r.restored} fail.`, `Restored: ${r.restored} files.`)); box.hidden = true; bkRender(); }
+    catch(e){ toast(lt("Pemulihan gagal. Fail yang belum dipulihkan tidak diubah.", "Restore failed. Files not yet restored were left unchanged.")); $("#bkGo").disabled = false; }
+  };
+}
+
+/* ---------- Recycle bin ---------- */
+function subscribeTrash(){
+  if(!trashCol || !isAdmin) return;
+  let first = true;
+  trashCol.onSnapshot(snap=>{
+    trashRows = snap.docs.map(d=>({...d.data(), id:d.id})).filter(r=>r && r.data && r.deletedAt);
+    if(first && canEdit){ trashRows.filter(r=>Date.now() - r.deletedAt > TRASH_KEEP).slice(0, 20).forEach(r=>trashCol.doc(r.id).delete().catch(()=>{})); }
+    first = false;
+    trRender();
+  }, ()=>{});
+}
+function trRender(){
+  const host = $("#trList"); if(!host) return;
+  const now = Date.now(), rows = [...trashRows].sort((a, b)=>b.deletedAt - a.deletedAt);
+  host.innerHTML = rows.length ? rows.map(r=>`<li class="bk-row"><div><b>${esc(r.name || r.id)}</b><small>${esc(lt("Dipadam oleh", "Deleted by"))} ${esc(r.deletedByName || r.deletedBy || "?")}, ${esc(fmtStamp(r.deletedAt))}. ${esc(lt("Dipadam kekal dalam", "Removed for good in"))} ${Math.max(0, Math.ceil((r.deletedAt + TRASH_KEEP - now)/864e5))} ${esc(lt("hari", "days"))}.</small></div><div class="bk-act"><button type="button" class="btn mini" data-trr="${esc(r.id)}">${esc(lt("Pulihkan", "Restore"))}</button> <button type="button" class="btn mini danger" data-trx="${esc(r.id)}">${esc(lt("Padam kekal", "Delete forever"))}</button></div></li>`).join("")
+    : `<li class="none">${esc(lt("Tong kitar semula kosong. Pembelian yang dipadam disimpan di sini selama 30 hari.", "The recycle bin is empty. Deleted purchases are kept here for 30 days."))}</li>`;
+  host.querySelectorAll("[data-trr]").forEach(b=>b.onclick=()=>trRestore(b.dataset.trr));
+  host.querySelectorAll("[data-trx]").forEach(b=>b.onclick=()=>trPurge(b.dataset.trx));
+}
+async function trRestore(id){
+  const r = trashRows.find(x=>x.id === id); if(!r || !r.data || !col) return;
+  if(items.some(x=>x.id === id)){ toast(lt("Pembelian ini sudah wujud semula.", "This purchase already exists again.")); return; }
+  try{ await col.doc(id).set(r.data); await trashCol.doc(id).delete(); audit("Restored purchase", r.name || "", ""); toast(lt("Pembelian dipulihkan.", "Purchase restored.")); }
+  catch(e){ toast(lt("Tidak dapat memulihkan. Cuba lagi.", "Could not restore. Try again.")); }
+}
+async function trPurge(id){
+  const r = trashRows.find(x=>x.id === id); if(!r) return;
+  if(!confirm(lt(`Padam kekal “${r.name || id}”? Ini tidak boleh dibatalkan.`, `Delete “${r.name || id}” for good? This cannot be undone.`))) return;
+  try{ await trashCol.doc(id).delete(); }catch(e){ toast(lt("Tidak dapat memadam.", "Could not delete.")); }
+}
+
+/* ---------- E-mail when a purchase is complete ---------- */
+async function notifyComplete(rec){
+  try{
+    if(!col || !canEdit || !db || !rec || !me) return;
+    const svc = await claude.use("mail"); if(!svc) return;
+    const log = db.collection("mail");
+    const prev = await log.doc(rec.id).get(); if(prev && prev.exists) return;   // already e-mailed once
+    const doms = cfg("emailDomains", []), ok = a=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(a) && doms.some(d=>a.endsWith(d));
+    const to = [...new Set([rec.createdByEmail, ...members.filter(m=>m.role === "admin" || m.role === "boss").map(m=>m.id), cfg("ownerEmail", "")]
+      .filter(Boolean).map(s=>String(s).toLowerCase()).filter(ok))];
+    if(!to.length) return;
+    await log.doc(rec.id).set({at: Date.now(), by: me.id, to});   // mark first, so two people never send it twice
+    const nm = String(rec.title || "Pembelian").replace(/[\r\n]+/g, " ").slice(0, 150);
+    const link = location.origin + location.pathname.replace(/index\.html$/, "") + "#p=" + encodeURIComponent(rec.id);
+    const text = [`Salam,`, ``, `Pembelian berikut telah SELESAI (semua langkah dan dokumen Indent, DO dan Invois lengkap):`, ``,
+      `No. Fail : ${rec.fileNo || "-"}`, `Tajuk    : ${nm}`, `Pemohon  : ${[rec.requester, rec.division].filter(Boolean).join(", ") || "-"}`,
+      `Kaedah   : ${METHOD_LABEL[rec.method] || rec.method || "-"}`, `Jumlah   : ${money(bestAmount(rec))}`, `Disahkan oleh: ${me.name || me.id}`, ``,
+      `Buka dalam sistem: ${link}`, ``, `E-mel ini dihantar secara automatik oleh Sistem Pemantauan Pembelian SYSHHB.`].join("\n");
+    const r = await svc.send(to, `Pembelian selesai: ${(rec.fileNo ? rec.fileNo + " - " : "") + nm}`.slice(0, 250), text);
+    if(r.ok){ audit("Sent completion email", nm, lt(`${to.length} penerima`, `${to.length} recipients`)); toast(lt("E-mel pemberitahuan dihantar.", "Notification e-mail sent.")); return; }
+    await log.doc(rec.id).delete().catch(()=>{});   // let it try again later
+    if(r.reason === "consent") askMailConsent(svc, rec.id);
+    else toast(lt("E-mel pemberitahuan tidak dapat dihantar.", "The notification e-mail could not be sent."));
+  }catch(e){}
+}
+function askMailConsent(svc, id){
+  try{ if(sessionStorage.getItem("apt-mail-asked")){ toast(lt("E-mel tidak dihantar: kebenaran e-mel diperlukan.", "E-mail not sent: mail permission is needed.")); return; } sessionStorage.setItem("apt-mail-asked", "1"); }catch(e){}
+  if(confirm("Pembelian ini telah selesai. Untuk menghantar e-mel pemberitahuan, sistem memerlukan kebenaran e-mel daripada Microsoft (sekali sahaja). Teruskan?\n\nThis purchase is complete. To send the notification e-mail the system needs mail permission from Microsoft (one time). Continue?")){
+    try{ localStorage.setItem("apt-mail-pending", id); }catch(e){}
+    svc.grant();
+  }
+}
+async function mailRetryPending(){
+  let id = null; try{ id = localStorage.getItem("apt-mail-pending"); }catch(e){}
+  if(!id) return;
+  try{ localStorage.removeItem("apt-mail-pending"); }catch(e){}
+  const it = items.find(x=>x.id === id); if(it && isComplete(it)) notifyComplete(it);
+}
+
+/* ---------- Management report ---------- */
+let mgYear = "", mgMonth = "";
+function stageDate(it, i){
+  const s = it.stages && it.stages[STAGES[i].k]; if(!s || !s.done) return "";
+  const d = STAGES[i].k === "indent" && s.pdDate ? s.pdDate : s.date;
+  return /^\d{4}-\d{2}-\d{2}/.test(d || "") ? d.slice(0, 10) : "";
+}
+function mgMonthOf(it){ const d = (it.stages && it.stages.s601 && it.stages.s601.date) || (it.created ? new Date(it.created).toISOString().slice(0, 10) : ""); return d.slice(5, 7); }
+function mgCompute(year, month){
+  const list = items.filter(it=>yearOf(it) === year && (!month || mgMonthOf(it) === month));
+  const live = list.filter(it=>cancelIdx(it) < 0), done = live.filter(it=>stageIndex(it) === STAGES.length);
+  const months = Array.from({length: 12}, (_, i)=>({m: String(i + 1).padStart(2, "0"), n: 0, v: 0}));
+  items.filter(it=>yearOf(it) === year && cancelIdx(it) < 0).forEach(it=>{ const row = months[(+mgMonthOf(it) || 0) - 1]; if(row){ row.n++; row.v += bestAmount(it); } });
+  const steps = STAGES.map(s=>({code: s.code, what: s.what, d: []}));
+  live.forEach(it=>{ let prev = ""; STAGES.forEach((s, i)=>{ const d = stageDate(it, i); if(d && prev){ const n = daysBetween(prev, d); if(n >= 0 && n < 1000) steps[i].d.push(n); } if(d) prev = d; }); });
+  const budget = CATS.map(c=>({c, rows: (((BUDGETS[year] || {})[c]) || []).map(h=>({t: h.t, amt: h.amt, used: items.filter(it=>cancelIdx(it) < 0 && yearOf(it) === year && it.category === c).reduce((a, it)=>a + headShare(it, h.t), 0)}))})).filter(b=>b.rows.length);
+  const stuck = items.filter(it=>cancelIdx(it) < 0 && stageIndex(it) < STAGES.length).map(it=>{ const f = lastDate(it, stageIndex(it)); return {it, at: STAGES[stageIndex(it)].code, days: f ? Math.max(0, daysBetween(f, today())) : 0}; }).filter(x=>x.days >= 14).sort((a, b)=>b.days - a.days).slice(0, 15);
+  const grp = (keyFn)=>{ const m = new Map(); live.forEach(it=>{ const k = keyFn(it) || "-"; const g = m.get(k) || {k, n: 0, v: 0}; g.n++; g.v += bestAmount(it); m.set(k, g); }); return [...m.values()].sort((a, b)=>b.v - a.v); };
+  return {total: list.length, live: live.length, cancelled: list.length - live.length, done: done.length, active: live.length - done.length, value: live.reduce((a, it)=>a + bestAmount(it), 0),
+    months, steps, budget, stuck, methods: grp(it=>METHOD_LABEL[it.method]), divisions: grp(it=>it.division).slice(0, 8)};
+}
+const avg = a=>a.length ? a.reduce((x, y)=>x + y, 0)/a.length : 0;
+function mgRender(){
+  const y = mgYear, mo = mgMonth, D = mgCompute(y, mo), MON = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogos", "Sep", "Okt", "Nov", "Dis"];
+  const maxV = Math.max(1, ...D.months.map(m=>m.v)), slow = D.steps.map(s=>avg(s.d)), slowMax = Math.max(...slow);
+  const period = mo ? `${MON[+mo - 1]} ${y}` : lt(`Tahun ${y}`, `Year ${y}`);
+  $("#mgPaper").innerHTML = `
+    <h2>${esc(lt("Laporan Pengurusan Pembelian", "Purchasing Management Report"))}</h2>
+    <p class="mg-sub">${esc(lt("Yayasan Sultan Haji Hassanal Bolkiah", "Yayasan Sultan Haji Hassanal Bolkiah"))} · ${esc(period)} · ${esc(lt("Dijana", "Generated"))} ${esc(dmy(today()))}</p>
+    <div class="mg-cards">
+      <div class="mg-card"><span>${esc(lt("Pembelian", "Purchases"))}</span><b>${D.total}</b></div>
+      <div class="mg-card"><span>${esc(lt("Selesai", "Complete"))}</span><b>${D.done}</b></div>
+      <div class="mg-card"><span>${esc(lt("Dalam proses", "In progress"))}</span><b>${D.active}</b></div>
+      <div class="mg-card"><span>${esc(lt("Dibatalkan", "Cancelled"))}</span><b>${D.cancelled}</b></div>
+      <div class="mg-card wide"><span>${esc(lt("Jumlah nilai", "Total value"))}</span><b>${esc(money(D.value))}</b></div>
+    </div>
+    <h3>${esc(lt(`Jumlah bulanan ${y}`, `Monthly totals ${y}`))}</h3>
+    <div class="mg-bars">${D.months.map((m, i)=>`<div class="row"><span>${MON[i]}</span><div><i style="width:${Math.round(m.v/maxV*100)}%"></i></div><span>${m.n} · ${esc(money(m.v))}</span></div>`).join("")}</div>
+    <h3>${esc(lt("Penggunaan anggaran", "Budget use"))}</h3>
+    ${D.budget.length ? D.budget.map(b=>`<p class="mg-cat">${esc(CAT_LABEL[b.c] || b.c)}</p><table class="mg-tbl"><thead><tr><th>${esc(lt("Tajuk Perbelanjaan", "Expenditure head"))}</th><th class="r">${esc(lt("Anggaran", "Budget"))}</th><th class="r">${esc(lt("Digunakan", "Used"))}</th><th class="r">%</th></tr></thead><tbody>${b.rows.map(r=>{ const p = r.amt > 0 ? Math.round(r.used/r.amt*100) : 0; return `<tr class="${p > 100 ? "bad" : p >= 80 ? "warn" : ""}"><td>${esc(r.t)}</td><td class="r">${esc(money(r.amt))}</td><td class="r">${esc(money(r.used))}</td><td class="r">${r.amt > 0 ? p + "%" : "-"}</td></tr>`; }).join("")}</tbody></table>`).join("") : `<p class="mg-none">${esc(lt("Tiada anggaran ditetapkan untuk tahun ini.", "No budget is set for this year."))}</p>`}
+    <h3>${esc(lt("Purata hari bagi setiap langkah", "Average days per step"))}</h3>
+    <table class="mg-tbl"><thead><tr><th>${esc(lt("Langkah", "Step"))}</th><th class="r">${esc(lt("Pembelian diukur", "Measured"))}</th><th class="r">${esc(lt("Purata (hari)", "Average (days)"))}</th><th class="r">${esc(lt("Terlama (hari)", "Longest (days)"))}</th></tr></thead><tbody>${D.steps.map((s, i)=>`<tr class="${s.d.length && slow[i] === slowMax && slowMax > 0 ? "warn" : ""}"><td><b>${esc(s.code)}</b> ${esc(s.what)}</td><td class="r">${s.d.length || "-"}</td><td class="r">${s.d.length ? avg(s.d).toFixed(1) : "-"}</td><td class="r">${s.d.length ? Math.max(...s.d) : "-"}</td></tr>`).join("")}</tbody></table>
+    <p class="mg-note">${esc(lt("Masa dikira daripada tarikh langkah sebelumnya. Baris kuning ialah langkah yang paling lambat.", "Time is counted from the previous step's date. The highlighted row is the slowest step."))}</p>
+    <h3>${esc(lt("Pembelian tersangkut (14 hari atau lebih)", "Stuck purchases (14 days or more)"))}</h3>
+    ${D.stuck.length ? `<table class="mg-tbl"><thead><tr><th>${esc(lt("Pembelian", "Purchase"))}</th><th>${esc(lt("Menunggu di", "Waiting at"))}</th><th class="r">${esc(lt("Hari", "Days"))}</th></tr></thead><tbody>${D.stuck.map(x=>`<tr><td>${esc(x.it.title || "-")}</td><td>${esc(x.at)}</td><td class="r">${x.days}</td></tr>`).join("")}</tbody></table>` : `<p class="mg-none">${esc(lt("Tiada pembelian tersangkut.", "No stuck purchases."))}</p>`}
+    <div class="mg-two"><div><h3>${esc(lt("Mengikut kaedah", "By method"))}</h3><table class="mg-tbl"><tbody>${D.methods.map(g=>`<tr><td>${esc(g.k)}</td><td class="r">${g.n}</td><td class="r">${esc(money(g.v))}</td></tr>`).join("") || `<tr><td>-</td></tr>`}</tbody></table></div>
+    <div><h3>${esc(lt("Mengikut bahagian", "By division"))}</h3><table class="mg-tbl"><tbody>${D.divisions.map(g=>`<tr><td>${esc(g.k)}</td><td class="r">${g.n}</td><td class="r">${esc(money(g.v))}</td></tr>`).join("") || `<tr><td>-</td></tr>`}</tbody></table></div></div>`;
+}
+function openMg(){
+  const ys = [...new Set([...items.map(yearOf), ...Object.keys(BUDGETS), curYear()])].sort().reverse();
+  if(!mgYear || !ys.includes(mgYear)) mgYear = ys.includes(curYear()) ? curYear() : ys[0];
+  $("#mgYearSel").innerHTML = ys.map(v=>`<option value="${esc(v)}" ${v === mgYear ? "selected" : ""}>${esc(v)}</option>`).join("");
+  const MON = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+  $("#mgMonthSel").innerHTML = `<option value="">${esc(lt("Sepanjang tahun", "Whole year"))}</option>` + MON.map((n, i)=>`<option value="${String(i + 1).padStart(2, "0")}" ${mgMonth === String(i + 1).padStart(2, "0") ? "selected" : ""}>${esc(n)}</option>`).join("");
+  mgRender(); $("#mgDlg").showModal();
+}
+async function mgPdf(){
+  const btn = $("#mgPdf"); btn.disabled = true;
+  try{
+    await loadScript(PV_LIBS.h2c); await loadScript(PV_LIBS.jspdf);
+    const c = await window.html2canvas($("#mgPaper"), {scale: 2, backgroundColor: "#ffffff"});
+    const pdf = new window.jspdf.jsPDF({unit: "mm", format: "a4"}), M = 10, pw = 210 - 2*M, ph = 297 - 2*M, slicePx = Math.floor(c.width * ph / pw);
+    for(let off = 0, first = true; off < c.height; off += slicePx, first = false){
+      const sl = document.createElement("canvas"); sl.width = c.width; sl.height = Math.min(slicePx, c.height - off);
+      sl.getContext("2d").drawImage(c, 0, off, c.width, sl.height, 0, 0, c.width, sl.height);
+      if(!first) pdf.addPage();
+      pdf.addImage(sl.toDataURL("image/jpeg", 0.92), "JPEG", M, M, pw, sl.height * pw / c.width);
+    }
+    pdf.save(`laporan-pengurusan-${mgYear}${mgMonth ? "-" + mgMonth : ""}.pdf`);
+    audit("Downloaded PDF", "", lt("Laporan Pengurusan", "Management report"));
+  }catch(e){ toast(lt("PDF tidak dapat dijana. Semak sambungan internet.", "The PDF could not be made. Check your internet connection.")); }
+  finally{ btn.disabled = false; }
+}
+
+/* ---------- User activity report ---------- */
+let acCache = {at: 0, rows: []};
+async function acLoad(force){
+  const host = $("#acBody"); host.textContent = lt("Memuatkan…", "Loading…");
+  let h = null; try{ h = await claude.use("history"); }catch(e){}
+  if(!h){ host.textContent = lt("Laporan ini hanya tersedia dalam versi Microsoft.", "This report is only available in the Microsoft version."); return; }
+  if(force || Date.now() - acCache.at > 60000){
+    try{ acCache = {at: Date.now(), rows: await h.load(90)}; }catch(e){ host.textContent = lt("Tidak dapat membaca rekod.", "Could not read the records."); return; }
+  }
+  acRender();
+}
+function acAgg(days){
+  const now = Date.now(), cut = days === 1 ? Date.parse(bnParts().day + "T00:00:00+08:00") : now - days*864e5, by = new Map();
+  acCache.rows.forEach(r=>{
+    if(!r.by || !r.start) return;
+    const u = by.get(r.by) || {id: r.by, name: "", role: "", n: 0, ms: 0, lastAny: 0, last: 0, days: new Set(), seenAt: 0};
+    if(r.start >= u.seenAt){ u.seenAt = r.start; u.name = r.name || u.name; u.role = r.role || u.role; }
+    u.lastAny = Math.max(u.lastAny, r.start);
+    if(r.start >= cut){ u.n++; u.ms += presInfo(r, now).ms; u.last = Math.max(u.last, r.start); u.days.add(bnDayOf(r.start)); }
+    by.set(r.by, u);
+  });
+  const rows = [...by.values()].filter(u=>u.n > 0).sort((a, b)=>b.ms - a.ms);
+  const inactive = members.filter(m=>!(by.get(m.id) && by.get(m.id).lastAny > now - 30*864e5)).map(m=>({id: m.id, name: m.name || m.id, role: m.role, lastAny: by.get(m.id) ? by.get(m.id).lastAny : 0}));
+  return {rows, inactive};
+}
+function acRender(){
+  const days = +$("#acDays").value || 7, {rows, inactive} = acAgg(days), tot = rows.reduce((a, u)=>a + u.ms, 0), sess = rows.reduce((a, u)=>a + u.n, 0);
+  $("#acBody").innerHTML = `
+    <div class="mg-cards"><div class="mg-card"><span>${esc(lt("Pengguna aktif", "Active users"))}</span><b>${rows.length}</b></div><div class="mg-card"><span>${esc(lt("Jumlah sesi", "Sessions"))}</span><b>${sess}</b></div><div class="mg-card wide"><span>${esc(lt("Jumlah masa digunakan", "Total time used"))}</span><b>${esc(presDur(tot))}</b></div></div>
+    <h3>${esc(lt("Penggunaan mengikut pengguna", "Use by person"))}</h3>
+    ${rows.length ? `<table class="mg-tbl"><thead><tr><th>${esc(lt("Pengguna", "User"))}</th><th>${esc(lt("Peranan", "Role"))}</th><th class="r">${esc(lt("Sesi", "Sessions"))}</th><th class="r">${esc(lt("Jumlah masa", "Total time"))}</th><th class="r">${esc(lt("Purata sesi", "Avg session"))}</th><th class="r">${esc(lt("Hari aktif", "Active days"))}</th><th>${esc(lt("Log masuk terakhir", "Last sign-in"))}</th></tr></thead><tbody>${rows.map(u=>`<tr><td>${esc(u.name || u.id)}<br><small>${esc(u.id)}</small></td><td>${esc(ROLE_NAME[u.role] || "-")}</td><td class="r">${u.n}</td><td class="r">${esc(presDur(u.ms))}</td><td class="r">${esc(presDur(u.ms/u.n))}</td><td class="r">${u.days.size}</td><td>${esc(fmtStamp(u.last))}</td></tr>`).join("")}</tbody></table>` : `<p class="mg-none">${esc(lt("Tiada sesi direkodkan dalam tempoh ini.", "No sessions were recorded in this period."))}</p>`}
+    <h3>${esc(lt("Tidak log masuk dalam 30 hari", "No sign-in in 30 days"))}</h3>
+    ${inactive.length ? `<table class="mg-tbl"><tbody>${inactive.map(u=>`<tr><td>${esc(u.name)}<br><small>${esc(u.id)}</small></td><td>${esc(ROLE_NAME[u.role] || "-")}</td><td>${u.lastAny ? esc(lt("Terakhir", "Last") + " " + fmtStamp(u.lastAny)) : esc(lt("Tiada rekod dalam 90 hari", "No record in 90 days"))}</td></tr>`).join("")}</tbody></table>` : `<p class="mg-none">${esc(lt("Semua pengguna aktif dalam 30 hari terakhir.", "Every user was active in the last 30 days."))}</p>`}
+    <p class="mg-note">${esc(lt("Hanya pengguna yang boleh menulis ke folder OneDrive (Penyunting, Pentadbir, Bos) direkodkan. Pemerhati (lihat sahaja) tidak muncul di sini, jadi mereka mungkin disenaraikan sebagai tidak aktif.", "Only users who can write to the OneDrive folder (Editor, Admin, Boss) are recorded. View-only users do not appear here and may be listed as inactive."))}</p>`;
+}
+async function acCsv(){
+  const {rows} = acAgg(+$("#acDays").value || 7);
+  const head = [lt("Pengguna", "User"), "E-mel", lt("Peranan", "Role"), lt("Sesi", "Sessions"), lt("Jumlah minit", "Total minutes"), lt("Hari aktif", "Active days"), lt("Log masuk terakhir", "Last sign-in")];
+  const csv = "\uFEFF" + [head, ...rows.map(u=>[u.name, u.id, ROLE_NAME[u.role] || "", u.n, Math.round(u.ms/60000), u.days.size, fmtStamp(u.last)])].map(r=>r.map(csvCell).join(",")).join("\r\n");
+  try{ const dl = await claude.use("downloads"); if(dl) await dl.save({filename: `aktiviti-pengguna-${today()}.csv`, data: csv}); }catch(e){}
+}
+
+/* ---------- Comments and tasks on each purchase ---------- */
+function assignees(){
+  const list = members.filter(m=>m.role !== "viewer").map(m=>({id: m.id, name: m.name || m.id})), owner = String(cfg("ownerEmail", "")).toLowerCase();
+  if(owner && !list.some(x=>x.id === owner)) list.push({id: owner, name: lt("Pemilik sistem", "System owner")});
+  return list.sort((a, b)=>a.name.localeCompare(b.name));
+}
+function collabChips(it){
+  let s = "";
+  const a = assignRows.find(x=>x.id === it.id);
+  if(a && a.to && cancelIdx(it) < 0 && !isComplete(it)) s += ` <span class="tag asg" title="${esc(lt("Perlu tindakan oleh", "Action needed from"))}">&#128100; ${esc(a.toName || a.to)}</span>`;
+  const n = commentRows.filter(c=>c.pid === it.id).length;
+  if(n) s += ` <span class="tag cm" title="${esc(lt("Komen", "Comments"))}">&#128172; ${n}</span>`;
+  return s;
+}
+function featNotes(){
+  if(!me || !me.id) return [];
+  const out = [], now = Date.now(), byId = new Map(items.map(i=>[i.id, i]));
+  assignRows.forEach(a=>{
+    const it = byId.get(a.id); if(!it || a.to !== me.id || cancelIdx(it) >= 0 || isComplete(it)) return;
+    out.push({id: `as:${a.id}:${a.at}`, cat: "task", kind: "warn", pri: 3, item: a.id, title: lt("Tugasan untuk anda", "Task for you"), text: `${nameOf(it)}: ${lt("ditugaskan oleh", "assigned by")} ${a.byName || a.by}${a.note ? " - " + a.note : ""}`});
+  });
+  commentRows.filter(c=>c.by !== me.id && now - c.at < 14*864e5).forEach(c=>{
+    const it = byId.get(c.pid); if(!it) return;
+    const a = assignRows.find(x=>x.id === c.pid);
+    const involved = String(it.createdByEmail || "").toLowerCase() === me.id || (a && a.to === me.id) || commentRows.some(x=>x.pid === c.pid && x.by === me.id);
+    if(!involved) return;
+    out.push({id: `cm:${c.id}`, cat: "task", kind: "info", pri: 20, item: c.pid, title: lt("Komen baharu", "New comment"), text: `${c.name || c.by} (${nameOf(it)}): ${String(c.text).slice(0, 140)}`});
+  });
+  return out;
+}
+function renderCollab(){
+  const box = $("#collab"); if(!box) return;
+  const id = editingId; box.hidden = !(col && id); if(box.hidden) return;
+  const a = assignRows.find(x=>x.id === id), sel = $("#coWho"), keep = sel.value;
+  sel.innerHTML = `<option value="">${esc(lt("– Pilih orang –", "– Choose a person –"))}</option>` + assignees().map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("");
+  sel.value = a ? a.to : keep || "";
+  $("#coCur").textContent = a ? lt(`Perlu tindakan oleh ${a.toName || a.to}. Ditugaskan oleh ${a.byName || a.by} pada ${fmtStamp(a.at)}${a.note ? ": " + a.note : ""}.`, `Action needed from ${a.toName || a.to}. Assigned by ${a.byName || a.by} on ${fmtStamp(a.at)}${a.note ? ": " + a.note : ""}.`) : lt("Belum ditugaskan kepada sesiapa.", "Not assigned to anyone yet.");
+  $("#coAssignRow").hidden = !canEdit; $("#coNew").hidden = !canEdit; $("#coClear").hidden = !(canEdit && a);
+  const ul = $("#coList"); ul.textContent = "";
+  const list = commentRows.filter(c=>c.pid === id).sort((x, y)=>x.at - y.at);
+  list.forEach(c=>{
+    const li = document.createElement("li"), h = document.createElement("div"), b = document.createElement("b"), s = document.createElement("small"), p = document.createElement("p");
+    h.className = "co-h"; b.textContent = c.name || c.by; s.textContent = " " + fmtStamp(c.at); h.append(b, s);
+    if(c.by === me.id || isAdmin){ const x = document.createElement("button"); x.type = "button"; x.className = "mini"; x.textContent = "✕"; x.setAttribute("aria-label", lt("Padam komen", "Delete comment")); x.onclick = ()=>coDelete(c.id); h.append(x); }
+    p.textContent = c.text; li.append(h, p); ul.append(li);
+  });
+  if(!list.length){ const li = document.createElement("li"); li.className = "none"; li.textContent = lt("Belum ada komen.", "No comments yet."); ul.append(li); }
+}
+async function coAssign(){
+  const id = editingId, to = $("#coWho").value, p = assignees().find(x=>x.id === to);
+  if(!col || !canEdit || !id) return;
+  if(!p){ toast(lt("Pilih seseorang dahulu.", "Choose a person first.")); return; }
+  try{ await assignCol.doc(id).set({to, toName: p.name, note: $("#coNote").value.trim().slice(0, 200), by: me.id, byName: me.name || me.id, at: Date.now()}); audit("Assigned purchase", nameOf(items.find(x=>x.id === id) || {}), p.name); $("#coNote").value = ""; toast(lt("Tugasan disimpan.", "Task saved.")); }
+  catch(e){ toast(lt("Tidak dapat menyimpan tugasan.", "Could not save the task.")); }
+}
+async function coClear(){ const id = editingId; if(!id || !canEdit) return; try{ await assignCol.doc(id).delete(); toast(lt("Tugasan dikosongkan.", "Task cleared.")); }catch(e){} }
+async function coSend(){
+  const id = editingId, text = $("#coText").value.trim();
+  if(!col || !canEdit || !id || !text) return;
+  const cid = "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  try{ await commentsCol.doc(cid).set({pid: id, by: me.id, name: me.name || me.id, at: Date.now(), text: text.slice(0, COMMENT_MAX)}); audit("Added comment", nameOf(items.find(x=>x.id === id) || {}), ""); $("#coText").value = ""; }
+  catch(e){ toast(lt("Komen tidak dapat dihantar.", "The comment could not be sent.")); }
+}
+async function coDelete(cid){ if(!confirm(lt("Padam komen ini?", "Delete this comment?"))) return; try{ await commentsCol.doc(cid).delete(); }catch(e){} }
+let featT = 0;
+function featRefresh(){ clearTimeout(featT); featT = setTimeout(()=>{ try{ render(); if($("#dlg").open) renderCollab(); }catch(e){} }, 150); }
+function subscribeCollab(){
+  if(!commentsCol || !assignCol) return;
+  commentsCol.onSnapshot(snap=>{ commentRows = snap.docs.map(d=>({...d.data(), id: d.id})).filter(c=>c && c.pid && c.text); featRefresh(); }, ()=>{});
+  assignCol.onSnapshot(snap=>{ assignRows = snap.docs.map(d=>({...d.data(), id: d.id})).filter(a=>a && a.to); featRefresh(); }, ()=>{});
+}
+
+/* ---------- Start-up, role visibility and wiring ---------- */
+function featMode(){
+  const adm = !!(col && isAdmin);
+  ["navAc", "navBk", "navTr"].forEach(id=>{ const el = document.getElementById(id); if(el) el.hidden = !adm; });
+}
+function featStart(){
+  subscribeCollab();
+  if(isAdmin){ subscribeTrash(); try{ claude.use("history").then(h=>{ if(h && h.prune) h.prune(); }).catch(()=>{}); }catch(e){} }
+  startBackupScheduler();
+  setTimeout(mailRetryPending, 8000);
+}
+function featWire(){
+  Object.assign(EN, {"Laporan Pengurusan": "Management Report", "Aktiviti Pengguna": "User Activity", "Sandaran": "Backup", "Tong Kitar Semula": "Recycle Bin",
+    "Muat turun PDF": "Download PDF", "Sandarkan sekarang": "Back up now", "Tugasan & Perbincangan": "Tasks & Discussion", "Perlu tindakan oleh": "Action needed from",
+    "Tugaskan": "Assign", "Kosongkan": "Clear", "Hantar": "Send", "Tahun": "Year", "Bulan": "Month", "Tempoh": "Period"});
+  Object.assign(AUDIT_KIND, {"Restored purchase":"update", "Backup done":"login", "Restored backup":"update", "Sent completion email":"login", "Added comment":"create", "Assigned purchase":"update"});
+  Object.assign(AUDIT_MS, {"Restored purchase":"Pulihkan pembelian", "Backup done":"Sandaran siap", "Restored backup":"Pulih sandaran", "Sent completion email":"E-mel pembelian selesai", "Added comment":"Tambah komen", "Assigned purchase":"Tugaskan pembelian"});
+  $("#navMg").onclick = openMg;
+  $("#mgClose").onclick = ()=>$("#mgDlg").close();
+  $("#mgPdf").onclick = mgPdf;
+  $("#mgYearSel").onchange = e=>{ mgYear = e.target.value; mgRender(); };
+  $("#mgMonthSel").onchange = e=>{ mgMonth = e.target.value; mgRender(); };
+  $("#navAc").onclick = ()=>{ $("#acDlg").showModal(); acLoad(false); };
+  $("#acClose").onclick = ()=>$("#acDlg").close();
+  $("#acDays").onchange = ()=>{ if(acCache.rows.length) acRender(); else acLoad(false); };
+  $("#acCsv").onclick = acCsv;
+  $("#acRefresh").onclick = ()=>acLoad(true);
+  $("#navBk").onclick = ()=>{ $("#bkRestore").hidden = true; $("#bkDlg").showModal(); bkRender(); };
+  $("#bkClose").onclick = ()=>$("#bkDlg").close();
+  $("#bkNow").onclick = ()=>backupTick(true);
+  $("#navTr").onclick = ()=>{ $("#trDlg").showModal(); trRender(); };
+  $("#trClose").onclick = ()=>$("#trDlg").close();
+  $("#coAssign").onclick = coAssign; $("#coClear").onclick = coClear; $("#coSend").onclick = coSend;
+  $("#coText").addEventListener("keydown", e=>{ if(e.key === "Enter" && (e.ctrlKey || e.metaKey)){ e.preventDefault(); coSend(); } });
+  $("#coNote").addEventListener("keydown", e=>{ if(e.key === "Enter"){ e.preventDefault(); coAssign(); } });
+}
+
 function logSave(old, rec){
   const nm = nameOf(rec);
   if(!old){ audit("Created purchase", nm, ""); }
@@ -6250,6 +6842,7 @@ function applyMode(){
   $("#btnAudit").hidden = !(col && isAdmin);
   $("#btnSettings").hidden = !(col && (isAdmin || (me && me.isOwner)));
   $("#hcHijriSet").hidden = !(col && (isAdmin || (me && me.isOwner)));
+  if(typeof featMode === "function") featMode();
   render();
 }
 async function init(){
@@ -6267,6 +6860,7 @@ async function init(){
     memCol = db.collection("members");
     auditCol = db.collection("audit");
     presCol = db.collection("presence");
+    trashCol = db.collection("trash"); commentsCol = db.collection("comments"); assignCol = db.collection("assign");
     items = []; applyMode();
     showMe();
     if(!shareAdmin){
@@ -6296,6 +6890,7 @@ async function init(){
     if(isAdmin){ subscribeAudit(); subscribePresence(); }
     await new Promise(res=>gateLogin(res));
     startPresence();
+    featStart();
     db.collection("settings").onSnapshot(snap=>{ const d = snap.docs.find(x=>x.id==="budgets"); if(d){ loadBudgets(d.data().years); render(); } const h = snap.docs.find(x=>x.id==="hijri"); if(h && window.applyHijriOffset){ const v = h.data(); window.applyHijriOffset(v.offset, {by: v.by, at: v.updated}); } const sd = snap.docs.find(x=>x.id==="suppliers"); if(sd && window.applyRemoteSuppliers) window.applyRemoteSuppliers(sd.data()); const sm = snap.docs.find(x=>x.id==="suppliersManual"); if(sm && window.applyManualSuppliers) window.applyManualSuppliers(sm.data()); }, ()=>{});
     try{ db.collection("minit").onSnapshot(snap=>{ window.applyMinitRows(snap.docs.map(d=>({...d.data(), id:d.id}))); }, ()=>{}); }catch(e){}
     let firstSnap = true;
@@ -7930,7 +8525,7 @@ function hdSetView(v){
   document.addEventListener("keydown", e=>{ if(e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !document.querySelector("dialog[open]")){ e.preventDefault(); hdSetView("list"); $("#q").focus(); } });
   // menu order, like the Documents Storage app
   { const act = document.querySelector(".hero .actions"), foot = $("#navFoot");
-    ["navList","btnNew","navDash","navBud","navRep","navMn","navSup","navXI","btnAudit","btnUsers","btnSettings","btnManual","btnInstall"].forEach(id=>{ const el = document.getElementById(id); if(el) act.insertBefore(el, foot); }); }
+    ["navList","btnNew","navDash","navBud","navRep","navMn","navSup","navMg","navAc","navBk","navTr","navXI","btnAudit","btnUsers","btnSettings","btnManual","btnInstall"].forEach(id=>{ const el = document.getElementById(id); if(el) act.insertBefore(el, foot); }); }
   // Eksport / Import
   $("#navXI").onclick = ()=>$("#xiDlg").showModal();
   $("#xiClose").onclick = ()=>$("#xiDlg").close();
@@ -8067,6 +8662,7 @@ const drop = $("#drop");
 ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{ e.preventDefault(); drop.classList.add("over"); }));
 ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{ e.preventDefault(); drop.classList.remove("over"); }));
 drop.addEventListener("drop", e=>autoFill([...e.dataTransfer.files]));
+featWire();
 init().finally(()=>{ try{ setTimeout(()=>window.__splash.hide(), col ? 3500 : 0); }catch(e){} });
 applyLang();
 </script>
