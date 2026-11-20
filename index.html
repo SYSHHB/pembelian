@@ -8146,6 +8146,7 @@ applyLang();
   }
   function linkOf(id){ return location.href.split(/[?#]/)[0] + "?p=" + encodeURIComponent(id); }
   function waMessage(it){
+    // Same layout in both languages; labels follow the app language (BM / English)
     const cur = stageIndex(it), ci = cancelIdx(it), done = [], todo = [];
     STAGES.forEach((s, i) => {
       const st = it.stages?.[s.k];
@@ -8155,19 +8156,20 @@ applyLang();
     const w = (ci < 0 && cur < STAGES.length) ? waitDays(it) : -1;
     let now;
     if(ci >= 0) now = tt("Dibatalkan di ", "Cancelled at ") + STAGES[ci].code;
-    else if(cur >= STAGES.length) now = tt("Semua langkah selesai", "All steps completed");
+    else if(cur >= STAGES.length) now = tt("Selesai", "Completed");
     else now = STAGES[cur].code + (w > 0 ? tt(" (menunggu " + w + " hari)", " (waiting " + w + " days)") : "");
-    const po = it.stages?.indent?.ref, sup = supplierVal(it), amt = bestAmount(it);
-    const lines = [tt("Makluman pembelian", "Purchase update"), nameOf(it)];
-    if(po) lines.push(tt("No. PO: ", "PO no.: ") + po);
-    if(sup) lines.push(tt("Syarikat: ", "Company: ") + sup);
-    if(amt) lines.push(tt("Jumlah: ", "Total: ") + money(amt));
-    lines.push("");
-    lines.push(tt("Sudah selesai: ", "Done: ") + (done.length ? done.join(", ") : tt("belum ada", "none yet")));
-    lines.push(tt("Sekarang di: ", "Now at: ") + now);
+    const po = it.stages?.indent?.ref || "-", sup = supplierVal(it) || "-", amt = bestAmount(it);
+    const lines = [
+      tt("Tajuk: ", "Title: ") + nameOf(it),
+      tt("No. PO: ", "PO no.: ") + po,
+      tt("Syarikat: ", "Company: ") + sup,
+      tt("Jumlah: ", "Total: ") + (amt ? money(amt) : "-"),
+      "",
+      tt("Sudah selesai: ", "Done: ") + (done.length ? done.join(", ") : tt("belum ada", "none yet")),
+      tt("Sekarang di: ", "Now at: ") + now,
+    ];
     if(todo.length) lines.push(tt("Belum: ", "Still to do: ") + todo.join(", "));
-    lines.push("");
-    lines.push(tt("Buka pembelian: ", "Open purchase: ") + linkOf(it.id));
+    lines.push("", tt("Buka pembelian: ", "Open purchase: ") + linkOf(it.id));
     return lines.join("\n");
   }
   function waNorm(v){
@@ -8224,10 +8226,16 @@ applyLang();
       .replace(/https?:\/\/[^\s<]+/g, u => '<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>')
       .replace(/\n/g, "<br>");
   }
-  function renderWa(){ labels(); renderPurchases(); renderContacts(); renderSend(); renderPrev(); }
+  let genLang = null;
+  function renderWa(){
+    labels();
+    // rebuild the message when the app language changed (keeps edits otherwise)
+    if(S.sel && genLang !== lang()){ const it = items.find(x => x.id === S.sel); if(it){ q("waText").value = waMessage(it); genLang = lang(); } }
+    renderPurchases(); renderContacts(); renderSend(); renderPrev();
+  }
   function pick(id){
     S.sel = id; const it = items.find(x => x.id === id);
-    q("waText").value = it ? waMessage(it) : ""; renderPrev();
+    q("waText").value = it ? waMessage(it) : ""; genLang = lang(); renderPrev();
     renderPurchases(); renderSend();
   }
 
