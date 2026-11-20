@@ -1692,6 +1692,61 @@ body .pg-head h2{font-size:28px!important}
 .gb-toc a{border-left:2px solid transparent;border-radius:0 8px 8px 0;margin-left:2px}
 .gb-toc a:hover{border-left-color:var(--accent)}
 .gb-body mark{background:linear-gradient(180deg,transparent 40%,#f6d85f 40%);color:inherit}
+
+/* ===== WhatsApp update tab ===== */
+dialog#waDlg{width:min(680px,96vw);max-height:92vh;padding:0;border-radius:16px}
+dialog#waDlg[open]{display:flex;flex-direction:column}
+#waDlg .dlg-body{overflow:auto;flex:1}
+.wam-h{margin:16px 0 8px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.wam-h:first-child{margin-top:4px}
+.wam-list{display:flex;flex-direction:column;gap:6px;max-height:230px;overflow:auto;padding:2px}
+.wam-row{text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 12px;cursor:pointer;font-size:14px;line-height:1.35}
+.wam-row small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.wam-row.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));box-shadow:inset 3px 0 0 var(--accent)}
+.wam-chips{display:flex;flex-wrap:wrap;gap:8px}
+.wam-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 8px 7px 13px;font-size:14px;cursor:pointer}
+.wam-chip.on{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.wam-chip .x{opacity:.7;font-size:13px;padding:0 4px;border-radius:50%}
+.wam-chip .x:hover{opacity:1}
+.wam-add{display:grid;grid-template-columns:1fr 1.2fr auto;gap:8px;margin-top:10px}
+.wam-add input,#waQ,#waTxt{width:100%;border:1px solid var(--line);background:var(--field);color:var(--ink);border-radius:10px;padding:9px 12px;font:inherit;font-size:14px;box-sizing:border-box}
+#waQ{margin-bottom:8px}
+#waTxt{min-height:200px;resize:vertical;line-height:1.5;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px}
+.wam-acts{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+.wam-go{background:#25D366!important;color:#fff!important;border-color:transparent!important;font-weight:700}
+.wam-go:disabled{opacity:.45;cursor:not-allowed}
+@media (max-width:560px){ .wam-add{grid-template-columns:1fr} }
+
+/* ===== WhatsApp tab ===== */
+body[data-view="wa"] .wrap > :not(#heroCard):not(#waView){display:none!important}
+body[data-view="wa"] #topSearch,body[data-view="wa"] .m-search{display:none!important}
+.wa-wrap{display:none;padding-top:4px}
+body[data-view="wa"] #waView{display:block}
+.wa-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.wa-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}
+.wa-card h3{margin:0 0 10px;font-size:16px}
+.wa-card input,.wa-card textarea{width:100%;box-sizing:border-box;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--ink);font-size:14px;padding:0 12px;height:40px}
+.wa-card textarea{height:auto;min-height:230px;padding:12px;font-family:inherit;font-size:14.5px;line-height:1.55;resize:vertical;white-space:pre-wrap}
+.wa-plist,.wa-clist{max-height:380px;overflow:auto;display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.wa-item{display:block;width:100%;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);cursor:pointer;font:inherit}
+.wa-item b{display:block;font-size:14.5px}
+.wa-item small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
+.wa-item.on{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.wa-crow{display:flex;gap:6px;align-items:stretch}
+.wa-crow .wa-item{flex:1}
+.wa-del{flex:none;width:38px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--danger);cursor:pointer;font-size:14px}
+.wa-add{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-top:6px}
+.wa-add[hidden]{display:none}
+.wa-add .wa-hint{grid-column:1/-1;margin:0;color:var(--muted);font-size:12.5px}
+.wa-to{font-size:14px;color:var(--muted);margin:0 0 8px}
+.wa-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.wa-acts .wa-go{background:#25D366;color:#fff;border-color:transparent}
+.wa-acts button:disabled{opacity:.45;cursor:not-allowed}
+.wa-empty{color:var(--muted);font-size:13.5px;margin:6px 0}
+@media (max-width:820px){.wa-grid{grid-template-columns:1fr}.wa-add{grid-template-columns:1fr 1fr}.wa-add button{grid-column:1/-1}}
+.wa-prev{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--bg);border:1px dashed var(--line);font-size:14px;line-height:1.55;word-break:break-word;color:var(--ink)}
+.wa-prev:empty{display:none}
+.wa-prev a{color:#128C7E;font-weight:700;text-decoration:underline}
 </style>
 </head>
 <body>
@@ -1741,7 +1796,7 @@ body .pg-head h2{font-size:28px!important}
       <button class="btn nav-go active" id="navDash" type="button">Papan Pemuka</button>
       <button class="btn nav-go" id="navList" type="button">Pembelian<span class="nbadge" id="navCount">0</span></button>
       <button class="btn primary" id="btnNew" hidden>Pembelian baharu</button>
-      <button class="btn nav-go" id="navBud" type="button">Anggaran</button>
+      <button class="btn nav-go" id="navBud" type="button">Anggaran</button><button class="btn nav-go" id="navWa" type="button">💬 WhatsApp</button>
       <button class="btn" id="navRep" type="button">Laporan Anggaran</button>
       <button class="btn" id="navMn" type="button">Senarai Rujukan</button>
       <button class="btn" id="navSup" type="button">Senarai Pembekal</button>
@@ -7889,6 +7944,362 @@ applyLang();
     main.scrollTop = 0;
   };
   new MutationObserver(decorate).observe(art, {childList: true});
+})();
+</script>
+
+<dialog id="waDlg" aria-labelledby="waTitle">
+  <div class="dlg-head"><h3 id="waTitle">💬 Hantar kemas kini WhatsApp</h3><button type="button" class="btn" id="waClose">Tutup</button></div>
+  <div class="dlg-body">
+    <p class="wam-h">1. Pilih pembelian</p>
+    <input type="search" id="waQ" placeholder="Cari tajuk, PO, pembekal…" aria-label="Cari pembelian">
+    <div class="wam-list" id="waList"></div>
+    <p class="wam-h">2. Pilih penerima</p>
+    <div class="wam-chips" id="waChips"></div>
+    <div class="wam-add">
+      <input id="waName" placeholder="Nama" aria-label="Nama penerima">
+      <input id="waPhone" placeholder="No. WhatsApp (cth 6737xxxxxx)" inputmode="tel" aria-label="No. WhatsApp">
+      <button type="button" class="btn" id="waAdd">+ Tambah</button>
+    </div>
+    <p class="wam-h">3. Semak mesej</p>
+    <textarea id="waTxt" aria-label="Teks mesej"></textarea>
+    <div class="wam-acts">
+      <button type="button" class="btn" id="waCopy">Salin teks</button>
+      <button type="button" class="btn wam-go" id="waSend" disabled>Buka WhatsApp</button>
+    </div>
+    <p class="u-note" id="waNote" style="margin-top:8px"></p>
+  </div>
+</dialog>
+<script>
+(function(){
+  const LS = "apt-wa-contacts";
+  let contacts = []; try{ contacts = JSON.parse(localStorage.getItem(LS) || "[]") || []; }catch(e){}
+  const saveC = ()=>{ try{ localStorage.setItem(LS, JSON.stringify(contacts)); }catch(e){} };
+  const T = (ms, en)=> (typeof LANG !== "undefined" && LANG === "en") ? en : ms;
+  const $w = s=>document.querySelector(s);
+  let pick = null, who = null;
+
+  const link = it => location.href.split("#")[0] + "#p=" + encodeURIComponent(it.id);
+
+  function buildText(it){
+    const L = [];
+    L.push("*" + (it.title || "-") + "*");
+    const po = it.stages?.indent?.ref; if(po) L.push(T("No. PO", "PO No.") + ": " + po);
+    const amt = bestAmount(it); if(amt) L.push(T("Jumlah", "Total") + ": " + money(amt));
+    L.push("");
+    const cur = stageIndex(it), ci = cancelIdx(it), fin = ci < 0 && cur === STAGES.length;
+    STAGES.forEach((s, i)=>{
+      const st = it.stages?.[s.k] || {};
+      let icon, status;
+      if(ci >= 0 && i === ci){ icon = "❌"; status = T("dibatalkan", "cancelled"); }
+      else if(st.done){ icon = "✅"; const d = (s.k === "indent" && st.pdDate) ? st.pdDate : st.date; status = d ? fmtDate(d) : T("selesai", "done"); }
+      else if(ci < 0 && !fin && i === cur){ icon = "⏳"; status = T("SEDANG DI SINI", "CURRENT"); }
+      else { icon = "⬜"; status = T("belum", "not yet"); }
+      L.push(icon + " " + s.code + " - " + status);
+    });
+    L.push("");
+    if(ci >= 0) L.push(T("Status: Dibatalkan di " + STAGES[ci].code, "Status: Cancelled at " + STAGES[ci].code));
+    else if(fin) L.push(T("Status: Selesai ✅", "Status: Completed ✅"));
+    else {
+      const w = waitDays(it);
+      L.push(T("Kini di: " + STAGES[cur].code, "Now at: " + STAGES[cur].code) + (w > 0 ? T(", menunggu " + w + " hari", ", waiting " + w + " days") : ""));
+    }
+    L.push("", T("Lihat pembelian:", "View purchase:"), link(it));
+    return L.join("\n");
+  }
+
+  function renderList(){
+    const q = ($w("#waQ").value || "").trim().toLowerCase();
+    const list = items.filter(it=>{
+      if(!q) return true;
+      const hay = [it.title, it.stages?.indent?.ref, it.stages?.do?.ref, it.stages?.inv?.ref, supplierVal(it), it.id].join(" ").toLowerCase();
+      return hay.includes(q);
+    }).slice(0, 60);
+    $w("#waList").innerHTML = list.length ? list.map(it=>{
+      const cur = stageIndex(it), ci = cancelIdx(it), fin = ci < 0 && cur === STAGES.length;
+      const now = ci >= 0 ? T("Dibatalkan", "Cancelled") : fin ? T("Selesai", "Completed") : T("Kini di ", "Now at ") + STAGES[cur].code;
+      return `<button type="button" class="wam-row ${pick && pick.id === it.id ? "on" : ""}" data-id="${esc(it.id)}">${esc(it.title || "-")}<small>${esc(now)}${it.stages?.indent?.ref ? " · PO " + esc(it.stages.indent.ref) : ""}</small></button>`;
+    }).join("") : `<p class="u-note">${T("Tiada padanan.", "No match.")}</p>`;
+  }
+
+  function renderChips(){
+    const chips = contacts.map((c, i)=>`<span class="wam-chip ${who === i ? "on" : ""}" data-i="${i}">${esc(c.n)}<span class="x" data-del="${i}" title="${T("Buang", "Remove")}">✕</span></span>`);
+    chips.push(`<span class="wam-chip ${who === -1 ? "on" : ""}" data-i="-1">${T("Pilih sendiri dalam WhatsApp", "Pick in WhatsApp")}</span>`);
+    $w("#waChips").innerHTML = chips.join("");
+  }
+
+  function refresh(){
+    renderList(); renderChips();
+    if(pick) $w("#waTxt").value = buildText(pick);
+    else $w("#waTxt").value = "";
+    const ready = !!pick && who !== null;
+    $w("#waSend").disabled = !ready;
+    $w("#waNote").textContent = !pick ? T("Pilih pembelian dahulu.", "Pick a purchase first.")
+      : who === null ? T("Pilih penerima.", "Pick a recipient.") : "";
+  }
+
+  function open(itId){
+    if(itId){ const f = items.find(x=>x.id === itId); if(f) pick = f; }
+    refresh(); $w("#waDlg").showModal();
+  }
+
+  function send(){
+    if(!pick || who === null) return;
+    const txt = $w("#waTxt").value;
+    const url = who === -1 ? "https://wa.me/?text=" + encodeURIComponent(txt)
+      : "https://wa.me/" + contacts[who].p + "?text=" + encodeURIComponent(txt);
+    window.open(url, "_blank", "noopener");
+  }
+
+  function copy(){
+    const ta = $w("#waTxt"); ta.select();
+    const done = ()=>{ $w("#waNote").textContent = T("Teks telah disalin.", "Text copied."); };
+    if(navigator.clipboard) navigator.clipboard.writeText(ta.value).then(done, ()=>{ document.execCommand("copy"); done(); });
+    else { document.execCommand("copy"); done(); }
+  }
+
+  // wiring
+  $w("#navWa").onclick = ()=>{ try{ hdSetView("wa"); }catch(e){ open(); } };
+  $w("#waClose").onclick = ()=>$w("#waDlg").close();
+  $w("#waQ").addEventListener("input", renderList);
+  $w("#waList").addEventListener("click", e=>{ const b = e.target.closest("[data-id]"); if(!b) return; pick = items.find(x=>x.id === b.dataset.id) || null; refresh(); });
+  $w("#waChips").addEventListener("click", e=>{
+    const del = e.target.closest("[data-del]");
+    if(del){ const i = +del.dataset.del; contacts.splice(i, 1); saveC(); if(who === i) who = null; else if(who > i) who--; refresh(); return; }
+    const c = e.target.closest("[data-i]"); if(!c) return; who = +c.dataset.i; refresh();
+  });
+  $w("#waAdd").onclick = ()=>{
+    const n = $w("#waName").value.trim(), p = $w("#waPhone").value.replace(/\D/g, "");
+    if(!n || !p){ $w("#waNote").textContent = T("Isi nama dan no. WhatsApp.", "Enter a name and WhatsApp number."); return; }
+    contacts.push({n, p}); saveC(); who = contacts.length - 1;
+    $w("#waName").value = ""; $w("#waPhone").value = ""; refresh();
+  };
+  $w("#waSend").onclick = send;
+  $w("#waCopy").onclick = copy;
+  $w("#waTxt").addEventListener("input", ()=>{ $w("#waNote").textContent = ""; });
+
+  // deep link: https://.../index.html#p=<purchase id> opens that purchase once data is loaded
+  let tries = 0;
+  const t = setInterval(()=>{
+    tries++;
+    const m = /#p=([^&]+)/.exec(location.hash);
+    if(!m || tries > 240){ clearInterval(t); return; }
+    const id = decodeURIComponent(m[1]);
+    if(typeof items !== "undefined" && items.some(x=>x.id === id) && !document.querySelector("dialog[open]")){
+      clearInterval(t); openDlg(id);
+    }
+  }, 500);
+})();
+</script>
+
+<script>
+/* WhatsApp tab: choose a purchase and a recipient, check the plain text, then open WhatsApp with it.
+   Opening the app with ?p=ID goes straight to that purchase. */
+(function(){
+  const q = id => document.getElementById(id);
+  const lang = () => typeof LANG !== "undefined" && LANG === "en";
+  const tt = (ms, en) => lang() ? en : ms;
+  const S = {sel: null, to: null, contacts: []};
+  try{ S.contacts = JSON.parse(localStorage.getItem("apt-wa-contacts") || "[]") || []; }catch(e){}
+
+  // ---- the tab itself ----
+  const sec = document.createElement("section");
+  sec.className = "wa-wrap"; sec.id = "waView";
+  sec.innerHTML = `
+    <div class="wa-grid">
+      <div class="wa-card">
+        <h3 data-ms="1. Pilih pembelian" data-en="1. Choose a purchase"></h3>
+        <input type="search" id="waQ" data-pms="Cari tajuk, no. PO atau syarikat…" data-pen="Search title, PO no. or company…" aria-label="Cari pembelian">
+        <div class="wa-plist" id="waPList"></div>
+      </div>
+      <div class="wa-card">
+        <h3 data-ms="2. Pilih penerima" data-en="2. Choose a recipient"></h3>
+        <div class="wa-clist" id="waCList"></div>
+        <div class="wa-add" id="waAddRow">
+          <input id="waName" data-pms="Nama" data-pen="Name" aria-label="Nama">
+          <input id="waPhone" inputmode="tel" data-pms="No. telefon, cth. 7123456" data-pen="Phone no., e.g. 7123456" aria-label="No. telefon">
+          <button type="button" class="btn" id="waAdd" data-ms="Tambah" data-en="Add"></button>
+          <p class="wa-hint" data-ms="Nombor 7 digit akan ditambah kod negara 673 secara automatik." data-en="A 7-digit number gets country code 673 added automatically."></p>
+        </div>
+      </div>
+    </div>
+    <div class="wa-card">
+      <h3 data-ms="3. Semak mesej dan hantar" data-en="3. Check the message and send"></h3>
+      <p class="wa-to" id="waTo"></p>
+      <textarea id="waText" rows="11" data-pms="Pilih pembelian dahulu." data-pen="Choose a purchase first." aria-label="Mesej WhatsApp"></textarea>
+      <div class="wa-prev" id="waPrev"></div>
+      <div class="wa-acts">
+        <button type="button" class="btn wa-go" id="waSend" data-ms="Buka WhatsApp" data-en="Open WhatsApp"></button>
+        <button type="button" class="btn" id="waCopy" data-ms="Salin teks" data-en="Copy text"></button>
+        <button type="button" class="btn" id="waLink" data-ms="Salin pautan" data-en="Copy link"></button>
+        <button type="button" class="btn" id="waOpen" data-ms="Buka pembelian" data-en="Open purchase"></button>
+      </div>
+    </div>`;
+  document.querySelector(".wrap").appendChild(sec);
+
+  // ---- text helpers ----
+  function waShort(it){
+    const cur = stageIndex(it), ci = cancelIdx(it);
+    if(ci >= 0) return tt("Dibatalkan di ", "Cancelled at ") + STAGES[ci].code;
+    if(cur >= STAGES.length) return tt("Selesai", "Completed");
+    const pct = Math.round(STAGES.filter(s => it.stages?.[s.k]?.done).length / STAGES.length * 100);
+    return tt("Sekarang di ", "Now at ") + STAGES[cur].code + " · " + pct + "%";
+  }
+  function linkOf(id){ return location.href.split(/[?#]/)[0] + "?p=" + encodeURIComponent(id); }
+  function waMessage(it){
+    const cur = stageIndex(it), ci = cancelIdx(it), done = [], todo = [];
+    STAGES.forEach((s, i) => {
+      const st = it.stages?.[s.k];
+      if(st?.done){ const d = (s.k === "indent" && st.pdDate) ? st.pdDate : st.date; done.push(s.code + (d ? " (" + dmy(d) + ")" : "")); }
+      else if(ci < 0 && cur < STAGES.length && i > cur) todo.push(s.code);
+    });
+    const w = (ci < 0 && cur < STAGES.length) ? waitDays(it) : -1;
+    let now;
+    if(ci >= 0) now = tt("Dibatalkan di ", "Cancelled at ") + STAGES[ci].code;
+    else if(cur >= STAGES.length) now = tt("Semua langkah selesai", "All steps completed");
+    else now = STAGES[cur].code + (w > 0 ? tt(" (menunggu " + w + " hari)", " (waiting " + w + " days)") : "");
+    const po = it.stages?.indent?.ref, sup = supplierVal(it), amt = bestAmount(it);
+    const lines = [tt("Makluman pembelian", "Purchase update"), nameOf(it)];
+    if(po) lines.push(tt("No. PO: ", "PO no.: ") + po);
+    if(sup) lines.push(tt("Syarikat: ", "Company: ") + sup);
+    if(amt) lines.push(tt("Jumlah: ", "Total: ") + money(amt));
+    lines.push("");
+    lines.push(tt("Sudah selesai: ", "Done: ") + (done.length ? done.join(", ") : tt("belum ada", "none yet")));
+    lines.push(tt("Sekarang di: ", "Now at: ") + now);
+    if(todo.length) lines.push(tt("Belum: ", "Still to do: ") + todo.join(", "));
+    lines.push("");
+    lines.push(tt("Buka pembelian: ", "Open purchase: ") + linkOf(it.id));
+    return lines.join("\n");
+  }
+  function waNorm(v){
+    let d = String(v || "").replace(/\D/g, "");
+    if(d.startsWith("00")) d = d.slice(2);
+    if(d.length === 7) d = "673" + d;
+    return d.length >= 9 && d.length <= 15 ? d : "";
+  }
+  function copy(txt, msg){
+    const fallback = () => { const t = document.createElement("textarea"); t.value = txt; document.body.appendChild(t); t.select(); let ok = false; try{ ok = document.execCommand("copy"); }catch(e){} t.remove(); toast(ok ? msg : tt("Tidak dapat menyalin.", "Could not copy.")); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(() => toast(msg), fallback);
+    else fallback();
+  }
+
+  // ---- rendering ----
+  function labels(){
+    document.querySelectorAll("#waView [data-ms]").forEach(e => e.textContent = lang() ? e.dataset.en : e.dataset.ms);
+    document.querySelectorAll("#waView [data-pms]").forEach(e => e.placeholder = lang() ? e.dataset.pen : e.dataset.pms);
+  }
+  function renderPurchases(){
+    const qq = (q("waQ").value || "").trim().toLowerCase();
+    let list = items.slice().sort((a, b) => (Number(b.fileNo) || 0) - (Number(a.fileNo) || 0));
+    if(qq) list = list.filter(it => [nameOf(it), supplierVal(it), it.fileNo, it.stages?.indent?.ref, it.stages?.do?.ref, it.stages?.inv?.ref].some(v => String(v || "").toLowerCase().includes(qq)));
+    q("waPList").innerHTML = list.length
+      ? list.slice(0, 300).map(it => `<button type="button" class="wa-item ${it.id === S.sel ? "on" : ""}" data-id="${esc(it.id)}"><b>${esc(nameOf(it))}</b><small>${esc(waShort(it))}${it.fileNo ? " · #" + esc(it.fileNo) : ""}</small></button>`).join("")
+      : `<p class="wa-empty">${tt("Tiada pembelian dijumpai.", "No purchases found.")}</p>`;
+    q("waPList").querySelectorAll("[data-id]").forEach(b => b.onclick = () => pick(b.dataset.id));
+  }
+  function renderContacts(){
+    q("waAddRow").hidden = !canEdit;
+    const host = q("waCList");
+    host.innerHTML = S.contacts.length
+      ? S.contacts.map(c => `<div class="wa-crow"><button type="button" class="wa-item ${c.p === S.to ? "on" : ""}" data-p="${esc(c.p)}"><b>${esc(c.n)}</b><small>+${esc(c.p)}</small></button>${canEdit ? `<button type="button" class="wa-del" data-dp="${esc(c.p)}" aria-label="${tt("Buang", "Remove")}">✕</button>` : ""}</div>`).join("")
+      : `<p class="wa-empty">${tt("Belum ada nama. Tambah di bawah.", "No contacts yet. Add one below.")}</p>`;
+    host.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { S.to = b.dataset.p; renderContacts(); renderSend(); });
+    host.querySelectorAll("[data-dp]").forEach(b => b.onclick = () => {
+      const c = S.contacts.find(x => x.p === b.dataset.dp); if(!c) return;
+      if(!confirm(tt("Buang " + c.n + " dari senarai?", "Remove " + c.n + " from the list?"))) return;
+      if(S.to === c.p) S.to = null;
+      saveContacts(S.contacts.filter(x => x.p !== c.p));
+    });
+  }
+  function renderSend(){
+    const c = S.contacts.find(x => x.p === S.to), ok = !!S.sel;
+    q("waTo").textContent = c
+      ? tt("Kepada: ", "To: ") + c.n + " (+" + c.p + ")"
+      : tt("Belum pilih penerima. Butang akan buka WhatsApp supaya anda boleh pilih sendiri.", "No recipient chosen. The button opens WhatsApp so you can pick one.");
+    ["waSend", "waCopy", "waLink", "waOpen"].forEach(id => q(id).disabled = !ok);
+  }
+  function renderPrev(){
+    const E = c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]);
+    const t = q("waText").value || "";
+    q("waPrev").innerHTML = t.replace(/[&<>"']/g, E)
+      .replace(/https?:\/\/[^\s<]+/g, u => '<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>')
+      .replace(/\n/g, "<br>");
+  }
+  function renderWa(){ labels(); renderPurchases(); renderContacts(); renderSend(); renderPrev(); }
+  function pick(id){
+    S.sel = id; const it = items.find(x => x.id === id);
+    q("waText").value = it ? waMessage(it) : ""; renderPrev();
+    renderPurchases(); renderSend();
+  }
+
+  // ---- shared contacts (same storage as the other settings), with a local copy ----
+  function saveContacts(list){
+    S.contacts = list;
+    try{ localStorage.setItem("apt-wa-contacts", JSON.stringify(list)); }catch(e){}
+    if(typeof db !== "undefined" && db && typeof col !== "undefined" && col){
+      Promise.resolve(db.collection("settings").doc("waContacts").set({list, updated: Date.now()}))
+        .catch(() => toast(tt("Tidak dapat menyimpan ke storan kongsi. Cuba lagi.", "Could not save to shared storage. Try again.")));
+    }
+    renderContacts(); renderSend();
+  }
+  let watched = false;
+  function watch(){
+    if(watched || typeof db === "undefined" || !db || typeof col === "undefined" || !col) return;
+    watched = true;
+    db.collection("settings").onSnapshot(snap => {
+      const d = snap.docs.find(x => x.id === "waContacts"); if(!d) return;
+      const v = d.data() || {};
+      if(Array.isArray(v.list)){
+        S.contacts = v.list.filter(c => c && c.n && c.p);
+        try{ localStorage.setItem("apt-wa-contacts", JSON.stringify(S.contacts)); }catch(e){}
+        renderContacts(); renderSend();
+      }
+    });
+  }
+  const wt = setInterval(() => { watch(); if(watched) clearInterval(wt); }, 500);
+
+  // ---- events ----
+  q("waQ").addEventListener("input", renderPurchases);
+  q("waAdd").onclick = () => {
+    if(!canEdit) return;
+    const n = q("waName").value.trim(), p = waNorm(q("waPhone").value);
+    if(!n){ toast(tt("Sila isi nama.", "Please enter a name.")); return; }
+    if(!p){ toast(tt("Nombor telefon tidak sah.", "Phone number is not valid.")); return; }
+    S.to = p; q("waName").value = ""; q("waPhone").value = "";
+    saveContacts(S.contacts.filter(c => c.p !== p).concat({n, p}).sort((a, b) => a.n.localeCompare(b.n)));
+  };
+  q("waText").addEventListener("input", renderPrev);
+  q("waSend").onclick = () => {
+    const url = "https://wa.me/" + (S.to || "") + "?text=" + encodeURIComponent(q("waText").value);
+    window.open(url, "_blank", "noopener");
+  };
+  q("waCopy").onclick = () => copy(q("waText").value, tt("Teks disalin.", "Text copied."));
+  q("waLink").onclick = () => S.sel && copy(linkOf(S.sel), tt("Pautan disalin.", "Link copied."));
+  q("waOpen").onclick = () => S.sel && openDlg(S.sel);
+
+  // ---- side menu item and view switching ----
+  const nb = q("navBud"), wb = nb.cloneNode(false);
+  wb.id = "navWaTab"; wb.textContent = "WhatsApp"; wb.classList.remove("active");
+  nb.after(wb);
+  wb.onclick = () => hdSetView("wa");
+
+  { const hv = hdSetView; hdSetView = function(v){ hv(v); if(v === "wa") renderWa(); try{ q("navWaTab").classList.toggle("active", v === "wa"); }catch(e){} }; }
+  { const hp = hdUpdatePg; hdUpdatePg = function(){
+      if(hdView === "wa"){ q("pgTitle").textContent = "WhatsApp"; q("pgSub").textContent = tt("Pilih pembelian dan penerima, semak mesej, kemudian hantar.", "Pick a purchase and a recipient, check the message, then send."); return; }
+      hp(); }; }
+  { const r0 = render; render = function(){ r0.apply(this, arguments); try{ if(hdView === "wa") renderPurchases(); }catch(e){} }; }
+  { const al = applyLang; applyLang = function(){ al.apply(this, arguments); try{ labels(); if(hdView === "wa") renderWa(); }catch(e){} }; }
+
+  // ---- open a purchase straight from a link: ...?p=ID ----
+  const pid = new URLSearchParams(location.search).get("p");
+  if(pid){
+    let tries = 0;
+    const t = setInterval(() => {
+      tries++;
+      if(typeof items !== "undefined" && items.some(x => x.id === pid)){ clearInterval(t); pick(pid); openDlg(pid); }
+      else if(tries > 360){ clearInterval(t); toast(tt("Pembelian ini tidak dijumpai.", "This purchase was not found.")); }
+    }, 500);
+  }
+  labels();
 })();
 </script>
 </body>
