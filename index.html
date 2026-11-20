@@ -8574,5 +8574,41 @@ body:has(#msLogin) #uxCpBtn, body:has(#msLogin) #uxCp, body:has(#msGate:not([hid
   setInterval(sync, 700);
 })();
 </script>
+
+<style id="ux-search-place">
+/* Search lives in the bottom menu (phone) and the side menu (desktop), not floating over the content */
+.ux-cp-btn{display:none!important}
+#uxCpNav{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border:1px solid transparent;border-radius:20px;background:none;color:var(--muted);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+#uxCpNav svg{width:22px;height:22px}
+#uxCpSide{display:flex;align-items:center;gap:10px}
+#uxCpSide kbd{margin-left:auto;font:inherit;font-size:11px;opacity:.7;border:1px solid currentColor;border-radius:6px;padding:0 6px}
+body:has(#msLogin) #uxCpNav,body:has(#msLogin) #uxCpSide,body:has(#msGate:not([hidden])) #uxCpNav,body:has(#msGate:not([hidden])) #uxCpSide,body:has(#gate:not([hidden])) #uxCpNav,body:has(#gate:not([hidden])) #uxCpSide{display:none!important}
+</style>
+
+<script>
+/* Put the Cari button in the bottom menu and in the side menu */
+(function(){
+  const open = () => { const b = document.getElementById("uxCpBtn"); if(b) b.click(); };
+  const ic = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>';
+
+  const bnav = document.getElementById("bnav");
+  if(bnav && !document.getElementById("uxCpNav")){
+    const b = document.createElement("button");
+    b.type = "button"; b.id = "uxCpNav"; b.setAttribute("aria-label", "Cari");
+    b.innerHTML = ic + "<span>Cari</span>";
+    b.addEventListener("click", open);
+    bnav.appendChild(b);
+  }
+
+  const side = document.querySelector("#sideNav .actions");
+  if(side && !document.getElementById("uxCpSide")){
+    const b = document.createElement("button");
+    b.type = "button"; b.id = "uxCpSide"; b.className = "btn nav-go"; b.setAttribute("aria-label", "Cari");
+    b.innerHTML = ic + "<span>Cari</span><kbd>Ctrl K</kbd>";
+    b.addEventListener("click", open);
+    side.appendChild(b);
+  }
+})();
+</script>
 </body>
 </html>
