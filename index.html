@@ -8629,5 +8629,49 @@ body:has(#msLogin) #uxCpNav,body:has(#msLogin) #uxCpSide,body:has(#msGate:not([h
 /* Remove the "upload documents to fill in automatically" box from the purchase form */
 #autoBox,#autoBox *{display:none!important}
 </style>
+
+<style id="ux-search-top">
+/* Search sits at the top of the side menu, always visible, no scrolling needed */
+#uxCpSide{display:none!important}
+#uxCpTop{display:flex;align-items:center;gap:10px;width:calc(100% - 4px);margin:12px 2px 14px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 70%,transparent);color:var(--muted);font:inherit;font-size:14px;cursor:pointer;text-align:left;transition:border-color .15s,background .15s}
+#uxCpTop:hover{border-color:var(--accent);color:var(--ink)}
+#uxCpTop svg{width:18px;height:18px;flex:none}
+#uxCpTop span{flex:1}
+#uxCpTop kbd{font:inherit;font-size:11px;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;opacity:.8}
+body:has(#msLogin) #uxCpTop,body:has(#msGate:not([hidden])) #uxCpTop,body:has(#gate:not([hidden])) #uxCpTop{display:none!important}
+@media (max-width:820px){ #uxCpTop{display:none!important} }
+</style>
+
+<script>
+/* Put the Cari search right under the title in the side menu */
+(function(){
+  const host = document.querySelector("#sideNav .hero-txt");
+  if(!host || document.getElementById("uxCpTop")) return;
+  const b = document.createElement("button");
+  b.type = "button"; b.id = "uxCpTop"; b.setAttribute("aria-label", "Cari");
+  b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Cari halaman atau pembelian…</span><kbd>Ctrl K</kbd>';
+  b.addEventListener("click", () => { const o = document.getElementById("uxCpBtn"); if(o) o.click(); });
+  host.after(b);
+})();
+</script>
+
+<script>
+/* Keep one WhatsApp item in the side menu (the one near the top). Remove the copy under Anggaran. */
+(function(){
+  const dup = document.getElementById("navWaTab");
+  if(dup) dup.remove();
+  const h = hdSetView;
+  hdSetView = function(v){
+    h(v);
+    const n = document.getElementById("navWa");
+    if(n) n.classList.toggle("active", v === "wa");
+  };
+})();
+</script>
+
+<style id="ux-one-whatsapp">
+/* Keep one WhatsApp item in the side menu (the one that opens the WhatsApp tab) */
+#sideNav #navWa{display:none!important}
+</style>
 </body>
 </html>
