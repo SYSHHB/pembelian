@@ -8673,5 +8673,23 @@ body:has(#msLogin) #uxCpTop,body:has(#msGate:not([hidden])) #uxCpTop,body:has(#g
 /* Keep one WhatsApp item in the side menu (the one that opens the WhatsApp tab) */
 #sideNav #navWa{display:none!important}
 </style>
+
+<script>
+/* Keep one WhatsApp item in the side menu, inside the "Menu Utama" group, right after Papan Pemuka */
+(function(){
+  function fixWa(){
+    const side = document.getElementById("sideNav"), dash = document.getElementById("navDash");
+    if(!side || !dash) return;
+    const keep = document.getElementById("navWaTab") || document.getElementById("navWa");
+    if(!keep) return;
+    side.querySelectorAll("button").forEach(b => {
+      if(b !== keep && /WhatsApp/.test(b.textContent)) b.remove();
+    });
+    if(keep.previousElementSibling !== dash) dash.after(keep);
+  }
+  fixWa();
+  setInterval(fixWa, 1000);
+})();
+</script>
 </body>
 </html>
