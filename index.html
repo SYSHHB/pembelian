@@ -8145,8 +8145,29 @@ applyLang();
     return tt("Sekarang di ", "Now at ") + STAGES[cur].code + " · " + pct + "%";
   }
   function linkOf(id){ return location.href.split(/[?#]/)[0] + "?p=" + encodeURIComponent(id); }
+  // live date and time (Brunei time), e.g. 20-Nov-2026, 14:35
+  function stampNow(){
+    const f = new Intl.DateTimeFormat("en-GB", {timeZone: "Asia/Brunei", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23"});
+    const p = Object.fromEntries(f.formatToParts(new Date()).map(x => [x.type, x.value]));
+    const M = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return p.day + "-" + M[+p.month - 1] + "-" + p.year + ", " + p.hour + ":" + p.minute;
+  }
+  // refresh the date/time in the header right before sharing or copying
+  function freshText(){
+    const ta = q("waText");
+    const v = ta.value.replace(/^([^\n(]*\()[^)\n]*\)/, (m, a) => a + stampNow() + ")");
+    ta.value = v; renderPrev();
+    return v;
+  }
   function waMessage(it){
-    // Same layout in both languages; labels follow the app language (BM / English)
+    const en = lang();
+    const L = {
+      head: en ? "Update from Purchase Tracker System" : "Kemas kini daripada Purchase Tracker System",
+      title: en ? "Title" : "Tajuk", po: en ? "PO no." : "No. PO", co: en ? "Company" : "Syarikat", tot: en ? "Total" : "Jumlah",
+      done: en ? "Done" : "Sudah selesai", now: en ? "Now at" : "Sekarang di", todo: en ? "Still to do" : "Belum selesai",
+      link: en ? "Open purchase" : "Buka pembelian", none: en ? "none yet" : "belum ada", completed: en ? "Completed" : "Selesai",
+      cancelled: en ? "Cancelled at " : "Dibatalkan di ", wait: en ? " (waiting N days)" : " (menunggu N hari)"
+    };
     const cur = stageIndex(it), ci = cancelIdx(it), done = [], todo = [];
     STAGES.forEach((s, i) => {
       const st = it.stages?.[s.k];
@@ -8155,21 +8176,23 @@ applyLang();
     });
     const w = (ci < 0 && cur < STAGES.length) ? waitDays(it) : -1;
     let now;
-    if(ci >= 0) now = tt("Dibatalkan di ", "Cancelled at ") + STAGES[ci].code;
-    else if(cur >= STAGES.length) now = tt("Selesai", "Completed");
-    else now = STAGES[cur].code + (w > 0 ? tt(" (menunggu " + w + " hari)", " (waiting " + w + " days)") : "");
+    if(ci >= 0) now = L.cancelled + STAGES[ci].code;
+    else if(cur >= STAGES.length) now = L.completed;
+    else now = STAGES[cur].code + (w > 0 ? L.wait.replace("N", w) : "");
     const po = it.stages?.indent?.ref || "-", sup = supplierVal(it) || "-", amt = bestAmount(it);
     const lines = [
-      tt("Tajuk: ", "Title: ") + nameOf(it),
-      tt("No. PO: ", "PO no.: ") + po,
-      tt("Syarikat: ", "Company: ") + sup,
-      tt("Jumlah: ", "Total: ") + (amt ? money(amt) : "-"),
+      L.head + " (" + stampNow() + ")",
       "",
-      tt("Sudah selesai: ", "Done: ") + (done.length ? done.join(", ") : tt("belum ada", "none yet")),
-      tt("Sekarang di: ", "Now at: ") + now,
+      L.title + ": " + nameOf(it),
+      L.po + ": " + po,
+      L.co + ": " + sup,
+      L.tot + ": " + (amt ? money(amt) : "-"),
+      "",
+      L.done + ": " + (done.length ? done.join(", ") : L.none),
+      L.now + ": " + now,
     ];
-    if(todo.length) lines.push(tt("Belum: ", "Still to do: ") + todo.join(", "));
-    lines.push("", tt("Buka pembelian: ", "Open purchase: ") + linkOf(it.id));
+    if(todo.length) lines.push(L.todo + ": " + todo.join(", "));
+    lines.push("", L.link + ": " + linkOf(it.id));
     return lines.join("\n");
   }
   function waNorm(v){
@@ -8277,10 +8300,10 @@ applyLang();
   };
   q("waText").addEventListener("input", renderPrev);
   q("waSend").onclick = () => {
-    const url = "https://wa.me/" + (S.to || "") + "?text=" + encodeURIComponent(q("waText").value);
+    const url = "https://wa.me/" + (S.to || "") + "?text=" + encodeURIComponent(freshText());
     window.open(url, "_blank", "noopener");
   };
-  q("waCopy").onclick = () => copy(q("waText").value, tt("Teks disalin.", "Text copied."));
+  q("waCopy").onclick = () => copy(freshText(), tt("Teks disalin.", "Text copied."));
   q("waLink").onclick = () => S.sel && copy(linkOf(S.sel), tt("Pautan disalin.", "Link copied."));
   q("waOpen").onclick = () => S.sel && openDlg(S.sel);
 
@@ -8295,7 +8318,7 @@ applyLang();
       if(hdView === "wa"){ q("pgTitle").textContent = "WhatsApp"; q("pgSub").textContent = tt("Pilih pembelian dan penerima, semak mesej, kemudian hantar.", "Pick a purchase and a recipient, check the message, then send."); return; }
       hp(); }; }
   { const r0 = render; render = function(){ r0.apply(this, arguments); try{ if(hdView === "wa") renderPurchases(); }catch(e){} }; }
-  { const al = applyLang; applyLang = function(){ al.apply(this, arguments); try{ labels(); if(hdView === "wa") renderWa(); }catch(e){} }; }
+  { const al = applyLang; applyLang = function(){ al.apply(this, arguments); try{ labels(); if(hdView === "wa"){ renderWa(); const it = S.sel && items.find(x => x.id === S.sel); if(it){ q("waText").value = waMessage(it); renderPrev(); } } }catch(e){} }; }
 
   // ---- open a purchase straight from a link: ...?p=ID ----
   const pid = new URLSearchParams(location.search).get("p");
