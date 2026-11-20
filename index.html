@@ -8675,20 +8675,27 @@ body:has(#msLogin) #uxCpTop,body:has(#msGate:not([hidden])) #uxCpTop,body:has(#g
 </style>
 
 <script>
-/* Keep one WhatsApp item in the side menu, inside the "Menu Utama" group, right after Papan Pemuka */
+/* Side menu: exactly one WhatsApp item, in the "Menu Utama" group right after Papan Pemuka. Recreated if the menu is redrawn. */
 (function(){
-  function fixWa(){
+  const WA = '<svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#25D366"/><path d="M12 5.4a6.6 6.6 0 0 0-5.7 9.9l-.9 3.2 3.3-.9A6.6 6.6 0 1 0 12 5.4z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.4 9.3c.2-.4.4-.4.6-.4h.4c.1 0 .3 0 .4.3l.6 1.4c.1.2 0 .4-.1.5l-.4.5c.5 1 1.3 1.8 2.3 2.3l.5-.5c.1-.1.3-.2.5-.1l1.4.7c.2.1.3.2.3.4v.4c0 .2-.2.6-.5.8-.4.3-1 .4-1.6.2-1.7-.5-3.2-1.8-4.1-3.5-.4-.8-.5-1.6-.3-2.2z" fill="#fff"/></svg>';
+  function ensureWa(){
     const side = document.getElementById("sideNav"), dash = document.getElementById("navDash");
     if(!side || !dash) return;
-    const keep = document.getElementById("navWaTab") || document.getElementById("navWa");
-    if(!keep) return;
-    side.querySelectorAll("button").forEach(b => {
-      if(b !== keep && /WhatsApp/.test(b.textContent)) b.remove();
-    });
-    if(keep.previousElementSibling !== dash) dash.after(keep);
+    const all = [...side.querySelectorAll("button")].filter(b => /WhatsApp/.test(b.textContent));
+    let wa = all.find(b => b.previousElementSibling === dash) || all[0] || null;
+    all.forEach(b => { if(b !== wa) b.remove(); });
+    if(!wa){
+      wa = document.createElement("button");
+      wa.type = "button"; wa.className = "btn nav-go";
+      wa.innerHTML = WA + "<span>WhatsApp</span>";
+      wa.onclick = () => hdSetView("wa");
+    }
+    wa.id = "navWaTab";
+    if(wa.previousElementSibling !== dash) dash.after(wa);
+    wa.classList.toggle("active", typeof hdView !== "undefined" && hdView === "wa");
   }
-  fixWa();
-  setInterval(fixWa, 1000);
+  ensureWa();
+  setInterval(ensureWa, 800);
 })();
 </script>
 </body>
