@@ -2,6 +2,13 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-wQD+Hp1wShseiXEHPlsVTu/qNr5zAIh1i7UV+ukT5Fk=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-+pWRKbIU9mVknT7nYHoou8YjecGgz/mHjd59moNiz1I=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-7Ko7rTmIFCH+50ouMP/G9lyXZXo4IJjfj7SjwAyqRCM=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="referrer" content="no-referrer">
+<script>
+/* Frame guard: do not run inside a page from another origin (clickjacking). A same-origin frame (Microsoft sign-in renewal) is fine. */
+try{ if(window.top !== window.self){ void window.top.location.href; } }
+catch(e){ try{ window.stop(); }catch(x){} document.documentElement.innerHTML = ""; }
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.json?v=3">
 <meta name="theme-color" content="#0f5e34">
@@ -2253,11 +2260,7 @@ const SRI = {
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js": "",
   "https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js": "",
   "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js": "",
-  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js": "",
-  "https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.4/lib/msal-browser.min.js": "",
-  "https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js": "",
-  "https://alcdn.msftauth.net/browser/2.38.2/js/msal-browser.min.js": "",
-  "https://unpkg.com/@azure/msal-browser@2.38.4/lib/msal-browser.min.js": ""
+  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js": ""
 };
 const sriApply = (sc, src)=>{ const h = (typeof SRI !== "undefined" && SRI[src]) || ""; if(h){ sc.integrity = h; sc.crossOrigin = "anonymous"; } };
 
@@ -2271,7 +2274,9 @@ const CONFIG = {
   folderUrl: "https://syayasanedu-my.sharepoint.com/personal/it_helpdesk_syayasan_edu_bn/Documents/Sistem%20Pemantauan%20Pembelian",   // the shared folder in the owner's OneDrive
   folderName: "Sistem Pemantauan Pembelian",
   docsFolder: "Dokumen",
-  pollSeconds: 30
+  pollSeconds: 30,
+  idleMinutes: 30,            // sign out automatically after this many minutes with no activity (0 = off)
+  tokenStorage: "localStorage" // "sessionStorage" = sign-in is forgotten when the tab/browser closes (safer on shared computers)
 };
 
 (function(){
@@ -2290,12 +2295,9 @@ const CONFIG = {
     return;
   }
   // Load the Microsoft sign-in library, trying several copies in case one is blocked.
-  const MSAL_SOURCES = [
-    "https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.4/lib/msal-browser.min.js",
-    "https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js",
-    "https://alcdn.msftauth.net/browser/2.38.2/js/msal-browser.min.js",
-    "https://unpkg.com/@azure/msal-browser@2.38.4/lib/msal-browser.min.js"
-  ];
+  // The Microsoft sign-in library is built into this file. It is deliberately NOT downloaded from any CDN:
+  // that code handles the access tokens, so it must never come from outside.
+  const MSAL_SOURCES = [];
   const loadScript = src=>new Promise((res, rej)=>{ const sc = document.createElement("script"); sc.src = src; sriApply(sc, src); sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
   let useImpl = null, implReady;
   const implPromise = new Promise(r=>implReady = r);
@@ -2318,7 +2320,7 @@ const CONFIG = {
   const redirectUri = location.origin + location.pathname.replace(/index\.html$/, "");
   const pca = new msal.PublicClientApplication({
     auth: {clientId: CONFIG.clientId, authority: `https://login.microsoftonline.com/${CONFIG.tenant}`, redirectUri},
-    cache: {cacheLocation: "localStorage"}
+    cache: {cacheLocation: CONFIG.tokenStorage === "sessionStorage" ? "sessionStorage" : "localStorage"}
   });
   let account = null, me = null, readyResolve;
   const ready = new Promise(r=>readyResolve = r);
@@ -2400,6 +2402,20 @@ const CONFIG = {
     const b = document.createElement("button");
     b.type = "button"; b.className = "btn"; b.id = "msSignOut"; b.textContent = "Log keluar"; b.title = "Log keluar"; b.onclick = signOut;
     host.appendChild(b);
+  }
+
+  /* ---------- Automatic sign-out after inactivity ---------- */
+  function startIdleLock(){
+    const ms = (+CONFIG.idleMinutes || 0) * 60000; if(!ms) return;
+    const KEY = "apt-last-active";   // shared by all open tabs, so activity in any tab keeps the others signed in
+    let last = 0, done = false;
+    const mark = ()=>{ const n = Date.now(); if(n - last < 5000) return; last = n; try{ localStorage.setItem(KEY, String(n)); }catch(e){} };
+    const idleFor = ()=>{ let t = 0; try{ t = +localStorage.getItem(KEY) || 0; }catch(e){} return Date.now() - (t || last || Date.now()); };
+    const check = ()=>{ if(!done && idleFor() > ms){ done = true; try{ localStorage.removeItem(KEY); }catch(e){} signOut(); } };
+    mark();
+    ["pointerdown", "keydown", "touchstart", "wheel", "mousemove"].forEach(ev=>addEventListener(ev, mark, {passive:true, capture:true}));
+    document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState === "visible") check(); });
+    setInterval(check, 20000);
   }
 
   /* ---------- Microsoft Graph ---------- */
@@ -2683,7 +2699,7 @@ const CONFIG = {
     // A guest invited from another organisation signs in as name_theirdomain#EXT#@..., so use their real e-mail address.
     const uname = String(account.username || ""), claims = account.idTokenClaims || {};
     const gm = uname.match(/^(.+)_([^_#]+)#ext#@/i);
-    const email = (/#ext#/i.test(uname) ? String(claims.email || (gm ? `${gm[1]}@${gm[2]}` : uname)) : uname).toLowerCase();
+    const email = (/#ext#/i.test(uname) ? String(gm ? `${gm[1]}@${gm[2]}` : (claims.email || uname)) : uname).toLowerCase();   // the account name wins over the "email" claim, which the user can influence
     if(!CONFIG.emailDomains.some(d=>email.endsWith(d))){ showSignIn(`Akaun ${email} bukan akaun ${CONFIG.emailDomains.map(d=>d.slice(1)).join(" / ")}. Log masuk dengan akaun sekolah anda.`); return; }
     me = {email, name: account.name || email};
     hideOverlay(); if(window.__splash) window.__splash.show();   // the loading screen is shown while the folder opens
@@ -2699,6 +2715,7 @@ const CONFIG = {
     }
     hideOverlay();
     addSignOut();
+    startIdleLock();
     readyResolve();
   })();
   }
@@ -3244,6 +3261,46 @@ const GENERAL = ["fileNo","title","requester","position","division","forWho","bu
 const LS_KEY = "asset-purchase-tracker-v2";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+/* Only https: web addresses may become links. This blocks javascript:, data:, vbscript: and similar, including tricks like java&#9;script: */
+function safeUrl(u, allowMail){
+  const s = String(u == null ? "" : u).trim();
+  if(!s) return "about:blank";
+  try{
+    const x = new URL(s, location.href);
+    if(x.protocol === "https:" || (allowMail && (x.protocol === "http:" || x.protocol === "mailto:"))) return x.href;
+  }catch(e){}
+  return "about:blank";
+}
+/* Rebuild the HTML that mammoth makes from a .docx using an allow-list of tags and attributes (nothing else survives). */
+const DOCX_KEEP = new Set(["P","BR","STRONG","B","EM","I","U","S","SUB","SUP","H1","H2","H3","H4","H5","H6","UL","OL","LI","TABLE","THEAD","TBODY","TFOOT","TR","TH","TD","A","IMG","BLOCKQUOTE","SPAN","DIV","PRE","CODE","HR"]);
+const DOCX_DROP = new Set(["SCRIPT","STYLE","IFRAME","OBJECT","EMBED","LINK","META","FORM","NOSCRIPT","TEMPLATE","SVG","MATH","BASE","FRAME","FRAMESET","APPLET"]);
+function cleanDocxHtml(html){
+  const src = new DOMParser().parseFromString(String(html || ""), "text/html").body;
+  const out = document.createDocumentFragment();
+  const walk = (from, to)=>{
+    from.childNodes.forEach(n=>{
+      if(n.nodeType === 3){ to.appendChild(document.createTextNode(n.nodeValue)); return; }
+      if(n.nodeType !== 1) return;
+      const tag = n.tagName;
+      if(DOCX_DROP.has(tag)) return;
+      if(!DOCX_KEEP.has(tag)){ walk(n, to); return; }
+      const el = document.createElement(tag.toLowerCase());
+      if(tag === "A"){
+        const h = safeUrl(n.getAttribute("href"), true);
+        if(h !== "about:blank"){ el.setAttribute("href", h); el.target = "_blank"; el.rel = "noopener noreferrer"; }
+      } else if(tag === "IMG"){
+        const s = String(n.getAttribute("src") || "").trim();
+        if(!/^data:image\/(png|jpe?g|gif|webp);base64,[a-z0-9+\/=\s]+$/i.test(s)) return;
+        el.setAttribute("src", s); el.setAttribute("alt", String(n.getAttribute("alt") || "").slice(0, 200));
+      } else if(tag === "TD" || tag === "TH"){
+        ["colspan", "rowspan"].forEach(a=>{ const v = parseInt(n.getAttribute(a), 10); if(v > 0 && v < 50) el.setAttribute(a, String(v)); });
+      }
+      walk(n, el); to.appendChild(el);
+    });
+  };
+  walk(src, out);
+  return out;
+}
 const money = n => "B$" + Number(n||0).toLocaleString("en-GB",{minimumFractionDigits:2,maximumFractionDigits:2});
 
 let items = [];
@@ -3568,7 +3625,7 @@ function addPeriod(iso, code){
 }
 function filesHTML(k){
   const list = draftFiles[k]||[];
-  const links = list.map((f,i)=>`<span class="file">${String(f.url||"").startsWith("db:") || String(f.url||"").startsWith("data:") ? `<a href="#" data-dl="${k}:${i}" title="Muat turun">${esc(f.name)}</a>` : `<a href="${esc(f.od||f.url)}" target="_blank" rel="noopener">${esc(f.name)}</a>`}${f.od?`<a class="od" href="${esc(f.od)}" target="_blank" rel="noopener" title="Buka di OneDrive">OneDrive</a>`:""}${canEdit && k==="awardLetter" && /\.(pdf|docx|jpe?g|png|webp)$/i.test(f.name) ? `<button type="button" class="readl" data-readl="${k}:${i}" title="Baca nama syarikat dan rujukan daripada surat ini">Baca surat</button>` : ""}${canEdit?`<button type="button" data-rm="${k}:${i}" aria-label="Buang ${esc(f.name)}">✕</button>`:""}</span>`).join("");
+  const links = list.map((f,i)=>`<span class="file">${String(f.url||"").startsWith("db:") || String(f.url||"").startsWith("data:") ? `<a href="#" data-dl="${k}:${i}" title="Muat turun">${esc(f.name)}</a>` : `<a href="${esc(safeUrl(f.od||f.url))}" target="_blank" rel="noopener noreferrer">${esc(f.name)}</a>`}${f.od?`<a class="od" href="${esc(safeUrl(f.od))}" target="_blank" rel="noopener noreferrer" title="Buka di OneDrive">OneDrive</a>`:""}${canEdit && k==="awardLetter" && /\.(pdf|docx|jpe?g|png|webp)$/i.test(f.name) ? `<button type="button" class="readl" data-readl="${k}:${i}" title="Baca nama syarikat dan rujukan daripada surat ini">Baca surat</button>` : ""}${canEdit?`<button type="button" data-rm="${k}:${i}" aria-label="Buang ${esc(f.name)}">✕</button>`:""}</span>`).join("");
   const up = (canEdit && assets && attachOK(k)) ? `<label class="upl">Lampirkan fail<input type="file" data-up="${k}" accept="${FILE_ACCEPT}" multiple></label>` : "";
   if(!links && !up) return "";
   return `<div class="files">${links}${up}</div>`;
@@ -4992,12 +5049,12 @@ function dvError(host, f, e){
   host.querySelector('[data-a="retry"]').onclick = showDoc;
   host.querySelector('[data-a="dl"]').textContent = "Muat turun";
   host.querySelector('[data-a="dl"]').onclick = downloadDoc;
-  const a = host.querySelector("a.btn"); if(a){ a.textContent = "Buka di OneDrive"; a.href = f.od; }
+  const a = host.querySelector("a.btn"); if(a){ a.textContent = "Buka di OneDrive"; a.href = safeUrl(f.od); }
 }
 async function showDoc(){
   const f = dvFiles[dvIdx], host = $("#dvPages");
   $("#dvHint").textContent = f.name;
-  const od = $("#dvOd"); od.hidden = !f.od; if(f.od) od.href = f.od;
+  const od = $("#dvOd"); od.hidden = !f.od; if(f.od) od.href = safeUrl(f.od);
   host.innerHTML = `<div class="dv-msg">Memuatkan dokumen…</div>`;
   let blob;
   try{ blob = await (await fetchFile(f.url)).blob(); }
@@ -5007,12 +5064,9 @@ async function showDoc(){
     try{
       await loadScript(LIBS.mammoth);
       const r = await window.mammoth.convertToHtml({arrayBuffer: await blob.arrayBuffer()});
-      const dom = new DOMParser().parseFromString(r.value || "", "text/html");
-      dom.querySelectorAll("script,style,iframe,object,embed,link,meta,form").forEach(n=>n.remove());
-      dom.querySelectorAll("*").forEach(n=>[...n.attributes].forEach(a=>{ if(/^on/i.test(a.name) || /^\s*javascript:/i.test(a.value)) n.removeAttribute(a.name); }));
-      dom.querySelectorAll("a").forEach(a=>{ a.target = "_blank"; a.rel = "noopener"; });
       host.innerHTML = `<div class="dv-doc"></div>`;
-      host.firstElementChild.innerHTML = dom.body.innerHTML || "<p></p>";
+      const cleaned = cleanDocxHtml(r.value || "");
+      host.firstElementChild.appendChild(cleaned.childNodes.length ? cleaned : document.createElement("p"));
       return;
     }catch(e){}
   }
@@ -8084,7 +8138,7 @@ applyLang();
     tries++;
     const m = /#p=([^&]+)/.exec(location.hash);
     if(!m || tries > 240){ clearInterval(t); return; }
-    const id = decodeURIComponent(m[1]);
+    let id; try{ id = decodeURIComponent(m[1]); }catch(e){ clearInterval(t); return; }
     if(typeof items !== "undefined" && items.some(x=>x.id === id) && !document.querySelector("dialog[open]")){
       clearInterval(t); openDlg(id);
     }
