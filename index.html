@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-9PeLdNlFGYPe6S6t4/cLcSxmF35aXwhumIDLvPqxRX0=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-1+kbFn3fbRlj5hC+DHSNy3yrWkhj/5CKXZPevtqao7Y=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-ywXMbzWgIMc+xmvLjg64P29KN6dJALvzNCqGRf7pbz8=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-Fr6dbkG0477kZn6qdeb5jjRKOHDQ8j/zGI5GFPVSBkM=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <script>
 /* Frame guard: do not run inside a page from another origin (clickjacking). A same-origin frame (Microsoft sign-in renewal) is fine. */
@@ -1815,6 +1815,9 @@ body[data-view="wa"] #waView{display:block}
 </style>
 <style id="dark-readability">
 /* Dark mode readability: text and button colors that did not adapt to the dark palette */
+/* White "paper" sheets (Management report and its PDF, report/budget/manual pages, Word preview) always keep the LIGHT palette inside them,
+   so anything on a sheet that uses the app's theme colours (for example the monthly rows) stays dark-on-white even when the app is in dark mode. */
+.mg-paper,.a4,.dv-doc{--bg:#EDF3EE;--surface:#FFFFFF;--ink:#14251B;--muted:#5B6E61;--line:#D6E3D9;--field:#F4F8F5;--done:#1F9254;--done-soft:#DDF3E6;--now:#B7791F;--now-soft:#FFF1D2;--todo:#B9CBBE;--accent:#2F8F4E;--accent-ink:#FFFFFF;--danger:#C53F4E;--gold:#F3D83D;--gold-ink:#3D3200;--band:#0F3D24;--band-2:#14532F;color-scheme:light}
 @media (prefers-color-scheme:dark){
 :root:not([data-theme="light"]) .btn.danger.armed,:root:not([data-theme="light"]) .u-list .btn.armed,:root:not([data-theme="light"]) .badge,:root:not([data-theme="light"]) .np-tabs .n.on{color:#1a0907}
 :root:not([data-theme="light"]) .mn-tabs button[aria-selected="true"]{color:var(--accent-ink)}
@@ -2635,7 +2638,7 @@ Object.freeze(CONFIG); Object.freeze(CONFIG.emailDomains);   // settings cannot 
   async function writeJson(name, data, etag){
     const headers = {"Content-Type": "application/json"};
     if(etag) headers["If-Match"] = etag;
-    const r = await (await graph(fileUrl(name) + ":/content", {method:"PUT", headers, body: JSON.stringify(data, null, 1)})).json();
+    const r = await (await graph(fileUrl(name) + ":/content" + (etag ? "" : "?@microsoft.graph.conflictBehavior=fail"), {method:"PUT", headers, body: JSON.stringify(data, null, 1)})).json();   // no etag = new file: fail (and retry) if someone else created it first, instead of overwriting theirs
     cache[name] = {etag: r.eTag, data};
   }
   async function mutate(name, fn, empty){
@@ -6136,22 +6139,42 @@ function presInfo(r, now){
   const stop = r.end || (live ? now : seenAt);
   return {live, ms: Math.max(0, stop - r.start)};
 }
+const presState = {ok:false, why:"", tries:0, at:0};
+window.__presState = presState;
+async function presTry(){
+  const now = Date.now();
+  let sid = null; try{ sid = sessionStorage.getItem("apt-sid"); }catch(e){}
+  if(sid){ const s = await presCol.doc(sid).get(); if(!s.exists || !s.data() || s.data().end || s.data().by !== me.id) sid = null; }   // a page refresh continues the same session
+  if(sid){ await presCol.doc(sid).update({last: now}); }
+  else {
+    sid = "p" + bnDayOf(now).replace(/-/g, "") + "-" + now.toString(36) + Math.random().toString(36).slice(2, 6);
+    await presCol.doc(sid).set({by: me.id, name: me.name || me.id, role: myRole, dev: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Telefon" : "Komputer", start: now, last: now});
+    try{ sessionStorage.setItem("apt-sid", sid); }catch(e){}
+  }
+  presSid = sid;
+}
 async function startPresence(){
   if(!presCol || !me || !me.id) return;
-  try{
-    const now = Date.now();
-    let sid = null; try{ sid = sessionStorage.getItem("apt-sid"); }catch(e){}
-    if(sid){ const s = await presCol.doc(sid).get(); if(!s.exists || !s.data() || s.data().end || s.data().by !== me.id) sid = null; }   // a page refresh continues the same session
-    if(sid){ await presCol.doc(sid).update({last: now}); }
-    else {
-      sid = "p" + bnDayOf(now).replace(/-/g, "") + "-" + now.toString(36) + Math.random().toString(36).slice(2, 6);
-      await presCol.doc(sid).set({by: me.id, name: me.name || me.id, role: myRole, dev: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Telefon" : "Komputer", start: now, last: now});
-      try{ sessionStorage.setItem("apt-sid", sid); }catch(e){}
+  const waits = [0, 5000, 20000, 60000, 180000];   // a temporary problem (busy network, many people signing in together) must not lose the whole session
+  for(let i = 0; i < waits.length; i++){
+    if(waits[i]) await new Promise(r=>setTimeout(r, waits[i]));
+    presState.tries = i + 1;
+    try{ await presTry(); presState.ok = true; presState.why = ""; presState.at = Date.now(); break; }
+    catch(e){
+      presState.ok = false; presState.at = Date.now();
+      presState.why = (e && e.code === "invalid_argument") ? "noaccess" : "error";
+      if(presState.why === "noaccess") break;   // no permission: trying again cannot help
     }
-    presSid = sid;
-    clearInterval(presBeat);
-    presBeat = setInterval(()=>{ presCol.doc(presSid).update({last: Date.now()}).catch(()=>{}); }, PRES_BEAT);
-  }catch(e){}   // view-only users cannot write: nothing to record
+  }
+  if(!presState.ok){
+    // tell the person, but only if their role says they SHOULD be recorded (view-only users are not recorded by design)
+    if(myRole && myRole !== "viewer") toast(presState.why === "noaccess"
+      ? lt("Log masuk anda tidak direkodkan: peranan anda ialah " + (ROLE_NAME[myRole] || myRole) + " tetapi OneDrive hanya membenarkan lihat. Minta pentadbir tekan Kongsi folder.", "Your sign-in is not being recorded: your role is " + (ROLE_NAME[myRole] || myRole) + " but OneDrive only lets you view. Ask an administrator to press Share folder.")
+      : lt("Log masuk anda tidak dapat direkodkan sekarang.", "Your sign-in could not be recorded right now."));
+    return;
+  }
+  clearInterval(presBeat);
+  presBeat = setInterval(()=>{ presCol.doc(presSid).update({last: Date.now()}).catch(()=>{}); }, PRES_BEAT);
 }
 window.__beforeSignOut = async ()=>{
   clearInterval(presBeat);
@@ -6426,6 +6449,22 @@ function acRender(){
     ${inactive.length ? `<table class="mg-tbl"><tbody>${inactive.map(u=>`<tr><td>${esc(u.name)}<br><small>${esc(u.id)}</small></td><td>${esc(ROLE_NAME[u.role] || "-")}</td><td>${u.lastAny ? esc(lt("Terakhir", "Last") + " " + fmtStamp(u.lastAny)) : esc(lt("Tiada rekod dalam 90 hari", "No record in 90 days"))}</td></tr>`).join("")}</tbody></table>` : `<p class="mg-none">${esc(lt("Semua pengguna aktif dalam 30 hari terakhir.", "Every user was active in the last 30 days."))}</p>`}
     <p class="mg-note">${esc(lt("Hanya pengguna yang boleh menulis ke folder OneDrive (Penyunting, Pentadbir, Bos) direkodkan. Pemerhati (lihat sahaja) tidak muncul di sini, jadi mereka mungkin disenaraikan sebagai tidak aktif.", "Only users who can write to the OneDrive folder (Editor, Admin, Boss) are recorded. View-only users do not appear here and may be listed as inactive."))}</p>`;
 }
+/* Adds to the report: is MY sign-in being recorded, since when does the record exist, and why might someone show "no record". */
+function acDecorate(){
+  const host = $("#acBody"); if(!host || !host.firstElementChild) return;
+  const st = window.__presState || {}, first = acCache.rows.reduce((m, r)=>r.start && (!m || r.start < m) ? r.start : m, 0);
+  const mine = st.ok ? lt("Log masuk anda sedang direkodkan.", "Your own sign-in is being recorded.")
+    : st.why === "noaccess" ? lt("Log masuk anda TIDAK direkodkan: OneDrive hanya membenarkan anda melihat folder. Tekan Kongsi folder untuk akaun anda.", "Your own sign-in is NOT recorded: OneDrive only lets you view the folder. Press Share folder for your account.")
+    : st.tries ? lt("Log masuk anda belum dapat direkodkan (sedang cuba semula).", "Your own sign-in could not be recorded yet (retrying).")
+    : lt("Rekod log masuk anda belum bermula.", "Your own sign-in recording has not started.");
+  const since = first ? lt("Rekod bermula " + fmtStamp(first).slice(0, 11) + ".", "Records start " + fmtStamp(first).slice(0, 11) + ".") : lt("Belum ada rekod.", "No records yet.");
+  const why = lt("Seseorang disenaraikan sebagai tiada rekod jika dia belum log masuk selepas sistem ini dikemas kini (pastikan dia memuat semula halaman), atau jika akses OneDrive-nya hanya \"lihat\" (tekan Kongsi folder pada namanya di senarai pengguna).",
+    "Someone is listed as having no record if they have not signed in since this system was updated (make sure they reload the page), or if their OneDrive access is \"view only\" (press Share folder next to their name in the users list).");
+  const top = document.createElement("p"); top.className = "mg-note"; top.textContent = mine + " " + since;
+  const bot = document.createElement("p"); bot.className = "mg-note"; bot.textContent = why;
+  host.insertBefore(top, host.firstChild); host.appendChild(bot);
+}
+{ const acRenderBase = acRender; acRender = function(){ acRenderBase(); acDecorate(); }; }
 async function acCsv(){
   const {rows} = acAgg(+$("#acDays").value || 7);
   const head = [lt("Pengguna", "User"), "E-mel", lt("Peranan", "Role"), lt("Sesi", "Sessions"), lt("Jumlah minit", "Total minutes"), lt("Hari aktif", "Active days"), lt("Log masuk terakhir", "Last sign-in")];
