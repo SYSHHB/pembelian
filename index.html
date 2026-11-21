@@ -9555,6 +9555,24 @@ applyLang();
 .hero .nav-go{border-radius:10px;text-align:left;justify-content:flex-start;transition:background .15s,transform .15s}
 .hero .nav-go:hover{transform:translateX(3px)}
 .hero .nav-go.active{box-shadow:inset 3px 0 0 var(--gold)}
+/* Coloured sidebar icons (icons are masks that follow --icc) */
+.hero #btnNew::before{background:#7DD3FC!important}
+.hero #navList::before{background:#86EFAC!important}
+.hero #navDash::before{background:#C4B5FD!important}
+.hero #navBud::before{background:#FCD34D!important}
+.hero #navRep::before{background:#FDBA74!important}
+.hero #navMn::before{background:#67E8F9!important}
+.hero #navSup::before{background:#F9A8D4!important}
+.hero #navMg::before{background:#A5B4FC!important}
+.hero #navAc::before{background:#5EEAD4!important}
+.hero #navBk::before{background:#93C5FD!important}
+.hero #navTr::before{background:#FCA5A5!important}
+.hero #navXI::before{background:#BEF264!important}
+.hero #btnAudit::before{background:#FDA4AF!important}
+.hero #btnUsers::before{background:#7DD3FC!important}
+.hero #btnSettings::before{background:#CBD5E1!important}
+.hero #btnManual::before{background:#FDE68A!important}
+.hero .nav-go:hover::before,.hero .actions .btn:hover::before{filter:brightness(1.15)}
 .ux-cp-btn{position:fixed;right:18px;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);z-index:90;display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 18px;background:linear-gradient(135deg,var(--band),var(--band-2));color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 12px 28px -10px rgba(15,61,36,.7)}
 .ux-cp-btn kbd{font:inherit;font-size:11px;opacity:.75;border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:1px 6px}
 .ux-cp-back{position:fixed;inset:0;z-index:300;background:rgba(8,18,12,.5);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding:9vh 14px 14px}
