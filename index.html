@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-R03DMGmu7i4FIH5gTEHLqVynUcZD6YGNFw/f3qU1XlE=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-KvrEWW8QA7XijJ+kGOYitaM1HfCfB4cFVECXtn92rA8=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <script>
 /* Frame guard: do not run inside a page from another origin (clickjacking). A same-origin frame (Microsoft sign-in renewal) is fine. */
@@ -3997,13 +3997,14 @@ function catHeadFor(kind, y, c){
   return list.find(h=>code.test(h.t) && (kind !== "rental" || /komputer/i.test(h.t))) || list.find(h=>code.test(h.t)) || list[0] || null;
 }
 function catHeadInfo(kind, y){
-  const cur = ($("#frm").category && $("#frm").category.value) || "";
+  const cur = kind === "rental" ? "Sekolah" : (($("#frm").category && $("#frm").category.value) || "");   // rental exists under School (2F) only
   for(const c of (cur ? [cur] : CATS)){ const h = catHeadFor(kind, y, c); if(h) return {c, h}; }
   return null;
 }
 function tonerHeadFor(y){ return catHeadInfo("toner", y); }
 function headSync(){
   const f = $("#frm"), m = f.method.value; if(m !== TONER_METHOD && m !== RENTAL_METHOD) return;
+  if(m === RENTAL_METHOD) f.category.value = "Sekolah";
   const y = f.budgetYear.value || curYear(), r = catHeadInfo(m === TONER_METHOD ? "toner" : "rental", y), c = f.category.value || "Sekolah";
   buildBudgetSelect(r ? r.h.t : (m === RENTAL_METHOD && c === "Sekolah" ? RENTAL_HEAD : ""));
   if(r && f.approvedBudget) f.approvedBudget.value = r.h.amt;
@@ -8811,21 +8812,21 @@ function rentalHeadInfo(y){ return catHeadInfo("rental", y); }
 function rentalHeadFor(y){ const r = rentalHeadInfo(y); return r ? r.h : null; }
 function rentalAuto(){
   const f = $("#frm"), y = f.budgetYear.value || curYear(), r = rentalHeadInfo(y);
-  if(!f.category.value) f.category.value = r ? r.c : "Sekolah";
-  const c = f.category.value;
+  f.category.value = "Sekolah";
+  const c = "Sekolah";
   buildBudgetSelect(r ? r.h.t : (c === "Sekolah" ? RENTAL_HEAD : ""));
   if(f.approvedBudget && r && !String(f.approvedBudget.value).trim()) f.approvedBudget.value = r.h.amt;
   $("#budgetHead").dispatchEvent(new Event("change")); syncPicks();
 }
 function rentalHint(){
-  const y = ($("#frm").budgetYear && $("#frm").budgetYear.value) || curYear(), base = mnT("Tajuk perbelanjaan Penyewaan dipilih ikut jenis pembelian (2F Sekolah, 2A Office). Butiran sewaan dipaparkan di bawah.", "The Rental expenditure head follows the purchase type (2F School, 2A Office). Rental details are shown below.");
+  const y = ($("#frm").budgetYear && $("#frm").budgetYear.value) || curYear(), base = mnT("Tajuk perbelanjaan Penyewaan dipilih secara automatik (2F Sekolah sahaja). Butiran sewaan dipaparkan di bawah.", "The Rental expenditure head is the 2F School head. Rental details are shown below.");
   if(rentalHeadFor(y)) return esc(base);
   return esc(base) + ` <span class="r-warn">⚠ ${esc(mnT("Tajuk ini belum ada dalam bajet " + y + ".", "This head is not in the " + y + " budget yet."))}</span> ` + (canBudget() ? `<button type="button" class="mini" data-addhead="1">${esc(mnT("Tambah ke bajet", "Add to budget"))}</button>` : esc(mnT("Minta Pentadbir tambahnya dalam Urus bajet.", "Ask an Admin to add it in Manage budget.")));
 }
 $("#methodHint").addEventListener("click", async e=>{
   const b = e.target.closest ? e.target.closest("[data-addhead]") : null; if(!b) return;
   const y = $("#frm").budgetYear.value || curYear(); if(!BUDGETS[y]) BUDGETS[y] = {Sekolah: [], Office: []}; if(!BUDGETS[y].Sekolah) BUDGETS[y].Sekolah = []; if(!BUDGETS[y].Office) BUDGETS[y].Office = [];
-  { const c = $("#frm").category.value || "Sekolah"; if(!rentalHeadFor(y)) BUDGETS[y][c].push({t: c === "Office" ? RENTAL_HEAD.replace(/^2F/, "2A").replace("(Sekolah Yayasan)", "(Office)") : RENTAL_HEAD, amt: 0}); }
+  if(!rentalHeadFor(y)) BUDGETS[y].Sekolah.push({t: RENTAL_HEAD, amt: 0});
   try{ await saveBudgets(); }catch(err){}
   rentalAuto(); toast(mnT("Tajuk ditambah ke bajet " + y + ". Kemas kini anggarannya di Urus bajet.", "Head added to the " + y + " budget. Update its amount in Manage budget."), 5000);
 });
