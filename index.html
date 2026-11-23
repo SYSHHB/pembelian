@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-jpktgxekiEM4aTWqaqNsBqr0IAAN5OooSiKJr7DA+cU=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-r2Uk3UVN+ktoQdTA/fCH/XRA7IhvisGXP88EF+ddR7Q=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <script>
 /* Frame guard: do not run inside a page from another origin (clickjacking). A same-origin frame (Microsoft sign-in renewal) is fine. */
@@ -3533,6 +3533,14 @@ const AWARD_MULTI = {...AWARD, what:"Surat setuju terima kepada syarikat-syarika
   {k:"awardList", label:"Syarikat Berjaya", placeholder:"Nama syarikat berjaya", type:"list", addLabel:"Tambah syarikat berjaya", refLabel:"No. Rujukan Surat Setuju Terima", full:true},
   AWARD.fields[2], AWARD.fields[3], AWARD.fields[4]
 ]};
+const EVAL_MULTI = {...EVAL, what:"Penilaian tawaran yang diterima (boleh mencadangkan lebih daripada satu syarikat)", fields:[
+  {k:"chosen", label:"Syarikat Dicadangkan", placeholder:"Nama syarikat dicadangkan", type:"list", addLabel:"Tambah syarikat dicadangkan", full:true}
+]};
+AWARD_MULTI.prefill = it=>{ const e = (it.stages && it.stages.tenderEval) || {}; let n = Array.isArray(e.chosenList) ? e.chosenList.map(x=>String(x && x.name || "").trim()).filter(Boolean) : []; if(!n.length && e.chosen) n = String(e.chosen).split(",").map(x=>x.trim()).filter(Boolean); return n.length ? {awardListList: n.map(name=>({name, ref: ""})), awardList: n.join(", ")} : {}; };
+const ACCEPT_MULTI = {...ACCEPT, what:"Surat penerimaan daripada setiap syarikat berjaya (rujukan dan tarikh berbeza)", fields:[
+  {k:"vendor", label:"Syarikat yang menerima", type:"accepts", full:true}
+]};
+function accRowHTML(v){ v = v || {}; return `<div class="acc-row"><input type="text" data-a="name" placeholder="${esc(mnT("Nama syarikat", "Company name"))}" value="${esc(v.name || "")}"><input type="text" data-a="ref" placeholder="${esc(mnT("No. rujukan surat penerimaan", "Acceptance letter ref. no."))}" value="${esc(v.ref || "")}"><label class="acc-d"><span>${esc(mnT("Tarikh surat", "Letter date"))}</span><input type="date" data-a="date" value="${esc(v.date || "")}"></label><label class="acc-d"><span>${esc(mnT("Tarikh diterima", "Date received"))}</span><input type="date" data-a="recv" value="${esc(v.recv || "")}"></label><button type="button" class="mini x" data-acc-rm aria-label="Buang">✕</button></div>`; }
 function awardedOf(it){ const a = (it && it.stages && it.stages.awardLetter) || {}; let l = Array.isArray(a.awardListList) ? a.awardListList.map(x=>String(x && x.name || "").trim()).filter(Boolean) : []; if(!l.length && a.awardList) l = String(a.awardList).split(",").map(x=>x.trim()).filter(Boolean); if(!l.length && a.awardTo) l = [String(a.awardTo).trim()]; return l; }
 const BOXES = [REFNO, TENDER, ADVERT, CLOSING, EVAL, SOKONG, AWARD, ACCEPT];
 function vendorVal(it){ const s = it.stages || {}, v = s.acceptLetter?.vendor || "", f = s.awardLetter?.awardTo || s.tenderEval?.chosen || ""; return (f && (!s.acceptLetter?.vendorManual || !v.trim())) ? f : v; }
@@ -3547,10 +3555,13 @@ function tenderHTML(it){
 const AUTO_MEDIA_RX = /^(tender tertutup\. tiada iklan\. jemputan melalui e-mel sahaja\.|tender terbuka\. laman web, instagram dan facebook\.|close(d)? tender\.? no advert\.? e-?mail only\.?)$/i;
 function boxHTML(B, it){
   if(B.k === "awardLetter" && isHolderM(it)) B = AWARD_MULTI;
+  if(B.k === "tenderEval" && isHolderM(it)) B = EVAL_MULTI;
+  if(B.k === "acceptLetter" && isHolderM(it)) B = ACCEPT_MULTI;
   let st = it.stages?.[B.k] || {};
   if(B.k === "advert" && st.media && AUTO_MEDIA_RX.test(String(st.media).trim())) st = {...st, media: ""};
   if(B.prefill){ st = {...st}; const p = B.prefill(it); for(const k in p) if(!st[k]) st[k] = p[k]; }
   if(B.follow){ st = {...st}; const p = B.follow(it); for(const k in p) if(p[k] && (!st[k+"Manual"] || !String(st[k]||"").trim())) st[k] = p[k]; }
+  if(B === ACCEPT_MULTI && !(Array.isArray(st.vendorList) && st.vendorList.length)){ st = {...st, vendorList: awardedOf(it).map(name=>({name}))}; }
   return `<div class="minit-box">
     <strong>${esc(B.code)}${B.plain ? "" : " " + esc(METHOD_LABEL[it.method])}</strong>
     <p>${B.intro ? esc(B.intro) : `Pembelian secara ${esc(METHOD_LABEL[it.method])} memerlukan ${esc(B.code)}.`} ${st.done ? "Selesai." : "Belum selesai."}</p>${B.extra ? B.extra(it, st) : ""}
@@ -3570,7 +3581,7 @@ function isOrderM(it){ return !!it && (it.method === "TonerOrder" || (it.method 
 function isTenderFirst(it){ return isHolderM(it) || (!!it && it.method === "Sewaan" && !!it.tenderFirst); }
 function curTenderFirst(){ const old = editingId ? items.find(x=>x.id===editingId) : null; return old ? !!old.tenderFirst : true; }
 function needsMinit(it){ return it && (it.method==="Sebutharga" || it.method==="Tender" || isTenderFirst(it)); }
-function minitOk(it){ return (!needsMinit(it) || MINIT.every(m=>it.stages?.[m.k]?.done)) && (!needsTender(it) || BOXES.every(B=>B.optional || !!it.stages?.[B.k]?.done)); }
+function minitOk(it){ return (!isHolderM(it) || !!it.stages?.s601?.done) && (!needsMinit(it) || MINIT.every(m=>it.stages?.[m.k]?.done)) && (!needsTender(it) || BOXES.every(B=>B.optional || !!it.stages?.[B.k]?.done)); }
 let minitTab = "minitP";
 function minitHTML(it){
   if(!needsMinit(it)) return "";
@@ -3598,7 +3609,7 @@ function syncPicks(){
   const m = f.method ? f.method.value : "";
   const h = $("#methodHint");
   if(h){
-    const tot = itemsTotal(readItems()), want = (m === "Sewaan" || m === "Toner" || m === "TonerOrder") ? "" : methodFor(tot); { const dl = $("#dlg"); if(dl){ const hold = m === "Toner" && curTenderFirst(); dl.dataset.rental = (m === "Sewaan" || hold) ? "1" : ""; dl.dataset.toner = (m === "TonerOrder" || (m === "Toner" && !hold)) ? "1" : ""; } }
+    const tot = itemsTotal(readItems()), want = (m === "Sewaan" || m === "Toner" || m === "TonerOrder") ? "" : methodFor(tot); { const dl = $("#dlg"); if(dl){ const hold = m === "Toner" && curTenderFirst(); dl.dataset.rental = (m === "Sewaan") ? "1" : ""; dl.dataset.hold = hold ? "1" : ""; dl.dataset.toner = (m === "TonerOrder" || (m === "Toner" && !hold)) ? "1" : ""; } }
     if(want && m && want!==m){ h.className = "seg-hint warn"; h.innerHTML = `Jumlah ${money(tot)} sesuai untuk ${esc(METHOD_LABEL[want])}. <button type="button" class="mini" data-pickm="${esc(want)}">Tukar ke ${esc(METHOD_LABEL[want])}</button>`; }
     else if(want && !m){ h.className = "seg-hint warn"; h.innerHTML = `Jumlah ${money(tot)}: pilih ${esc(METHOD_LABEL[want])}. <button type="button" class="mini" data-pickm="${esc(want)}">Pilih ${esc(METHOD_LABEL[want])}</button>`; }
     else { h.className = "seg-hint"; h.innerHTML = (m==="Sebutharga"||m==="Tender") ? "Tab Minit Permohonan kepada PPU dipaparkan di bawah." : (m==="Sewaan" ? rentalHint() : (m==="Toner" ? "Mulakan dengan proses tender. Selepas tender selesai, tandakan Sewaan Tahunan / Bulanan atau Pembelian Toner di bawah. Tajuk Perbelanjaan Pejabat dipilih ikut jenis pembelian (2F Sekolah, 2A Office)." : m==="TonerOrder" ? "Pesanan toner bermula dari 602. Pilih pembekal daripada syarikat tender." : "")); }
@@ -3964,6 +3975,7 @@ function updTotal(){ $("#itemTotal").textContent = "Jumlah " + money(itemsTotal(
 function listRowHTML(ph, val, ref, refPh){ return `<div class="lrow"><input type="text" data-l="name" placeholder="${esc(ph||"")}" value="${esc(val||"")}">${refPh!=null?`<input type="text" data-l="ref" class="lref" placeholder="${esc(refPh)}" value="${esc(ref||"")}">`:""}<button type="button" class="mini x" data-list-rm aria-label="Buang">✕</button></div>`; }
 function fieldHTML(f, st){
   const v = st[f.k];
+  if(f.type==="accepts"){ const l = Array.isArray(st.vendorList) && st.vendorList.length ? st.vendorList : [{}]; return `<div class="full"><div class="f" style="font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:4px">${esc(mnT("Setiap syarikat menghantar surat sendiri (rujukan dan tarikh berbeza)", "Each company sends its own letter (different reference and dates)"))}</div><div class="accwrap" data-f="vendor" data-type="accepts">${l.map(accRowHTML).join("")}</div><button type="button" class="mini" data-acc-add>+ ${esc(mnT("Tambah syarikat", "Add company"))}</button></div>`; }
   if(f.type==="list"){
     const list = Array.isArray(st[f.k+"List"]) && st[f.k+"List"].length ? st[f.k+"List"] : String(v||"").split(",").map(x=>x.trim()).filter(Boolean).map(name=>({name, ref:""}));
     const refPh = f.refLabel ?? null;
@@ -4024,8 +4036,7 @@ function rentalHasData(it){ const r = (it && it.rental) || {}; return !!(r.start
 function tenderUnlocked(it){ return minitOk(it); }
 function nextOf(it){ return (it && it.next) || ""; }
 function tenderTop(it){
-  const six = `<div class="minit-box toner-box"><strong>${esc(mnT("601 Tender", "601 Tender"))}</strong><p>${esc(mnT("Muat naik Borang 601 tender. Kekal untuk tender ini.", "Upload the tender 601 form. It stays with this tender."))}</p><div class="step tstep" data-k="s601"><div class="card"><div class="card-top"><strong>${esc(mnT("Muat naik 601 Tender", "Upload 601 Tender"))}</strong></div>${filesHTML("s601") || `<p class="s6f-none">Tiada fail.</p>`}</div></div></div>`;
-  return minitHTML(it) + tenderHTML(it) + six;
+  return minitHTML(it) + tenderHTML(it);
 }
 function nextHTML(it){
   return "";   // no choice box: Toner goes to toner orders, Rental goes to rental payments
@@ -4054,7 +4065,7 @@ function tonerVendors(it){
 }
 function tonerLinkHTML(it){
   const t = tonerTender(it), tt = t, title = (t && t.title) || (it && it.tenderTitle) || "", v = tonerVendors(it), vgrp = []; v.forEach(x=>{ let g = vgrp.find(y=>y.name.toLowerCase() === String(x.name).toLowerCase()); if(!g) vgrp.push(g = {name: x.name, types: []}); const ty = tvTypeOf(x); if(ty && !g.types.includes(ty)) g.types.push(ty); });
-  return `<div class="minit-box toner-box"><strong>${esc(mnT("Pesanan Toner", "Toner Order"))}</strong><p>${title ? esc(mnT("Tender: ", "Tender: ")) + `<b>${esc(title)}</b>. ` : esc(mnT("Tiada tender dipautkan. ", "No tender linked. "))}${esc(mnT("Pesanan bermula dari 602. Pilih pembekal daripada syarikat tender.", "The order starts from 602. Choose the supplier from the tender companies."))}</p>
+  return `<div class="minit-box toner-box"><strong>${esc(mnT("Pesanan Toner", "Toner Order"))}</strong><p>${title ? esc(mnT("Tender: ", "Tender: ")) + `<b>${esc(title)}</b>. ` : esc(mnT("Tiada tender dipautkan. ", "No tender linked. "))}${t && t.stages && t.stages.s601 && (t.stages.s601.files || []).length ? esc(mnT("601 rujukan: ", "601 reference: ")) + `<b>${esc(t.stages.s601.files.map(f=>f.name).join(", "))}</b>. ` : ""}${esc(mnT("Pesanan bermula dari 602. Pilih pembekal daripada syarikat tender.", "The order starts from 602. Choose the supplier from the tender companies."))}</p>
     ${tt && tonerExpired(tt) ? `<p class="r-note" style="color:#e0a030"><b>${esc(mnT("Tender ini telah tamat tempoh (" + fmtDate(tonerValidTo(tt)) + "). Buat tender toner baharu untuk tahun ini.", "This tender has expired (" + fmtDate(tonerValidTo(tt)) + "). Create a new toner tender for this year."))}</b></p>` : ""}
     ${v.length ? `<div class="quick" role="group" aria-label="${esc(mnT("Pembekal tender", "Tender suppliers"))}">${vgrp.map(x=>`<button type="button" data-tvpick="${esc(x.name)}">${esc(x.name)}${x.types.length ? " · " + esc(x.types.join(", ")) : ""}</button>`).join("")}</div>` : ""}
     <datalist id="tvList">${v.map(x=>`<option value="${esc(x.name)}">`).join("")}</datalist></div>`;
@@ -4069,6 +4080,7 @@ function tonerOrdersHTML(it){
   const vt = tonerValidTo({...it, toner: t}), exp = vt < today();
   return `<div class="minit-box tn-box" id="tonerBox"><strong>${esc(mnT("Pembelian Toner", "Toner Purchase"))}</strong>
     <p class="r-note">${esc(mnT("Setiap pembelian toner ialah pembelian berasingan yang bermula dari 602. Senaraikan syarikat berjaya beserta jenama dan model toner mereka. Tender toner sah sehingga hujung tahun dan perlu dibuat semula setiap tahun.", "Every toner purchase is a separate purchase that starts at 602. List the awarded companies with their toner brand and model. A toner tender is valid until the end of the year and must be tendered again every year."))}</p>
+    <p class="r-note">${esc(mnT("601 bertandatangan (rujukan): ", "Signed 601 (reference): "))}<b>${esc(((it.stages && it.stages.s601 && it.stages.s601.files) || (draftFiles.s601 || [])).map(f=>f.name).join(", ") || mnT("belum dimuat naik", "not uploaded yet"))}</b></p>
     <label class="f tv-valid">${esc(mnT("Sah sehingga", "Valid until"))}<input type="date" id="tvValid" value="${esc(vt)}"></label>
     ${exp ? `<p class="r-note" style="color:#e0a030"><b>${esc(mnT("Tender ini telah tamat tempoh. Pesanan baharu tidak dibenarkan. Buat tender toner baharu.", "This tender has expired. New orders are not allowed. Create a new toner tender."))}</b></p>` : ""}
     <h4 class="r-h">${esc(mnT("Pembekal berjaya, jenama dan model toner", "Awarded suppliers, toner brand and model"))}</h4>
@@ -4160,12 +4172,14 @@ function tonerAuto(){
 function stepsHTML(it){
   if(isTenderFirst(it)){
     const show = tenderUnlocked(it);
-    return tenderTop(it) + nextHTML(it) + (show ? (it.method === "Sewaan" ? rentalHTML(it) : tonerOrdersHTML(it)) : `<div class="items-slot" hidden></div>`);
+    return stageCard(it, STAGES[0], 0, 0, false) + tenderTop(it) + nextHTML(it) + (show ? (it.method === "Sewaan" ? rentalHTML(it) : tonerOrdersHTML(it)) : `<div class="items-slot" hidden></div>`);
   }
   if(it && it.method === "Sewaan") return rentalHTML(it);
   const cur = stageIndex(it);
   const toner = isOrderM(it);
-  return (toner ? tonerLinkHTML(it) : minitHTML(it) + tenderHTML(it)) + STAGES.map((s,i)=>{
+  return (toner ? tonerLinkHTML(it) : minitHTML(it) + tenderHTML(it)) + STAGES.map((s,i)=>stageCard(it, s, i, cur, toner)).join("");
+}
+function stageCard(it, s, i, cur, toner){
     if(toner && s.k === "s601") return "";
     let st = it.stages?.[s.k] || {};
     if(AUTO_DATE_STEPS.includes(s.k) && !st.done && !st.cancelled && (!st.date || st.dateAuto)){ st = {...st, date: today(), dateAuto: true}; (draftExtra[s.k] ||= {}).dateAuto = true; }
@@ -4183,7 +4197,7 @@ function stepsHTML(it){
         <div class="fields">
           ${toner && s.k==="s602" ? `<div class="items-slot full"></div><label class="f full">Ulasan mengenai keperluan / penyediaan kerja<textarea name="notes" rows="3">${esc(it.notes)}</textarea></label>` : ""}
           ${s.k==="s601" ? `<div class="items-slot full"></div><label class="f full">Ulasan mengenai keperluan / penyediaan kerja<textarea name="notes" rows="4">${esc(it.notes)}</textarea></label>` : ""}
- ${s.k==="s601" && needsMinit(it) ? XKINDS.map(K=>`<label class="chk vo-tick full"><input type="checkbox" data-f="${K.on}" ${st[K.on]?"checked":""}> ${K.tick}</label>`).join("") : ""} ${s.k==="s601" ? apprBoxHTML() : ""} ${s.k==="s601" ? s601FilesHTML() : ""} ${s.k==="s602" ? `<label class="f">Nama Syarikat<input name="supplier"${toner ? ' list="tvList"' : ""} value="${esc(supplierVal(it))}"></label><label class="f">No Sijil Pembekal<input name="supplierCert" placeholder="cth. YSHHB/SP/260017" value="${esc(it.supplierCert || CERT_PREFIX)}"></label>` : ""}
+ ${s.k==="s601" && needsMinit(it) ? XKINDS.map(K=>`<label class="chk vo-tick full"><input type="checkbox" data-f="${K.on}" ${st[K.on]?"checked":""}> ${K.tick}</label>`).join("") : ""} ${s.k==="s601" ? apprBoxHTML() : ""} ${s.k==="s601" ? s601FilesHTML(isHolderM(it)) : ""} ${s.k==="s602" ? `<label class="f">Nama Syarikat<input name="supplier"${toner ? ' list="tvList"' : ""} value="${esc(supplierVal(it))}"></label><label class="f">No Sijil Pembekal<input name="supplierCert" placeholder="cth. YSHHB/SP/260017" value="${esc(it.supplierCert || CERT_PREFIX)}"></label>` : ""}
           ${s.fields.map(f0=>{ let f = f0, sv = st;
             if(f0.prefixFn){ f = {...f0, prefix: f0.prefixFn(it)}; const cur = String(st[f0.k]||"").trim().toUpperCase(); if(/^YSHHB-PO-(S-|M-)?$/.test(cur)) sv = {...st, [f0.k]: ""}; }
             if(s.k==="inv" && f0.k==="date" && !st.date && it.stages?.do?.date) sv = {...st, date: it.stages.do.date};
@@ -4195,14 +4209,14 @@ function stepsHTML(it){
         ${gap?`<div class="gap">${gap}</div>`:""}
       </div>
     </div>` + (s.k==="s601" ? voHTML(it, st) : "") + (st.cancelled ? boxHTML(CANCEL, it) : "");
-  }).join("");
 }
 function readSteps(){
   const out = {};
   document.querySelectorAll("#steps .step").forEach(el=>{
     const o = {};
     el.querySelectorAll("[data-f]").forEach(inp=>{
-      if(inp.dataset.type==="list"){ const rows = [...inp.querySelectorAll(".lrow")].map(r=>({name:(r.querySelector('[data-l="name"]')?.value||"").trim(), ref:(r.querySelector('[data-l="ref"]')?.value||"").trim()})).filter(x=>x.name||x.ref); o[inp.dataset.f]=rows.map(x=>x.name).filter(Boolean).join(", "); o[inp.dataset.f+"List"]=rows; }
+      if(inp.dataset.type==="accepts"){ const rows = [...inp.querySelectorAll(".acc-row")].map(r=>{ const g = k=>(r.querySelector(`[data-a="${k}"]`)?.value || "").trim(); return {name: g("name"), ref: g("ref"), date: g("date"), recv: g("recv")}; }).filter(x=>x.name || x.ref || x.date || x.recv); o.vendor = rows.map(x=>x.name).filter(Boolean).join(", "); o.vendorList = rows; o.ref = (rows[0] && rows[0].ref) || ""; o.date = (rows[0] && rows[0].date) || ""; o.receivedDate = (rows[0] && rows[0].recv) || ""; }
+      else if(inp.dataset.type==="list"){ const rows = [...inp.querySelectorAll(".lrow")].map(r=>({name:(r.querySelector('[data-l="name"]')?.value||"").trim(), ref:(r.querySelector('[data-l="ref"]')?.value||"").trim()})).filter(x=>x.name||x.ref); o[inp.dataset.f]=rows.map(x=>x.name).filter(Boolean).join(", "); o[inp.dataset.f+"List"]=rows; }
       else if(inp.dataset.type==="vitems") o.lines = [...inp.querySelectorAll(".vo-rows tr")].map(tr=>{ const r = {}; tr.querySelectorAll("[data-i]").forEach(i=>r[i.dataset.i] = i.value.trim()); return r; }).filter(r=>r.desc || r.qty || r.unitPrice || r.total);
  else if(inp.dataset.type==="checks") o[inp.dataset.f]=[...inp.querySelectorAll("input:checked")].map(c=>c.value);
       else if(inp.type==="checkbox") o[inp.dataset.f]=inp.checked;
@@ -4261,6 +4275,8 @@ function wireSteps(){ try{ mnCheckWarn(); }catch(e){} document.querySelectorAll(
     if(sp && fm.supplierManual){
       sp.addEventListener("input", ()=>{ fm.supplierManual.value = (vd && sp.value.trim() && sp.value.trim()!==vd.value.trim()) ? "1" : ""; });
       if(vd) vd.addEventListener("input", ()=>{ if(fm.supplierManual.value!=="1" || !sp.value.trim()){ sp.value = vd.value; sp.dispatchEvent(new Event("input")); } }); } }
+  document.querySelectorAll("#steps [data-acc-add]").forEach(b=>b.onclick=()=>{ const w = b.previousElementSibling; w.insertAdjacentHTML("beforeend", accRowHTML({})); w.lastElementChild.querySelector("input").focus(); });
+  document.querySelectorAll("#steps .accwrap").forEach(w=>w.onclick=e=>{ const x = e.target.closest("[data-acc-rm]"); if(!x) return; const row = x.closest(".acc-row"); if(w.children.length>1) row.remove(); else row.querySelectorAll("input").forEach(i=>i.value = ""); });
   document.querySelectorAll("#steps [data-list-add]").forEach(b=>b.onclick=()=>{ const w = b.previousElementSibling; w.insertAdjacentHTML("beforeend", listRowHTML(w.dataset.ph, "", "", w.dataset.refph ?? null)); w.lastElementChild.querySelector("input").focus(); });
   document.querySelectorAll("#steps .lwrap").forEach(w=>w.onclick=e=>{ const x = e.target.closest("[data-list-rm]"); if(!x) return; const row = x.closest(".lrow"); if(w.children.length>1) row.remove(); else row.querySelectorAll("input").forEach(i=>i.value = ""); });
   { const td = document.querySelector('#steps .step[data-k="tenderDoc"]');
@@ -7330,7 +7346,7 @@ function supSearch(q, limit){
   out.sort((a, b)=>b[0] - a[0] || a[1].name.localeCompare(b[1].name));
   return (limit ? out.slice(0, limit) : out).map(x=>x[1]);
 }
-const SUP_SEL = 'input[name="supplier"], #steps [data-f="chosen"], #steps [data-f="awardTo"], #steps [data-f="vendor"], #steps .lwrap[data-f="rejectTo"] [data-l="name"], #steps .lwrap[data-f="awardList"] [data-l="name"]';
+const SUP_SEL = 'input[name="supplier"], #steps [data-f="chosen"], #steps [data-f="awardTo"], #steps [data-f="vendor"], #steps .lwrap[data-f="rejectTo"] [data-l="name"], #steps .lwrap[data-f="awardList"] [data-l="name"], #steps .lwrap[data-f="chosen"] [data-l="name"]';
 const supCertInp = ()=>document.querySelector('#steps input[name="supplierCert"]'), supNameInp = ()=>document.querySelector('#steps input[name="supplier"]');
 /* note under the certificate box */
 function supHint(){
@@ -8902,7 +8918,8 @@ function initByRow(id){
 }
 { const od = openDlg; openDlg = function(id, stepK){ const r = od.apply(this, arguments); try{ initByRow(id); }catch(e){} return r; }; }
 /* ---------- Two optional upload boxes in the 601 step ---------- */
-function s601FilesHTML(){
+function s601FilesHTML(holder){
+  if(holder) return `<div class="s6files full"><h4>${esc(mnT("601 bertandatangan", "Signed 601"))}</h4><div class="s6f"><p class="s6f-none">${esc(mnT("Taip butiran 601 di atas, cetak, kemudian muat naik 601 yang telah ditandatangani di sini. Fail ini menjadi rujukan untuk pembelian toner.", "Enter the 601 details above, print it, then upload the signed 601 here. This file is the reference for the toner purchases."))}</p>${filesHTML("s601") || `<p class="s6f-none">Tiada fail.</p>`}</div></div>`;
   const box = (k, label, opt, hint)=>`<div class="s6f"><div class="s6f-h"><b>${label}</b>${opt ? ` <small>(pilihan)</small>` : ""}</div>${hint ? `<p class="s6f-none">${hint}</p>` : ""}${filesHTML(k) || `<p class="s6f-none">Tiada fail.</p>`}</div>`;
   return `<div class="s6files full"><h4>Dokumen 601</h4>${box("s601", "Sebutharga", false, "")}${box("req601", "Permintaan daripada E-mel atau Minit", true, "Pilihan. Muat naik e-mel atau minit permintaan jika ada.")}</div>`;
 }
@@ -9808,12 +9825,16 @@ applyLang();
 .rental-box .r-sec{border-top:1px dashed var(--line);margin-top:12px;padding-top:10px}.rental-box .r-sec-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.rental-box .r-sec-h b{font-size:15px}.rental-box .r-docs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px}.rental-box .r-docs>span{grid-column:1/-1;font-weight:700;font-size:12.5px;color:var(--muted)}@media (max-width:640px){.rental-box .r-docs{grid-template-columns:1fr}}.rental-box .r-amt{background:var(--surface);font-weight:700}
 .r-more{margin-top:10px}.r-more summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--muted);padding:4px 0}.r-more[open] summary{margin-bottom:8px}
 #dlg[data-toner="1"] [data-print="601"]{display:none!important}
+#dlg[data-hold="1"] [data-print]:not([data-print="601"]),#dlg[data-hold="1"] [data-doc],#dlg[data-hold="1"] #docProg{display:none!important}
 .step .card-top .r-print{margin-left:auto}
 .next-box .nx-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}.next-box .chk.nx{font-size:14.5px;font-weight:700;padding:8px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.next-box .chk.nx.off{opacity:.55;cursor:not-allowed}.next-box .chk.nx input{width:20px;height:20px}
 .tn-box .tv-row{display:grid;grid-template-columns:1.6fr 1fr 1fr 34px;gap:8px;align-items:center;margin-bottom:8px}
 .tv-head{display:grid;grid-template-columns:1.6fr 1fr 1fr 34px;gap:8px;font-size:12px;color:var(--muted);margin:6px 0 4px}
 .tv-bulk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 8px}.tv-bulk small{flex:1 1 100%;color:var(--muted)}
 .tv-valid{max-width:240px;margin:6px 0}
+.acc-row{display:grid;grid-template-columns:1.5fr 1.3fr 1fr 1fr 34px;gap:8px;align-items:end;margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed var(--line,#3a4a3a)}
+.acc-d{display:flex;flex-direction:column;font-size:11.5px;color:var(--muted);gap:2px}
+@media(max-width:700px){.acc-row{grid-template-columns:1fr 1fr 34px}.acc-row [data-a="name"],.acc-row [data-a="ref"]{grid-column:span 3}}
 @media(max-width:640px){.tv-row{grid-template-columns:1fr 1fr 34px}.tv-head{display:none}}.tn-box .tv-row input{width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--field,var(--surface));color:var(--ink);font:inherit}
 .tn-box .r-h{margin:16px 0 6px;font-size:14px}.tn-box .r-add{margin:4px 0 10px}.tn-orders{display:grid;gap:8px;margin-bottom:12px}.tn-order{display:grid;grid-template-columns:1.4fr 1fr auto;gap:10px;align-items:center;text-align:left;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer}.tn-order:hover{border-color:var(--accent)}.tn-order span{color:var(--muted);font-size:13.5px}.tn-order em{font-style:normal;font-weight:800;font-size:12px;padding:2px 10px;border-radius:999px;background:var(--now-soft);color:var(--now)}.tn-order em.ok{background:var(--done-soft);color:var(--done)}
 @media (max-width:640px){.tn-box .tv-row{grid-template-columns:1fr 34px}.tn-order{grid-template-columns:1fr auto}}
