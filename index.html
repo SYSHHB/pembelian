@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-q2xEjjUsYicjufFK2qsygQ1Ph9fWRpAqCsvaMqruc+8=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-jpktgxekiEM4aTWqaqNsBqr0IAAN5OooSiKJr7DA+cU=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <script>
 /* Frame guard: do not run inside a page from another origin (clickjacking). A same-origin frame (Microsoft sign-in renewal) is fine. */
@@ -3529,11 +3529,16 @@ const CANCEL = {k:"cancelMinit", code:"Minit Pembatalan", what:"Minit pembatalan
   {k:"ref", label:"No. Rujukan Minit"},
   {k:"date", label:"Tarikh Minit", type:"date"}
 ]};
+const AWARD_MULTI = {...AWARD, what:"Surat setuju terima kepada syarikat-syarikat berjaya (boleh lebih daripada satu) dan surat penolakan kepada syarikat lain", fields:[
+  {k:"awardList", label:"Syarikat Berjaya", placeholder:"Nama syarikat berjaya", type:"list", addLabel:"Tambah syarikat berjaya", refLabel:"No. Rujukan Surat Setuju Terima", full:true},
+  AWARD.fields[2], AWARD.fields[3], AWARD.fields[4]
+]};
+function awardedOf(it){ const a = (it && it.stages && it.stages.awardLetter) || {}; let l = Array.isArray(a.awardListList) ? a.awardListList.map(x=>String(x && x.name || "").trim()).filter(Boolean) : []; if(!l.length && a.awardList) l = String(a.awardList).split(",").map(x=>x.trim()).filter(Boolean); if(!l.length && a.awardTo) l = [String(a.awardTo).trim()]; return l; }
 const BOXES = [REFNO, TENDER, ADVERT, CLOSING, EVAL, SOKONG, AWARD, ACCEPT];
 function vendorVal(it){ const s = it.stages || {}, v = s.acceptLetter?.vendor || "", f = s.awardLetter?.awardTo || s.tenderEval?.chosen || ""; return (f && (!s.acceptLetter?.vendorManual || !v.trim())) ? f : v; }
 function supplierVal(it){ if(!needsTender(it)) return it.supplier || ""; const v = vendorVal(it); return (v && (it.supplierManual!=="1" || !String(it.supplier||"").trim())) ? v : (it.supplier || ""); }
 TENDER.follow = it=>({ref: it.stages?.refTender?.ref || ""});
-ACCEPT.follow = it=>({vendor: it.stages?.awardLetter?.awardTo || it.stages?.tenderEval?.chosen || ""});
+ACCEPT.follow = it=>({vendor: (isHolderM(it) ? awardedOf(it).join(", ") : "") || it.stages?.awardLetter?.awardTo || it.stages?.tenderEval?.chosen || ""});
 AWARD.prefill = it=>({awardTo: it.stages?.tenderEval?.chosen || ""});
 function tenderHTML(it){
   if(!needsTender(it)) return "";
@@ -3541,6 +3546,7 @@ function tenderHTML(it){
 }
 const AUTO_MEDIA_RX = /^(tender tertutup\. tiada iklan\. jemputan melalui e-mel sahaja\.|tender terbuka\. laman web, instagram dan facebook\.|close(d)? tender\.? no advert\.? e-?mail only\.?)$/i;
 function boxHTML(B, it){
+  if(B.k === "awardLetter" && isHolderM(it)) B = AWARD_MULTI;
   let st = it.stages?.[B.k] || {};
   if(B.k === "advert" && st.media && AUTO_MEDIA_RX.test(String(st.media).trim())) st = {...st, media: ""};
   if(B.prefill){ st = {...st}; const p = B.prefill(it); for(const k in p) if(!st[k]) st[k] = p[k]; }
@@ -4027,38 +4033,97 @@ function nextHTML(it){
   const opt = (v, ms, en)=>`<label class="chk nx${ok ? "" : " off"}"><input type="checkbox" data-nx="${v}" ${nx === v ? "checked" : ""} ${ok ? "" : "disabled"}> ${esc(mnT(ms, en))}</label>`;
   return `<div class="minit-box next-box"><strong>${esc(mnT("Langkah seterusnya selepas tender", "Next step after the tender"))}</strong><p>${esc(ok ? mnT("Tender selesai. Tandakan satu untuk meneruskan.", "The tender is complete. Tick one to continue.") : mnT("Lengkapkan semua langkah tender (tanda Selesai) dahulu.", "Complete every tender step (tick Done) first."))}</p><div class="nx-row">${opt("Sewaan", "Sewaan Tahunan / Bulanan", "Yearly / Monthly Rental")}${opt("Toner", "Pembelian Toner", "Toner Purchase")}</div></div>`;
 }
+function tvRowHTML(v){
+  v = v || {}; const model = v.model != null || v.brand != null ? (v.model || "") : (v.type || "");
+  return `<div class="tv-row"><input type="text" data-tv="name" value="${esc(v.name || "")}" placeholder="${esc(mnT("Nama pembekal", "Supplier name"))}"><input type="text" data-tv="brand" value="${esc(v.brand || "")}" placeholder="${esc(mnT("Jenama toner (cth. HP)", "Toner brand (e.g. HP)"))}"><input type="text" data-tv="model" value="${esc(model)}" placeholder="${esc(mnT("Model toner (cth. 26A)", "Toner model (e.g. 26A)"))}"><button type="button" class="mini tv-del" aria-label="${esc(mnT("Buang", "Remove"))}">✕</button></div>`;
+}
+function tvTypeOf(v){ return [v.brand, v.model].map(x=>String(x || "").trim()).filter(Boolean).join(" ") || String(v.type || "").trim(); }
 function tonerRead(){
   const box = $("#tonerBox"); if(!box) return null;
-  return {vendors: [...box.querySelectorAll(".tv-row")].map(r=>({name: r.querySelector('[data-tv="name"]').value.trim(), type: r.querySelector('[data-tv="type"]').value.trim()})).filter(v=>v.name || v.type)};
+  const vendors = [...box.querySelectorAll(".tv-row")].map(r=>{ const g = k=>r.querySelector(`[data-tv="${k}"]`).value.trim(), o = {name: g("name"), brand: g("brand"), model: g("model")}; o.type = tvTypeOf(o); return o; }).filter(v=>v.name || v.brand || v.model);
+  const vt = box.querySelector("#tvValid"); return {vendors, validTo: vt ? vt.value : ""};
 }
+function tonerValidTo(it){ const t = (it && it.toner) || {}; if(t.validTo) return t.validTo; const y = (it && it.budgetYear) || curYear(); return y + "-12-31"; }
+function tonerExpired(it){ const v = tonerValidTo(it); return !!v && v < today(); }
 function tonerTender(it){ return it && it.tenderId ? (items.find(x=>x.id === it.tenderId) || null) : null; }
 function tonerVendors(it){
-  const t = tonerTender(it); let v = (t && t.toner && t.toner.vendors) || (it && it.tenderVendors) || [];
-  v = v.filter(x=>x && x.name);
+  const t = tonerTender(it); let v = ((t && t.toner && t.toner.vendors) || (it && it.tenderVendors) || []).filter(x=>x && x.name).map(x=>({...x}));
+  if(t) awardedOf(t).forEach(n=>{ if(!v.some(x=>String(x.name).trim().toLowerCase() === n.toLowerCase())) v.push({name: n}); });
   if(!v.length && t){ const n = vendorVal(t); if(n) v = [{name: n}]; }
   return v;
 }
 function tonerLinkHTML(it){
-  const t = tonerTender(it), title = (t && t.title) || (it && it.tenderTitle) || "", v = tonerVendors(it);
+  const t = tonerTender(it), tt = t, title = (t && t.title) || (it && it.tenderTitle) || "", v = tonerVendors(it), vgrp = []; v.forEach(x=>{ let g = vgrp.find(y=>y.name.toLowerCase() === String(x.name).toLowerCase()); if(!g) vgrp.push(g = {name: x.name, types: []}); const ty = tvTypeOf(x); if(ty && !g.types.includes(ty)) g.types.push(ty); });
   return `<div class="minit-box toner-box"><strong>${esc(mnT("Pesanan Toner", "Toner Order"))}</strong><p>${title ? esc(mnT("Tender: ", "Tender: ")) + `<b>${esc(title)}</b>. ` : esc(mnT("Tiada tender dipautkan. ", "No tender linked. "))}${esc(mnT("Pesanan bermula dari 602. Pilih pembekal daripada syarikat tender.", "The order starts from 602. Choose the supplier from the tender companies."))}</p>
-    ${v.length ? `<div class="quick" role="group" aria-label="${esc(mnT("Pembekal tender", "Tender suppliers"))}">${v.map(x=>`<button type="button" data-tvpick="${esc(x.name)}">${esc(x.name)}${x.type ? " · " + esc(x.type) : ""}</button>`).join("")}</div>` : ""}
+    ${tt && tonerExpired(tt) ? `<p class="r-note" style="color:#e0a030"><b>${esc(mnT("Tender ini telah tamat tempoh (" + fmtDate(tonerValidTo(tt)) + "). Buat tender toner baharu untuk tahun ini.", "This tender has expired (" + fmtDate(tonerValidTo(tt)) + "). Create a new toner tender for this year."))}</b></p>` : ""}
+    ${v.length ? `<div class="quick" role="group" aria-label="${esc(mnT("Pembekal tender", "Tender suppliers"))}">${vgrp.map(x=>`<button type="button" data-tvpick="${esc(x.name)}">${esc(x.name)}${x.types.length ? " · " + esc(x.types.join(", ")) : ""}</button>`).join("")}</div>` : ""}
     <datalist id="tvList">${v.map(x=>`<option value="${esc(x.name)}">`).join("")}</datalist></div>`;
 }
 function tonerOrdersHTML(it){
   const t = it.toner || tonerDraft || {}, tid = editingId;
-  let vs = (t.vendors && t.vendors.length) ? t.vendors : []; if(!vs.length){ const n = vendorVal(it); vs = [{name: n || "", type: ""}]; }
-  const row = v=>`<div class="tv-row"><input type="text" data-tv="name" value="${esc(v.name || "")}" placeholder="${esc(mnT("Nama pembekal", "Supplier name"))}"><input type="text" data-tv="type" value="${esc(v.type || "")}" placeholder="${esc(mnT("Jenis toner (cth. HP 26A)", "Toner type (e.g. HP 26A)"))}"><button type="button" class="mini tv-del" aria-label="${esc(mnT("Buang", "Remove"))}">✕</button></div>`;
+  let vs = (t.vendors && t.vendors.length) ? t.vendors.map(v=>({...v})) : [];
+  awardedOf(it).forEach(n=>{ if(!vs.some(v=>String(v.name||"").trim().toLowerCase() === n.toLowerCase())){ const e = vs.find(v=>!String(v.name||"").trim()); if(e) e.name = n; else vs.push({name: n}); } });
+  if(!vs.length){ const n = vendorVal(it); vs = [{name: n || ""}]; }
   const orders = tid ? items.filter(x=>x.tenderId === tid).sort((a,b)=>(b.created || 0) - (a.created || 0)) : [];
   const ordRow = o=>{ const si = stageIndex(o), fin = si === STAGES.length; return `<button type="button" class="tn-order" data-open-order="${esc(o.id)}"><b>${esc(o.title || mnT("Tanpa tajuk", "Untitled"))}</b><span>${esc(o.supplier || "")}</span><em class="${fin ? "ok" : ""}">${esc(fin ? mnT("Selesai", "Completed") : STAGES[si].code)}</em></button>`; };
+  const vt = tonerValidTo({...it, toner: t}), exp = vt < today();
   return `<div class="minit-box tn-box" id="tonerBox"><strong>${esc(mnT("Pembelian Toner", "Toner Purchase"))}</strong>
-    <p class="r-note">${esc(mnT("Setiap pembelian toner ialah pembelian berasingan yang bermula dari 602. Senaraikan pembekal tender dan jenis toner mereka di bawah, kemudian tambah pesanan apabila perlu.", "Every toner purchase is a separate purchase that starts at 602. List the tender suppliers and their toner types below, then add an order whenever one is needed."))}</p>
-    <h4 class="r-h">${esc(mnT("Pembekal tender", "Tender suppliers"))}</h4>
-    <div id="tvRows">${vs.map(row).join("")}</div>
-    <button type="button" class="btn r-add" id="tvAdd">${esc(mnT("+ Tambah pembekal", "+ Add supplier"))}</button>
+    <p class="r-note">${esc(mnT("Setiap pembelian toner ialah pembelian berasingan yang bermula dari 602. Senaraikan syarikat berjaya beserta jenama dan model toner mereka. Tender toner sah sehingga hujung tahun dan perlu dibuat semula setiap tahun.", "Every toner purchase is a separate purchase that starts at 602. List the awarded companies with their toner brand and model. A toner tender is valid until the end of the year and must be tendered again every year."))}</p>
+    <label class="f tv-valid">${esc(mnT("Sah sehingga", "Valid until"))}<input type="date" id="tvValid" value="${esc(vt)}"></label>
+    ${exp ? `<p class="r-note" style="color:#e0a030"><b>${esc(mnT("Tender ini telah tamat tempoh. Pesanan baharu tidak dibenarkan. Buat tender toner baharu.", "This tender has expired. New orders are not allowed. Create a new toner tender."))}</b></p>` : ""}
+    <h4 class="r-h">${esc(mnT("Pembekal berjaya, jenama dan model toner", "Awarded suppliers, toner brand and model"))}</h4>
+    <div class="tv-bulk"><button type="button" class="btn" id="tvUp">${esc(mnT("Muat naik senarai (Excel / CSV)", "Upload list (Excel / CSV)"))}</button><button type="button" class="btn" id="tvTpl">${esc(mnT("Muat turun templat", "Download template"))}</button><input type="file" id="tvFile" accept=".xlsx,.csv,.tsv,.txt,text/csv" hidden><small>${esc(mnT("Lajur: Syarikat, Jenama, Model. Baris baharu ditambah, yang sama diabaikan.", "Columns: Company, Brand, Model. New rows are added, duplicates are skipped."))}</small></div>
+    <div class="tv-head"><span>${esc(mnT("Syarikat", "Company"))}</span><span>${esc(mnT("Jenama", "Brand"))}</span><span>${esc(mnT("Model", "Model"))}</span><span></span></div>
+    <div id="tvRows">${vs.map(tvRowHTML).join("")}</div>
+    <button type="button" class="btn r-add" id="tvAdd">${esc(mnT("+ Tambah baris", "+ Add row"))}</button>
     <h4 class="r-h">${esc(mnT("Pesanan toner", "Toner orders"))} (${orders.length})</h4>
     <div class="tn-orders">${orders.length ? orders.map(ordRow).join("") : `<p class="s6f-none">${esc(mnT("Belum ada pesanan.", "No orders yet."))}</p>`}</div>
     <button type="button" class="btn primary" id="tnNew">${esc(mnT("+ Pesanan toner baharu", "+ New toner order"))}</button>
     <div class="items-slot" hidden></div></div>`;
+}
+/* bulk upload of awarded companies, toner brand and model: Excel (.xlsx), CSV or tab separated text */
+function xlsxCol(ref){ let n = 0; for(const c of String(ref).replace(/\d+/g, "")) n = n * 26 + c.charCodeAt(0) - 64; return n - 1; }
+async function readXlsxRows(buf){
+  const files = await unzipBytes(buf), dec = new TextDecoder(), get = n=>{ const f = files.find(x=>x.name === n); return f ? dec.decode(f.data) : ""; };
+  const dom = s=>new DOMParser().parseFromString(s, "application/xml");
+  const sst = [...dom(get("xl/sharedStrings.xml")).getElementsByTagName("si")].map(si=>[...si.getElementsByTagName("t")].map(t=>t.textContent).join(""));
+  const name = (files.map(f=>f.name).filter(n=>/^xl\/worksheets\/sheet\d+\.xml$/.test(n)).sort()[0]) || "xl/worksheets/sheet1.xml";
+  const rows = [];
+  [...dom(get(name)).getElementsByTagName("row")].forEach(r=>{ const row = []; [...r.getElementsByTagName("c")].forEach(c=>{ const i = xlsxCol(c.getAttribute("r") || "A1"), t = c.getAttribute("t"); let v = ""; if(t === "s"){ const x = c.getElementsByTagName("v")[0]; v = x ? sst[+x.textContent] || "" : ""; } else if(t === "inlineStr") v = [...c.getElementsByTagName("t")].map(x=>x.textContent).join(""); else { const x = c.getElementsByTagName("v")[0]; v = x ? x.textContent : ""; } row[i] = String(v).trim(); }); rows.push(Array.from(row, x=>x || "")); });
+  return rows;
+}
+function tvRowsFromTable(rows){
+  rows = rows.filter(r=>r && r.some(x=>String(x || "").trim()));
+  if(!rows.length) return [];
+  const low = rows[0].map(x=>String(x || "").toLowerCase());
+  const fi = rx=>low.findIndex(x=>rx.test(x));
+  let ci = fi(/syarikat|company|pembekal|supplier|vendor|nama/), bi = fi(/jenama|brand/), mi = fi(/model|jenis|type/);
+  const hasHead = ci >= 0 || bi >= 0 || mi >= 0;
+  if(hasHead){ rows = rows.slice(1); if(ci < 0) ci = [0, 1, 2].find(i=>i !== bi && i !== mi); } else { ci = 0; bi = 1; mi = 2; }
+  const out = []; let last = "";
+  rows.forEach(r=>{ let n = String(r[ci] || "").trim(); if(!n) n = last; else last = n; const b = bi >= 0 ? String(r[bi] || "").trim() : "", m = mi >= 0 ? String(r[mi] || "").trim() : ""; if(n && (b || m || String(r[ci] || "").trim())) out.push({name: n, brand: b, model: m, type: [b, m].filter(Boolean).join(" ")}); });
+  return out;
+}
+async function tvImport(file){
+  let rows;
+  try{
+    if(/\.xlsx$/i.test(file.name)) rows = await readXlsxRows(await file.arrayBuffer());
+    else { const txt = await file.text(); rows = /\t/.test(txt.split(/\r?\n/)[0] || "") ? txt.split(/\r?\n/).map(l=>l.split("\t")) : parseCsv(txt); }
+  }catch(e){ toast(mnT("Fail tidak dapat dibaca. Gunakan Excel (.xlsx) atau CSV.", "Could not read the file. Use Excel (.xlsx) or CSV.")); return; }
+  const list = tvRowsFromTable(rows); if(!list.length){ toast(mnT("Tiada baris dijumpai. Lajur: Syarikat, Jenama, Model.", "No rows found. Columns: Company, Brand, Model.")); return; }
+  const box = $("#tonerBox"), rowsEl = $("#tvRows"), key = v=>[v.name, v.brand, v.model].map(x=>String(x || "").trim().toLowerCase()).join("|");
+  const cur = (tonerRead() || {vendors: []}).vendors, seen = new Set(cur.map(key));
+  const keep = cur.filter(v=>v.name || v.brand || v.model); let added = 0;
+  list.forEach(v=>{ if(!seen.has(key(v))){ seen.add(key(v)); keep.push(v); added++; } });
+  // a company that only had a bare name row gives way to its detailed rows
+  const detailed = new Set(keep.filter(v=>v.brand || v.model).map(v=>v.name.toLowerCase()));
+  const final = keep.filter(v=>v.brand || v.model || !detailed.has(v.name.toLowerCase()));
+  rowsEl.innerHTML = (final.length ? final : [{}]).map(tvRowHTML).join("");
+  toast(mnT(`${added} baris ditambah daripada ${file.name}. Tekan Simpan.`, `${added} rows added from ${file.name}. Press Save.`), 6000);
+}
+function tvTemplate(){
+  const csv = "Syarikat,Jenama,Model\nContoh Syarikat A,HP,26A\nContoh Syarikat A,HP,83A\nContoh Syarikat B,Canon,337\nContoh Syarikat C,Lexmark,MS421\nContoh Syarikat D,Ricoh,SP 311\n";
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + csv], {type: "text/csv"})); a.download = "templat-pembekal-toner.csv"; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 async function tonerSaveThen(fn){
   const f = $("#frm");
@@ -4079,9 +4144,12 @@ function tonerWire(){
   document.querySelectorAll("#steps [data-tvpick]").forEach(b=>b.onclick=()=>{ const sp = document.querySelector('#steps input[name="supplier"]'); if(sp){ sp.value = b.dataset.tvpick; sp.dispatchEvent(new Event("input", {bubbles: true})); } });
   const box = $("#tonerBox"); if(!box) return;
   const rows = $("#tvRows");
-  $("#tvAdd").onclick = ()=>{ rows.insertAdjacentHTML("beforeend", `<div class="tv-row"><input type="text" data-tv="name" placeholder="${esc(mnT("Nama pembekal", "Supplier name"))}"><input type="text" data-tv="type" placeholder="${esc(mnT("Jenis toner (cth. HP 26A)", "Toner type (e.g. HP 26A)"))}"><button type="button" class="mini tv-del">✕</button></div>`); rows.lastElementChild.querySelector("input").focus(); };
+  $("#tvAdd").onclick = ()=>{ rows.insertAdjacentHTML("beforeend", tvRowHTML({})); rows.lastElementChild.querySelector("input").focus(); };
+  $("#tvUp").onclick = ()=>$("#tvFile").click();
+  $("#tvFile").onchange = e=>{ const f = e.target.files[0]; if(f) tvImport(f); e.target.value = ""; };
+  $("#tvTpl").onclick = tvTemplate;
   rows.onclick = e=>{ const x = e.target.closest(".tv-del"); if(!x) return; const r = x.closest(".tv-row"); if(rows.children.length > 1) r.remove(); else r.querySelectorAll("input").forEach(i=>i.value = ""); };
-  $("#tnNew").onclick = ()=>tonerSaveThen((d, tid)=>{ openDlg(null, null, {method: "TonerOrder", tenderId: tid, tenderTitle: d.title, tenderVendors: (d.toner && d.toner.vendors) || [], category: d.category, budgetYear: d.budgetYear, budgetHead: d.budgetHead, approvedBudget: d.approvedBudget, forWho: d.forWho}); });
+  $("#tnNew").onclick = ()=>{ const vt = $("#tvValid") && $("#tvValid").value; if(vt && vt < today()){ toast(mnT("Tender toner ini telah tamat tempoh. Buat tender toner baharu untuk tahun ini.", "This toner tender has expired. Create a new toner tender for this year."), 8000); return; } tonerSaveThen((d, tid)=>{ openDlg(null, null, {method: "TonerOrder", tenderId: tid, tenderTitle: d.title, tenderVendors: (d.toner && d.toner.vendors) || [], category: d.category, budgetYear: d.budgetYear, budgetHead: d.budgetHead, approvedBudget: d.approvedBudget, forWho: d.forWho}); }); };
   box.querySelectorAll("[data-open-order]").forEach(b=>b.onclick=()=>tonerSaveThen(()=>openDlg(b.dataset.openOrder)));
 }
 function tonerAuto(){
@@ -7262,7 +7330,7 @@ function supSearch(q, limit){
   out.sort((a, b)=>b[0] - a[0] || a[1].name.localeCompare(b[1].name));
   return (limit ? out.slice(0, limit) : out).map(x=>x[1]);
 }
-const SUP_SEL = 'input[name="supplier"], #steps [data-f="chosen"], #steps [data-f="awardTo"], #steps [data-f="vendor"], #steps .lwrap[data-f="rejectTo"] [data-l="name"]';
+const SUP_SEL = 'input[name="supplier"], #steps [data-f="chosen"], #steps [data-f="awardTo"], #steps [data-f="vendor"], #steps .lwrap[data-f="rejectTo"] [data-l="name"], #steps .lwrap[data-f="awardList"] [data-l="name"]';
 const supCertInp = ()=>document.querySelector('#steps input[name="supplierCert"]'), supNameInp = ()=>document.querySelector('#steps input[name="supplier"]');
 /* note under the certificate box */
 function supHint(){
@@ -9742,7 +9810,11 @@ applyLang();
 #dlg[data-toner="1"] [data-print="601"]{display:none!important}
 .step .card-top .r-print{margin-left:auto}
 .next-box .nx-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}.next-box .chk.nx{font-size:14.5px;font-weight:700;padding:8px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.next-box .chk.nx.off{opacity:.55;cursor:not-allowed}.next-box .chk.nx input{width:20px;height:20px}
-.tn-box .tv-row{display:grid;grid-template-columns:1fr 1fr 34px;gap:8px;align-items:center;margin-bottom:8px}.tn-box .tv-row input{width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--field,var(--surface));color:var(--ink);font:inherit}
+.tn-box .tv-row{display:grid;grid-template-columns:1.6fr 1fr 1fr 34px;gap:8px;align-items:center;margin-bottom:8px}
+.tv-head{display:grid;grid-template-columns:1.6fr 1fr 1fr 34px;gap:8px;font-size:12px;color:var(--muted);margin:6px 0 4px}
+.tv-bulk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 8px}.tv-bulk small{flex:1 1 100%;color:var(--muted)}
+.tv-valid{max-width:240px;margin:6px 0}
+@media(max-width:640px){.tv-row{grid-template-columns:1fr 1fr 34px}.tv-head{display:none}}.tn-box .tv-row input{width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--field,var(--surface));color:var(--ink);font:inherit}
 .tn-box .r-h{margin:16px 0 6px;font-size:14px}.tn-box .r-add{margin:4px 0 10px}.tn-orders{display:grid;gap:8px;margin-bottom:12px}.tn-order{display:grid;grid-template-columns:1.4fr 1fr auto;gap:10px;align-items:center;text-align:left;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer}.tn-order:hover{border-color:var(--accent)}.tn-order span{color:var(--muted);font-size:13.5px}.tn-order em{font-style:normal;font-weight:800;font-size:12px;padding:2px 10px;border-radius:999px;background:var(--now-soft);color:var(--now)}.tn-order em.ok{background:var(--done-soft);color:var(--done)}
 @media (max-width:640px){.tn-box .tv-row{grid-template-columns:1fr 34px}.tn-order{grid-template-columns:1fr auto}}
 /* Coloured sidebar icons (icons are masks that follow --icc) */
