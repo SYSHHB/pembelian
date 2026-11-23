@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-0f0NWymiNw1kba/0U/g7Izanujo4H8qyAGlznJA9ysE=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-kGNSpvxZHJmc99YHWdIXJHRX/sxYxBjuVwA+UAh8f0U=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <script>
 /* Frame guard: do not run inside a page from another origin (clickjacking). A same-origin frame (Microsoft sign-in renewal) is fine. */
@@ -216,6 +216,12 @@ fieldset:disabled input,fieldset:disabled textarea,fieldset:disabled select{opac
 .docprog.all{background:var(--done-soft);color:var(--done);font-weight:600}
 .celebrate{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translateX(-50%);width:min(440px,92vw);background:var(--surface);border:2px solid var(--done);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 12px 32px rgba(10,16,28,.25);z-index:50}
 .celebrate[hidden]{display:none}
+.ua-tabs{display:flex;gap:6px;margin:0 0 12px;flex-wrap:wrap}
+.ua-tabs button{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+.ua-tabs button[aria-selected="true"]{background:var(--done,#2e8b57);color:#fff;border-color:transparent}
+.nt-bar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+.nt-list li{display:flex;align-items:center;gap:12px}.nt-list .who{flex:1;min-width:0}.nt-list .who small{display:block;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+.nt-list img{width:36px;height:36px;border-radius:50%;background:var(--line);object-fit:cover}.nt-list .nt-count{justify-content:center;color:var(--muted)}
 .celebrate .tick{width:34px;height:34px;flex:none;border-radius:50%;background:var(--done);display:grid;place-items:center}
 .celebrate .tick::after{content:"";width:8px;height:15px;border:solid #fff;border-width:0 3px 3px 0;transform:translate(0,-2px) rotate(45deg)}
 .celebrate p{margin:2px 0 0;font-size:13px;color:var(--muted)}
@@ -2309,6 +2315,8 @@ body[data-view="wa"] #waView{display:block}
 <dialog id="usersDlg" aria-labelledby="usersTitle">
   <div class="ua-head"><h3 id="usersTitle">Pengguna dan akses</h3><button type="button" class="ua-x" id="usersClose" aria-label="Tutup">✕</button></div>
   <div class="dlg-body ua-body">
+    <div class="ua-tabs" role="tablist"><button type="button" role="tab" data-ut="users" aria-selected="true"><span data-ms>Pengguna</span><span data-en hidden>Users</span></button><button type="button" role="tab" data-ut="notify" aria-selected="false"><span data-ms>Pemberitahuan e-mel</span><span data-en hidden>Email notifications</span></button></div>
+    <div id="uPaneUsers">
     <ul class="u-list" id="uAdmins"></ul>
     <h4>Tambah pengguna</h4>
     <div class="ua-add">
@@ -2334,6 +2342,12 @@ body[data-view="wa"] #waView{display:block}
       <p class="en-only">The system owner (it.helpdesk@syayasan.edu.bn) is always an admin. Everyone signs in with their own syayasan.edu.bn Microsoft account.</p>
       <p class="en-only">Each user must also be given the <b>Sistem Pemantauan Pembelian</b> OneDrive folder owned by it.helpdesk@syayasan.edu.bn: <b>Can view</b> for Viewers, <b>Can edit</b> for Editors and Admins.</p>
     </details>
+    </div>
+    <div id="uPaneNotify" hidden>
+      <p class="u-note" id="ntIntro"></p>
+      <div class="nt-bar"><button type="button" class="btn" id="ntSelAll"></button><button type="button" class="btn" id="ntSelNone"></button><button type="button" class="btn" id="ntTestBtn"></button></div>
+      <ul class="u-list nt-list" id="ntList"></ul>
+    </div>
   </div>
   <div class="ua-foot"><button type="button" class="btn primary" id="usersDone">Selesai</button></div>
 </dialog>
@@ -6666,7 +6680,7 @@ async function notifyComplete(rec){
     const prev = await log.doc(rec.id).get(); if(prev && prev.exists) return;   // already e-mailed once
     const doms = cfg("emailDomains", []), ok = a=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(a) && doms.some(d=>a.endsWith(d));
     const to = [...new Set([rec.createdByEmail, ...members.filter(m=>m.role === "admin" || m.role === "boss").map(m=>m.id), cfg("ownerEmail", "")]
-      .filter(Boolean).map(s=>String(s).toLowerCase()).filter(ok))];
+      .filter(Boolean).map(s=>String(s).toLowerCase()).filter(ok).filter(notifyEmailOk))];
     if(!to.length) return;
     await log.doc(rec.id).set({at: Date.now(), by: me.id, to});   // mark first, so two people never send it twice
     const nm = String(rec.title || "Pembelian").replace(/[\r\n]+/g, " ").slice(0, 150);
@@ -8330,7 +8344,7 @@ async function saMailTick(force, fresh){
     const pend = items.filter(it=>isLive(it) && saState(it) === "pending" && (saGet(it) || {}).requestedAt);
     if(fresh && saState(fresh) === "pending" && (saGet(fresh) || {}).requestedAt && !pend.some(x=>x.id === fresh.id)) pend.push(fresh);
     if(!pend.length) return; saMailAt = Date.now();
-    const to = [...new Set(saBosses().map(m=>String(m.id).toLowerCase()))].filter(saValidMail); if(!to.length) return;
+    const to = [...new Set(saBosses().map(m=>String(m.id).toLowerCase()))].filter(saValidMail).filter(notifyEmailOk); if(!to.length) return;
     const svc = await claude.use("mail"); if(!svc) return;
     saMailBusy = true;
     const every = Math.max(5, +cfg("approvalEmailMinutes", 30)) * 60000, log = db.collection("mail");
@@ -8355,7 +8369,7 @@ function saAskMailConsent(svc){
 async function saDecisionMail(rec){   // best effort, never asks for permission
   try{
     const a = saGet(rec), to = String((a && a.requestedBy) || "").toLowerCase();
-    if(!cfg("approvalEmail", true) || !saOn() || typeof db === "undefined" || !db || !me || !saValidMail(to) || to === String(me.id || "").toLowerCase()) return;
+    if(!cfg("approvalEmail", true) || !saOn() || typeof db === "undefined" || !db || !me || !saValidMail(to) || !notifyEmailOk(to) || to === String(me.id || "").toLowerCase()) return;
     const svc = await claude.use("mail"); if(!svc) return;
     const log = db.collection("mail"), key = `sa:${rec.id}:d:${a.at}`; const prev = await log.doc(key).get(); if(prev && prev.exists) return;
     await log.doc(key).set({at: Date.now(), by: me.id, to: [to]});
@@ -9057,6 +9071,45 @@ function rentalBackup(d){ if(STAGES.some(s=>d.stages[s.k])) stagesBackup = JSON.
 /* the head is found in the budget by its name, so small spelling or spacing differences do not matter */
 function rentalHeadInfo(y){ return catHeadInfo("rental", y); }
 function rentalHeadFor(y){ const r = rentalHeadInfo(y); return r ? r.h : null; }
+/* ---------- Who receives notifications and e-mail (during testing only the people chosen here) ---------- */
+function notifyOn(m){ return !!(m && m.notify === true); }
+function notifyActive(){ return typeof memCol !== "undefined" && !!memCol; }   // on this device only (no shared list): everyone
+function myNotify(){ if(!notifyActive()) return true; if(!me) return false; return notifyOn(members.find(m=>String(m.id).toLowerCase() === String(me.id).toLowerCase())); }
+function notifyEmailOk(addr){ if(!notifyActive()) return true; const a = String(addr || "").toLowerCase(); return members.some(m=>String(m.id).toLowerCase() === a && notifyOn(m)); }
+{ const b = buildNotes; buildNotes = function(){ return myNotify() ? b.apply(this, arguments) : []; }; }
+{ const c = celebrate; celebrate = function(){ if(!myNotify()) return; return c.apply(this, arguments); }; }
+async function renderNotify(){
+  const host = $("#ntList"); if(!host) return;
+  $("#ntIntro").textContent = lt("Pilih siapa yang menerima pemberitahuan dan e-mel daripada sistem. Semasa ujian, hanya orang yang ditanda menerima loceng pemberitahuan, e-mel pembelian selesai dan e-mel kelulusan. Orang lain tidak menerima apa-apa.", "Choose who gets notifications and e-mail from the system. During testing, only the people ticked get the bell notifications, the purchase-complete e-mail and the approval e-mails. Everyone else gets nothing.");
+  $("#ntSelAll").textContent = lt("Pilih semua", "Select all"); $("#ntSelNone").textContent = lt("Kosongkan semua", "Clear all"); $("#ntTestBtn").textContent = lt("Hantar e-mel ujian kepada saya", "Send me a test e-mail");
+  const ids = members.map(m=>m.id), ps = ids.length && typeof userCap !== "undefined" && userCap ? await userCap.profiles(ids).catch(()=>({})) : {};
+  const on = members.filter(notifyOn).length;
+  host.innerHTML = (members.length ? "" : `<li class="u-note">${esc(lt("Belum ada pengguna.", "No users yet."))}</li>`) + members.map(m=>{ const pr = ps[m.id] || {}; return `<li data-id="${esc(m.id)}"><img alt="" src="${esc(pr.avatarUrl || "")}"><span class="who"><b>${esc(pr.name || m.id)}</b><small>${esc(m.id)} · ${esc(ROLE_NAME[m.role || "viewer"])}</small></span><label class="chk nt-on"><input type="checkbox" data-nt="${esc(m.id)}" ${notifyOn(m) ? "checked" : ""}> ${esc(lt("Terima", "Receive"))}</label></li>`; }).join("") + (members.length ? `<li class="u-note nt-count">${esc(lt(`${on} daripada ${members.length} pengguna menerima pemberitahuan.`, `${on} of ${members.length} users receive notifications.`))}</li>` : "");
+  host.querySelectorAll("[data-nt]").forEach(cb=>cb.onchange=async()=>{
+    try{ await memCol.doc(cb.dataset.nt).update({notify: cb.checked}); audit("Changed notification recipient", "", (cb.checked ? "on: " : "off: ") + cb.dataset.nt, {target: cb.dataset.nt}); renderNotify(); }
+    catch(e){ cb.checked = !cb.checked; toast(lt("Tidak dapat menyimpan. Cuba lagi.", "Could not save. Try again.")); }
+  });
+}
+async function ntSetAll(v){
+  if(!notifyActive()) return;
+  try{ for(const m of members) if(notifyOn(m) !== v) await memCol.doc(m.id).update({notify: v}); audit("Changed notification recipient", "", v ? "all on" : "all off"); renderNotify(); }
+  catch(e){ toast(lt("Tidak dapat menyimpan. Cuba lagi.", "Could not save. Try again.")); }
+}
+document.querySelectorAll("#usersDlg [data-ut]").forEach(b=>b.addEventListener("click", ()=>{
+  document.querySelectorAll("#usersDlg [data-ut]").forEach(x=>x.setAttribute("aria-selected", String(x === b)));
+  const n = b.dataset.ut === "notify"; $("#uPaneUsers").hidden = n; $("#uPaneNotify").hidden = !n; if(n) renderNotify();
+}));
+$("#ntSelAll").addEventListener("click", ()=>ntSetAll(true));
+$("#ntSelNone").addEventListener("click", ()=>ntSetAll(false));
+$("#ntTestBtn").addEventListener("click", async()=>{
+  try{
+    const svc = await claude.use("mail"); if(!svc){ toast(lt("E-mel tidak tersedia.", "E-mail is not available.")); return; }
+    const r = await svc.send([String(me.id)], "Ujian e-mel / Test e-mail", "Ini ialah e-mel ujian daripada Sistem Pemantauan Pembelian SYSHHB.\nThis is a test e-mail from the SYSHHB Purchase Tracker.");
+    if(r.ok) toast(lt("E-mel ujian dihantar kepada anda.", "Test e-mail sent to you."), 5000); else if(r.reason === "consent") saAskMailConsent(svc); else toast(lt("E-mel ujian tidak dapat dihantar.", "The test e-mail could not be sent."));
+  }catch(e){ toast(lt("E-mel ujian tidak dapat dihantar.", "The test e-mail could not be sent.")); }
+});
+{ const rm = renderMembers; renderMembers = async function(){ const v = await rm.apply(this, arguments); try{ const pn = $("#uPaneNotify"); if(pn && !pn.hidden) renderNotify(); }catch(e){} return v; }; }
+try{ Object.assign(AUDIT_MS, {"Changed notification recipient":"Menukar penerima pemberitahuan"}); }catch(e){}
 const TELCO_RX = /telefon\s*&\s*kawat/i;
 function isTelcoHead(t){ return TELCO_RX.test(String(t || "")); }
 function telcoSync(){
