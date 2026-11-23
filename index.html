@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-S+/H5mxrv/kJwQ77a0b21wQGYxhBt2p1XAs4qvZ7aOg=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lSdpPY5/wfOYRrIgedYUuEO70MOChq68rWeVWOVqA6I=' 'sha256-OrJuNLt9gOL0iLZBqa9u1fM/U1nbZ0bz/ltNzqz00l8=' 'sha256-D1ZLxfbzW100pLAykI7JPsJvbZyjbrdsYayxIcefUO4=' 'sha256-MoEJ36AsWfLXYgotAh+ozIten/17Lbv8hlsl2ABL5PM=' 'sha256-MTDRqdAd65iTQ2SMxpidUm7wh2flwBcFliYTToIFvyg=' 'sha256-0f0NWymiNw1kba/0U/g7Izanujo4H8qyAGlznJA9ysE=' 'sha256-uYlqqULBDfa53iHO3uV1RHWwmZ78MXInmg2UrqmoVyo=' 'sha256-jt87/HDnrpJ8sp8LO/22cbaBi+ark6IqukFYAmjs4Pk=' 'sha256-3aRNijr/QULvNVVM4qJYqmsr7fKTGsAtEzKOnaIuYmo=' 'sha256-ocQXzMIEWKVa2JqJGpTVUiN4fq3nHOuccpsUM08swdw=' 'sha256-jZG2B2yw2jWlFcMIJ9/3Rm8iqvNFJiPNLOR83uiOxYk=' 'sha256-slGfLGJCbXw7WvnZRDVWMcvVxYzTWeeGj3ArmBRmRf8=' 'sha256-rOn/UAlsctcEDNouFNSnr9LXGJ5q9RxbIUiRbr2Q5Oc=' 'sha256-snLVi5yRNKmIS2CKKK2VpRYP+sJuiZvoRRS9QX8yquY=' 'sha256-QsGv9+kx4R+GBRC/6Na4GqYYglXs9y5ekrNiS2EfoJo=' 'sha256-zjzy7oqyUnh5DByTmYFxv5/i96teIZ1AvqldlJDiets=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://login.microsoftonline.com https://graph.microsoft.com https://*.sharepoint.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src blob: https://login.microsoftonline.com; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
 <meta name="referrer" content="no-referrer">
 <script>
 /* Frame guard: do not run inside a page from another origin (clickjacking). A same-origin frame (Microsoft sign-in renewal) is fine. */
@@ -2162,6 +2162,7 @@ body[data-view="wa"] #waView{display:block}
           </div>
           <label class="f">Tahun bajet<select name="budgetYear" id="budgetYear"></select></label>
           <label class="f full">Tajuk Perbelanjaan<select name="budgetHead" id="budgetHead"></select></label>
+          <div class="full minit-box next-box" id="telcoBox" hidden><strong>Jenis pembelian (Telefon &amp; Kawat)</strong><p id="telcoHint">Tandakan satu. Semua langkah bermula dari 601.</p><div class="nx-row"><label class="chk nx"><input type="checkbox" data-tc="monthly"> <span data-tcl="monthly">Monthly Leasing</span></label><label class="chk nx"><input type="checkbox" data-tc="yearly"> <span data-tcl="yearly">Yearly Leasing</span></label><label class="chk nx"><input type="checkbox" data-tc="other"> <span data-tcl="other">Other</span></label></div></div>
           <label class="f">Anggaran yang diluluskan (B$)<input name="approvedBudget" type="number" step="0.01" min="0"></label>
           <input type="hidden" name="inBudget">
         </div>
@@ -3582,7 +3583,7 @@ function isOrderM(it){ return !!it && (it.method === "TonerOrder" || (it.method 
 function isLeaseNew(it){ return !!it && it.method === "Sewaan" && !!it.tenderFirst && (it.leaseKind === "new" || it.leaseKind === undefined); }
 function isLeaseChoose(it){ return !!it && it.method === "Sewaan" && !!it.tenderFirst && (it.leaseKind === "" || it.leaseKind === "existing"); }
 function isTenderFirst(it){ return isHolderM(it) || isLeaseNew(it); }
-function curTenderFirst(){ const old = editingId ? items.find(x=>x.id===editingId) : null; return old ? !!old.tenderFirst : true; }
+function curTenderFirst(){ if(draftBill) return false; const old = editingId ? items.find(x=>x.id===editingId) : null; return old ? !!old.tenderFirst : true; }
 function needsMinit(it){ return it && (it.method==="Sebutharga" || it.method==="Tender" || isTenderFirst(it)); }
 function minitOk(it){ return (!isHolderM(it) || !!it.stages?.s601?.done) && (!needsMinit(it) || MINIT.every(m=>it.stages?.[m.k]?.done)) && (!needsTender(it) || BOXES.every(B=>B.optional || !!it.stages?.[B.k]?.done)); }
 let minitTab = "minitP";
@@ -4025,7 +4026,7 @@ function catHeadInfo(kind, y){
 }
 function tonerHeadFor(y){ return catHeadInfo("toner", y); }
 function headSync(){
-  const f = $("#frm"), m = f.method.value; if(m !== TONER_METHOD && m !== RENTAL_METHOD) return;
+  const f = $("#frm"), m = f.method.value; if(m !== TONER_METHOD && m !== RENTAL_METHOD) return; if(m === RENTAL_METHOD && draftBill) return;
   if(m === RENTAL_METHOD) f.category.value = "Sekolah";
   const y = f.budgetYear.value || curYear(), r = catHeadInfo(m === TONER_METHOD ? "toner" : "rental", y), c = f.category.value || "Sekolah";
   buildBudgetSelect(r ? r.h.t : (m === RENTAL_METHOD && c === "Sekolah" ? RENTAL_HEAD : ""));
@@ -4033,7 +4034,7 @@ function headSync(){
   $("#budgetHead").dispatchEvent(new Event("change")); syncPicks();
 }
 /* ---------- Tender first (Toner / Rental), then Toner orders as linked purchases that start at 602 ---------- */
-let draftNext = "", draftKind = "", tonerDraft = {}, draftLink = {};
+let draftBill = "", draftTelco = "", draftNext = "", draftKind = "", tonerDraft = {}, draftLink = {};
 function isAuto601(d){ return !!d && (d.method === "Sewaan" || isOrderM(d)); }
 function rentalHasData(it){ const r = (it && it.rental) || {}; return !!(r.start || r.term || Number(r.laptopUnits) || Number(r.desktopUnits) || (r.extras || []).some(x=>x && (x.name || x.units || x.price)) || rentalPaymentsOf(r).some(p=>p && (p.from || p.to || p.indentRef || p.doRef || p.invRef))); }
 function tenderUnlocked(it){ return minitOk(it); }
@@ -4247,6 +4248,7 @@ function draftFromForm(){
   d.lines = readItems();
   d.stages = readSteps();
   if(d.method === RENTAL_METHOD) rentalApply(d); else rentalBackup(d);
+  d.telco = isTelcoHead(d.budgetHead) ? draftTelco : "";
   d.tenderFirst = (d.method === "Toner" || d.method === "Sewaan") && curTenderFirst(); d.next = draftNext; if(d.method === "Sewaan" && d.tenderFirst) d.leaseKind = draftKind; else delete d.leaseKind;
   if(draftLink.tenderId){ d.tenderId = draftLink.tenderId; d.tenderTitle = draftLink.tenderTitle || ""; d.tenderVendors = draftLink.tenderVendors || []; }
   if(isOrderM(d)){ const s6 = d.stages.s601 || {}; d.stages.s601 = {...s6, done:true, date:(d.stages.s602 && d.stages.s602.date) || s6.date || "", toner:true}; }
@@ -4623,8 +4625,8 @@ function fillDialog(it){
   [...STAGES, ...MINIT, ...BOXES].forEach(s=>draftFiles[s.k] = (it.stages?.[s.k]?.files||[]).slice());
   draftFiles.req601 = (it.stages?.req601?.files||[]).slice(); draftFiles.cancelMinit = (it.stages?.cancelMinit?.files||[]).slice(); draftExtra.cancelMinit = {...(it.stages?.cancelMinit||{})};
   rentalLoad(it); stagesBackup = JSON.parse(JSON.stringify(it.stages||{}));
-  draftLink = {tenderId: it.tenderId || "", tenderTitle: it.tenderTitle || "", tenderVendors: it.tenderVendors || []}; tonerDraft = {...(it.toner || {})}; draftKind = it.method === "Sewaan" && it.tenderFirst ? (it.leaseKind === undefined ? "new" : it.leaseKind) : ""; draftNext = it.next || (it.method === "Sewaan" && !it.tenderFirst ? "Sewaan" : "");
-  syncPicks();
+  draftLink = {tenderId: it.tenderId || "", tenderTitle: it.tenderTitle || "", tenderVendors: it.tenderVendors || []}; tonerDraft = {...(it.toner || {})}; draftKind = it.method === "Sewaan" && it.tenderFirst ? (it.leaseKind === undefined ? "new" : it.leaseKind) : ""; draftNext = it.next || (it.method === "Sewaan" && !it.tenderFirst ? "Sewaan" : ""); draftBill = it.method === "Sewaan" && it.rental && it.rental.bill ? it.rental.bill : ""; draftTelco = draftBill || it.telco || "";
+  syncPicks(); try{ telcoSync(); }catch(e){}
   $("#itemRows").innerHTML = (it.lines?.length?it.lines:[{}]).map(itemRowHTML).join("");
   wireItems(); updTotal();
   $("#steps").innerHTML = stepsHTML(it);
@@ -5562,9 +5564,16 @@ function rentalPayDraft(d, pid){
   const units = [["Laptop", r.laptopUnits], ["Desktop", r.desktopUnits]].concat((r.extras || []).map(x=>[x.name, x.units])).filter(([n, u])=>n && Number(u) > 0).map(([n, u])=>`${u} unit ${n}`).join(", ");
   const o2 = p.s602 || {}, o7 = p.t607 || {};
   d.method = "Tender"; d.lines = [];
-  d.notes = (o2.notes != null ? o2.notes : `Bayaran sewaan ${r.type || ""}${units ? " (" + units + ")" : ""} bagi ${mo} bulan, ${from} hingga ${to}.`.replace(/\s+/g, " "));
+  d.notes = (o2.notes != null ? o2.notes : r.bill ? `Bayaran bil ${d.supplier || "langganan"} bagi ${from}${mo > 1 ? " hingga " + to : ""}.` : `Bayaran sewaan ${r.type || ""}${units ? " (" + units + ")" : ""} bagi ${mo} bulan, ${from} hingga ${to}.`.replace(/\s+/g, " "));
   d.stages = {...d.stages, s602: {...o2, amount: rentalPayAmount(r, p)}, t607: {...o7}};
   return d;
+}
+function openPrint601Pay(pid){
+  const d = draftFromForm(), r = d.rental || {}, p = rentalPaymentsOf(r).find(x=>x.id === pid) || {}, s6 = p.s601 || {};
+  d.method = "Lain-lain"; d.lines = [{desc: `Bayaran bil ${d.supplier || d.title || "langganan"} (${mnMonthTxt(p.from)}${p.to && p.to !== p.from ? " - " + mnMonthTxt(p.to) : ""})`, qty: "1", unitPrice: String(rentalPayAmount(r, p))}];
+  d.stages = {...d.stages, s601: {...(d.stages.s601 || {}), date: s6.date || ""}}; d.notes = s6.note || "";
+  pvName = `${d.fileNo ? d.fileNo + " - " : ""}601 ${d.title || "Pembelian"}`.replace(/[\\/:*?"<>|]/g, "-").trim();
+  $("#pvPages").innerHTML = build601(d); $("#printView").showModal();
 }
 function openPrint(form, payId){
  pvVO = false; $("#pvWord").hidden = false;
@@ -8985,9 +8994,10 @@ function rentalPaymentsOf(r){
   return (r.payFrom || r.payTo || r.indentRef || r.doRef || r.invRef) ? [{id: "p1", from: r.payFrom || "", to: r.payTo || "", indentRef: r.indentRef || "", doRef: r.doRef || "", invRef: r.invRef || ""}] : [];
 }
 function rentalPayMonths(p){ const a = monthNum(p.from), b = monthNum(p.to); return a != null && b != null && b >= a ? b - a + 1 : 0; }
-function rentalPayAmount(r, p){ return Math.round(rentalMonthly(r) * rentalPayMonths(p) * 100) / 100; }
-function rentalYearAmount(r){ return Math.round(rentalPaymentsOf(r).reduce((a, p)=>a + rentalMonthly(r) * rentalPayMonths(p), 0) * 100) / 100; }
+function rentalPayAmount(r, p){ if(r && r.bill) return Math.round((Number(p.amount) || 0) * 100) / 100; return Math.round(rentalMonthly(r) * rentalPayMonths(p) * 100) / 100; }
+function rentalYearAmount(r){ if(r && r.bill) return Math.round(rentalPaymentsOf(r).reduce((a, p)=>a + rentalPayAmount(r, p), 0) * 100) / 100; return Math.round(rentalPaymentsOf(r).reduce((a, p)=>a + rentalMonthly(r) * rentalPayMonths(p), 0) * 100) / 100; }
 function rentalDefaults(r, year){
+  if(r && r.bill) return r.bill === "monthly" ? {from: year + "-01", to: year + "-01"} : {from: year + "-01", to: year + "-12"};
   const s = monthNum(r.start), t = rentalMonths(r), y0 = monthNum(year + "-01"), y1 = y0 + 11;
   if(s == null) return {from: year + "-01", to: year + "-12"};
   const e = t > 0 ? s + t - 1 : y1, a = Math.max(s, y0), b = Math.min(e, y1);
@@ -8997,6 +9007,7 @@ function rentalFlags(r){
   const ps = rentalPaymentsOf(r), P = ps[ps.length - 1];
   if(r.done) return {s601: true, s602: true, t607: true, indent: true, do: true, inv: true};
   if(!P) return {s601: true, s602: false, t607: false, indent: false, do: false, inv: false};
+  if(r.bill){ const o6 = P.s601 || {}, q2 = P.s602 || {}, q7 = P.t607 || {}, has = s=>(draftFiles[P.id + "_" + s] || []).length > 0; return {s601: !!(o6.date || has("601")), s602: !!(q2.date || q2.quoteNo || has("602")), t607: !!(q7.ref || q7.date || has("607")), indent: !!P.indentRef || has("ind"), do: !!P.doRef || has("do"), inv: !!P.invRef || has("inv")}; }
   const o2 = P.s602 || {}, o7 = P.t607 || {}, typed = {"602": !!(o2.date || o2.quoteNo || o2.quoteDate || o2.quoteValidity || o2.deliveryTerm), "607": !!(o7.ref || o7.date)};
   const has = s=>(draftFiles[P.id + "_" + s] || []).length > 0 || !!typed[s];
   const inv = !!P.invRef || has("inv"), dO = inv || !!P.doRef || has("do"), indent = dO || !!P.indentRef || has("ind"), t607 = indent || has("607"), s602 = t607 || has("602"), s601 = true;
@@ -9019,6 +9030,7 @@ function rentalLoad(it){
 function rentalRead(){
   const box = $("#rentalBox"); if(!box) return null;
   const r = {}; box.querySelectorAll("[data-r]").forEach(el=>{ r[el.dataset.r] = el.type === "checkbox" ? el.checked : el.value.trim(); });
+  r.bill = draftBill;
   r.extras = [...box.querySelectorAll(".r-ex")].map(div=>{ const o = {}; div.querySelectorAll("[data-rx]").forEach(el=>{ o[el.dataset.rx] = el.value.trim(); }); return o; });
   r.payments = [...box.querySelectorAll(".r-pay")].map(div=>{
     const p = {id: div.dataset.pid}; div.querySelectorAll("[data-rp]").forEach(el=>{ p[el.dataset.rp] = el.value.trim(); });
@@ -9045,7 +9057,34 @@ function rentalBackup(d){ if(STAGES.some(s=>d.stages[s.k])) stagesBackup = JSON.
 /* the head is found in the budget by its name, so small spelling or spacing differences do not matter */
 function rentalHeadInfo(y){ return catHeadInfo("rental", y); }
 function rentalHeadFor(y){ const r = rentalHeadInfo(y); return r ? r.h : null; }
+const TELCO_RX = /telefon\s*&\s*kawat/i;
+function isTelcoHead(t){ return TELCO_RX.test(String(t || "")); }
+function telcoSync(){
+  const box = $("#telcoBox"); if(!box) return;
+  const on = isTelcoHead($("#budgetHead").value);
+  if(!on){ if(draftBill) telcoOther(); draftTelco = ""; }
+  box.hidden = !on;
+  box.querySelectorAll("[data-tc]").forEach(c=>{ c.checked = c.dataset.tc === draftTelco; c.disabled = !canEdit; });
+}
+function telcoOther(){
+  draftBill = "";
+  const f = $("#frm"); if(f.method.value === RENTAL_METHOD){ const t = document.querySelector('#frm .seg[data-pick="method"] [data-v="Terus kepada Pembekal"]'); if(t) t.click(); }
+}
+document.querySelectorAll("#telcoBox [data-tc]").forEach(c=>c.addEventListener("change", ()=>{
+  if(!c.checked){ c.checked = true; return; }
+  draftTelco = c.dataset.tc; const f = $("#frm");
+  if(draftTelco === "other"){ telcoOther(); refreshSteps(); }
+  else {
+    draftBill = draftTelco;
+    if(f.method.value !== RENTAL_METHOD){ const t = document.querySelector(`#frm .seg[data-pick="method"] [data-v="${RENTAL_METHOD}"]`); if(t) t.click(); }
+    const cur = rentalRead() || rentalDraft; if(cur){ cur.bill = draftBill; const p0 = (cur.payments || [])[0]; if(p0) p0.manual = false; }
+    refreshSteps();
+  }
+  telcoSync();
+}));
+$("#budgetHead").addEventListener("change", telcoSync);
 function rentalAuto(){
+  if(draftBill){ syncPicks(); return; }
   const f = $("#frm"), y = f.budgetYear.value || curYear(), r = rentalHeadInfo(y);
   f.category.value = "Sekolah";
   const c = "Sekolah";
@@ -9054,6 +9093,7 @@ function rentalAuto(){
   $("#budgetHead").dispatchEvent(new Event("change")); syncPicks();
 }
 function rentalHint(){
+  if(draftBill) return esc(mnT("Bil langganan Telefon & Kawat (" + (draftBill === "monthly" ? "bulanan" : "tahunan") + "). Setiap bayaran bermula dari 601.", "Telephone & Wire leasing bill (" + draftBill + "). Every payment starts from 601."));
   const y = ($("#frm").budgetYear && $("#frm").budgetYear.value) || curYear(), base = mnT("Tajuk perbelanjaan Penyewaan dipilih secara automatik (2F Sekolah sahaja). Butiran sewaan dipaparkan di bawah.", "The Rental expenditure head is the 2F School head. Rental details are shown below.");
   if(rentalHeadFor(y)) return esc(base);
   return esc(base) + ` <span class="r-warn">⚠ ${esc(mnT("Tajuk ini belum ada dalam bajet " + y + ".", "This head is not in the " + y + " budget yet."))}</span> ` + (canBudget() ? `<button type="button" class="mini" data-addhead="1">${esc(mnT("Tambah ke bajet", "Add to budget"))}</button>` : esc(mnT("Minta Pentadbir tambahnya dalam Urus bajet.", "Ask an Admin to add it in Manage budget.")));
@@ -9074,19 +9114,27 @@ function rentalCardLines(it){
   }
   return out;
 }
-function rentalPayHTML(p, i){
+function rentalPayHTML(p, i, bill){
+  p = {...p, bill: bill || ""};
   const man = p.manual ? ' data-manual="1"' : "", inp = (k, type)=>`<input type="${type || "text"}" data-rp="${k}" value="${esc(p[k] || "")}"${(k === "from" || k === "to") ? man : ""}>`;
   const pf = (sec, k, type, ph)=>`<input type="${type || "text"}" data-pf="${sec}.${k}" value="${esc(((p[sec] || {})[k]) || "")}" placeholder="${esc(ph || "")}">`;
   const file = ([x, ms, en])=>`<div class="s6f"><div class="s6f-h"><b>${esc(mnT(ms, en))}</b></div>${filesHTML(p.id + "_" + x) || `<p class="s6f-none">Tiada fail.</p>`}</div>`;
   const T7 = STAGES.find(s=>s.k === "t607").fields.find(f=>f.k === "docs"), d7 = Array.isArray((p.t607 || {}).docs) ? p.t607.docs : [];
-  const pbtn = f=>`<button type="button" class="btn mini r-print" data-rprint="${f}">${esc(mnT(f === "602" ? "Cetak Borang 602" : "Cetak T-607", f === "602" ? "Print Form 602" : "Print T-607"))}</button>`;
+  const pbtn = f=>`<button type="button" class="btn mini r-print" data-rprint="${f}">${esc(f === "601" ? mnT("Cetak Borang 601", "Print Form 601") : mnT(f === "602" ? "Cetak Borang 602" : "Cetak T-607", f === "602" ? "Print Form 602" : "Print T-607"))}</button>`;
   return `<div class="r-pay" data-pid="${esc(p.id)}">
     <div class="r-pay-h"><b>${esc(mnT("Bayaran", "Payment"))} ${i + 1}</b><button type="button" class="mini r-pay-del" aria-label="${esc(mnT("Buang bayaran ini", "Remove this payment"))}">✕</button></div>
     <div class="r-grid">
-      <label class="f">Bayaran sewaan dari bulan${inp("from", "month")}</label>
-      <label class="f">hingga bulan (ikut invois pembekal)${inp("to", "month")}</label>
+      <label class="f">${p.bill ? esc(mnT("Bayaran bil dari bulan", "Bill payment from month")) : "Bayaran sewaan dari bulan"}${inp("from", "month")}</label>
+      <label class="f">${p.bill ? esc(mnT("hingga bulan (sama jika bulanan)", "to month (same if monthly)")) : "hingga bulan (ikut invois pembekal)"}${inp("to", "month")}</label>
+      ${p.bill ? `<label class="f full">${esc(mnT("Jumlah bil (B$)", "Bill amount (B$)"))}<input type="number" min="0" step="any" inputmode="decimal" data-rp="amount" value="${esc(p.amount || "")}"></label>` : ""}
       <div class="r-psum full"></div>
     </div>
+    ${p.bill ? `<div class="r-sec"><div class="r-sec-h"><b>${esc(mnT("Invois (diterima daripada pembekal dahulu)", "Invoice (received from the supplier first)"))}</b></div><div class="r-grid">
+      <label class="f">${esc(mnT("Rujukan Invois", "Invoice reference"))}${inp("invRef")}</label>
+      <label class="f">${esc(mnT("Tarikh invois diterima", "Date invoice received"))}${pf("inv", "date", "date")}</label></div>${file(RENTAL_PAY_FILES[6])}</div>` : ""}
+    ${p.bill ? `<div class="r-sec"><div class="r-sec-h"><b>601</b>${pbtn("601")}</div><div class="r-grid">
+      <label class="f">${esc(mnT("Tarikh 601", "601 date"))}${pf("s601", "date", "date")}</label>
+      <label class="f">${esc(mnT("Ulasan mengenai keperluan", "Note on the requirement"))}${pf("s601", "note")}</label></div>${file(RENTAL_PAY_FILES[0])}</div>` : ""}
     <div class="r-sec"><div class="r-sec-h"><b>${esc(mnT("Minit", "Minute"))}</b></div><div class="r-grid">
       <label class="f">${esc(mnT("No. Rujukan Minit", "Minute reference no."))}${pf("minit", "ref")}</label>
       <label class="f">${esc(mnT("Tarikh Minit", "Minute date"))}${pf("minit", "date", "date")}</label>
@@ -9105,9 +9153,9 @@ function rentalPayHTML(p, i){
     <div class="r-grid" style="margin-top:10px">
       <label class="f">Rujukan Indent${inp("indentRef")}</label>
       <label class="f">Rujukan DO${inp("doRef")}</label>
-      <label class="f">Rujukan Invois${inp("invRef")}</label>
+      ${p.bill ? "" : `<label class="f">Rujukan Invois${inp("invRef")}</label>`}
     </div>
-    <div class="s6files">${RENTAL_PAY_FILES.filter(f=>["ind", "do", "inv"].includes(f[0])).map(file).join("")}</div>
+    <div class="s6files">${RENTAL_PAY_FILES.filter(f=>["ind", "do", "inv"].includes(f[0]) && !(p.bill && f[0] === "inv")).map(file).join("")}</div>
   </div>`;
 }
 function rentalHTML(it){
@@ -9122,6 +9170,24 @@ function rentalHTML(it){
   const docsBlock = existing
     ? `<div class="minit-box"><strong>${esc(mnT("Dokumen sewaan sedia ada", "Existing lease documents"))}</strong><p class="r-note">${esc(mnT("Sewaan ini sudah berjalan sejak tahun-tahun lepas, jadi tiada proses tender atau 601 baharu dan jumlah keseluruhan sewaan tidak dimasukkan ke bajet tahun ini. Hanya bayaran yang dibuat pada tahun ini dikira. Muat naik dokumen yang telah diluluskan di bawah.", "This lease has been running since earlier years, so there is no new tender or 601 process and the whole lease is not counted in this year's budget. Only payments made this year are counted. Upload the approved documents below."))}</p><div class="s6files">${RENTAL_EXISTING.map(file).join("")}</div><details class="r-more"><summary>${esc(mnT("Dokumen lain (pilihan)", "Other documents (optional)"))}</summary><div class="s6files">${RENTAL_MAIN_FILES.filter(f=>!exKeys.includes(f[0])).map(file).join("")}</div></details></div>`
     : `<details class="r-more"><summary>${esc(mnT("Dokumen tender lama / lain (pilihan)", "Older / other tender documents (optional)"))}</summary><div class="s6files">${RENTAL_MAIN_FILES.map(file).join("")}</div></details>`;
+  if(r.bill){
+    return `<div class="minit-box rental-box" id="rentalBox">
+    <strong>${esc(r.bill === "monthly" ? "Monthly Leasing" : "Yearly Leasing")} (${esc(mnT("Telefon & Kawat", "Telephone & Wire"))})</strong>
+    <p class="r-note">${esc(mnT("Bil langganan seperti talian tetap (landline). Setiap bayaran melalui langkah penuh: 601, Minit, 602, T-607, Indent, DO dan Invois. Tambah satu bayaran untuk setiap bil.", "A leasing bill such as a landline. Every payment goes through the full steps: 601, Minute, 602, T-607, Indent, DO and Invoice. Add one payment for each bill."))}</p>
+    <div class="r-grid">
+      <label class="f">${esc(mnT("Nama Syarikat (Pembekal)", "Company (Supplier)"))}<input name="supplier" value="${esc(it.supplier || "")}"></label>
+      <label class="f">${esc(mnT("No Sijil Pembekal", "Supplier certificate no."))}<input name="supplierCert" placeholder="cth. YSHHB/SP/260017" value="${esc(it.supplierCert || CERT_PREFIX)}"></label>
+      <label class="f full">${esc(mnT("Perkhidmatan / No. akaun", "Service / account no."))}${inp("account", "cth. talian 2xxxxxx", "text")}</label>
+      <label class="f full">Catatan${inp("notes", "", "text")}</label>
+      <div class="r-sum full" id="rSum" aria-live="polite"></div>
+    </div>
+    <h4 class="r-h">${esc(mnT("Bayaran (bermula dari 601)", "Payments (start from 601)"))}</h4>
+    <div id="rPays">${pays.map((p, i)=>rentalPayHTML(p, i, r.bill)).join("")}</div>
+    <button type="button" class="btn r-add" id="rAddPay">${esc(mnT("+ Tambah bayaran", "+ Add payment"))}</button>
+    <label class="chk r-done"><input type="checkbox" data-r="done"${r.done ? " checked" : ""}> Selesai</label>
+    <div class="items-slot" hidden></div>
+  </div>`;
+  }
   return `${docsBlock}
   <div class="minit-box rental-box" id="rentalBox">
     <strong>Sewaan Tahunan / Bulanan</strong>
@@ -9144,7 +9210,7 @@ function rentalHTML(it){
       <div class="r-sum full" id="rSum" aria-live="polite"></div>
     </div>
     <h4 class="r-h">${esc(existing ? mnT("Bayaran tahun ini (bulanan / suku tahunan: ke-1, ke-2, ke-3, ke-4 dan seterusnya)", "This year's payments (monthly / quarterly: 1st, 2nd, 3rd, 4th and so on)") : mnT("Bayaran (mula dari 602)", "Payments (start from 602)"))}</h4>
-    <div id="rPays">${pays.map(rentalPayHTML).join("")}</div>
+    <div id="rPays">${pays.map((p, i)=>rentalPayHTML(p, i, r.bill)).join("")}</div>
     <button type="button" class="btn r-add" id="rAddPay">${esc(mnT("+ Tambah bayaran", "+ Add payment"))}</button>
     <label class="chk r-done"><input type="checkbox" data-r="done"${r.done ? " checked" : ""}> Selesai</label>
     <div class="items-slot" hidden></div>
@@ -9156,6 +9222,16 @@ function rentalUpdate(){
   let r = rentalRead();
   const p0 = box.querySelector(".r-pay");
   if(p0 && !r.payments[0].manual){ const d = rentalDefaults(r, y), f0 = p0.querySelector('[data-rp="from"]'), t0 = p0.querySelector('[data-rp="to"]'); if(f0.value !== d.from) f0.value = d.from; if(t0.value !== d.to) t0.value = d.to; r = rentalRead(); }
+  if(r.bill){
+    const ps = r.payments, tot = ps.reduce((a, p)=>a + rentalPayAmount(r, p), 0), warns = [];
+    const y0 = monthNum(y + "-01"), y1 = monthNum(y + "-12"), used = ps.filter(p=>rentalPayMonths(p) > 0).sort((a, b)=>monthNum(a.from) - monthNum(b.from));
+    if(used.some(p=>monthNum(p.from) < y0 || monthNum(p.to) > y1)) warns.push(mnT("Ada bulan bayaran di luar tahun bajet " + y + ".", "Some payment months are outside budget year " + y + "."));
+    if(used.some((p, i)=>i > 0 && monthNum(p.from) <= monthNum(used[i - 1].to))) warns.push(mnT("Bulan bayaran bertindih antara dua bayaran.", "Payment months overlap between two payments."));
+    $("#rSum").innerHTML = `<div><b>${mnT("Jumlah bayaran dalam tahun bajet", "Total payments in budget year")} ${esc(y)}:</b> ${ps.length} ${mnT("bayaran", ps.length === 1 ? "payment" : "payments")} = <b>${money(tot)}</b></div>` + warns.map(w=>`<div class="r-warn">⚠ ${esc(w)}</div>`).join("");
+    box.querySelectorAll(".r-pay").forEach((div, i)=>{ const p = ps[i], m = rentalPayMonths(p), a = div.querySelector(".r-amt"); if(a) a.value = Number(p.amount) ? money(rentalPayAmount(r, p)) : "";
+      div.querySelector(".r-psum").textContent = m ? `${mnMonthTxt(p.from)}${m > 1 ? " " + mnT("hingga", "to") + " " + mnMonthTxt(p.to) : ""} = ${money(rentalPayAmount(r, p))}` : mnT("Isi bulan bayaran.", "Fill in the payment months."); });
+    return;
+  }
   const mo = rentalMonthly(r), ps = r.payments, term = rentalMonths(r), end = rentalEnd(r), s = monthNum(r.start), e = monthNum(end), cm = monthNum(today().slice(0, 7)), lines = [], warns = [];
   if(s != null && term > 0){
     const st = cm < s ? mnT("Belum bermula", "Not started yet") : cm > e ? mnT("Telah tamat", "Ended") : mnT(`Sedang berjalan: bulan ke-${cm - s + 1} daripada ${term}, baki ${e - cm} bulan`, `Running: month ${cm - s + 1} of ${term}, ${e - cm} ${e - cm === 1 ? "month" : "months"} left`);
@@ -9197,7 +9273,7 @@ function rentalWire(){
     const h = ()=>{ if(el.dataset.rp === "from" || el.dataset.rp === "to") el.dataset.manual = "1"; rentalUpdate(); };
     el.addEventListener("input", h); el.addEventListener("change", h);
   });
-  box.querySelectorAll("[data-rprint]").forEach(b=>b.onclick = ()=>openPrint(b.dataset.rprint, b.closest(".r-pay").dataset.pid));
+  box.querySelectorAll("[data-rprint]").forEach(b=>b.onclick = ()=>b.dataset.rprint === "601" ? openPrint601Pay(b.closest(".r-pay").dataset.pid) : openPrint(b.dataset.rprint, b.closest(".r-pay").dataset.pid));
   const add = $("#rAddPay"); if(add) add.onclick = rentalAddPay;
   const addEx = $("#rAddEx"); if(addEx) addEx.onclick = ()=>{ const r = rentalRead(); r.extras.push({name: "", units: "", price: ""}); rentalRerender(r); const rows = document.querySelectorAll("#rentalBox .r-ex"); if(rows.length) rows[rows.length - 1].querySelector("input").focus(); };
   box.querySelectorAll(".r-ex-del").forEach((btn, i)=>btn.onclick = ()=>{ const r = rentalRead(); r.extras.splice(i, 1); rentalRerender(r); });
