@@ -1883,6 +1883,70 @@ body[data-view="wa"] #waView{display:block}
 <link rel="stylesheet" href="syshhb-shared.css?v=2">
 <link rel="stylesheet" href="syshhb-login.css?v=1">
 <link rel="stylesheet" href="syshhb-splash.css?v=1">
+<style id="portal-theme">
+/* ===== SYSHHB portal theme: shared look (green gradient header, glass controls, rounded cards) ===== */
+:root{
+  --p-pine:#0d3b26;--p-green:#27a047;--p-green-d:#157a35;--p-sun:#f8f038;--p-gold:#a8946a;
+  --p-bg:#eef4ee;--p-card:#ffffff;--p-text:#10241a;--p-muted:#5f7466;--p-line:rgba(16,36,26,.08);
+  --p-shadow:0 1px 2px rgba(16,36,26,.06),0 10px 28px -10px rgba(16,60,30,.25);
+  --p-hero:radial-gradient(120% 70% at 100% 0%,rgba(248,240,56,.28),transparent 55%),radial-gradient(90% 60% at 0% 100%,rgba(255,255,255,.14),transparent 60%),linear-gradient(180deg,#27a047 0%,#1b8a3c 55%,#0f6b30 100%);
+  --p-font:"Inter","SF Pro Display",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+:root[data-theme="dark"]{--p-bg:#09130d;--p-card:#14231a;--p-text:#eaf4ec;--p-muted:#93aa9a;--p-line:rgba(255,255,255,.08);--p-shadow:0 1px 2px rgba(0,0,0,.4),0 12px 30px -12px rgba(0,0,0,.7)}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+/* ---- purchase tracker ---- */
+:root{--bg:#eef4ee;--surface:#ffffff;--ink:#10241a;--muted:#5f7466;--line:rgba(16,36,26,.10);--field:#f3f8f3;--accent:#157a35;--accent-ink:#ffffff}
+:root[data-theme="dark"]{--bg:#09130d;--surface:#14231a;--ink:#eaf4ec;--muted:#93aa9a;--line:rgba(255,255,255,.09);--field:#1a2e21;--accent:#27a047;--accent-ink:#ffffff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#09130d;--surface:#14231a;--ink:#eaf4ec;--muted:#93aa9a;--line:rgba(255,255,255,.09);--field:#1a2e21;--accent:#27a047;--accent-ink:#ffffff}}
+@media screen{
+body{background:var(--bg)!important;font-family:var(--p-font)}
+body .hero-card{background:var(--p-hero)!important;color:#fff!important;border:0!important;border-radius:0 0 30px 30px!important;box-shadow:0 14px 30px -14px rgba(10,70,30,.65)!important;padding:14px 20px 18px!important}
+body .hero-card::before{display:block!important;content:"";position:absolute;inset:0;height:auto;border-radius:inherit;pointer-events:none;background:radial-gradient(rgba(255,255,255,.11) 1.2px,transparent 1.4px) 0 0/22px 22px;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
+body .hero-card>*{position:relative;z-index:1}
+body .hc-title .hc-org{color:#fff!important;font-size:15px!important;font-weight:800;letter-spacing:-.2px}
+body .hc-pill,body .hc-clock{background:rgba(255,255,255,.13)!important;border:1px solid rgba(255,255,255,.26)!important;color:#fff!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+body .hc-pill small{color:rgba(255,255,255,.8)!important}
+body .hc-pill b,body .hc-clock b{color:#fff!important}
+body .hc-clock b i{color:var(--p-sun)!important}
+body .hc-clock small{color:rgba(255,255,255,.8)!important}
+body .hc-clock svg,body .hc-ico{color:var(--p-sun)!important}
+body .hc-gear{background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.3)!important;color:#fff!important}
+body .hc-tools .btn,body .hc-tools .theme-btn,body .hc-tools .lang-sw button,body .hero-card .menu-btn{background:rgba(255,255,255,.16)!important;border:1px solid rgba(255,255,255,.28)!important;color:#fff!important;border-radius:999px!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+body .hc-tools .btn:hover,body .hc-tools .theme-btn:hover,body .hc-tools .lang-sw button:hover{background:rgba(255,255,255,.28)!important;border-color:rgba(255,255,255,.5)!important}
+body .hc-tools .lang-sw button{width:auto!important;min-width:34px;padding:0 10px}
+body .hero-card .bell-wrap>.btn,body .hc-tools #btnBell{height:34px!important}
+/* sidebar */
+body .hero .actions .btn{border-radius:999px!important;padding:10px 14px!important}
+body .hero .actions .btn.active{background:linear-gradient(160deg,#27a047,#157a35)!important;color:#fff!important;box-shadow:0 6px 12px -6px #27a047!important}
+.sb-search{border-radius:999px;padding:10px 14px;box-shadow:var(--p-shadow)}
+/* cards */
+body .stats .stat,body .dcard,body .bcard,body #list .row,body .dash-grid>*,body .budgets .bgroup,body .line-overview{border-radius:26px!important;box-shadow:var(--p-shadow)!important}
+body #list .row,body .bcard{border-radius:22px!important}
+body .stats .stat{border-top:1px solid var(--line)!important}
+body .stats .stat::before{border-radius:14px}
+body .stats .stat::after{background:var(--accent)}
+body .top-search,body .m-search{border-radius:999px!important;box-shadow:var(--p-shadow)}
+body .toolbar{border-radius:26px;box-shadow:var(--p-shadow)}
+body .toolbar input[type="search"],body .toolbar select{border-radius:999px!important}
+body .cat-tabs{border:0;gap:8px;flex-wrap:wrap}
+body .cat-tabs button{border:1px solid var(--line)!important;border-radius:999px!important;background:var(--surface)!important;box-shadow:var(--p-shadow)!important;margin-bottom:0;padding:8px 16px!important}
+body .cat-tabs button[aria-selected="true"]{background:linear-gradient(160deg,#27a047,#157a35)!important;color:#fff!important;border-color:transparent!important}
+body .cat-tabs button[aria-selected="true"] .n,body .cat-tabs button[aria-selected="true"] *{color:#fff!important}
+body .btn{border-radius:14px!important}
+body .btn.primary{background:linear-gradient(160deg,#27a047,#157a35)!important;border-color:transparent!important;box-shadow:0 6px 12px -6px #27a047}
+body .pill-btn{border-radius:999px!important}
+dialog{border-radius:26px!important;box-shadow:var(--p-shadow)!important}
+:focus-visible{outline:3px solid var(--p-sun)!important;outline-offset:2px}
+}
+@media screen and (max-width:900px){
+body .hero-card{padding:12px 12px 16px!important;border-radius:0 0 26px 26px!important}
+body .hc-title .hc-org{color:#fff!important}
+.bnav{margin:0 10px calc(8px + env(safe-area-inset-bottom,0px));border:1px solid var(--line);border-radius:26px;box-shadow:var(--p-shadow)!important;padding:6px!important;left:0;right:0}
+.bnav button{border-radius:20px!important;font-size:11px!important}
+.bnav button.on{background:linear-gradient(160deg,#27a047,#157a35)!important;color:#fff!important}
+.fab{background:linear-gradient(160deg,#27a047,#157a35)!important}
+}
+</style>
 </head>
 <body>
 <div id="saBar" class="sa-bar" role="alert" aria-live="assertive" hidden>
